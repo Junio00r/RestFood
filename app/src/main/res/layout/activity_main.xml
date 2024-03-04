@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:paddingHorizontal="4dp"
+        android:text="@string/text_userName"
+        android:textColor="@color/thirdary_color"
+        app:layout_constraintBottom_toTopOf="@+id/edit_userName"
+        app:layout_constraintStart_toStartOf="@id/edit_userName" />
+
+    <EditText
+        android:id="@+id/edit_userName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="username"
+        android:background="@null"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColor="@color/thirdary_color"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/text_userTable"
+        app:layout_constraintStart_toStartOf="@id/edit_tableNumber" />
+
+    <TextView
+        android:id="@+id/text_userTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingHorizontal="4dp"
+        android:text="@string/text_userTable"
+        android:textColor="@color/thirdary_color"
+        app:layout_constraintBottom_toTopOf="@+id/edit_tableNumber"
+        app:layout_constraintStart_toStartOf="@id/edit_tableNumber" />
+
+    <EditText
+        android:id="@+id/edit_tableNumber"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginBottom="16dp"
+        android:background="@null"
+        android:inputType="number"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:paddingHorizontal="8dp"
+        android:textColor="@color/thirdary_color"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/enterButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/enterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="128dp"
+        android:gravity="center"
+        android:paddingHorizontal="32dp"
+        android:text="@string/button_enter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

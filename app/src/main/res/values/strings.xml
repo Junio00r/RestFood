@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">restaurant</string>
+    <string name="button_enter">Enter</string>
+    <string name="text_userName">Insira o seu nome</string>
+    <string name="text_userTable">Insira o número da sua Mesa</string>
+    <string name="tab_item_entradas">Entradas</string>
+    <string name="tab_item_pratos_principais">Pratos Principais</string>
+    <string name="tab_item_bebidas">Bebidas</string>
+    <string name="tab_item_sobremesas">Sobremesas</string>
+</resources>
