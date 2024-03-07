@@ -8,7 +8,7 @@
         <item name="tabIndicatorFullWidth">false</item>
         <item name="tabIndicatorColor">@color/secondary_color</item>
         <item name="tabSelectedTextColor">@color/secondary_color</item>
-        <item name="tabMode">auto</item>
+        <item name="tabMode">fixed</item>
         <item name="tabTextColor">@color/primary_color</item>
         <item name="tabIndicatorHeight">1dp</item>
         <item name="tabRippleColor">@color/fourty_color</item>

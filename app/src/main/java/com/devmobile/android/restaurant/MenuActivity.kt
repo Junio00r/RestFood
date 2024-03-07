@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlin.math.absoluteValue
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding

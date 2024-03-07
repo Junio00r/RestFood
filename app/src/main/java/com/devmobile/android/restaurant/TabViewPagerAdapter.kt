@@ -14,7 +14,7 @@ class TabViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fra
     )
 
     private val fragments = arrayOf(
-        FoodSection(),
+        FragmentRestaurant(),
         FoodSection(),
         FoodSection(),
         FoodSection()
