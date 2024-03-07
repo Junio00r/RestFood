@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  TabLayou  -->
+    <style name="TabStyle" parent="Widget.AppCompat.ActionBar.TabBar">
+        <item name="android:background">@drawable/radius_tab_layout</item>
+        <item name="android:backgroundTint">@color/thirdary_color</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorColor">@color/secondary_color</item>
+        <item name="tabSelectedTextColor">@color/secondary_color</item>
+        <item name="tabMode">auto</item>
+        <item name="tabTextColor">@color/primary_color</item>
+        <item name="tabIndicatorHeight">1dp</item>
+        <item name="tabRippleColor">@color/fourty_color</item>
+    </style>
+
+    <!--  TabTextLayouy -->
+    <style name="TabTextStyle" parent="Widget.AppCompat.ActionBar.TabBar">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/font_tab</item>
+    </style>
+
+    <!--  SearchView  -->
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:hint">Search Food</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingHorizontal">2dp</item>
+        <item name="android:background">@drawable/radius_search_view</item>
+        <item name="android:backgroundTint">@color/thirdary_color</item>
+        <item name="android:searchIcon">@drawable/ic_search_view</item>
+        <item name="android:amPmTextColor">@color/primary_color</item>
+        <item name="textBackground">@color/primary_color</item>
+        <item name="android:textColor">@color/primary_color</item>
+    </style>
+
+</resources>
