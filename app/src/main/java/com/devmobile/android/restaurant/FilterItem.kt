@@ -1,11 +1,10 @@
 package com.devmobile.android.restaurant
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.layout.Layout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 
@@ -21,11 +20,13 @@ data class FilterItem(
 fun FilterItem.toChip(context: Context): Chip {
 
     val chip = if (rightChipIcon == null) {
-        LayoutInflater.from(context).inflate(R.layout.layout_chip, null, false) as Chip
+        LayoutInflater.from(context).inflate(R.layout.chip_filter_choice, null, false) as Chip
     } else {
-        Chip(ContextThemeWrapper(
-            context, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice
-        ))
+        Chip(
+            ContextThemeWrapper(
+                context, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Filter
+            )
+        )
     }
 
     setChipAtributes(chip)
@@ -33,23 +34,25 @@ fun FilterItem.toChip(context: Context): Chip {
     return chip
 }
 
+@SuppressLint("ResourceType")
 private fun FilterItem.setChipAtributes(chip: Chip) {
     chip.text = this.text
     chip.chipStrokeWidth = 2f
+    chip.setChipStrokeColorResource(R.color.six_color)
 
-    if (chip.closeIcon != null) {
+    if (rightChipIcon != null) {
         chip.setChipBackgroundColorResource(R.color.thirdary_color)
+    } else {
+        chip.chipIconSize = 60f
     }
 
-    // Set a stroke color
-    // Defino uma cor para borda
-    chip.setChipStrokeColorResource(R.color.fourty_color)
 
     leftChipIcon?.let {
-        chip.chipIconSize = this.iconSize
-        chip.setChipIconResource(it)
+        chip.chipIconSize = iconSize
+        chip.isCheckable = false
         chip.chipStartPadding = 20f
     }
+
     rightChipIcon?.let {
         chip.setCloseIconResource(it)
         chip.isCloseIconVisible = true

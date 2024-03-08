@@ -6,7 +6,8 @@
     <string name="tab_item_entradas">Entradas</string>
     <string name="tab_item_pratos_principais">P. Principais</string>
     <string name="tab_item_bebidas">Bebidas</string>
-    <string name="tab_item_sobremesas">Sobremesas</string>
+    <string name="tab_item_sobremesas">Sobremes</string>
+    <string name="tab_todos_itens">Todos</string>
 
     <!--  Section Food  -->
 
