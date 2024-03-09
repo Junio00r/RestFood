@@ -7,7 +7,7 @@ import com.devmobile.android.restaurant.databinding.FragmentRestaurantBinding
 
 class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
     private lateinit var binding: FragmentRestaurantBinding
-    private val iconSize = 10f
+    private val iconSize = 64f
     private val filtersChip = ArrayList<CustomChipFilter>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,11 +27,11 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
 
         filtersChip.addAll(
             arrayOf(
-                CustomChipFilter(requireContext(), "Ordenar"        , 0f, null, R.drawable.ic_chip_filter),
-                CustomChipFilter(requireContext(), "Mais Recente"   , 0f, null, null),
-                CustomChipFilter(requireContext(), "Preparo Rápido" , 0f, null, null),
-                CustomChipFilter(requireContext(), "Preparo Lento"  , 0f, null, null),
-                CustomChipFilter(requireContext(), "Filtros"        , 0f, null, R.drawable.ic_chip_filter_list)
+                CustomChipFilter(requireContext(), "Ordenar"        , iconSize, null, R.drawable.ic_chip_filter),
+                CustomChipFilter(requireContext(), "Mais Recente"   , iconSize, null, null),
+                CustomChipFilter(requireContext(), "Preparo Rápido" , iconSize, null, null),
+                CustomChipFilter(requireContext(), "Preparo Lento"  , iconSize, null, null),
+                CustomChipFilter(requireContext(), "Filtros"        , iconSize, null, R.drawable.ic_chip_filter_list)
             )
         )
     }

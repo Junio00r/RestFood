@@ -10,7 +10,7 @@ import com.google.android.material.chip.Chip
 class CustomChipFilter(
     private val context: Context,
     private var textChip: String,
-    private var iconSize: Float = 64f,
+    private var iconSize: Float? = 64f,
     @DrawableRes leftChipIcon: Int? = null,
     @DrawableRes rightChipIcon: Int? = null,
 ) : Chip(context) {
@@ -21,7 +21,7 @@ class CustomChipFilter(
         setChipBackgroundColorResource(R.color.bg_chip)
         setChipStrokeColorResource(R.color.six_color)
 
-        chipIconSize = this.iconSize
+        chipIconSize = this.iconSize!!
         text = this.textChip
         chipStrokeWidth = 2f
         isCheckable = true
