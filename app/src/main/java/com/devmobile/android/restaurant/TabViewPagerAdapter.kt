@@ -3,6 +3,7 @@ package com.devmobile.android.restaurant
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.adapter.FragmentViewHolder
 
 class TabViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
