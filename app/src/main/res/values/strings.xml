@@ -8,7 +8,9 @@
     <string name="tab_item_bebidas">Bebidas</string>
     <string name="tab_item_sobremesas">Sobremes</string>
     <string name="tab_todos_itens">Todos</string>
+    <string name="search_bar_hint">Search a Food</string>
 
     <!--  Section Food  -->
-
+    <string name="text_food_name">Food Name</string>
+    <string name="image_food">Food Name</string>
 </resources>

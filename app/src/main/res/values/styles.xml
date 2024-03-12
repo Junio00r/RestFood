@@ -22,15 +22,17 @@
 
     <!--  SearchView  -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="android:hint">Search Food</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:paddingHorizontal">2dp</item>
-        <item name="android:background">@drawable/radius_search_view</item>
-        <item name="android:backgroundTint">@color/thirdary_color</item>
-        <item name="android:searchIcon">@drawable/ic_search_view</item>
-        <item name="android:amPmTextColor">@color/primary_color</item>
-        <item name="textBackground">@color/primary_color</item>
-        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.SearchBar</item>
+        <item name="android:hint">@string/search_bar_hint</item>
+        <item name="backgroundTint">@color/thirdary_color</item>
+    </style>
+
+    <!--  ShapeableImageView  -->
+    <style name="ImageRounded">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 
 </resources>
