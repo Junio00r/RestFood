@@ -1,7 +1,13 @@
 package com.devmobile.android.restaurant
 
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import android.view.View.OnCreateContextMenuListener
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -117,22 +123,41 @@ class MenuActivity : AppCompatActivity() {
 
     private fun initImageFilterButton() {
         this.imageFilterButton = binding.imageFilterButton
+        registerForContextMenu(imageFilterButton)
 
         imageFilterButton.setOnCreateContextMenuListener { menu, v, menuInfo ->
+            val contextMenuImageFilterView = v
+            val context = this.baseContext
 
-            v.= imageFilterButton
-        }
+            menu.add("Option 1").setOnMenuItemClickListener {
+                Toast.makeText(context, "Option 1", Toast.LENGTH_SHORT).show()
 
-        imageFilterButton.setOnCreateContextMenuListener { menu, v, menuInfo ->
-            when(it.itemId) {
-                R.id.menu_filter_option1 -> return@setOnCreateContextMenuListener
-                R.id.menu_filter_option2 -> return@setOnCreateContextMenuListener
-                R.id.menu_filter_option3 -> return@setOnCreateContextMenuListener
+                return@setOnMenuItemClickListener true
+            }
 
-                else -> {
-                    return@setOnCreateContextMenuListener
-                }
+            menu.add("Option 2").setOnMenuItemClickListener {
+                Toast.makeText(context, "Option 2", Toast.LENGTH_SHORT).show()
+
+                return@setOnMenuItemClickListener true
+            }
+
+            menu.add("Option 3").setOnMenuItemClickListener {
+                Toast.makeText(context, "Option 3", Toast.LENGTH_SHORT).show()
+
+                return@setOnMenuItemClickListener true
             }
         }
+
+//        imageFilterButton.setOnCreateContextMenuListener { menu, v, menuInfo ->
+//            when(it.itemId) {
+//                R.id.menu_filter_option1 -> return@setOnCreateContextMenuListener
+//                R.id.menu_filter_option2 -> return@setOnCreateContextMenuListener
+//                R.id.menu_filter_option3 -> return@setOnCreateContextMenuListener
+//
+//                else -> {
+//                    return@setOnCreateContextMenuListener
+//                }
+//            }
+//        }
     }
 }
