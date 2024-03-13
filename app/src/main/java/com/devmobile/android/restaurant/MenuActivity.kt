@@ -69,6 +69,7 @@ class MenuActivity : AppCompatActivity() {
             binding.searchViewFoods.hide()
             false
         }
+
     }
 
     private fun initRecyclerView() {
@@ -100,7 +101,6 @@ class MenuActivity : AppCompatActivity() {
         )
     }
 
-    @SuppressLint("RtlHardcoded")
     private fun initImageFilterButton() {
 
         this.imageFilterButton = binding.imageFilterButton

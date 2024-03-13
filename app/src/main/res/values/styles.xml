@@ -36,10 +36,9 @@
     </style>
 
     <!--  SearchBar  -->
-    <style name="SearchBarStyle" parent="Theme.MaterialComponents">
-        <item name="android:colorPrimary">@color/primary_color</item>
-        <item name="colorPrimary">@color/primary_color</item>
-        <item name="android:inputType">textNoSuggestions</item>
+    <style name="SearchBarStyle" parent="Widget.Material3.SearchBar">
+        <item name="backgroundTint">@color/thirdary_color</item>
+        <item name="android:hint">@string/search_bar_hint</item>
     </style>
 
     <!--Popup Style Local-->
