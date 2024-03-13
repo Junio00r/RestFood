@@ -42,4 +42,12 @@
         <item name="android:inputType">textNoSuggestions</item>
     </style>
 
+    <!--Popup Style Local-->
+    <style name="PopupMenu.Local.View" parent="Widget.Material3.PopupMenu">
+        <item name="android:popupElevation">20dp</item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
+        <item name="android:popupBackground">@drawable/bg_popup_menu</item>
+    </style>
+
 </resources>

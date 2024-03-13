@@ -1,13 +1,10 @@
 package com.devmobile.android.restaurant
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.ContextMenu
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.View.OnCreateContextMenuListener
-import android.widget.Toast
+import android.view.Gravity
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,14 +22,14 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var recyclerViewFoods: RecyclerView
     private val foodImagesIds = LinkedList<Int>()
     private val foodNames = LinkedList<String>()
-    private lateinit var searchBarFoods : SearchBar
-    private lateinit var searchViewFoods : SearchView
-    private lateinit var imageFilterButton : ImageFilterButton
+    private lateinit var searchBarFoods: SearchBar
+    private lateinit var searchViewFoods: SearchView
+    private lateinit var imageFilterButton: ImageFilterButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             binding = ActivityMenuBinding.inflate(this.layoutInflater)
             setContentView(binding.root)
 
@@ -67,28 +64,15 @@ class MenuActivity : AppCompatActivity() {
         this.searchBarFoods = binding.searchBarFoods
         this.searchViewFoods = binding.searchViewFoods
 
-//        binding.searchBarFoods.inflateMenu(R.menu.seachbar_filter_options)
-//        binding.searchBarFoods.setOnMenuItemClickListener {
-//
-//            when(it.itemId) {
-//                R.id.menu_filter_option1 -> return@setOnMenuItemClickListener true
-//                R.id.menu_filter_option2 -> return@setOnMenuItemClickListener true
-//                R.id.menu_filter_option3 -> return@setOnMenuItemClickListener true
-//
-//                else -> {return@setOnMenuItemClickListener false}
-//            }
-//        }
-
-        searchViewFoods
-            .getEditText()
-            .setOnEditorActionListener { v, actionId, event ->
-                binding.searchBarFoods.setText(binding.searchViewFoods.getText())
-                binding.searchViewFoods.hide()
-                false
-            }
+        searchViewFoods.getEditText().setOnEditorActionListener { v, actionId, event ->
+            binding.searchBarFoods.setText(binding.searchViewFoods.getText())
+            binding.searchViewFoods.hide()
+            false
+        }
     }
 
     private fun initRecyclerView() {
+
         recyclerViewFoods = binding.recyclerFoods
         customAdapter = FoodCustomAdapter(foodImagesIds, foodNames, this)
         recyclerViewFoods.adapter = customAdapter
@@ -96,6 +80,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun putCardViewValues() {
+
         foodImagesIds.addAll(
             listOf(
                 R.drawable.macarronada,
@@ -110,54 +95,34 @@ class MenuActivity : AppCompatActivity() {
 
         foodNames.addAll(
             listOf(
-                "Macarronada",
-                "Hamburguer",
-                "Principal",
-                "Feijoada",
-                "Camarão",
-                "Queijo",
-                "Sopa"
+                "Macarronada", "Hamburguer", "Principal", "Feijoada", "Camarão", "Queijo", "Sopa"
             )
         )
     }
 
+    @SuppressLint("RtlHardcoded")
     private fun initImageFilterButton() {
+
         this.imageFilterButton = binding.imageFilterButton
-        registerForContextMenu(imageFilterButton)
+        val popupMenu = PopupMenu(
+            applicationContext,
+            imageFilterButton,
+            Gravity.START,
+            0,
+            R.style.PopupMenu_Local_View
+        )
 
-        imageFilterButton.setOnCreateContextMenuListener { menu, v, menuInfo ->
-            val contextMenuImageFilterView = v
-            val context = this.baseContext
+        popupMenu.menuInflater.inflate(R.menu.seachbar_filter_options, popupMenu.menu)
 
-            menu.add("Option 1").setOnMenuItemClickListener {
-                Toast.makeText(context, "Option 1", Toast.LENGTH_SHORT).show()
+        imageFilterButton.setOnClickListener {
 
-                return@setOnMenuItemClickListener true
-            }
+            popupMenu.show()
 
-            menu.add("Option 2").setOnMenuItemClickListener {
-                Toast.makeText(context, "Option 2", Toast.LENGTH_SHORT).show()
-
-                return@setOnMenuItemClickListener true
-            }
-
-            menu.add("Option 3").setOnMenuItemClickListener {
-                Toast.makeText(context, "Option 3", Toast.LENGTH_SHORT).show()
+            popupMenu.setOnMenuItemClickListener { menuItem ->
 
                 return@setOnMenuItemClickListener true
             }
+
         }
-
-//        imageFilterButton.setOnCreateContextMenuListener { menu, v, menuInfo ->
-//            when(it.itemId) {
-//                R.id.menu_filter_option1 -> return@setOnCreateContextMenuListener
-//                R.id.menu_filter_option2 -> return@setOnCreateContextMenuListener
-//                R.id.menu_filter_option3 -> return@setOnCreateContextMenuListener
-//
-//                else -> {
-//                    return@setOnCreateContextMenuListener
-//                }
-//            }
-//        }
     }
 }
