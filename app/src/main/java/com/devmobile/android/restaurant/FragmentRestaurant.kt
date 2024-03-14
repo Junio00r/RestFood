@@ -13,12 +13,34 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        context?.let { createChips() }
+        if (savedInstanceState == null) {
 
-        binding = FragmentRestaurantBinding.bind(view)
-        binding.let {
-            filtersChip.forEach {filter ->
-                it.chipGroupFilters.addView(filter)
+            context?.let { createChips() }
+            binding = FragmentRestaurantBinding.bind(view)
+
+            binding.let {
+                filtersChip.forEach { filter ->
+
+                    if (it.chipGroupFilter.childCount <= filtersChip.size) {
+                        it.chipGroupFilter.addView(filter)
+                    } else {
+                        it.chipGroupFilter.removeView(filter)
+                    }
+                }
+            }
+
+        } else {
+
+            binding = FragmentRestaurantBinding.bind(view)
+            binding.let {
+                filtersChip.forEach { filter ->
+
+                    if (it.chipGroupFilter.parent == null) {
+                        it.chipGroupFilter.addView(filter)
+                    } else {
+                        it.chipGroupFilter.removeView(filter)
+                    }
+                }
             }
         }
     }
@@ -27,11 +49,11 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
 
         filtersChip.addAll(
             arrayOf(
-                CustomChipFilter(requireContext(), "Ordenar"        , iconSize, null, R.drawable.ic_chip_filter),
-                CustomChipFilter(requireContext(), "Mais Recente"   , iconSize, null, null),
-                CustomChipFilter(requireContext(), "Preparo Rápido" , iconSize, null, null),
-                CustomChipFilter(requireContext(), "Preparo Lento"  , iconSize, null, null),
-                CustomChipFilter(requireContext(), "Filtros"        , iconSize, null, R.drawable.ic_chip_filter_list)
+                CustomChipFilter(requireContext(),"Ordenar",iconSize,null,R.drawable.ic_chip_filter),
+                CustomChipFilter(requireContext(), "Mais Recente", iconSize, null, null),
+                CustomChipFilter(requireContext(), "Preparo Rápido", iconSize, null, null),
+                CustomChipFilter(requireContext(), "Preparo Lento", iconSize, null, null),
+                CustomChipFilter(requireContext(),"Filtros",iconSize,null,R.drawable.ic_chip_filter_list)
             )
         )
     }

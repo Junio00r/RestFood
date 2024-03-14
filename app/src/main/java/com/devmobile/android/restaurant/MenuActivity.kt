@@ -1,7 +1,5 @@
 package com.devmobile.android.restaurant
 
-import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.PopupMenu
@@ -15,6 +13,7 @@ import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.LinkedList
+import kotlin.math.absoluteValue
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -65,11 +64,12 @@ class MenuActivity : AppCompatActivity() {
         this.searchViewFoods = binding.searchViewFoods
 
         searchViewFoods.getEditText().setOnEditorActionListener { v, actionId, event ->
-            binding.searchBarFoods.setText(binding.searchViewFoods.getText())
-            binding.searchViewFoods.hide()
+            searchBarFoods.setText(searchViewFoods.text)
+            searchViewFoods.hide()
             false
         }
 
+        searchViewFoods.setupWithSearchBar(searchBarFoods)
     }
 
     private fun initRecyclerView() {
@@ -109,7 +109,7 @@ class MenuActivity : AppCompatActivity() {
             imageFilterButton,
             Gravity.START,
             0,
-            R.style.PopupMenu_Local_View
+            R.style.PopupMenu_View_Local
         )
 
         popupMenu.menuInflater.inflate(R.menu.seachbar_filter_options, popupMenu.menu)

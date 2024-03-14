@@ -10,7 +10,7 @@
         <item name="tabSelectedTextColor">@color/secondary_color</item>
         <item name="tabMode">fixed</item>
         <item name="tabTextColor">@color/primary_color</item>
-        <item name="tabIndicatorHeight">1dp</item>
+        <item name="tabIndicatorHeight">2dp</item>
         <item name="tabRippleColor">@color/fourty_color</item>
     </style>
 
@@ -36,17 +36,25 @@
     </style>
 
     <!--  SearchBar  -->
-    <style name="SearchBarStyle" parent="Widget.Material3.SearchBar">
+    <style name="SearchBar.Style.Local" parent="Widget.Material3.SearchBar">
         <item name="backgroundTint">@color/thirdary_color</item>
         <item name="android:hint">@string/search_bar_hint</item>
+        <item name="defaultMarginsEnabled">false</item>
+        <item name="android:fontFamily">@font/font_tab</item>
+        '       <!--    put hint color one    -->
     </style>
 
     <!--Popup Style Local-->
-    <style name="PopupMenu.Local.View" parent="Widget.Material3.PopupMenu">
+    <style name="PopupMenu.View.Local" parent="Widget.Material3.PopupMenu">
         <item name="android:popupElevation">20dp</item>
         <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
         <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
         <item name="android:popupBackground">@drawable/bg_popup_menu</item>
+    </style>
+
+    <!--App Bar Layout Style Local-->
+    <style name="AppBarLayout.Style.Local" parent="Widget.Material3.AppBarLayout">
+        <item name="android:background">@null</item>
     </style>
 
 </resources>

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/thirdary_color"
     android:orientation="vertical">
 
     <HorizontalScrollView
@@ -16,7 +15,7 @@
         android:scrollbars="none">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupFilters"
+            android:id="@+id/chipGroupFilter"
             android:layout_width="wrap_content"
             android:layout_height="46dp"
             app:singleLine="true" />
@@ -24,8 +23,8 @@
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerFoods"
+        android:id="@+id/recyclerFood"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
