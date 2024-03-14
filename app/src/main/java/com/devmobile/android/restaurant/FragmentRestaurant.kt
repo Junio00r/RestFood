@@ -15,7 +15,8 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
 
         if (savedInstanceState == null) {
 
-            context?.let { createChips() }
+            // 12411
+            createChips()
             binding = FragmentRestaurantBinding.bind(view)
 
             binding.let {
@@ -31,7 +32,7 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
 
         } else {
 
-            binding = FragmentRestaurantBinding.bind(view)
+//            binding = FragmentRestaurantBinding.bind(view)
             binding.let {
                 filtersChip.forEach { filter ->
 
