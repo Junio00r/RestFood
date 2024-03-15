@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--  TabLayou  -->
-    <style name="TabStyle" parent="Widget.AppCompat.ActionBar.TabBar">
+    <style name="TabStyle" parent="Widget.Material3.TabLayout">
         <item name="android:background">@drawable/radius_tab_layout</item>
         <item name="android:backgroundTint">@color/thirdary_color</item>
         <item name="tabIndicatorFullWidth">false</item>

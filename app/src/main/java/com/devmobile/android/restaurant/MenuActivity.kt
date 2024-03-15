@@ -5,7 +5,6 @@ import android.view.Gravity
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.recyclerview.FoodCustomAdapter
@@ -13,7 +12,6 @@ import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.LinkedList
-import kotlin.math.absoluteValue
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -38,24 +36,24 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
-    fun init() {
+    private fun init() {
 
-        initTabLayoutSpecifications()
         initSearchBarSpecifications()
         putCardViewValues()
+        initTabLayoutSpecifications()
         initRecyclerView()
         initImageFilterButton()
     }
 
     private fun initTabLayoutSpecifications() {
+
         val tabLayout = binding.tabFoodSections
         val viewPager2 = binding.pagerFoodSections
-
-        val adapter = TabViewPagerAdapter(this)
-        viewPager2.adapter = adapter
+        val tabPagerAdapter = TabViewPagerAdapter(this)
+        viewPager2.adapter = tabPagerAdapter
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
-            tab.text = getString(adapter.tabs[position])
+            tab.text = getString(tabPagerAdapter.tabs[position])
         }.attach()
     }
 
@@ -63,7 +61,7 @@ class MenuActivity : AppCompatActivity() {
         this.searchBarFoods = binding.searchBarFoods
         this.searchViewFoods = binding.searchViewFoods
 
-        searchViewFoods.getEditText().setOnEditorActionListener { v, actionId, event ->
+        searchViewFoods.editText.setOnEditorActionListener { v, actionId, event ->
             searchBarFoods.setText(searchViewFoods.text)
             searchViewFoods.hide()
             false
@@ -74,10 +72,10 @@ class MenuActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-        recyclerViewFoods = binding.recyclerFoods
-        customAdapter = FoodCustomAdapter(foodImagesIds, foodNames, this)
-        recyclerViewFoods.adapter = customAdapter
-        recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//        this.recyclerViewFoods = binding.recyclerFoods
+//        customAdapter = FoodCustomAdapter(foodImagesIds, foodNames, this)
+//        recyclerViewFoods.adapter = customAdapter
+//        recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false);
     }
 
     private fun putCardViewValues() {
@@ -105,11 +103,7 @@ class MenuActivity : AppCompatActivity() {
 
         this.imageFilterButton = binding.imageFilterButton
         val popupMenu = PopupMenu(
-            applicationContext,
-            imageFilterButton,
-            Gravity.START,
-            0,
-            R.style.PopupMenu_View_Local
+            applicationContext, imageFilterButton, Gravity.START, 0, R.style.PopupMenu_View_Local
         )
 
         popupMenu.menuInflater.inflate(R.menu.seachbar_filter_options, popupMenu.menu)

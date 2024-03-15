@@ -1,60 +1,85 @@
 package com.devmobile.android.restaurant
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.animation.core.withInfiniteAnimationFrameNanos
+import androidx.compose.ui.node.getOrAddAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentContainerView
+import androidx.viewpager2.widget.ViewPager2
 import com.devmobile.android.restaurant.databinding.FragmentRestaurantBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
+class FragmentRestaurant(fragment: Int) : Fragment(fragment) {
     private lateinit var binding: FragmentRestaurantBinding
     private val iconSize = 64f
     private val filtersChip = ArrayList<CustomChipFilter>()
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val tabLayout = view.findViewById<TabLayout>(R.layout.fragment_restaurant)
+        val viewPager2 = view.findViewById<ViewPager2>(R.id.pagerFoodSections)
 
-        if (savedInstanceState == null) {
+        TabLayoutMediator(tabLayout, viewPager2) {tab, position ->
+            tab.text = "Testando"
+        }.attach()
 
-            // 12411
+        binding = FragmentRestaurantBinding.bind(view)
+
+        if (filtersChip.size == 0) {
+
             createChips()
-            binding = FragmentRestaurantBinding.bind(view)
-
             binding.let {
                 filtersChip.forEach { filter ->
 
-                    if (it.chipGroupFilter.childCount <= filtersChip.size) {
-                        it.chipGroupFilter.addView(filter)
-                    } else {
-                        it.chipGroupFilter.removeView(filter)
+                    if (filter.parent != null) {
+                        (filter.parent as ViewGroup).removeView(filter)
                     }
+                    it.chipGroupFilter.addView(filter)
                 }
             }
 
         } else {
 
-//            binding = FragmentRestaurantBinding.bind(view)
             binding.let {
                 filtersChip.forEach { filter ->
 
-                    if (it.chipGroupFilter.parent == null) {
-                        it.chipGroupFilter.addView(filter)
-                    } else {
-                        it.chipGroupFilter.removeView(filter)
+                    if (filter.parent != null) {
+                        (filter.parent as ViewGroup).removeView(filter)
                     }
+                    it.chipGroupFilter.addView(filter)
                 }
             }
         }
     }
 
+
     private fun createChips() {
 
         filtersChip.addAll(
             arrayOf(
-                CustomChipFilter(requireContext(),"Ordenar",iconSize,null,R.drawable.ic_chip_filter),
+                CustomChipFilter(
+                    requireContext(),
+                    "Ordenar",
+                    iconSize,
+                    null,
+                    R.drawable.ic_chip_filter
+                ),
                 CustomChipFilter(requireContext(), "Mais Recente", iconSize, null, null),
                 CustomChipFilter(requireContext(), "Preparo Rápido", iconSize, null, null),
                 CustomChipFilter(requireContext(), "Preparo Lento", iconSize, null, null),
-                CustomChipFilter(requireContext(),"Filtros",iconSize,null,R.drawable.ic_chip_filter_list)
+                CustomChipFilter(
+                    requireContext(),
+                    "Filtros",
+                    iconSize,
+                    null,
+                    R.drawable.ic_chip_filter_list
+                )
             )
         )
     }

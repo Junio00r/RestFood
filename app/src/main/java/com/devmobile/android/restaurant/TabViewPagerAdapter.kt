@@ -15,14 +15,14 @@ class TabViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fra
     )
 
     private val fragments = arrayOf(
-        FragmentRestaurant(),
+        FragmentRestaurant(R.layout.fragment_restaurant),
         FoodSection(),
         FoodSection(),
         FoodSection(),
         FoodSection()
     )
 
-    override fun getItemCount(): Int = fragments.size
+    override fun getItemCount(): Int = tabs.size
 
     override fun createFragment(position: Int): Fragment = fragments[position]
 }
