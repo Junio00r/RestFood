@@ -14,7 +14,7 @@ import com.devmobile.android.restaurant.databinding.FragmentRestaurantBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class FragmentRestaurant(fragment: Int) : Fragment(fragment) {
+class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
     private lateinit var binding: FragmentRestaurantBinding
     private val iconSize = 64f
     private val filtersChip = ArrayList<CustomChipFilter>()
@@ -22,15 +22,7 @@ class FragmentRestaurant(fragment: Int) : Fragment(fragment) {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val tabLayout = view.findViewById<TabLayout>(R.layout.fragment_restaurant)
-        val viewPager2 = view.findViewById<ViewPager2>(R.id.pagerFoodSections)
-
-        TabLayoutMediator(tabLayout, viewPager2) {tab, position ->
-            tab.text = "Testando"
-        }.attach()
-
         binding = FragmentRestaurantBinding.bind(view)
-
         if (filtersChip.size == 0) {
 
             createChips()

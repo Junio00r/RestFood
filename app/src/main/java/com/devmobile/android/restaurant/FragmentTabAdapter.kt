@@ -4,7 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class TabViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
+
+internal class FragmentTabAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
     val tabs = arrayOf(
         R.string.tab_item_entradas,
@@ -15,12 +16,13 @@ class TabViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fra
     )
 
     private val fragments = arrayOf(
-        FragmentRestaurant(R.layout.fragment_restaurant),
-        FoodSection(),
-        FoodSection(),
-        FoodSection(),
-        FoodSection()
+        FragmentRestaurant(),
+        FragmentRestaurant(),
+        FragmentRestaurant(),
+        FragmentRestaurant(),
+        FragmentRestaurant()
     )
+
 
     override fun getItemCount(): Int = tabs.size
 

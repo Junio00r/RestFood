@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.recyclerview.FoodCustomAdapter
@@ -49,11 +50,11 @@ class MenuActivity : AppCompatActivity() {
 
         val tabLayout = binding.tabFoodSections
         val viewPager2 = binding.pagerFoodSections
-        val tabPagerAdapter = TabViewPagerAdapter(this)
-        viewPager2.adapter = tabPagerAdapter
+        val fragmentTabAdapter = FragmentTabAdapter(this)
+        viewPager2.adapter = fragmentTabAdapter
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
-            tab.text = getString(tabPagerAdapter.tabs[position])
+            tab.text = getString(fragmentTabAdapter.tabs[position])
         }.attach()
     }
 
@@ -72,10 +73,10 @@ class MenuActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-//        this.recyclerViewFoods = binding.recyclerFoods
-//        customAdapter = FoodCustomAdapter(foodImagesIds, foodNames, this)
-//        recyclerViewFoods.adapter = customAdapter
-//        recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        this.recyclerViewFoods = binding.recyclerFoods
+        customAdapter = FoodCustomAdapter(foodImagesIds, foodNames, this)
+        recyclerViewFoods.adapter = customAdapter
+        recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false);
     }
 
     private fun putCardViewValues() {
