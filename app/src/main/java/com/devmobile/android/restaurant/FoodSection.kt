@@ -1,13 +1,21 @@
 package com.devmobile.android.restaurant
 
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+enum class FoodSection {
+    ENTRADA {
+        override fun getFoodSectionName(): String = "Entrada"
+    },
+    PRINCIPAL {
+        override fun getFoodSectionName(): String = "Principal"
+    },
+    BEBIDA {
+        override fun getFoodSectionName(): String = "Bebida"
+    },
+    SOBREMESA {
+        override fun getFoodSectionName(): String = "Sobremesa"
+    },
+    TODAS {
+        override fun getFoodSectionName(): String = "Todas"
+    };
 
-class FoodSection : Fragment() {
-
+    abstract fun getFoodSectionName() : String
 }

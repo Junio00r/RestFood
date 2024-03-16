@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.devmobile.android.restaurant.Food
 import com.devmobile.android.restaurant.R
 import java.util.LinkedList
 
 class FoodCustomAdapter(
 
-    private val foodImagesId: LinkedList<Int>,
-    private val foodNames: LinkedList<String>,
+    private val foods: LinkedList<Food>,
     private val context: Context
 
 ) : RecyclerView.Adapter<FoodViewHolder>() {
@@ -26,10 +26,11 @@ class FoodCustomAdapter(
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
 
-        holder.textViewFood.text = foodNames[position]
-        holder.imageViewFood.scaleType = ImageView.ScaleType.FIT_XY
-        holder.imageViewFood.setImageResource(foodImagesId[position])
+        holder.imageFood.setImageResource(foods[position].imageFoodId)
+        holder.imageFood.scaleType = ImageView.ScaleType.FIT_XY
+        holder.textFoodName.text = foods[position].foodName
+        holder.textFoodDescription.text = foods[position].descriptionFood
     }
 
-    override fun getItemCount(): Int = foodNames.size
+    override fun getItemCount(): Int = foods.size
 }

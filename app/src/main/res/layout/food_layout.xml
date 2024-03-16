@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/thirdary_color"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="10dp">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -35,17 +35,47 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textFoodName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignStart="@id/imageTimeToPrepare"
                 android:layout_alignTop="@id/imageFood"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="64dp"
-                android:layout_toStartOf="@id/checkboxFood"
-                android:layout_toEndOf="@id/imageFood"
+                android:layout_alignEnd="@id/textPrepareTime"
                 android:fontFamily="@font/sul_sans_regular"
                 android:importantForAccessibility="no"
                 android:textColor="@color/primary_color" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textFoodDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/textPrepareTime"
+                android:layout_alignStart="@id/imageTimeToPrepare"
+                android:layout_alignEnd="@id/textPrepareTime"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/five_color"
+                android:textSize="12sp" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageTimeToPrepare"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/stopwatch_67"
+                android:background="@null"
+                android:layout_alignBottom="@id/imageFood"
+                android:layout_marginStart="18dp"
+                android:layout_toEndOf="@id/imageFood" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textPrepareTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageTimeToPrepare"
+                android:layout_alignBottom="@id/imageFood"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/five_color"
+                android:layout_marginEnd="32dp"
+                android:layout_toStartOf="@id/checkboxFood"
+                android:layout_toEndOf="@id/imageTimeToPrepare" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"

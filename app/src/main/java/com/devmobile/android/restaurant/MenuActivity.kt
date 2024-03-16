@@ -18,8 +18,7 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
     private lateinit var customAdapter: FoodCustomAdapter
     private lateinit var recyclerViewFoods: RecyclerView
-    private val foodImagesIds = LinkedList<Int>()
-    private val foodNames = LinkedList<String>()
+    private val foods = LinkedList<Food>()
     private lateinit var searchBarFoods: SearchBar
     private lateinit var searchViewFoods: SearchView
     private lateinit var imageFilterButton: ImageFilterButton
@@ -40,7 +39,7 @@ class MenuActivity : AppCompatActivity() {
     private fun init() {
 
         initSearchBarSpecifications()
-        putCardViewValues()
+        setFoods()
         initTabLayoutSpecifications()
         initRecyclerView()
         initImageFilterButton()
@@ -74,28 +73,58 @@ class MenuActivity : AppCompatActivity() {
     private fun initRecyclerView() {
 
         this.recyclerViewFoods = binding.recyclerFoods
-        customAdapter = FoodCustomAdapter(foodImagesIds, foodNames, this)
+        customAdapter = FoodCustomAdapter(foods, this)
         recyclerViewFoods.adapter = customAdapter
         recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false);
     }
 
-    private fun putCardViewValues() {
+    private fun setFoods() {
 
-        foodImagesIds.addAll(
+        foods.addAll(
             listOf(
-                R.drawable.macarronada,
-                R.drawable.hamburguer,
-                R.drawable.principal,
-                R.drawable.feijoada,
-                R.drawable.camarao,
-                R.drawable.queijo,
-                R.drawable.sopa
-            )
-        )
-
-        foodNames.addAll(
-            listOf(
-                "Macarronada", "Hamburguer", "Principal", "Feijoada", "Camarão", "Queijo", "Sopa"
+                Food(
+                    "Macarronada",
+                    FoodSection.ENTRADA,
+                    R.drawable.macarronada,
+                    "Macarronado com Salsicha"
+                ),
+                Food(
+                    "Hamburger",
+                    FoodSection.ENTRADA,
+                    R.drawable.hamburguer,
+                    "Big Hamburger"
+                ),
+                Food(
+                    "Lasanha",
+                    FoodSection.ENTRADA,
+                    R.drawable.lasanha,
+                    "Lasanha Irlandesa"
+                ),
+                Food(
+                    "Feijoada",
+                    FoodSection.ENTRADA,
+                    R.drawable.feijoada,
+                    "Feijoada Brasileira"
+                )
+                ,
+                Food(
+                    "Camarão",
+                    FoodSection.ENTRADA,
+                    R.drawable.camarao,
+                    "Camarao do Mar"
+                ),
+                Food(
+                    "Queijo",
+                    FoodSection.ENTRADA,
+                    R.drawable.queijo,
+                    "Queijo Fresco"
+                ),
+                Food(
+                    "Sopa",
+                    FoodSection.ENTRADA,
+                    R.drawable.sopa,
+                    "Sopa de Carne"
+                )
             )
         )
     }

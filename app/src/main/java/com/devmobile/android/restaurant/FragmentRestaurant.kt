@@ -22,7 +22,9 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
     @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding = FragmentRestaurantBinding.bind(view)
+
         if (filtersChip.size == 0) {
 
             createChips()
@@ -50,28 +52,13 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
         }
     }
 
-
     private fun createChips() {
 
         filtersChip.addAll(
-            arrayOf(
-                CustomChipFilter(
-                    requireContext(),
-                    "Ordenar",
-                    iconSize,
-                    null,
-                    R.drawable.ic_chip_filter
-                ),
+            arrayOf(CustomChipFilter(requireContext(),"Ordenar", iconSize, null, R.drawable.ic_chip_filter),
                 CustomChipFilter(requireContext(), "Mais Recente", iconSize, R.drawable.ic_check_chip_filter, null),
                 CustomChipFilter(requireContext(), "Preparo Rápido", iconSize, R.drawable.ic_check_chip_filter, null),
                 CustomChipFilter(requireContext(), "Preparo Lento", iconSize, R.drawable.ic_check_chip_filter, null),
-                CustomChipFilter(
-                    requireContext(),
-                    "Filtros",
-                    iconSize,
-                    null,
-                    R.drawable.ic_chip_filter_list
-                )
             )
         )
     }
