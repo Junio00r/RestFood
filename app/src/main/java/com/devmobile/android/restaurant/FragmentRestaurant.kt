@@ -62,9 +62,9 @@ class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
                     null,
                     R.drawable.ic_chip_filter
                 ),
-                CustomChipFilter(requireContext(), "Mais Recente", iconSize, null, null),
-                CustomChipFilter(requireContext(), "Preparo Rápido", iconSize, null, null),
-                CustomChipFilter(requireContext(), "Preparo Lento", iconSize, null, null),
+                CustomChipFilter(requireContext(), "Mais Recente", iconSize, R.drawable.ic_check_chip_filter, null),
+                CustomChipFilter(requireContext(), "Preparo Rápido", iconSize, R.drawable.ic_check_chip_filter, null),
+                CustomChipFilter(requireContext(), "Preparo Lento", iconSize, R.drawable.ic_check_chip_filter, null),
                 CustomChipFilter(
                     requireContext(),
                     "Filtros",
