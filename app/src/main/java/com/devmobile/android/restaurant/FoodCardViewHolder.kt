@@ -1,20 +1,16 @@
-package com.devmobile.android.restaurant.recyclerview
+package com.devmobile.android.restaurant
 
-import android.annotation.SuppressLint
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.devmobile.android.restaurant.FoodSection
-import com.devmobile.android.restaurant.R
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
-class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     val imageFood: ShapeableImageView
     val textFoodName: MaterialTextView
     val textFoodDescription: MaterialTextView
-    lateinit var foodSectionName: FoodSection
     private val imageTimeToPrepare: ShapeableImageView
     var textTimeToPrepare: MaterialTextView
     private val checkSelectFood: MaterialCheckBox

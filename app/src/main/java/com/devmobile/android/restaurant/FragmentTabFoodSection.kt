@@ -1,41 +1,87 @@
 package com.devmobile.android.restaurant
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.animation.core.withInfiniteAnimationFrameNanos
-import androidx.compose.ui.node.getOrAddAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentContainerView
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import com.devmobile.android.restaurant.databinding.FragmentRestaurantBinding
-import com.devmobile.android.restaurant.recyclerview.FoodCustomAdapter
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import com.devmobile.android.restaurant.databinding.TabFoodSectionLayoutBinding
 import java.util.LinkedList
 
-class FragmentRestaurant : Fragment(R.layout.fragment_restaurant) {
-    private lateinit var binding: FragmentRestaurantBinding
+class FragmentTabFoodSection : Fragment(R.layout.tab_food_section_layout) {
+    private lateinit var binding: TabFoodSectionLayoutBinding
     private val iconSize = 64f
     private val filtersChip = LinkedList<CustomChipFilter>()
     private lateinit var recyclerViewFoods: RecyclerView
-    private lateinit var customAdapter: FoodCustomAdapter
-    var foods = LinkedList<Food>()
+    private lateinit var customAdapter: FoodCardAdapter
+    var dataFoodsOfTabSections = ArrayList<Food>()
 
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        Toast.makeText(context, "Chegou onCreateView", Toast.LENGTH_SHORT).show()
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentRestaurantBinding.bind(view)
+        binding = TabFoodSectionLayoutBinding.bind(view)
         recyclerViewFoods = binding.recyclerFood
-        customAdapter = context?.let { FoodCustomAdapter(foods, it) }!!
+        customAdapter = FoodCardAdapter(dataFoodsOfTabSections, requireContext())
         recyclerViewFoods.adapter = customAdapter
-        recyclerViewFoods.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recyclerViewFoods.layoutManager =
+            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
+        loadChipsOnFragment()
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        Toast.makeText(context, "Chegou onViewStateRestored", Toast.LENGTH_SHORT).show()
+        super.onViewStateRestored(savedInstanceState)
+    }
+
+    override fun onStart() {
+        Toast.makeText(context, "Chegou onStart", Toast.LENGTH_SHORT).show()
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Toast.makeText(context, "Chegou onResume", Toast.LENGTH_SHORT).show()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Toast.makeText(context, "Chegou onPause", Toast.LENGTH_SHORT).show()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Toast.makeText(context, "Chegou onStop", Toast.LENGTH_SHORT).show()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Toast.makeText(context, "Chegou onDestroy", Toast.LENGTH_SHORT).show()
+        super.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Toast.makeText(context, "Chegou onSaveInstanceState", Toast.LENGTH_SHORT).show()
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroyView() {
+        Toast.makeText(context, "Chegou onDestroyView", Toast.LENGTH_SHORT).show()
+        super.onDestroyView()
+    }
+
+    private fun loadChipsOnFragment() {
         if (filtersChip.size == 0) {
 
             createChips()
