@@ -49,7 +49,7 @@ class MenuActivity : AppCompatActivity() {
 
         val tabLayout = binding.tabFoodSections
         val viewPager2 = binding.pagerFoodSections
-        val fragmentTabAdapter = FragmentTabAdapter(this)
+        val fragmentTabAdapter = FragmentTabAdapter(this, baseContext)
         viewPager2.adapter = fragmentTabAdapter
 
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
@@ -72,10 +72,10 @@ class MenuActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-        this.recyclerViewFoods = binding.recyclerFoods
-        customAdapter = FoodCustomAdapter(foods, this)
-        recyclerViewFoods.adapter = customAdapter
-        recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//        this.recyclerViewFoods = binding.recyclerFoods
+//        customAdapter = FoodCustomAdapter(foods, this)
+//        recyclerViewFoods.adapter = customAdapter
+//        recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
     private fun setFoods() {
@@ -109,19 +109,19 @@ class MenuActivity : AppCompatActivity() {
                 ,
                 Food(
                     "Camarão",
-                    FoodSection.ENTRADA,
+                    FoodSection.TODAS,
                     R.drawable.camarao,
                     "Camarao do Mar"
                 ),
                 Food(
                     "Queijo",
-                    FoodSection.ENTRADA,
+                    FoodSection.TODAS,
                     R.drawable.queijo,
                     "Queijo Fresco"
                 ),
                 Food(
                     "Sopa",
-                    FoodSection.ENTRADA,
+                    FoodSection.TODAS,
                     R.drawable.sopa,
                     "Sopa de Carne"
                 )

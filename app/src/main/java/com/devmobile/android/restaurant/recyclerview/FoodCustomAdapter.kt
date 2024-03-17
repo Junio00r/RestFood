@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.compose.animation.fadeIn
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.Food
+import com.devmobile.android.restaurant.FoodSection
 import com.devmobile.android.restaurant.R
 import java.util.LinkedList
 
@@ -29,6 +31,7 @@ class FoodCustomAdapter(
         holder.imageFood.setImageResource(foods[position].imageFoodId)
         holder.imageFood.scaleType = ImageView.ScaleType.FIT_XY
         holder.textFoodName.text = foods[position].foodName
+        holder.textTimeToPrepare.text = foods[position].foodSection.getFoodSectionName()
         holder.textFoodDescription.text = foods[position].descriptionFood
     }
 

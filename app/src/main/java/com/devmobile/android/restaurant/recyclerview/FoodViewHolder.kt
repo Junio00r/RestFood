@@ -14,8 +14,9 @@ class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickLi
     val imageFood: ShapeableImageView
     val textFoodName: MaterialTextView
     val textFoodDescription: MaterialTextView
+    lateinit var foodSectionName: FoodSection
     private val imageTimeToPrepare: ShapeableImageView
-    private val textTimeToPrepare: MaterialTextView
+    var textTimeToPrepare: MaterialTextView
     private val checkSelectFood: MaterialCheckBox
 
     init {
@@ -32,7 +33,6 @@ class FoodViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickLi
     }
 
     private fun setImagesFoodSpecifications() {
-
     }
 
     private fun setTextsFoodSpecifications() {
