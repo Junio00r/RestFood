@@ -13,6 +13,9 @@ interface FoodDao {
     @Query("SELECT * FROM food")
     fun getAllFoods(): List<Food>
 
+    @Query("SELECT COUNT(mId) FROM food")
+    fun getFoodsSize(): Int
+
     @Query("SELECT * FROM food WHERE mId LIKE :foodId LIMIT 1")
     fun getFoodById(foodId: Int): Food
 

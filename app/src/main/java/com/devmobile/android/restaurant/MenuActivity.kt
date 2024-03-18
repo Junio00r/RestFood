@@ -62,28 +62,68 @@ class MenuActivity : AppCompatActivity() {
         )
         val foods = ArrayList<Food>()
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
-        foods.addAll(
-            listOf(
-                Food(0, "Macarronada", FoodSection.ENTRADA, R.drawable.macarronada, R.drawable.stopwatch_67, "Macarronado com Salsicha"
-                ), Food(
-                    1, "Hamburger", FoodSection.ENTRADA, R.drawable.hamburguer, R.drawable.stopwatch_67, "Big Hamburger"
-                ), Food(
-                    2, "Lasanha", FoodSection.ENTRADA, R.drawable.lasanha, R.drawable.stopwatch_67, "Lasanha Irlandesa"
-                ), Food(
-                    3, "Feijoada", FoodSection.ENTRADA, R.drawable.feijoada, R.drawable.stopwatch_67, "Feijoada Brasileira"
-                ), Food(
-                    4, "Camarão", FoodSection.TODAS, R.drawable.camarao, R.drawable.stopwatch_67, "Camarao do Mar"
-                ), Food(
-                    5, "Queijo", FoodSection.TODAS, R.drawable.queijo, R.drawable.stopwatch_67, "Queijo Fresco"
-                ), Food(
-                    6, "Sopa", FoodSection.TODAS, R.drawable.sopa, R.drawable.stopwatch_67, "Sopa de Carne"
+        if (foodDao.getFoodsSize() == 0) {
+            foods.addAll(
+                listOf(
+                    Food(
+                        0,
+                        "Macarronada",
+                        FoodSection.ENTRADA,
+                        R.drawable.macarronada,
+                        R.drawable.stopwatch_67,
+                        "Macarronado com Salsicha"
+                    ), Food(
+                        1,
+                        "Hamburger",
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.stopwatch_67,
+                        "Big Hamburger"
+                    ), Food(
+                        2,
+                        "Lasanha",
+                        FoodSection.ENTRADA,
+                        R.drawable.lasanha,
+                        R.drawable.stopwatch_67,
+                        "Lasanha Irlandesa"
+                    ), Food(
+                        3,
+                        "Feijoada",
+                        FoodSection.ENTRADA,
+                        R.drawable.feijoada,
+                        R.drawable.stopwatch_67,
+                        "Feijoada Brasileira"
+                    ), Food(
+                        4,
+                        "Camarão",
+                        FoodSection.TODAS,
+                        R.drawable.camarao,
+                        R.drawable.stopwatch_67,
+                        "Camarao do Mar"
+                    ), Food(
+                        5,
+                        "Queijo",
+                        FoodSection.TODAS,
+                        R.drawable.queijo,
+                        R.drawable.stopwatch_67,
+                        "Queijo Fresco"
+                    ), Food(
+                        6,
+                        "Sopa",
+                        FoodSection.TODAS,
+                        R.drawable.sopa,
+                        R.drawable.stopwatch_67,
+                        "Sopa de Carne"
+                    )
                 )
             )
-        )
-        foodDao.insertAll(foods as List<Food>)
+
+            foodDao.insertAll(foods as List<Food>)
+        }
         val tabLayout = binding.tabFoodSections
         val viewPager2 = binding.pagerFoodSections
-        val fragmentTabAdapter = FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsInstances)
+        val fragmentTabAdapter =
+            FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsInstances)
 
         viewPager2.adapter = fragmentTabAdapter
 
