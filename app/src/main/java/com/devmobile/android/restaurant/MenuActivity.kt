@@ -6,11 +6,14 @@ import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.recyclerview.widget.RecyclerView
+import com.devmobile.android.restaurant.adapters.FoodCardAdapter
+import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
+import com.devmobile.android.restaurant.dao.FoodDao
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
+import com.devmobile.android.restaurant.enums.FoodSection
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
-import java.util.LinkedList
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -38,7 +41,6 @@ class MenuActivity : AppCompatActivity() {
 
         initSearchBarSpecifications()
         initTabLayoutSpecifications()
-        initRecyclerView()
         initImageFilterButton()
     }
 
@@ -51,7 +53,7 @@ class MenuActivity : AppCompatActivity() {
             R.string.tab_item_sobremesas,
             R.string.tab_todos_itens
         )
-        val tabFragmentsIntances = arrayOf(
+        val tabFragmentsInstances = arrayOf(
             FragmentTabFoodSection(),
             FragmentTabFoodSection(),
             FragmentTabFoodSection(),
@@ -59,27 +61,29 @@ class MenuActivity : AppCompatActivity() {
             FragmentTabFoodSection()
         )
         val foods = ArrayList<Food>()
+        val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
         foods.addAll(
             listOf(
-                Food("Macarronada", FoodSection.ENTRADA, R.drawable.macarronada, "Macarronado com Salsicha"
+                Food(0, "Macarronada", FoodSection.ENTRADA, R.drawable.macarronada, R.drawable.stopwatch_67, "Macarronado com Salsicha"
                 ), Food(
-                    "Hamburger", FoodSection.ENTRADA, R.drawable.hamburguer, "Big Hamburger"
+                    1, "Hamburger", FoodSection.ENTRADA, R.drawable.hamburguer, R.drawable.stopwatch_67, "Big Hamburger"
                 ), Food(
-                    "Lasanha", FoodSection.ENTRADA, R.drawable.lasanha, "Lasanha Irlandesa"
+                    2, "Lasanha", FoodSection.ENTRADA, R.drawable.lasanha, R.drawable.stopwatch_67, "Lasanha Irlandesa"
                 ), Food(
-                    "Feijoada", FoodSection.ENTRADA, R.drawable.feijoada, "Feijoada Brasileira"
+                    3, "Feijoada", FoodSection.ENTRADA, R.drawable.feijoada, R.drawable.stopwatch_67, "Feijoada Brasileira"
                 ), Food(
-                    "Camarão", FoodSection.TODAS, R.drawable.camarao, "Camarao do Mar"
+                    4, "Camarão", FoodSection.TODAS, R.drawable.camarao, R.drawable.stopwatch_67, "Camarao do Mar"
                 ), Food(
-                    "Queijo", FoodSection.TODAS, R.drawable.queijo, "Queijo Fresco"
+                    5, "Queijo", FoodSection.TODAS, R.drawable.queijo, R.drawable.stopwatch_67, "Queijo Fresco"
                 ), Food(
-                    "Sopa", FoodSection.TODAS, R.drawable.sopa, "Sopa de Carne"
+                    6, "Sopa", FoodSection.TODAS, R.drawable.sopa, R.drawable.stopwatch_67, "Sopa de Carne"
                 )
             )
         )
+        foodDao.insertAll(foods as List<Food>)
         val tabLayout = binding.tabFoodSections
         val viewPager2 = binding.pagerFoodSections
-        val fragmentTabAdapter = FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsIntances, foods)
+        val fragmentTabAdapter = FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsInstances)
 
         viewPager2.adapter = fragmentTabAdapter
 
@@ -99,14 +103,6 @@ class MenuActivity : AppCompatActivity() {
         }
 
         searchViewFoods.setupWithSearchBar(searchBarFoods)
-    }
-
-    private fun initRecyclerView() {
-
-//        this.recyclerViewFoods = binding.recyclerFoods
-//        customAdapter = FoodCustomAdapter(foods, this)
-//        recyclerViewFoods.adapter = customAdapter
-//        recyclerViewFoods.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
     private fun initImageFilterButton() {

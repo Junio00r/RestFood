@@ -1,8 +1,9 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.viewholders
 
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.devmobile.android.restaurant.R
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView

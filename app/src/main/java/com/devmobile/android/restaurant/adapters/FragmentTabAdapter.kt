@@ -1,23 +1,25 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.adapters
 
 import android.content.Context
-import androidx.compose.ui.util.fastFilter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.adapter.FragmentViewHolder
-import java.util.LinkedList
+import com.devmobile.android.restaurant.Food
+import com.devmobile.android.restaurant.enums.FoodSection
+import com.devmobile.android.restaurant.FragmentTabFoodSection
+import com.devmobile.android.restaurant.RestaurantDatabase
 
 class FragmentTabAdapter(
 
-    private val fragment: FragmentActivity,
-    private val context: Context,
+    fragment: FragmentActivity,
+    context: Context,
     val tabsNameId: Array<Int>,
     private val fragments: Array<FragmentTabFoodSection>,
-    private val allFoods: ArrayList<Food>
 
 ) : FragmentStateAdapter(fragment) {
     private val listFoodOfSections = FoodSection.entries.toTypedArray()
+    private val foodDao = RestaurantDatabase.getInstance(context).getFoodDao()
 
     override fun onBindViewHolder(
         holder: FragmentViewHolder,
@@ -34,16 +36,16 @@ class FragmentTabAdapter(
 
         if (fragments[position].dataFoodsOfTabSections.size == 0) {
 
-            fragments[position].dataFoodsOfTabSections = getFoodsOfTabSectionSpecific(position)
+            fragments[position].dataFoodsOfTabSections = foodDao.getFoodsBySection(listFoodOfSections[0]) as ArrayList<Food>
         }
 
         return fragments[position]
     }
 
-    private fun getFoodsOfTabSectionSpecific(position: Int) : ArrayList<Food> {
-
-        return allFoods.fastFilter { it.foodSection == listFoodOfSections[position] } as ArrayList<Food>
-    }
+//    private fun getFoodsOfTabSectionSpecific(position: Int) : ArrayList<Food> {
+//
+//        return allFoods.fastFilter { it.foodSection == listFoodOfSections[position] } as ArrayList<Food>
+//    }
 }
 
 

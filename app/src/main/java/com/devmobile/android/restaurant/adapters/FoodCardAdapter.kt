@@ -1,11 +1,13 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import java.util.LinkedList
+import com.devmobile.android.restaurant.Food
+import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
+import com.devmobile.android.restaurant.R
 
 class FoodCardAdapter(
 
@@ -26,11 +28,11 @@ class FoodCardAdapter(
 
         if (foods.size > 0) {
 
-            holder.imageFood.setImageResource(foods[position].imageFoodId)
+            holder.imageFood.setImageResource(foods[position].mImageId)
             holder.imageFood.scaleType = ImageView.ScaleType.FIT_XY
-            holder.textFoodName.text = foods[position].foodName
-            holder.textTimeToPrepare.text = foods[position].foodSection.getFoodSectionName()
-            holder.textFoodDescription.text = foods[position].descriptionFood
+            holder.textFoodName.text = foods[position].mName
+            holder.textTimeToPrepare.text = foods[position].mSection.getFoodSectionName()
+            holder.textFoodDescription.text = foods[position].mDescription
         }
     }
 
