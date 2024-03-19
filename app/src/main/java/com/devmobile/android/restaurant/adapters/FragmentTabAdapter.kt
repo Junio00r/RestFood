@@ -17,9 +17,7 @@ class FragmentTabAdapter(
     val tabsNameId: Array<Int>,
     private val fragments: Array<FragmentTabFoodSection>,
 
-) : FragmentStateAdapter(fragment) {
-    private val listFoodOfSections = FoodSection.entries.toTypedArray()
-    private val foodDao = RestaurantDatabase.getInstance(context).getFoodDao()
+    ) : FragmentStateAdapter(fragment) {
 
     override fun onBindViewHolder(
         holder: FragmentViewHolder,
@@ -34,18 +32,8 @@ class FragmentTabAdapter(
 
     override fun createFragment(position: Int): Fragment {
 
-        if (fragments[position].dataFoodsOfTabSections.size == 0) {
-
-            fragments[position].dataFoodsOfTabSections = foodDao.getFoodsBySection(listFoodOfSections[0]) as ArrayList<Food>
-        }
-
         return fragments[position]
     }
-
-//    private fun getFoodsOfTabSectionSpecific(position: Int) : ArrayList<Food> {
-//
-//        return allFoods.fastFilter { it.foodSection == listFoodOfSections[position] } as ArrayList<Food>
-//    }
 }
 
 

@@ -5,23 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <HorizontalScrollView
-        android:id="@+id/scrollChipGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
-        android:background="@color/thirdary_color"
-        android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:scrollbars="none">
+<!--    <HorizontalScrollView-->
+<!--        android:id="@+id/scrollChipGroup"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginVertical="8dp"-->
+<!--        android:background="@color/thirdary_color"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:paddingHorizontal="16dp"-->
+<!--        android:scrollbars="none">-->
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            app:singleLine="true"/>
+<!--        <com.google.android.material.chip.ChipGroup-->
+<!--            android:id="@+id/chipGroupFilter"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="46dp"-->
+<!--            app:singleLine="true"/>-->
 
-    </HorizontalScrollView>
+<!--    </HorizontalScrollView>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFood"

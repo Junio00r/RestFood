@@ -8,7 +8,6 @@ import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
-import com.devmobile.android.restaurant.dao.FoodDao
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.google.android.material.search.SearchBar
@@ -54,11 +53,11 @@ class MenuActivity : AppCompatActivity() {
             R.string.tab_todos_itens
         )
         val tabFragmentsInstances = arrayOf(
-            FragmentTabFoodSection(),
-            FragmentTabFoodSection(),
-            FragmentTabFoodSection(),
-            FragmentTabFoodSection(),
-            FragmentTabFoodSection()
+            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.ENTRADA),
+            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.PRINCIPAL),
+            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.BEBIDA),
+            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.SOBREMESA),
+            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.TODAS)
         )
         val foods = ArrayList<Food>()
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()

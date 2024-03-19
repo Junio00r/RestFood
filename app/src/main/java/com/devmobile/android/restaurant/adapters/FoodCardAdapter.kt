@@ -17,7 +17,6 @@ class FoodCardAdapter(
 ) : RecyclerView.Adapter<FoodCardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
-
         val inflater = LayoutInflater.from(context)
         val foodViewInflated = inflater.inflate(R.layout.food_card_layout, parent, false)
 

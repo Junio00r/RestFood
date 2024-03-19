@@ -71,7 +71,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pagerFoodSections"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/thirdary_color" />
+        android:layout_height="match_parent"
+        android:background="@null" />
 
 </LinearLayout>
