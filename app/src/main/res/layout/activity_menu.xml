@@ -77,56 +77,6 @@
             android:layout_marginTop="8dp"
             android:background="@null" />
 
-        <FrameLayout
-            android:id="@+id/frameBottomSheetFoodSelected"
-            style="@style/Widget.Material3.BottomSheet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/thirdary_color"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-            <com.google.android.material.bottomsheet.BottomSheetDragHandleView
-                android:id="@+id/drag_handle"
-                android:layout_width="40dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="7dp"
-                android:background="@color/fourty_color" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textFoodDescription"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="Descrição da comida" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textFoodPreferencesDescriptions"
-                android:layout_width="match_parent"
-                android:layout_height="100dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonDecrementQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="-" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edittextFoodQuantityPedido"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:inputType="number" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonIncrementQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:text="+" />
-
-        </FrameLayout>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
