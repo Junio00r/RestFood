@@ -2,11 +2,13 @@ package com.devmobile.android.restaurant.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.DeleteTable
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.devmobile.android.restaurant.Food
+import com.devmobile.android.restaurant.RestaurantDatabase
 import com.devmobile.android.restaurant.enums.FoodSection
 
 @Dao
@@ -32,7 +34,7 @@ interface FoodDao {
     // no momento de execucao, caso tenha um erro de compilação é lançado.
 
 
-    @Query("SELECT * from foods WHERE section = :foodSection")
+    @Query("SELECT * FROM foods WHERE section = :foodSection")
     fun getFoodsBySection(foodSection: FoodSection): List<Food?>
 
     @Query("SELECT * FROM foods WHERE mId = :foodId")
@@ -43,4 +45,7 @@ interface FoodDao {
 
     @Query("SELECT * FROM foods")
     fun getAllFoods(): List<Food?>
+
+    @Query("DELETE FROM foods")
+    fun deleteAllTable()
 }

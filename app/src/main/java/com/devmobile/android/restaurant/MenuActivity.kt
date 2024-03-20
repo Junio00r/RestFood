@@ -10,6 +10,7 @@ import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.enums.FoodSection
+import com.devmobile.android.restaurant.enums.TempoPreparo
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
@@ -50,17 +51,16 @@ class MenuActivity : AppCompatActivity() {
             R.string.tab_item_pratos_principais,
             R.string.tab_item_bebidas,
             R.string.tab_item_sobremesas,
-            R.string.tab_todos_itens
         )
         val tabFragmentsInstances = arrayOf(
             FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.ENTRADA),
             FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.PRINCIPAL),
             FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.BEBIDA),
             FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.SOBREMESA),
-            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.TODAS)
         )
         val foods = ArrayList<Food>()
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
+        foodDao.deleteAllTable()
         if (foodDao.getFoodsSize() == 0) {
             foods.addAll(
                 listOf(
@@ -69,49 +69,62 @@ class MenuActivity : AppCompatActivity() {
                         "Macarronada",
                         FoodSection.ENTRADA,
                         R.drawable.macarronada,
-                        R.drawable.stopwatch_67,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.LENTO,
                         "Macarronado com Salsicha"
-                    ), Food(
+                    ),
+                    Food(
                         1,
                         "Hamburger",
-                        FoodSection.ENTRADA,
+                        FoodSection.PRINCIPAL,
                         R.drawable.hamburguer,
-                        R.drawable.stopwatch_67,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
                         "Big Hamburger"
-                    ), Food(
+                    ),
+                    Food(
                         2,
                         "Lasanha",
                         FoodSection.ENTRADA,
                         R.drawable.lasanha,
-                        R.drawable.stopwatch_67,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.LENTO,
                         "Lasanha Irlandesa"
-                    ), Food(
+                    ),
+                    Food(
                         3,
                         "Feijoada",
                         FoodSection.ENTRADA,
                         R.drawable.feijoada,
-                        R.drawable.stopwatch_67,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.LENTO,
                         "Feijoada Brasileira"
-                    ), Food(
+                    ),
+                    Food(
                         4,
                         "Camarão",
-                        FoodSection.TODAS,
+                        FoodSection.PRINCIPAL,
                         R.drawable.camarao,
-                        R.drawable.stopwatch_67,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.NORMAL,
                         "Camarao do Mar"
-                    ), Food(
+                    ),
+                    Food(
                         5,
                         "Queijo",
-                        FoodSection.TODAS,
+                        FoodSection.ENTRADA,
                         R.drawable.queijo,
-                        R.drawable.stopwatch_67,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
                         "Queijo Fresco"
-                    ), Food(
+                    ),
+                    Food(
                         6,
                         "Sopa",
-                        FoodSection.TODAS,
+                        FoodSection.PRINCIPAL,
                         R.drawable.sopa,
-                        R.drawable.stopwatch_67,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.NORMAL,
                         "Sopa de Carne"
                     )
                 )

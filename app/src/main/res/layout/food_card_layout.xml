@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#616161"
+    android:background="@null"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
@@ -29,7 +29,7 @@
                 android:layout_width="74dp"
                 android:layout_height="74dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
                 android:importantForAccessibility="no"
                 app:shapeAppearanceOverlay="@style/ImageRounded" />
 
@@ -40,27 +40,26 @@
                 android:layout_alignStart="@id/imageTimeToPrepare"
                 android:layout_alignTop="@id/imageFood"
                 android:layout_alignEnd="@id/textPrepareTime"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/sul_sans_regular"
                 android:importantForAccessibility="no"
                 android:textColor="@color/primary_color" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textFoodDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/textPrepareTime"
-                android:layout_alignStart="@id/imageTimeToPrepare"
-                android:layout_alignEnd="@id/textPrepareTime"
-                android:layout_marginBottom="4dp"
-                android:textColor="@color/five_color"
-                android:textSize="12sp" />
+            <!--            <com.google.android.material.textview.MaterialTextView-->
+            <!--                android:id="@+id/textFoodDescription"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_above="@id/textPrepareTime"-->
+            <!--                android:layout_alignStart="@id/imageTimeToPrepare"-->
+            <!--                android:layout_alignEnd="@id/textPrepareTime"-->
+            <!--                android:layout_marginBottom="12dp"-->
+            <!--                android:textColor="@color/five_color"-->
+            <!--                android:textSize="14sp" />-->
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageTimeToPrepare"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/stopwatch_67"
-                android:background="@null"
                 android:layout_alignBottom="@id/imageFood"
                 android:layout_marginStart="18dp"
                 android:layout_toEndOf="@id/imageFood" />
@@ -72,28 +71,21 @@
                 android:layout_alignTop="@id/imageTimeToPrepare"
                 android:layout_alignBottom="@id/imageFood"
                 android:layout_marginStart="4dp"
-                android:textColor="@color/five_color"
                 android:layout_marginEnd="32dp"
                 android:layout_toStartOf="@id/checkboxFood"
-                android:layout_toEndOf="@id/imageTimeToPrepare" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@id/checkboxFood"
-                android:layout_alignTop="@id/imageFood"
-                android:layout_alignEnd="@id/checkboxFood" />
+                android:layout_toEndOf="@id/imageTimeToPrepare"
+                android:textColor="@color/five_color" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkboxFood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/imageFood"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
-                app:buttonTint="@color/primary_color" />
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_ripple"
+                android:button="@drawable/_931155_add_attach_create_maximize_new_icon" />
 
         </RelativeLayout>
-
     </com.google.android.material.card.MaterialCardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

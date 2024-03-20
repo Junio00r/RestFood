@@ -12,9 +12,6 @@ enum class FoodSection(id: Int) {
     },
     SOBREMESA(3) {
         override fun getFoodSectionName(): String = "Sobremesa"
-    },
-    TODAS(4) {
-        override fun getFoodSectionName(): String = "Todas"
     };
 
     abstract fun getFoodSectionName(): String

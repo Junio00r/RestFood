@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#616161"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:paddingHorizontal="12dp">
 
     <!--    <androidx.core.widget.NestedScrollView-->
     <!--        android:layout_width="match_parent"-->
@@ -41,8 +41,8 @@
             <androidx.constraintlayout.utils.widget.ImageFilterButton
                 android:id="@+id/imageFilterButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="4dp"
                 android:layout_toEndOf="@id/searchBarFoods"
                 android:background="@drawable/ic_chip_filter_list"
                 app:layout_constraintBottom_toBottomOf="@id/searchBarFoods"
@@ -71,7 +71,65 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pagerFoodSections"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="30dp"
         android:background="@null" />
+
+    <FrameLayout
+        android:id="@+id/frameBottomSheetFoodSelected"
+        style="@style/Widget.Material3.BottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/thirdary_color"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+            android:id="@+id/drag_handle"
+            android:layout_width="40dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="7dp"
+            android:background="@color/fourty_color" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/foodDescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:text="Descrição da comida" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/foodPreferences"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="320dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDecrementQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="870dp"
+            android:text="-" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="230dp"
+            android:inputType="number" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonIncrementQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="720dp"
+            android:text="+" />
+
+    </FrameLayout>
 
 </LinearLayout>

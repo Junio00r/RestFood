@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.checkbox.MaterialCheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:background="@drawable/bg_checkbox"
+    android:backgroundTint="@color/primary_color"
+    app:buttonIcon="@drawable/_931155_add_attach_create_maximize_new_icon"
+    app:buttonTint="@color/primary_color" />
+
