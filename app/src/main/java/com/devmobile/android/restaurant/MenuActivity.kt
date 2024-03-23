@@ -1,19 +1,29 @@
 package com.devmobile.android.restaurant
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.Gravity
+import android.view.View
 import android.widget.PopupMenu
+import android.widget.RelativeLayout
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.constraintlayout.utils.widget.ImageFilterButton
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.enums.TempoPreparo
+import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.textfield.TextInputEditText
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -22,6 +32,9 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var searchBarFoods: SearchBar
     private lateinit var searchViewFoods: SearchView
     private lateinit var imageFilterButton: ImageFilterButton
+    private lateinit var bottomSheet: RelativeLayout
+    private lateinit var standardBottomSheetBehavior: BottomSheetBehavior<RelativeLayout>
+//    private lateinit var inputQuantity: TextInputEditText
 
     // Fragment Tab Attributes
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,11 +50,27 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        private const val INITIAL_COUNT = 1
+    }
+
     private fun init() {
 
         initSearchBarSpecifications()
         initTabLayoutSpecifications()
         initImageFilterButton()
+//        bottomSheet = binding.frameBottomSheetFoodSelectedBottomSheet
+//        standardBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+//
+//        binding.buttonDecrementQuantityBottomSheet.setOnClickListener(this)
+//        binding.buttonIncrementQuantityBottomSheet.setOnClickListener(this)
+//
+//        standardBottomSheetBehavior.saveFlags = BottomSheetBehavior.SAVE_HIDEABLE
+//
+//        inputQuantity = binding.edittextFoodQuantityPedidoBottomSheet
+//        inputQuantity.setText(INITIAL_COUNT.toString())
+//
+//        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     private fun initTabLayoutSpecifications() {
@@ -58,6 +87,7 @@ class MenuActivity : AppCompatActivity() {
             FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.BEBIDA),
             FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.SOBREMESA),
         )
+//        tabFragmentsInstances.forEach { it.setClickNotifyBridge(this) }
         val foods = ArrayList<Food>()
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
         foodDao.deleteAllTable()
@@ -72,8 +102,7 @@ class MenuActivity : AppCompatActivity() {
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.LENTO,
                         "Macarronado com Salsicha"
-                    ),
-                    Food(
+                    ), Food(
                         1,
                         "Hamburger",
                         FoodSection.PRINCIPAL,
@@ -81,8 +110,7 @@ class MenuActivity : AppCompatActivity() {
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.RAPIDO,
                         "Big Hamburger"
-                    ),
-                    Food(
+                    ), Food(
                         2,
                         "Lasanha",
                         FoodSection.ENTRADA,
@@ -90,8 +118,7 @@ class MenuActivity : AppCompatActivity() {
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.LENTO,
                         "Lasanha Irlandesa"
-                    ),
-                    Food(
+                    ), Food(
                         3,
                         "Feijoada",
                         FoodSection.ENTRADA,
@@ -99,8 +126,7 @@ class MenuActivity : AppCompatActivity() {
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.LENTO,
                         "Feijoada Brasileira"
-                    ),
-                    Food(
+                    ), Food(
                         4,
                         "Camarão",
                         FoodSection.PRINCIPAL,
@@ -108,8 +134,7 @@ class MenuActivity : AppCompatActivity() {
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.NORMAL,
                         "Camarao do Mar"
-                    ),
-                    Food(
+                    ), Food(
                         5,
                         "Queijo",
                         FoodSection.ENTRADA,
@@ -117,8 +142,7 @@ class MenuActivity : AppCompatActivity() {
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.RAPIDO,
                         "Queijo Fresco"
-                    ),
-                    Food(
+                    ), Food(
                         6,
                         "Sopa",
                         FoodSection.PRINCIPAL,
@@ -177,4 +201,42 @@ class MenuActivity : AppCompatActivity() {
 
         }
     }
+
+//    override fun checkboxClicked(v: FoodCardViewHolder) {
+//        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+//    }
+
+//    override fun onClick(v: View) {
+//        if (v.id == R.id.buttonDecrementQuantityBottomSheet) {
+//
+//            if (getEdittextFoodQuantity() - 1 >= 0) {
+//
+//                inputQuantity.setText((getEdittextFoodQuantity() - 1).toString())
+//            }
+//
+//        } else if (v.id == R.id.buttonIncrementQuantityBottomSheet) {
+//
+//            if ((getEdittextFoodQuantity() + 1).toString()
+//                    .count() <= inputQuantity.getMaxLength()
+//            ) {
+//
+//                inputQuantity.setText((getEdittextFoodQuantity() + 1).toString())
+//            }
+//        }
+//    }
+//
+//    private fun TextInputEditText.getMaxLength(): Int {
+//        filters.forEach {
+//            if (it is InputFilter.LengthFilter) {
+//                return it.max
+//            }
+//        }
+//
+//        return -1
+//    }
+//
+//    private fun getEdittextFoodQuantity(): Int {
+//
+//        return binding.edittextFoodQuantityPedidoBottomSheet.text.toString().toInt()
+//    }
 }

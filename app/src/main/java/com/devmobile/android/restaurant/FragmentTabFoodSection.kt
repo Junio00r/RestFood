@@ -13,20 +13,22 @@ import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.TabFoodSectionLayoutBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.LinkedList
 
 class FragmentTabFoodSection(fragmentLayoutId: Int, fragmentSection: FoodSection) :
-    Fragment(fragmentLayoutId), ClickNotification {
+    Fragment(fragmentLayoutId), ClickNotification, BottomSheetNotification {
     private var id: Int? = null
 
     private lateinit var binding: TabFoodSectionLayoutBinding
     private lateinit var recyclerViewFoods: RecyclerView
     private lateinit var foodCardAdapter: FoodCardAdapter
     private lateinit var foodDAO: RestaurantDatabase
-    private var dataFoodsOfTabSections = ArrayList<Food>()
+    private lateinit var dataFoodsOfTabSections: ArrayList<Food>
     private var mFragmentSection = fragmentSection
     private val iconSize = 64f
     private val filtersChip = LinkedList<CustomChipFilter>()
+    private val bottomSheet = ModalBottomSheet()
 
 
     override fun onCreateView(
@@ -119,11 +121,14 @@ class FragmentTabFoodSection(fragmentLayoutId: Int, fragmentSection: FoodSection
         super.onDestroyView()
     }
 
-    @SuppressLint("ResourceAsColor")
     override fun checkboxClicked(v: FoodCardViewHolder) {
 
-        val bottomSheet = ModalBottomSheet()
-        bottomSheet.show(this.parentFragmentManager, ModalBottomSheet.TAG)
+        bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
+        bottomSheet.setBottomSheetAtributes(v)
+        bottomSheet.setBottomSheetHideNotification(this)
+    }
+
+    override fun bottomSheetHidedNotification() {
     }
 
 //    private fun loadChipsOnFragment() {
