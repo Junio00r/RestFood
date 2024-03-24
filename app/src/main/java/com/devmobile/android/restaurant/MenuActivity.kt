@@ -1,7 +1,10 @@
 package com.devmobile.android.restaurant
 
+import android.annotation.SuppressLint
+import android.app.ActionBar.LayoutParams
 import android.os.Bundle
 import android.text.InputFilter
+import android.text.PrecomputedText.Params
 import android.view.Gravity
 import android.view.View
 import android.widget.PopupMenu
@@ -9,8 +12,11 @@ import android.widget.RelativeLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.core.view.WindowCompat
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
@@ -73,6 +79,7 @@ class MenuActivity : AppCompatActivity() {
 //        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun initTabLayoutSpecifications() {
 
         val tabsNameId = arrayOf(
@@ -82,10 +89,10 @@ class MenuActivity : AppCompatActivity() {
             R.string.tab_item_sobremesas,
         )
         val tabFragmentsInstances = arrayOf(
-            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.ENTRADA),
-            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.PRINCIPAL),
-            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.BEBIDA),
-            FragmentTabFoodSection(R.layout.tab_food_section_layout, FoodSection.SOBREMESA),
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.ENTRADA),
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.PRINCIPAL),
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.BEBIDA),
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.SOBREMESA),
         )
 //        tabFragmentsInstances.forEach { it.setClickNotifyBridge(this) }
         val foods = ArrayList<Food>()

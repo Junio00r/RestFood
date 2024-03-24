@@ -1,23 +1,34 @@
 package com.devmobile.android.restaurant
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.media.Image
 import android.os.Bundle
+import android.view.InflateException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.TabFoodSectionLayoutBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.LinkedList
+import java.util.zip.Inflater
 
-class FragmentTabFoodSection(fragmentLayoutId: Int, fragmentSection: FoodSection) :
-    Fragment(fragmentLayoutId), ClickNotification, BottomSheetNotification {
+@SuppressLint("MissingInflatedId", "ResourceType")
+class FragmentTabFoodSection(
+    private val context: Context,
+    private val fragmentLayoutId: Int,
+    fragmentSection: FoodSection
+) : Fragment(), ClickNotification {
     private var id: Int? = null
 
     private lateinit var binding: TabFoodSectionLayoutBinding
@@ -29,106 +40,44 @@ class FragmentTabFoodSection(fragmentLayoutId: Int, fragmentSection: FoodSection
     private val iconSize = 64f
     private val filtersChip = LinkedList<CustomChipFilter>()
     private val bottomSheet = ModalBottomSheet()
-
+    private lateinit var testeando: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         Toast.makeText(
-            requireContext(),
+            context,
             "Chegou onCreateView $mFragmentSection",
             Toast.LENGTH_SHORT
         ).show()
-        return super.onCreateView(inflater, container, savedInstanceState)
+
+        // Criando aqui ao inves de mandar pelo construtor
+        return LayoutInflater.from(context).inflate(R.layout.tab_food_section_layout, null)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
         binding = TabFoodSectionLayoutBinding.bind(view)
-        foodDAO = RestaurantDatabase.getInstance(requireContext())
+        foodDAO = RestaurantDatabase.getInstance(context)
         dataFoodsOfTabSections =
             foodDAO.getFoodDao().getFoodsBySection(mFragmentSection) as ArrayList<Food>
-        dataFoodsOfTabSections.size
+
         recyclerViewFoods = binding.recyclerFood
-        foodCardAdapter = FoodCardAdapter(dataFoodsOfTabSections, requireContext())
+        foodCardAdapter = FoodCardAdapter(dataFoodsOfTabSections, context)
         foodCardAdapter.setClickNotifyBridge(this)
         recyclerViewFoods.adapter = foodCardAdapter
         recyclerViewFoods.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+
+
 //        loadChipsOnFragment()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        Toast.makeText(
-            requireContext(),
-            "Chegou onViewStateRestored $mFragmentSection",
-            Toast.LENGTH_SHORT
-        ).show()
-        super.onViewStateRestored(savedInstanceState)
-    }
-
-    override fun onStart() {
-        Toast.makeText(requireContext(), "Chegou onStart $mFragmentSection", Toast.LENGTH_SHORT)
-            .show()
-        super.onStart()
-    }
-
-    override fun onResume() {
-        Toast.makeText(requireContext(), "Chegou onResume $mFragmentSection", Toast.LENGTH_SHORT)
-            .show()
-        // Solicito para redesenhar as views
-        recyclerViewFoods.invalidate()
-
-        super.onResume()
-    }
-
-    override fun onPause() {
-        Toast.makeText(requireContext(), "Chegou onPause $mFragmentSection", Toast.LENGTH_SHORT)
-            .show()
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Toast.makeText(requireContext(), "Chegou onStop $mFragmentSection", Toast.LENGTH_SHORT)
-            .show()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Toast.makeText(requireContext(), "Chegou onDestroy $mFragmentSection", Toast.LENGTH_SHORT)
-            .show()
-        super.onDestroy()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        Toast.makeText(
-            requireContext(),
-            "Chegou onSaveInstanceState $mFragmentSection",
-            Toast.LENGTH_SHORT
-        ).show()
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onDestroyView() {
-        Toast.makeText(
-            requireContext(),
-            "Chegou onDestroyView $mFragmentSection",
-            Toast.LENGTH_SHORT
-        ).show()
-        super.onDestroyView()
-    }
 
     override fun checkboxClicked(v: FoodCardViewHolder) {
 
         bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
         bottomSheet.setBottomSheetAtributes(v)
-        bottomSheet.setBottomSheetHideNotification(this)
-    }
-
-    override fun bottomSheetHidedNotification() {
     }
 
 //    private fun loadChipsOnFragment() {

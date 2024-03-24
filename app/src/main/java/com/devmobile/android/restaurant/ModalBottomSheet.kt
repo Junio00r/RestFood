@@ -9,18 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Filter
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.marginStart
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
+import java.io.FilterInputStream
+import java.io.FilterWriter
 
 
-class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener,
-    BottomSheetNotification {
+class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var viewInflate: View
     private lateinit var inputQuantity: TextInputEditText
     private lateinit var foodCard: FoodCardViewHolder
@@ -32,27 +35,25 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener,
     ): View {
 
         viewInflate = inflater.inflate(R.layout.modal_bottomsheet_layout, container, false)
-
+        viewInflate.setPadding(80, 0, 80, 0)
         val bottomSheetBehavior = (dialog as BottomSheetDialog).behavior
-        val relativeLayout: ViewGroup =
+        val bottomSheetLayoutRoot: ViewGroup =
             viewInflate.findViewById(R.id.frameBottomSheetFoodSelectedBottomSheet)
-        bottomSheetBehavior.peekHeight = relativeLayout.resources.displayMetrics.heightPixels
+        bottomSheetBehavior.peekHeight = bottomSheetLayoutRoot.resources.displayMetrics.heightPixels
 
         // AddedImageFood
         var foodView: ShapeableImageView = viewInflate.findViewById(R.id.imageFoodBottomSheet)
         val drawable = foodCard.imageFood.drawable
         foodView.setImageDrawable(drawable)
         foodView.scaleType = ImageView.ScaleType.FIT_XY
+        val bsFoodPreferences: TextInputEditText = viewInflate.findViewById(R.id.textFoodPreferencesDescriptionsBottomSheet)
+        bsFoodPreferences.letterSpacing = 0.1f
 
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> bottomSheetHidedNotification
-                }
-            }
 
-            override fun onSlide(p0: View, p1: Float) { }
-        })
+        bsFoodPreferences.post {
+            bsFoodPreferences.filters =  arrayOf(InputFilter.LengthFilter(bsFoodPreferences.width sta * 2))
+        }
+
 
         init()
         return viewInflate
@@ -110,20 +111,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener,
         return -1
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        bottomSheetHidedNotification
-    }
-
     fun setBottomSheetAtributes(v: FoodCardViewHolder) {
         foodCard = v
-    }
-
-    fun setBottomSheetHideNotification(bottomSheetHidedNotificationReceived: BottomSheetNotification) {
-        this.bottomSheetHidedNotification = bottomSheetHidedNotificationReceived
-    }
-
-    override fun bottomSheetHidedNotification() {
-        bottomSheetHidedNotification.bottomSheetHidedNotification()
     }
 }

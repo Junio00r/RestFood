@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.devmobile.android.restaurant"
-        minSdk = 29
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

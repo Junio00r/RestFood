@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         android:orientation="vertical">
 
         <!--    <androidx.core.widget.NestedScrollView-->
@@ -74,118 +75,117 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pagerFoodSections"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@null" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/frameBottomSheetFoodSelectedBottomSheet"-->
-<!--        style="@style/Widget.Material3.BottomSheet.Modal"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:backgroundTint="@color/thirdary_color"-->
-<!--        android:orientation="vertical"-->
-<!--        android:paddingHorizontal="14dp"-->
-<!--        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/frameBottomSheetFoodSelectedBottomSheet"-->
+    <!--        style="@style/Widget.Material3.BottomSheet.Modal"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:backgroundTint="@color/thirdary_color"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:paddingHorizontal="14dp"-->
+    <!--        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
 
-<!--        <com.google.android.material.bottomsheet.BottomSheetDragHandleView-->
-<!--            android:id="@+id/drag_handleBottomSheet"-->
-<!--            style="@style/Widget.Material3.BottomSheet.DragHandle"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="4dp"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:background="@color/fourty_color" />-->
+    <!--        <com.google.android.material.bottomsheet.BottomSheetDragHandleView-->
+    <!--            android:id="@+id/drag_handleBottomSheet"-->
+    <!--            style="@style/Widget.Material3.BottomSheet.DragHandle"-->
+    <!--            android:layout_width="40dp"-->
+    <!--            android:layout_height="4dp"-->
+    <!--            android:layout_alignParentTop="true"-->
+    <!--            android:layout_centerHorizontal="true"-->
+    <!--            android:layout_marginTop="8dp"-->
+    <!--            android:background="@color/fourty_color" />-->
 
-<!--        <com.google.android.material.imageview.ShapeableImageView-->
-<!--            android:id="@+id/imageFoodBottomSheet"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="128dp"-->
-<!--            android:layout_below="@id/drag_handleBottomSheet"-->
-<!--            android:layout_alignStart="@id/imageFoodBottomSheet"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginTop="16dp" />-->
+    <!--        <com.google.android.material.imageview.ShapeableImageView-->
+    <!--            android:id="@+id/imageFoodBottomSheet"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="128dp"-->
+    <!--            android:layout_below="@id/drag_handleBottomSheet"-->
+    <!--            android:layout_alignStart="@id/imageFoodBottomSheet"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_marginTop="16dp" />-->
 
-<!--        <com.google.android.material.textview.MaterialTextView-->
-<!--            android:id="@+id/textFoodDescriptionBottomSheet"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/imageFoodBottomSheet"-->
-<!--            android:layout_alignStart="@id/imageFoodBottomSheet"-->
-<!--            android:layout_alignEnd="@id/imageFoodBottomSheet"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:hint="Descrição da comida"-->
-<!--            android:padding="16dp"-->
-<!--            android:paddingVertical="16dp" />-->
+    <!--        <com.google.android.material.textview.MaterialTextView-->
+    <!--            android:id="@+id/textFoodDescriptionBottomSheet"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/imageFoodBottomSheet"-->
+    <!--            android:layout_alignStart="@id/imageFoodBottomSheet"-->
+    <!--            android:layout_alignEnd="@id/imageFoodBottomSheet"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:hint="Descrição da comida"-->
+    <!--            android:padding="16dp"-->
+    <!--            android:paddingVertical="16dp" />-->
 
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/textFoodPreferencesDescriptionsBottomSheet"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:layout_below="@id/textFoodDescriptionBottomSheet"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginTop="32dp"-->
-<!--            android:background="@null"-->
-<!--            android:hint="Coloque o que voce quer acrescentar a mais ou menos na comida"-->
-<!--            android:padding="8dp" />-->
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:id="@+id/textFoodPreferencesDescriptionsBottomSheet"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="100dp"-->
+    <!--            android:layout_below="@id/textFoodDescriptionBottomSheet"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_marginTop="32dp"-->
+    <!--            android:background="@null"-->
+    <!--            android:hint="Coloque o que voce quer acrescentar a mais ou menos na comida"-->
+    <!--            android:padding="8dp" />-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/linearLayout2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/textFoodPreferencesDescriptionsBottomSheet"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginHorizontal="16dp"-->
-<!--            android:layout_marginTop="128dp"-->
-<!--            android:layout_marginBottom="50dp"-->
-<!--            android:background="@drawable/radius_layout"-->
-<!--            android:backgroundTint="#FFFAE0"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:padding="8dp">-->
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/linearLayout2"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@+id/textFoodPreferencesDescriptionsBottomSheet"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_marginHorizontal="16dp"-->
+    <!--            android:layout_marginTop="128dp"-->
+    <!--            android:layout_marginBottom="50dp"-->
+    <!--            android:background="@drawable/radius_layout"-->
+    <!--            android:backgroundTint="#FFFAE0"-->
+    <!--            android:gravity="center"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            android:padding="8dp">-->
 
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/buttonDecrementQuantityBottomSheet"-->
-<!--                style="@style/Widget.Material3.Button"-->
-<!--                android:layout_width="64dp"-->
-<!--                android:layout_height="64dp"-->
-<!--                android:layout_weight="0"-->
-<!--                app:backgroundTint="@color/secondary_color"-->
-<!--                app:cornerRadius="8dp"-->
-<!--                app:icon="@drawable/ic_decrement"-->
-<!--                app:iconTint="@color/primary_color" />-->
+    <!--            <com.google.android.material.button.MaterialButton-->
+    <!--                android:id="@+id/buttonDecrementQuantityBottomSheet"-->
+    <!--                style="@style/Widget.Material3.Button"-->
+    <!--                android:layout_width="64dp"-->
+    <!--                android:layout_height="64dp"-->
+    <!--                android:layout_weight="0"-->
+    <!--                app:backgroundTint="@color/secondary_color"-->
+    <!--                app:cornerRadius="8dp"-->
+    <!--                app:icon="@drawable/ic_decrement"-->
+    <!--                app:iconTint="@color/primary_color" />-->
 
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:id="@+id/edittextFoodQuantityPedidoBottomSheet"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="8dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@null"-->
-<!--                android:inputType="number"-->
-<!--                android:lines="1"-->
-<!--                android:maxLength="1"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="38sp" />-->
+    <!--            <com.google.android.material.textfield.TextInputEditText-->
+    <!--                android:id="@+id/edittextFoodQuantityPedidoBottomSheet"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginHorizontal="8dp"-->
+    <!--                android:layout_weight="1"-->
+    <!--                android:background="@null"-->
+    <!--                android:inputType="number"-->
+    <!--                android:lines="1"-->
+    <!--                android:maxLength="1"-->
+    <!--                android:textAlignment="center"-->
+    <!--                android:textSize="38sp" />-->
 
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/buttonIncrementQuantityBottomSheet"-->
-<!--                style="@style/Widget.Material3.Button"-->
-<!--                android:layout_width="64dp"-->
-<!--                android:layout_height="64dp"-->
-<!--                android:layout_weight="0"-->
-<!--                app:backgroundTint="@color/secondary_color"-->
-<!--                app:cornerRadius="8dp"-->
-<!--                app:icon="@drawable/ic_increment"-->
-<!--                app:iconTint="@color/primary_color" />-->
+    <!--            <com.google.android.material.button.MaterialButton-->
+    <!--                android:id="@+id/buttonIncrementQuantityBottomSheet"-->
+    <!--                style="@style/Widget.Material3.Button"-->
+    <!--                android:layout_width="64dp"-->
+    <!--                android:layout_height="64dp"-->
+    <!--                android:layout_weight="0"-->
+    <!--                app:backgroundTint="@color/secondary_color"-->
+    <!--                app:cornerRadius="8dp"-->
+    <!--                app:icon="@drawable/ic_increment"-->
+    <!--                app:iconTint="@color/primary_color" />-->
 
-<!--        </LinearLayout>-->
-<!--    </RelativeLayout>-->
+    <!--        </LinearLayout>-->
+    <!--    </RelativeLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
