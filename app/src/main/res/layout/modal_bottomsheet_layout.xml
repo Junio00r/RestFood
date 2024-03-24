@@ -8,6 +8,7 @@
     android:layout_gravity="bottom"
     android:background="@drawable/radius_bottomsheet"
     android:backgroundTint="@color/thirdary_color"
+    android:fitsSystemWindows="false"
     android:orientation="vertical"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -29,7 +30,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp"
-        android:background="@null" />
+        android:background="@null"
+        android:padding="0dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textFoodDescriptionBottomSheet"

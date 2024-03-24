@@ -32,8 +32,8 @@ class FoodCardAdapter(
 
         if (foods.size > 0) {
 
-            holder.imageFood.scaleType = ImageView.ScaleType.FIT_XY
             holder.imageFood.setImageResource(foods[position].mImageId)
+            holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
             holder.textFoodName.text = foods[position].mName
             holder.textTimeToPrepare.text = foods[position].mSection.getFoodSectionName()
             holder.checkboxToSelectFood.setOnClickListener{

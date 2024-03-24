@@ -66,6 +66,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -2,23 +2,37 @@ package com.devmobile.android.restaurant
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Filter
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout.LayoutParams
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.MarginLayoutParamsCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsAnimationCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isInvisible
 import androidx.core.view.marginStart
+import androidx.core.view.updateLayoutParams
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import java.io.FilterInputStream
 import java.io.FilterWriter
 
@@ -29,13 +43,17 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var foodCard: FoodCardViewHolder
     lateinit var bottomSheetHidedNotification: BottomSheetNotification
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+    }
+
     @SuppressLint("ResourceType", "UseCompatLoadingForDrawables")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         viewInflate = inflater.inflate(R.layout.modal_bottomsheet_layout, container, false)
-        viewInflate.setPadding(80, 0, 80, 0)
         val bottomSheetBehavior = (dialog as BottomSheetDialog).behavior
         val bottomSheetLayoutRoot: ViewGroup =
             viewInflate.findViewById(R.id.frameBottomSheetFoodSelectedBottomSheet)
@@ -45,14 +63,53 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         var foodView: ShapeableImageView = viewInflate.findViewById(R.id.imageFoodBottomSheet)
         val drawable = foodCard.imageFood.drawable
         foodView.setImageDrawable(drawable)
-        foodView.scaleType = ImageView.ScaleType.FIT_XY
+        foodView.scaleType = ImageView.ScaleType.CENTER_CROP
         val bsFoodPreferences: TextInputEditText =
             viewInflate.findViewById(R.id.textFoodPreferencesDescriptionsBottomSheet)
         bsFoodPreferences.letterSpacing = 0.1f
+        var descriptionsHeight = bsFoodPreferences.height
 
         bsFoodPreferences.post {
             val teste = bsFoodPreferences.width
-            bsFoodPreferences.filters = arrayOf(InputFilter.LengthFilter(bsFoodPreferences.width / 8))
+            bsFoodPreferences.filters =
+                arrayOf(InputFilter.LengthFilter(bsFoodPreferences.width / 8))
+
+            descriptionsHeight = bsFoodPreferences.height
+        }
+        inputQuantity =
+            bottomSheetLayoutRoot.findViewById(R.id.edittextFoodQuantityPedidoBottomSheet)
+        val descriptions: MaterialTextView =
+            bottomSheetLayoutRoot.findViewById(R.id.textFoodDescriptionBottomSheet)
+        val bsFoodPreferencesHeight = bsFoodPreferences.height
+        var inputQuantityHasFocused = false
+
+        inputQuantity.setOnFocusChangeListener { view, hasFocus ->
+
+            inputQuantityHasFocused = hasFocus
+        }
+
+        activity?.let {
+            KeyboardVisibilityEvent.setEventListener(
+                it,
+                object : KeyboardVisibilityEventListener {
+                    override fun onVisibilityChanged(isOpen: Boolean) {
+
+                        if (isOpen) {
+                            if (inputQuantityHasFocused) {
+                                descriptions.updateLayoutParams { this.height -= 100 }
+
+                                bsFoodPreferences.updateLayoutParams { this.height = 0 }
+                                return
+                            }
+                        }
+
+                        if (inputQuantityHasFocused) {
+                            descriptions.updateLayoutParams { this.height += 100 }
+                            bsFoodPreferences.updateLayoutParams { this.height = descriptionsHeight }
+                        }
+                    }
+                }
+            )
         }
 
         init()

@@ -12,7 +12,6 @@ import com.google.android.material.textview.MaterialTextView
 class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var imageFood: ShapeableImageView
     var textFoodName: MaterialTextView
-
     //    var textFoodDescription: MaterialTextView
     var imageTimeToPrepare: ShapeableImageView
     var textTimeToPrepare: MaterialTextView
