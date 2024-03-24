@@ -46,7 +46,7 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/textFoodPreferencesDescriptionsBottomSheet"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_below="@id/textFoodDescriptionBottomSheet"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"

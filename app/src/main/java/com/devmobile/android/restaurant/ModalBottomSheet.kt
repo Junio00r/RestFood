@@ -46,14 +46,14 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         val drawable = foodCard.imageFood.drawable
         foodView.setImageDrawable(drawable)
         foodView.scaleType = ImageView.ScaleType.FIT_XY
-        val bsFoodPreferences: TextInputEditText = viewInflate.findViewById(R.id.textFoodPreferencesDescriptionsBottomSheet)
+        val bsFoodPreferences: TextInputEditText =
+            viewInflate.findViewById(R.id.textFoodPreferencesDescriptionsBottomSheet)
         bsFoodPreferences.letterSpacing = 0.1f
 
-
         bsFoodPreferences.post {
-            bsFoodPreferences.filters =  arrayOf(InputFilter.LengthFilter(bsFoodPreferences.width sta * 2))
+            val teste = bsFoodPreferences.width
+            bsFoodPreferences.filters = arrayOf(InputFilter.LengthFilter(bsFoodPreferences.width / 8))
         }
-
 
         init()
         return viewInflate

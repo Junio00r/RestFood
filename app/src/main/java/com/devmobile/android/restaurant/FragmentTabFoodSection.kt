@@ -45,11 +45,6 @@ class FragmentTabFoodSection(
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        Toast.makeText(
-            context,
-            "Chegou onCreateView $mFragmentSection",
-            Toast.LENGTH_SHORT
-        ).show()
 
         // Criando aqui ao inves de mandar pelo construtor
         return LayoutInflater.from(context).inflate(R.layout.tab_food_section_layout, null)
