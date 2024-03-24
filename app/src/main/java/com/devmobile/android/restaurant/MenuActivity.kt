@@ -65,18 +65,6 @@ class MenuActivity : AppCompatActivity() {
         initSearchBarSpecifications()
         initTabLayoutSpecifications()
         initImageFilterButton()
-//        bottomSheet = binding.frameBottomSheetFoodSelectedBottomSheet
-//        standardBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-//
-//        binding.buttonDecrementQuantityBottomSheet.setOnClickListener(this)
-//        binding.buttonIncrementQuantityBottomSheet.setOnClickListener(this)
-//
-//        standardBottomSheetBehavior.saveFlags = BottomSheetBehavior.SAVE_HIDEABLE
-//
-//        inputQuantity = binding.edittextFoodQuantityPedidoBottomSheet
-//        inputQuantity.setText(INITIAL_COUNT.toString())
-//
-//        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     @SuppressLint("ResourceAsColor")

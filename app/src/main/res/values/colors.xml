@@ -8,4 +8,7 @@
     <color name="six_color">#DADADA</color>
     <color name="testePager">#AA00FF</color>
     <color name="testeRecycler">#2FFF00</color>
+    <color name="preparoNormal">#FFD600</color>
+    <color name="preparoLento">#FF3300</color>
+    <color name="preparoRapido">#63FF00</color>
 </resources>

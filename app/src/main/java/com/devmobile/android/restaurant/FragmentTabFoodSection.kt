@@ -41,7 +41,6 @@ class FragmentTabFoodSection(
     private val filtersChip = LinkedList<CustomChipFilter>()
     private val bottomSheet = ModalBottomSheet()
     private lateinit var testeando: View
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -69,7 +68,7 @@ class FragmentTabFoodSection(
     }
 
 
-    override fun checkboxClicked(v: FoodCardViewHolder) {
+    override fun hasCheckboxSelected(v: FoodCardViewHolder) {
 
         bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
         bottomSheet.setBottomSheetAtributes(v)

@@ -16,6 +16,7 @@ class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var imageTimeToPrepare: ShapeableImageView
     var textTimeToPrepare: MaterialTextView
     var checkboxToSelectFood: MaterialCheckBox
+    var isCheckboxSelected = false
 
     init {
 
@@ -25,15 +26,6 @@ class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         imageTimeToPrepare = view.findViewById(R.id.imageTimeToPrepare)
         textTimeToPrepare = view.findViewById(R.id.textPrepareTime)
         checkboxToSelectFood = view.findViewById(R.id.checkboxFood)
-
-        setTextsFoodSpecifications()
-        setImagesFoodSpecifications()
-    }
-
-    private fun setImagesFoodSpecifications() {
-    }
-
-    private fun setTextsFoodSpecifications() {
 
         textFoodName.isSingleLine = true
         textFoodName.textSize = 24f

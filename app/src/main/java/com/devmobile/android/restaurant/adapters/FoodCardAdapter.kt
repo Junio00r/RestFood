@@ -2,15 +2,23 @@ package com.devmobile.android.restaurant.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.ClickNotification
 import com.devmobile.android.restaurant.Food
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.enums.TempoPreparo
+import com.google.android.material.drawable.DrawableUtils
 
 class FoodCardAdapter(
 
@@ -36,8 +44,8 @@ class FoodCardAdapter(
             holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
             holder.textFoodName.text = foods[position].mName
             holder.textTimeToPrepare.text = foods[position].mSection.getFoodSectionName()
-            holder.checkboxToSelectFood.setOnClickListener{
-                checkboxClicked(holder)
+            holder.checkboxToSelectFood.setOnClickListener {
+                hasCheckboxSelected(holder)
             }
 //            holder.textFoodDescription.text = foods[position].mDescription
 
@@ -71,7 +79,61 @@ class FoodCardAdapter(
         }
     }
 
-    override fun checkboxClicked(v: FoodCardViewHolder) {
-        clickNotification?.checkboxClicked(v)
+    override fun hasCheckboxSelected(v: FoodCardViewHolder) {
+
+        if (v.isCheckboxSelected) {
+
+            modifyCheckBoxButton(v, true)
+            v.isCheckboxSelected = false
+        } else {
+
+            modifyCheckBoxButton(v, false)
+            clickNotification?.hasCheckboxSelected(v)
+            v.isCheckboxSelected = true
+        }
+
+    }
+
+    @SuppressLint("ResourceType")
+    private fun modifyCheckBoxButton(v: FoodCardViewHolder, isCheckedboxCheckable: Boolean) {
+
+        if (isCheckedboxCheckable) {
+
+            val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_increment,
+                null
+            ) as Drawable
+            v.checkboxToSelectFood.apply {
+                background = null
+                buttonDrawable = customIconDrawable
+                val corFiltro = Color.parseColor("#FF0000")
+                buttonDrawable!!.colorFilter = PorterDuffColorFilter(
+                    context.getColor(R.color.primary_color),
+                    PorterDuff.Mode.SRC_IN
+                )
+            }
+        } else {
+
+            val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.ic_decrement,
+                null
+            ) as Drawable
+            val customButtonDrawable: Drawable = ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.bg_checkbox,
+                null
+            ) as Drawable
+            v.checkboxToSelectFood.apply {
+                background = customButtonDrawable
+                buttonDrawable = customIconDrawable
+                val corFiltro = Color.parseColor("#FF0000")
+                buttonDrawable!!.colorFilter = PorterDuffColorFilter(
+                    context.getColor(R.color.thirdary_color),
+                    PorterDuff.Mode.SRC_IN
+                )
+            }
+        }
     }
 }
