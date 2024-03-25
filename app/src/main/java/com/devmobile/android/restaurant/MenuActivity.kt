@@ -7,6 +7,8 @@ import android.text.InputFilter
 import android.text.PrecomputedText.Params
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import androidx.activity.enableEdgeToEdge
@@ -16,7 +18,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.core.view.WindowCompat
 import androidx.core.view.get
+import androidx.core.view.marginBottom
 import androidx.core.view.size
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
@@ -31,7 +35,7 @@ import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
 
-class MenuActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListener {
     private lateinit var binding: ActivityMenuBinding
     private lateinit var customAdapter: FoodCardAdapter
     private lateinit var recyclerViewFoods: RecyclerView
@@ -40,6 +44,7 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var imageFilterButton: ImageFilterButton
     private lateinit var bottomSheet: RelativeLayout
     private lateinit var standardBottomSheetBehavior: BottomSheetBehavior<RelativeLayout>
+    private lateinit var tabFragmentsInstances: Array<FragmentTabFoodSection>
 //    private lateinit var inputQuantity: TextInputEditText
 
     // Fragment Tab Attributes
@@ -51,13 +56,10 @@ class MenuActivity : AppCompatActivity() {
             setContentView(binding.root)
 
             init()
+
         } else {
 
         }
-    }
-
-    companion object {
-        private const val INITIAL_COUNT = 1
     }
 
     private fun init() {
@@ -65,9 +67,41 @@ class MenuActivity : AppCompatActivity() {
         initSearchBarSpecifications()
         initTabLayoutSpecifications()
         initImageFilterButton()
+        initViewsParams()
+        initExtendedFAT()
     }
 
-    @SuppressLint("ResourceAsColor")
+    private fun initViewsParams() {
+
+//        binding.bottomAppBarMenuActivity.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+//
+//
+//            val bottomMarginParams = binding.linearlayoutMenuActivity.layoutParams as ViewGroup.MarginLayoutParams
+//            bottomMarginParams.bottomMargin = v.height
+//            val teste = v.height
+//            binding.linearlayoutMenuActivity.layoutParams = bottomMarginParams
+//        }
+    }
+
+    override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
+        if (!binding.floatingButtonCancelFoodOrder.isShown) {
+            binding.floatingButtonCancelFoodOrder.show()
+            binding.floatingButtonPayFoods.show()
+        } else {
+
+            tabFragmentsInstances.all {
+
+                if (it.getQuantityOfFoodsChecked() == 0) {
+
+                    floatingButtonHide()
+                    return@all true
+                }
+
+                return@all false
+            }
+        }
+    }
+
     private fun initTabLayoutSpecifications() {
 
         val tabsNameId = arrayOf(
@@ -76,13 +110,13 @@ class MenuActivity : AppCompatActivity() {
             R.string.tab_item_bebidas,
             R.string.tab_item_sobremesas,
         )
-        val tabFragmentsInstances = arrayOf(
+        tabFragmentsInstances = arrayOf(
             FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.ENTRADA),
             FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.PRINCIPAL),
             FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.BEBIDA),
             FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.SOBREMESA),
         )
-//        tabFragmentsInstances.forEach { it.setClickNotifyBridge(this) }
+        tabFragmentsInstances.forEach { it.setClickNotifyBridge(this) }
         val foods = ArrayList<Food>()
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
         foodDao.deleteAllTable()
@@ -151,8 +185,8 @@ class MenuActivity : AppCompatActivity() {
 
             foodDao.insertAll(foods as List<Food>)
         }
-        val tabLayout = binding.tabFoodSections
-        val viewPager2 = binding.pagerFoodSections
+        val tabLayout = binding.tabFoodSectionsMenuActivity
+        val viewPager2 = binding.pagerFoodSectionsMenuActivity
         val fragmentTabAdapter =
             FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsInstances)
 
@@ -164,8 +198,8 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun initSearchBarSpecifications() {
-        this.searchBarFoods = binding.searchBarFoods
-        this.searchViewFoods = binding.searchViewFoods
+        this.searchBarFoods = binding.searchBarFoodsMenuActivity
+        this.searchViewFoods = binding.searchViewFoodsMenuActivity
 
         searchViewFoods.editText.setOnEditorActionListener { v, actionId, event ->
             searchBarFoods.setText(searchViewFoods.text)
@@ -178,7 +212,7 @@ class MenuActivity : AppCompatActivity() {
 
     private fun initImageFilterButton() {
 
-        this.imageFilterButton = binding.imageFilterButton
+        this.imageFilterButton = binding.imageFilterButtonMenuActivity
         val popupMenu = PopupMenu(
             applicationContext, imageFilterButton, Gravity.START, 0, R.style.PopupMenu_View_Local
         )
@@ -197,11 +231,26 @@ class MenuActivity : AppCompatActivity() {
         }
     }
 
-//    override fun checkboxClicked(v: FoodCardViewHolder) {
-//        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-//    }
+    private fun initExtendedFAT() {
+        binding.floatingButtonCancelFoodOrder.hide()
+        binding.floatingButtonPayFoods.hide()
 
-//    override fun onClick(v: View) {
+        binding.floatingButtonCancelFoodOrder.setOnClickListener(this)
+        binding.floatingButtonPayFoods.setOnClickListener(this)
+    }
+
+    private fun floatingButtonHide() {
+
+        binding.floatingButtonCancelFoodOrder.hide()
+        binding.floatingButtonPayFoods.hide()
+    }
+
+    override fun onClick(v: View) {
+
+        if (v.id == R.id.floatingButtonCancelFoodOrder) {
+            tabFragmentsInstances.forEach { it.cancelFoodSelected() }
+            floatingButtonHide()
+        }
 //        if (v.id == R.id.buttonDecrementQuantityBottomSheet) {
 //
 //            if (getEdittextFoodQuantity() - 1 >= 0) {
@@ -218,7 +267,7 @@ class MenuActivity : AppCompatActivity() {
 //                inputQuantity.setText((getEdittextFoodQuantity() + 1).toString())
 //            }
 //        }
-//    }
+    }
 //
 //    private fun TextInputEditText.getMaxLength(): Int {
 //        filters.forEach {

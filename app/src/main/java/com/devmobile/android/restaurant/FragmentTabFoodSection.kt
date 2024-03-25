@@ -2,38 +2,30 @@ package com.devmobile.android.restaurant
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.os.Bundle
-import android.view.InflateException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.graphics.drawable.toDrawable
+import androidx.compose.animation.fadeOut
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.TabFoodSectionLayoutBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
+import kotlinx.coroutines.delay
 import java.util.LinkedList
-import java.util.zip.Inflater
 
 @SuppressLint("MissingInflatedId", "ResourceType")
 class FragmentTabFoodSection(
-    private val context: Context,
-    private val fragmentLayoutId: Int,
-    fragmentSection: FoodSection
+    private val context: Context, private val fragmentLayoutId: Int, fragmentSection: FoodSection
 ) : Fragment(), ClickNotification {
     private var id: Int? = null
 
     private lateinit var binding: TabFoodSectionLayoutBinding
     private lateinit var recyclerViewFoods: RecyclerView
-    private lateinit var foodCardAdapter: FoodCardAdapter
+    private var foodCardAdapter: FoodCardAdapter? = null
     private lateinit var foodDAO: RestaurantDatabase
     private lateinit var dataFoodsOfTabSections: ArrayList<Food>
     private var mFragmentSection = fragmentSection
@@ -41,6 +33,8 @@ class FragmentTabFoodSection(
     private val filtersChip = LinkedList<CustomChipFilter>()
     private val bottomSheet = ModalBottomSheet()
     private lateinit var testeando: View
+    private var clickNotification: ClickNotification? = null
+    private var isBottomSheetInflacting = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -57,21 +51,60 @@ class FragmentTabFoodSection(
 
         recyclerViewFoods = binding.recyclerFood
         foodCardAdapter = FoodCardAdapter(dataFoodsOfTabSections, context)
-        foodCardAdapter.setClickNotifyBridge(this)
+        foodCardAdapter!!.setClickNotifyBridge(this)
         recyclerViewFoods.adapter = foodCardAdapter
-        recyclerViewFoods.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recyclerViewFoods.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
 
 //        loadChipsOnFragment()
         super.onViewCreated(view, savedInstanceState)
     }
 
+    fun setClickNotifyBridge(clickNotification: ClickNotification) {
+        if (this.clickNotification == null) {
 
-    override fun hasCheckboxSelected(v: FoodCardViewHolder) {
+            this.clickNotification = clickNotification
+        }
+    }
 
-        bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
-        bottomSheet.setBottomSheetAtributes(v)
+
+    override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
+
+        if (isCheckboxChecked) {
+
+            if (!isBottomSheetInflacting) {
+                isBottomSheetInflacting = true
+
+                bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
+                bottomSheet.setBottomSheetAttributes(v)
+                clickNotification!!.hasBeenCheckboxChecked(v, true)
+            }
+
+        } else {
+            clickNotification!!.hasBeenCheckboxChecked(v, false)
+            bottomSheet.dismiss()
+        }
+        isBottomSheetInflacting = false
+    }
+
+    fun cancelFoodSelected() {
+
+        foodCardAdapter?.getFoodCardViewHoldersSelected().let { viewHolderLinkedList ->
+
+            viewHolderLinkedList?.forEach { foodCardViewHolder ->
+                foodCardAdapter!!.hasBeenCheckboxChecked(
+                    foodCardViewHolder, true
+                )
+            }
+
+            // Remove all CardViewHolders Save
+            viewHolderLinkedList?.removeAll { !it.isCheckboxChecked }
+        }
+    }
+
+    fun getQuantityOfFoodsChecked(): Int {
+
+        return foodCardAdapter?.getFoodCardViewHoldersSelected()?.size ?: 0
     }
 
 //    private fun loadChipsOnFragment() {

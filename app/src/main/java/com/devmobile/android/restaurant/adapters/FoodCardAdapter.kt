@@ -2,9 +2,7 @@ package com.devmobile.android.restaurant.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
@@ -18,15 +16,16 @@ import com.devmobile.android.restaurant.Food
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.enums.TempoPreparo
-import com.google.android.material.drawable.DrawableUtils
+import com.google.android.material.checkbox.MaterialCheckBox
+import java.util.LinkedList
 
 class FoodCardAdapter(
 
-    private val foods: ArrayList<Food>,
-    private val context: Context
+    private val foods: ArrayList<Food>, private val context: Context
 
 ) : RecyclerView.Adapter<FoodCardViewHolder>(), ClickNotification {
     private var clickNotification: ClickNotification? = null
+    private val foodCardViewHolders = LinkedList<FoodCardViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
         val inflater = LayoutInflater.from(context)
@@ -35,7 +34,6 @@ class FoodCardAdapter(
         return FoodCardViewHolder(foodViewInflated)
     }
 
-    @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: FoodCardViewHolder, position: Int) {
 
         if (foods.size > 0) {
@@ -45,29 +43,53 @@ class FoodCardAdapter(
             holder.textFoodName.text = foods[position].mName
             holder.textTimeToPrepare.text = foods[position].mSection.getFoodSectionName()
             holder.checkboxToSelectFood.setOnClickListener {
-                hasCheckboxSelected(holder)
+                hasBeenCheckboxChecked(holder, false)
             }
+
+//            if (foodCardViewHolders == null) {
+//
+//                foodCardViewHolders = arrayOf(holder)
+//            } else {
+//                if (!foodCardViewHolders!!.contains(holder)) {
+//                    foodCardViewHolders!![foodCardViewHolders!!.lastIndex] = holder
+//                }
+//            }
 //            holder.textFoodDescription.text = foods[position].mDescription
 
-            if (foods[position].mTimeToPrepare == TempoPreparo.LENTO) {
+            when (foods[position].mTimeToPrepare) {
 
-                holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
-                holder.textTimeToPrepare.text =
-                    "${TempoPreparo.LENTO.getTimeOfPrepareMinutes()} minutos"
+                TempoPreparo.LENTO -> {
+                    holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
+                    holder.textTimeToPrepare.text =
+                        "${TempoPreparo.LENTO.getTimeOfPrepareMinutes()} minutos"
+                }
 
-            } else if (foods[position].mTimeToPrepare == TempoPreparo.NORMAL) {
+                TempoPreparo.NORMAL -> {
 
-                holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_normal)
-                holder.textTimeToPrepare.text =
-                    "${TempoPreparo.NORMAL.getTimeOfPrepareMinutes()} minutos"
+                    holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_normal)
+                    holder.textTimeToPrepare.text =
+                        "${TempoPreparo.NORMAL.getTimeOfPrepareMinutes()} minutos"
+                }
 
-            } else if (foods[position].mTimeToPrepare == TempoPreparo.RAPIDO) {
+                TempoPreparo.RAPIDO -> {
 
-                holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_rapido)
-                holder.textTimeToPrepare.text =
-                    "${TempoPreparo.RAPIDO.getTimeOfPrepareMinutes()} minutos"
+                    holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_rapido)
+                    holder.textTimeToPrepare.text =
+                        "${TempoPreparo.RAPIDO.getTimeOfPrepareMinutes()} minutos"
+                }
             }
         }
+    }
+
+
+    fun getFoodCardViewHoldersSelected(): LinkedList<FoodCardViewHolder>? {
+
+        foodCardViewHolders.all { foodViewHolder ->
+            foodViewHolder.isCheckboxChecked
+            return foodCardViewHolders
+        }
+
+        return null
     }
 
     override fun getItemCount(): Int = foods.size
@@ -79,61 +101,59 @@ class FoodCardAdapter(
         }
     }
 
-    override fun hasCheckboxSelected(v: FoodCardViewHolder) {
+    override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
 
-        if (v.isCheckboxSelected) {
+        if (v.isCheckboxChecked) {
 
-            modifyCheckBoxButton(v, true)
-            v.isCheckboxSelected = false
+            setButtonCheckboxUnchecked(v.checkboxToSelectFood)
+            clickNotification?.hasBeenCheckboxChecked(v, false)
+            v.isCheckboxChecked = false
+
         } else {
 
-            modifyCheckBoxButton(v, false)
-            clickNotification?.hasCheckboxSelected(v)
-            v.isCheckboxSelected = true
-        }
+            if (!foodCardViewHolders.contains(v)) {
+                foodCardViewHolders.add(v)
+            }
 
+            setButtonCheckboxChecked(v.checkboxToSelectFood)
+            clickNotification?.hasBeenCheckboxChecked(v, true)
+            v.isCheckboxChecked = true
+        }
     }
 
-    @SuppressLint("ResourceType")
-    private fun modifyCheckBoxButton(v: FoodCardViewHolder, isCheckedboxCheckable: Boolean) {
+    private fun setButtonCheckboxUnchecked(checkboxChecked: MaterialCheckBox) {
 
-        if (isCheckedboxCheckable) {
 
-            val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
-                context.resources,
-                R.drawable.ic_increment,
-                null
-            ) as Drawable
-            v.checkboxToSelectFood.apply {
-                background = null
-                buttonDrawable = customIconDrawable
-                val corFiltro = Color.parseColor("#FF0000")
-                buttonDrawable!!.colorFilter = PorterDuffColorFilter(
-                    context.getColor(R.color.primary_color),
-                    PorterDuff.Mode.SRC_IN
-                )
-            }
-        } else {
+        val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
+            context.resources, R.drawable.ic_increment, null
+        ) as Drawable
 
-            val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
-                context.resources,
-                R.drawable.ic_decrement,
-                null
-            ) as Drawable
-            val customButtonDrawable: Drawable = ResourcesCompat.getDrawable(
-                context.resources,
-                R.drawable.bg_checkbox,
-                null
-            ) as Drawable
-            v.checkboxToSelectFood.apply {
-                background = customButtonDrawable
-                buttonDrawable = customIconDrawable
-                val corFiltro = Color.parseColor("#FF0000")
-                buttonDrawable!!.colorFilter = PorterDuffColorFilter(
-                    context.getColor(R.color.thirdary_color),
-                    PorterDuff.Mode.SRC_IN
-                )
-            }
+        checkboxChecked.apply {
+            background = null
+            buttonDrawable = customIconDrawable
+            val corFiltro = Color.parseColor("#FF0000")
+            buttonDrawable!!.colorFilter = PorterDuffColorFilter(
+                context.getColor(R.color.primary_color), PorterDuff.Mode.SRC_IN
+            )
+        }
+    }
+
+    private fun setButtonCheckboxChecked(checkboxUnchecked: MaterialCheckBox) {
+
+        val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
+            context.resources, R.drawable.ic_decrement, null
+        ) as Drawable
+        val customButtonDrawable: Drawable = ResourcesCompat.getDrawable(
+            context.resources, R.drawable.bg_checkbox, null
+        ) as Drawable
+
+        checkboxUnchecked.apply {
+            background = customButtonDrawable
+            buttonDrawable = customIconDrawable
+            val corFiltro = Color.parseColor("#FF0000")
+            buttonDrawable!!.colorFilter = PorterDuffColorFilter(
+                context.getColor(R.color.thirdary_color), PorterDuff.Mode.SRC_IN
+            )
         }
     }
 }

@@ -16,13 +16,13 @@
 
     <!--  TabTextLayouy -->
     <style name="TabTextStyle" parent="Widget.AppCompat.ActionBar.TabBar">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/font_tab</item>
     </style>
 
     <!--  SearchView  -->
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textAppearance">@style/TextAppearance.Material3.SearchBar</item>
         <item name="android:hint">@string/search_bar_hint</item>
         <item name="backgroundTint">@color/thirdary_color</item>

@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="0dp"
     android:background="#616161"
     android:fitsSystemWindows="false"
-    android:padding="14dp">
+    android:orientation="vertical"
+    android:padding="0dp">
 
     <LinearLayout
+        android:id="@+id/linearlayoutMenuActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="14dp">
 
         <!--    <androidx.core.widget.NestedScrollView-->
         <!--        android:layout_width="match_parent"-->
@@ -22,7 +26,7 @@
         <!--  AppBar of SearchBar  -->
         <!--      Desabilitado para testar a rolagem da searchview  -->
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarSearch"
+            android:id="@+id/appBarSearchMenuActivity"
             style="@style/AppBarLayout.Style.Local"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,31 +38,31 @@
                 android:layout_marginVertical="16dp">
 
                 <com.google.android.material.search.SearchBar
-                    android:id="@+id/searchBarFoods"
+                    android:id="@+id/searchBarFoodsMenuActivity"
                     style="@style/SearchBar.Style.Local"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toStartOf="@id/imageFilterButton"
+                    app:layout_constraintEnd_toStartOf="@id/imageFilterButtonMenuActivity"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.utils.widget.ImageFilterButton
-                    android:id="@+id/imageFilterButton"
+                    android:id="@+id/imageFilterButtonMenuActivity"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_marginEnd="4dp"
-                    android:layout_toEndOf="@id/searchBarFoods"
+                    android:layout_toEndOf="@id/searchBarFoodsMenuActivity"
                     android:background="@drawable/ic_chip_filter_list"
-                    app:layout_constraintBottom_toBottomOf="@id/searchBarFoods"
+                    app:layout_constraintBottom_toBottomOf="@id/searchBarFoodsMenuActivity"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/searchBarFoods" />
+                    app:layout_constraintTop_toTopOf="@id/searchBarFoodsMenuActivity" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.search.SearchView
-            android:id="@+id/searchViewFoods"
+            android:id="@+id/searchViewFoodsMenuActivity"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:hint="@string/search_bar_hint">
@@ -66,126 +70,63 @@
         </com.google.android.material.search.SearchView>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabFoodSections"
+            android:id="@+id/tabFoodSectionsMenuActivity"
             style="@style/TabStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabTextAppearance="@style/TabTextStyle" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pagerFoodSections"
+            android:id="@+id/pagerFoodSectionsMenuActivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp" />
 
     </LinearLayout>
 
-    <!--    <RelativeLayout-->
-    <!--        android:id="@+id/frameBottomSheetFoodSelectedBottomSheet"-->
-    <!--        style="@style/Widget.Material3.BottomSheet.Modal"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:backgroundTint="@color/thirdary_color"-->
-    <!--        android:orientation="vertical"-->
-    <!--        android:paddingHorizontal="14dp"-->
-    <!--        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingButtonCancelFoodOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/thirdary_color"
+        android:fontFamily="@font/floating_button"
+        android:minWidth="180dp"
+        android:text="CANCEL"
+        android:textColor="@color/primary_color"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:hideMotionSpec="@anim/m3_extended_hide_motion"
+        app:icon="@drawable/baseline_close_24"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        app:iconTint="@android:color/black"
+        app:rippleColor="@color/five_color"
+        app:showMotionSpec="@anim/m3_extended_show_motion" />
 
-    <!--        <com.google.android.material.bottomsheet.BottomSheetDragHandleView-->
-    <!--            android:id="@+id/drag_handleBottomSheet"-->
-    <!--            style="@style/Widget.Material3.BottomSheet.DragHandle"-->
-    <!--            android:layout_width="40dp"-->
-    <!--            android:layout_height="4dp"-->
-    <!--            android:layout_alignParentTop="true"-->
-    <!--            android:layout_centerHorizontal="true"-->
-    <!--            android:layout_marginTop="8dp"-->
-    <!--            android:background="@color/fourty_color" />-->
-
-    <!--        <com.google.android.material.imageview.ShapeableImageView-->
-    <!--            android:id="@+id/imageFoodBottomSheet"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="128dp"-->
-    <!--            android:layout_below="@id/drag_handleBottomSheet"-->
-    <!--            android:layout_alignStart="@id/imageFoodBottomSheet"-->
-    <!--            android:layout_alignParentStart="true"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginTop="16dp" />-->
-
-    <!--        <com.google.android.material.textview.MaterialTextView-->
-    <!--            android:id="@+id/textFoodDescriptionBottomSheet"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@id/imageFoodBottomSheet"-->
-    <!--            android:layout_alignStart="@id/imageFoodBottomSheet"-->
-    <!--            android:layout_alignEnd="@id/imageFoodBottomSheet"-->
-    <!--            android:layout_marginTop="10dp"-->
-    <!--            android:hint="Descrição da comida"-->
-    <!--            android:padding="16dp"-->
-    <!--            android:paddingVertical="16dp" />-->
-
-    <!--        <com.google.android.material.textfield.TextInputEditText-->
-    <!--            android:id="@+id/textFoodPreferencesDescriptionsBottomSheet"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="100dp"-->
-    <!--            android:layout_below="@id/textFoodDescriptionBottomSheet"-->
-    <!--            android:layout_alignParentStart="true"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginTop="32dp"-->
-    <!--            android:background="@null"-->
-    <!--            android:hint="Coloque o que voce quer acrescentar a mais ou menos na comida"-->
-    <!--            android:padding="8dp" />-->
-
-    <!--        <LinearLayout-->
-    <!--            android:id="@+id/linearLayout2"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@+id/textFoodPreferencesDescriptionsBottomSheet"-->
-    <!--            android:layout_alignParentStart="true"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_marginHorizontal="16dp"-->
-    <!--            android:layout_marginTop="128dp"-->
-    <!--            android:layout_marginBottom="50dp"-->
-    <!--            android:background="@drawable/radius_layout"-->
-    <!--            android:backgroundTint="#FFFAE0"-->
-    <!--            android:gravity="center"-->
-    <!--            android:orientation="horizontal"-->
-    <!--            android:padding="8dp">-->
-
-    <!--            <com.google.android.material.button.MaterialButton-->
-    <!--                android:id="@+id/buttonDecrementQuantityBottomSheet"-->
-    <!--                style="@style/Widget.Material3.Button"-->
-    <!--                android:layout_width="64dp"-->
-    <!--                android:layout_height="64dp"-->
-    <!--                android:layout_weight="0"-->
-    <!--                app:backgroundTint="@color/secondary_color"-->
-    <!--                app:cornerRadius="8dp"-->
-    <!--                app:icon="@drawable/ic_decrement"-->
-    <!--                app:iconTint="@color/primary_color" />-->
-
-    <!--            <com.google.android.material.textfield.TextInputEditText-->
-    <!--                android:id="@+id/edittextFoodQuantityPedidoBottomSheet"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginHorizontal="8dp"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:background="@null"-->
-    <!--                android:inputType="number"-->
-    <!--                android:lines="1"-->
-    <!--                android:maxLength="1"-->
-    <!--                android:textAlignment="center"-->
-    <!--                android:textSize="38sp" />-->
-
-    <!--            <com.google.android.material.button.MaterialButton-->
-    <!--                android:id="@+id/buttonIncrementQuantityBottomSheet"-->
-    <!--                style="@style/Widget.Material3.Button"-->
-    <!--                android:layout_width="64dp"-->
-    <!--                android:layout_height="64dp"-->
-    <!--                android:layout_weight="0"-->
-    <!--                app:backgroundTint="@color/secondary_color"-->
-    <!--                app:cornerRadius="8dp"-->
-    <!--                app:icon="@drawable/ic_increment"-->
-    <!--                app:iconTint="@color/primary_color" />-->
-
-    <!--        </LinearLayout>-->
-    <!--    </RelativeLayout>-->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingButtonPayFoods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/thirdary_color"
+        android:fontFamily="@font/floating_button"
+        android:minWidth="180dp"
+        android:text="REALIZAR PEDIDO"
+        android:textColor="@color/primary_color"
+        android:textSize="14sp"
+        app:hideMotionSpec="@anim/m3_extended_hide_motion"
+        app:icon="@drawable/baseline_attach_money_24"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        app:iconTint="@android:color/black"
+        app:rippleColor="@color/five_color"
+        app:showMotionSpec="@anim/m3_extended_show_motion" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

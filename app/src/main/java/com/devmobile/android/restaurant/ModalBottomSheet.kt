@@ -66,7 +66,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         foodView.scaleType = ImageView.ScaleType.CENTER_CROP
         val bsFoodPreferences: TextInputEditText =
             viewInflate.findViewById(R.id.textFoodPreferencesDescriptionsBottomSheet)
-        bsFoodPreferences.letterSpacing = 0.1f
+        bsFoodPreferences.letterSpacing = 0.04f
         var descriptionsHeight = bsFoodPreferences.height
 
         bsFoodPreferences.post {
@@ -168,7 +168,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         return -1
     }
 
-    fun setBottomSheetAtributes(v: FoodCardViewHolder) {
+    fun setBottomSheetAttributes(v: FoodCardViewHolder) {
         foodCard = v
     }
 }

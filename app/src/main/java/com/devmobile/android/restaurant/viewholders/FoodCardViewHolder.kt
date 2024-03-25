@@ -16,7 +16,7 @@ class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var imageTimeToPrepare: ShapeableImageView
     var textTimeToPrepare: MaterialTextView
     var checkboxToSelectFood: MaterialCheckBox
-    var isCheckboxSelected = false
+    var isCheckboxChecked = false
 
     init {
 
