@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.viewholders
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,15 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.animation.fadeOut
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.devmobile.android.restaurant.ClickNotification
+import com.devmobile.android.restaurant.CustomChipFilter
+import com.devmobile.android.restaurant.Food
+import com.devmobile.android.restaurant.ModalBottomSheet
+import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.RestaurantDatabase
+import com.devmobile.android.restaurant.Scrolled
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.TabFoodSectionLayoutBinding
 import com.devmobile.android.restaurant.enums.FoodSection
-import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
-import kotlinx.coroutines.delay
 import java.util.LinkedList
 
 @SuppressLint("MissingInflatedId", "ResourceType")
@@ -24,7 +28,7 @@ class FragmentTabFoodSection(
     private var id: Int? = null
 
     private lateinit var binding: TabFoodSectionLayoutBinding
-    private lateinit var recyclerViewFoods: RecyclerView
+    lateinit var recyclerViewFoods: RecyclerView
     private var foodCardAdapter: FoodCardAdapter? = null
     private lateinit var foodDAO: RestaurantDatabase
     private lateinit var dataFoodsOfTabSections: ArrayList<Food>
@@ -35,6 +39,8 @@ class FragmentTabFoodSection(
     private lateinit var testeando: View
     private var clickNotification: ClickNotification? = null
     private var isBottomSheetInflacting = false
+    private lateinit var scrollListener: Scrolled
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -55,6 +61,14 @@ class FragmentTabFoodSection(
         recyclerViewFoods.adapter = foodCardAdapter
         recyclerViewFoods.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
+        recyclerViewFoods.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                scrollListener.hasBeenScrolled(recyclerView, dx, dy)
+            }
+        })
 
 //        loadChipsOnFragment()
         super.onViewCreated(view, savedInstanceState)
@@ -67,24 +81,22 @@ class FragmentTabFoodSection(
         }
     }
 
-
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
 
-        if (isCheckboxChecked) {
+        synchronized(Any()) {
 
-            if (!isBottomSheetInflacting) {
-                isBottomSheetInflacting = true
+            if (isCheckboxChecked) {
 
                 bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
                 bottomSheet.setBottomSheetAttributes(v)
                 clickNotification!!.hasBeenCheckboxChecked(v, true)
-            }
 
-        } else {
-            clickNotification!!.hasBeenCheckboxChecked(v, false)
-            bottomSheet.dismiss()
+
+            } else {
+                clickNotification!!.hasBeenCheckboxChecked(v, false)
+                bottomSheet.dismiss()
+            }
         }
-        isBottomSheetInflacting = false
     }
 
     fun cancelFoodSelected() {
@@ -105,6 +117,10 @@ class FragmentTabFoodSection(
     fun getQuantityOfFoodsChecked(): Int {
 
         return foodCardAdapter?.getFoodCardViewHoldersSelected()?.size ?: 0
+    }
+
+    fun setScrollListenerForNotify(scrollListener: Scrolled) {
+        this.scrollListener = scrollListener
     }
 
 //    private fun loadChipsOnFragment() {
