@@ -30,7 +30,8 @@
             style="@style/AppBarLayout.Style.Local"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="14dp">
+            android:layout_marginVertical="14dp"
+            android:nestedScrollingEnabled="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -71,10 +72,10 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabFoodSectionsMenuActivity"
-            style="@style/TabStyle"
+            style="@style/Tab.Style.Local"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextAppearance="@style/TabTextStyle" />
+            app:tabTextAppearance="@style/TabText.Layout.Style.Local" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pagerFoodSectionsMenuActivity"
@@ -84,46 +85,44 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/floatingButtonCancelFoodOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/thirdary_color"
-        android:fontFamily="@font/floating_button"
-        android:minWidth="180dp"
-        android:text="CANCEL"
-        android:textColor="@color/primary_color"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:hideMotionSpec="@anim/m3_extended_hide_motion"
-        app:icon="@drawable/baseline_close_24"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
-        app:iconSize="24dp"
-        app:iconTint="@android:color/black"
-        app:rippleColor="@color/five_color" />
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.Material3.BottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@android:color/transparent"
+        app:hideOnScroll="true">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/floatingButtonPayFoods"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/thirdary_color"
-        android:fontFamily="@font/floating_button"
-        android:minWidth="180dp"
-        android:text="REALIZAR PEDIDO"
-        android:textColor="@color/primary_color"
-        android:textSize="14sp"
-        app:hideMotionSpec="@anim/m3_extended_hide_motion"
-        app:icon="@drawable/baseline_attach_money_24"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
-        app:iconSize="24dp"
-        app:iconTint="@android:color/black"
-        app:rippleColor="@color/five_color" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/floatingButtonCancelFoodOrder"
+                style="@style/BottomAppBar.Style.Local"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="12dp"
+                android:layout_weight="1"
+                android:text="@string/floating_button_cancel"
+                app:icon="@drawable/baseline_close_24"
+                app:iconSize="24dp" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/floatingButtonPayFoods"
+                style="@style/BottomAppBar.Style.Local"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="12dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/floating_button_realizar_pedido"
+                app:icon="@drawable/baseline_attach_money_24" />
+        </LinearLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
