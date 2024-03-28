@@ -5,11 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.devmobile.android.restaurant.dao.FoodDao
+import com.devmobile.android.restaurant.dao.UserDao
 
-@Database(version = 6, entities = [Food::class, User::class], exportSchema = false)
+@Database(version = 14, entities = [Food::class, User::class], exportSchema = false)
 abstract class RestaurantDatabase : RoomDatabase() {
 
     abstract fun getFoodDao(): FoodDao
+
+    abstract fun getUserDao(): UserDao
 
     companion object {
         private var instance: RestaurantDatabase? = null

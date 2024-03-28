@@ -1,44 +1,42 @@
 package com.devmobile.android.restaurant
 
 import android.content.Intent
+import android.database.sqlite.SQLiteException
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.devmobile.android.restaurant.dao.UserDao
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.google.android.material.button.MaterialButton
-import java.io.FilterInputStream
 
 class LoginFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var buttonSignUp: MaterialButton
     private lateinit var buttonEnter: MaterialButton
     private var userName: String? = null
+    private lateinit var userDao:UserDao
+    private lateinit var intent:Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        if (savedInstanceState == null) {
+        userDao = RestaurantDatabase.getInstance(this).getUserDao()
+        intent = Intent(this, MenuActivity::class.java)
 
-            super.onCreate(savedInstanceState)
+        if (userDao.getUsers().isEmpty()) {
+
             binding = FragmentLoginBinding.inflate(layoutInflater)
-
             setContentView(binding.root)
 
             init()
+
         } else {
 
-            userName = savedInstanceState.getString("GAME_STATE_KEY")
-            val intent = Intent(this, MenuActivity::class.java)
-
             startActivity(intent)
-            this.onDestroy()
+            finish()
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        super.onSaveInstanceState(outState)
     }
 
     private fun init() {
@@ -49,7 +47,7 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
     }
 
     /**
-     * Ainda irei tratar os casos em que o usuário faz muitos requisitando login/cadastro
+     * Ainda irei tratar os casos em que o usuário faz muitaas requisitando login/cadastro
      */
     override fun onClick(v: View) {
 
@@ -57,14 +55,21 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
             buttonSignUp -> {
 
-                Toast.makeText(this, "Não Implementado", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Não Implementado", Toast.LENGTH_SHORT).show()
             }
 
             buttonEnter -> {
 
-                val intent = Intent(this, MenuActivity::class.java)
+                if (userName.isNullOrEmpty()) {
 
-                startActivity(intent)
+                    Toast.makeText(this, "Insira seu Nome", Toast.LENGTH_SHORT).show()
+
+                } else {
+
+                    insertUser(User(1, userName!!))
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }
@@ -86,5 +91,17 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
         buttonSignUp.setOnClickListener(this)
         buttonEnter.setOnClickListener(this)
+    }
+
+    private fun insertUser(user: User) {
+
+        try {
+
+            userDao.insertUser(user)
+
+        } catch (e: SQLiteException) {
+
+            Log.e("DatabaseError", "Erro ao inserir dados no banco de dados", e);
+        }
     }
 }

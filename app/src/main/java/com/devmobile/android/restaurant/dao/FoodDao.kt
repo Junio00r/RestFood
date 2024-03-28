@@ -32,8 +32,6 @@ interface FoodDao {
     // Métodos de consultas usado para instrucoes mais especificas e complexas //
     // O Room avalia as consultas no momento da compilação, evitando problemas
     // no momento de execucao, caso tenha um erro de compilação é lançado.
-
-
     @Query("SELECT * FROM foods WHERE section = :foodSection")
     fun getFoodsBySection(foodSection: FoodSection): List<Food?>
 
@@ -41,7 +39,7 @@ interface FoodDao {
     fun getFoodById(foodId: Long): Food?
 
     @Query("SELECT COUNT(mId) FROM foods")
-    fun getFoodsSize(): Long
+    fun getFoodsSize(): Int
 
     @Query("SELECT * FROM foods")
     fun getAllFoods(): List<Food?>

@@ -28,10 +28,19 @@ interface UserDao {
     @Update
     fun updateUser(user: User)
 
-    // Métodos de consultas usado para instrucoes mais especificas e complexas //
-    // O Room avalia as consultas no momento da compilação, evitando problemas
-    // no momento de execucao, caso tenha um erro de compilação é lançado.
+    /**
+     * Esses métodos serão alterados. Essa lógica está fora do app
+     */
 
     @Query("SELECT * FROM users WHERE id = :userId")
-    fun getFoodById(userId: Long): User?
+    fun findUserById(userId: Long): User?
+
+    @Query("SELECT * FROM users WHERE name = :userName")
+    fun findUserByName(userName: String): User?
+
+    @Query("SELECT name FROM users LIMIT 1")
+    fun getUserName(): String?
+
+    @Query("SELECT * FROM users")
+    fun getUsers(): List<User>
 }

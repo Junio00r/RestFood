@@ -97,9 +97,7 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
         val foods = ArrayList<Food>()
         val database = RestaurantDatabase.getInstance(this)
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
-        database.clearAllTables()
 
-        foodDao.deleteAllTable()
         if (foodDao.getFoodsSize() == 0) {
             foods.addAll(
                 listOf(
