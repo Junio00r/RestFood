@@ -1,60 +1,54 @@
 package com.devmobile.android.restaurant
 
-import android.animation.ObjectAnimator
+import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
-import android.view.animation.TranslateAnimation
 import android.widget.PopupMenu
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.core.view.ScrollingView
+import androidx.core.view.doOnLayout
 import androidx.core.view.marginBottom
-import androidx.recyclerview.widget.RecyclerView
-import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.enums.TempoPreparo
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
+import java.lang.String
 import kotlin.math.abs
+import kotlin.math.absoluteValue
+
 
 class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListener, Scrolled {
     private lateinit var binding: ActivityMenuBinding
-    private lateinit var customAdapter: FoodCardAdapter
-    private lateinit var recyclerViewFoods: RecyclerView
     private lateinit var searchBarFoods: SearchBar
     private lateinit var searchViewFoods: SearchView
     private lateinit var imageFilterButton: ImageFilterButton
-    private lateinit var bottomSheet: RelativeLayout
-    private lateinit var standardBottomSheetBehavior: BottomSheetBehavior<RelativeLayout>
     private lateinit var tabFragmentsInstances: Array<FragmentTabFoodSection>
     private var floatingButtonStillCanScrolledToDown = true
     private var floatingButtonStillCanScrolledToUp = false
-    private var floatingButtonMarginWhenCreated = 0
+    private var floatingButtonMarginWhenCreated: Int = 0
 
-//    private lateinit var inputQuantity: TextInputEditText
-
-    // Fragment Tab Attributes
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (savedInstanceState == null) {
             binding = ActivityMenuBinding.inflate(this.layoutInflater)
             setContentView(binding.root)
 
             init()
-
         } else {
 
         }
     }
+
 
     private fun init() {
 
@@ -63,7 +57,6 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
         initImageFilterButton()
         initViewsParams()
         initExtendedFAT()
-
     }
 
     private fun initViewsParams() {
@@ -79,22 +72,8 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
     }
 
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
-        if (!binding.floatingButtonCancelFoodOrder.isShown) {
-            binding.floatingButtonCancelFoodOrder.show()
-            binding.floatingButtonPayFoods.show()
-        } else {
 
-            tabFragmentsInstances.all {
 
-                if (it.getQuantityOfFoodsChecked() == 0) {
-
-                    floatingButtonHide()
-                    return@all true
-                }
-
-                return@all false
-            }
-        }
     }
 
     private fun initTabLayoutSpecifications() {
@@ -116,7 +95,10 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
             it.setScrollListenerForNotify(this)
         }
         val foods = ArrayList<Food>()
+        val database = RestaurantDatabase.getInstance(this)
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
+        database.clearAllTables()
+
         foodDao.deleteAllTable()
         if (foodDao.getFoodsSize() == 0) {
             foods.addAll(
@@ -179,15 +161,15 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
                         "Sopa de Carne"
                     ), Food(
                         7,
-                        "Hamburger",
+                        "Hamburg32er",
                         FoodSection.ENTRADA,
                         R.drawable.hamburguer,
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.RAPIDO,
                         "Big Hamburger"
                     ), Food(
-                        8,
-                        "Hamburger",
+                        18,
+                        "Nusmo",
                         FoodSection.ENTRADA,
                         R.drawable.hamburguer,
                         R.drawable.ic_time_prepare_lento,
@@ -195,7 +177,7 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
                         "Big Hamburger"
                     ), Food(
                         9,
-                        "Hamburger",
+                        "Nusmo111",
                         FoodSection.ENTRADA,
                         R.drawable.hamburguer,
                         R.drawable.ic_time_prepare_lento,
@@ -203,7 +185,7 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
                         "Big Hamburger"
                     ), Food(
                         10,
-                        "Hamburger",
+                        "Nusmo232",
                         FoodSection.ENTRADA,
                         R.drawable.hamburguer,
                         R.drawable.ic_time_prepare_lento,
@@ -211,7 +193,7 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
                         "Big Hamburger"
                     ), Food(
                         11,
-                        "Hamburger",
+                        "Nusmo23",
                         FoodSection.ENTRADA,
                         R.drawable.hamburguer,
                         R.drawable.ic_time_prepare_lento,
@@ -219,7 +201,7 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
                         "Big Hamburger"
                     ), Food(
                         12,
-                        "Hamburger",
+                        "Nusmo",
                         FoodSection.ENTRADA,
                         R.drawable.hamburguer,
                         R.drawable.ic_time_prepare_lento,
@@ -278,120 +260,34 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
     }
 
     private fun initExtendedFAT() {
-        binding.floatingButtonCancelFoodOrder.hide()
-        binding.floatingButtonPayFoods.hide()
 
         binding.floatingButtonCancelFoodOrder.setOnClickListener(this)
         binding.floatingButtonPayFoods.setOnClickListener(this)
 
-        floatingButtonMarginWhenCreated = binding.floatingButtonCancelFoodOrder.marginBottom
-    }
-
-    private fun floatingButtonHide() {
-
-        binding.floatingButtonCancelFoodOrder.hide()
-        binding.floatingButtonPayFoods.hide()
     }
 
     override fun onClick(v: View) {
 
-        if (v.id == R.id.floatingButtonCancelFoodOrder) {
-            tabFragmentsInstances.forEach { it.cancelFoodSelected() }
-            floatingButtonHide()
+        when (v.id) {
+
+            R.id.floatingButtonCancelFoodOrder -> {
+
+                tabFragmentsInstances.forEach { it.cancelFoodSelected() }
+            }
         }
     }
 
     override fun hasBeenScrolled(data: ScrollingView, dx: Int, dy: Int) {
 
+
         if (dy != 0) {
 
-            if (binding.floatingButtonCancelFoodOrder.isShown)
-                hideFloatingButtonVertically(data, dy)
-
-        } else {
-
-            // Inplemente para esconder algum botao horizontalmente caso deseje
+            hideFloatingButtonVertically(data, dy)
         }
+
     }
 
-    private fun hideFloatingButtonVertically(data: ScrollingView, dy: Int) {
-        val floatingButCancelMarginLayout =
-            binding.floatingButtonCancelFoodOrder.layoutParams as MarginLayoutParams
-        val floatingButPayMarginLayout =
-            binding.floatingButtonPayFoods.layoutParams as MarginLayoutParams
+    private fun hideFloatingButtonVertically(recyclerViewOfFoodCards: ScrollingView, dy: Int) {
 
-        if (dy > 0) {
-
-            if (floatingButtonStillCanScrolledToDown) {
-
-                if ((floatingButCancelMarginLayout.bottomMargin - dy) >= -binding.floatingButtonCancelFoodOrder.height) {
-
-                    floatingButCancelMarginLayout.bottomMargin -= dy
-                    floatingButPayMarginLayout.bottomMargin -= dy
-                    floatingButtonStillCanScrolledToUp = true
-                } else {
-
-                    floatingButCancelMarginLayout.bottomMargin -= abs(binding.floatingButtonCancelFoodOrder.height - floatingButCancelMarginLayout.bottomMargin - dy)
-                    floatingButPayMarginLayout.bottomMargin -= abs(binding.floatingButtonPayFoods.height - floatingButPayMarginLayout.bottomMargin - dy)
-                    floatingButtonStillCanScrolledToDown = false
-                }
-
-                binding.floatingButtonCancelFoodOrder.layoutParams = floatingButCancelMarginLayout
-                binding.floatingButtonPayFoods.layoutParams = floatingButPayMarginLayout
-            }
-
-        } else {
-
-            if (floatingButtonStillCanScrolledToUp) {
-
-                if (floatingButCancelMarginLayout.bottomMargin + abs(dy) <= floatingButtonMarginWhenCreated) {
-
-                    floatingButCancelMarginLayout.bottomMargin += abs(dy)
-                    floatingButPayMarginLayout.bottomMargin += abs(dy)
-                    floatingButtonStillCanScrolledToDown = true
-                } else {
-
-                    binding.floatingButtonCancelFoodOrder.layoutParams = floatingButCancelMarginLayout
-                    binding.floatingButtonPayFoods.layoutParams = floatingButPayMarginLayout
-                    floatingButtonStillCanScrolledToUp = false
-                }
-
-                binding.floatingButtonCancelFoodOrder.layoutParams = floatingButCancelMarginLayout
-                binding.floatingButtonPayFoods.layoutParams = floatingButPayMarginLayout
-            }
-        }
     }
-
-    //        if (v.id == R.id.buttonDecrementQuantityBottomSheet) {
-//
-//            if (getEdittextFoodQuantity() - 1 >= 0) {
-//
-//                inputQuantity.setText((getEdittextFoodQuantity() - 1).toString())
-//            }
-//
-//        } else if (v.id == R.id.buttonIncrementQuantityBottomSheet) {
-//
-//            if ((getEdittextFoodQuantity() + 1).toString()
-//                    .count() <= inputQuantity.getMaxLength()
-//            ) {
-//
-//                inputQuantity.setText((getEdittextFoodQuantity() + 1).toString())
-//            }
-//        }
-//    }
-//
-//    private fun TextInputEditText.getMaxLength(): Int {
-//        filters.forEach {
-//            if (it is InputFilter.LengthFilter) {
-//                return it.max
-//            }
-//        }
-//
-//        return -1
-//    }
-//
-//    private fun getEdittextFoodQuantity(): Int {
-//
-//        return binding.edittextFoodQuantityPedidoBottomSheet.text.toString().toInt()
-//    }
 }

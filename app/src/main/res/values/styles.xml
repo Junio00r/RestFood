@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+
+    <!--  Login Screen  -->
+    <style name="Button.Login.Style.Local" parent="">
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="rippleColor">@color/thirdary_color</item>
+        <item name="backgroundTint">@color/primary_color</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
     <!--  TabLayou  -->
-    <style name="TabStyle" parent="Widget.Material3.TabLayout">
+    <style name="Tab.Style.Local" parent="Widget.Material3.TabLayout">
         <item name="android:background">@drawable/radius_tab_layout</item>
         <item name="android:backgroundTint">@color/thirdary_color</item>
         <item name="tabIndicatorFullWidth">false</item>
@@ -15,13 +28,13 @@
     </style>
 
     <!--  TabTextLayouy -->
-    <style name="TabTextStyle" parent="Widget.AppCompat.ActionBar.TabBar">
+    <style name="TabText.Layout.Style.Local" parent="Widget.AppCompat.ActionBar.TabBar">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/font_tab</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
     </style>
 
     <!--  SearchView  -->
-    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+    <style name="SearchView.Style.Local" parent="Widget.AppCompat.SearchView">
         <item name="android:textSize">14sp</item>
         <item name="android:textAppearance">@style/TextAppearance.Material3.SearchBar</item>
         <item name="android:hint">@string/search_bar_hint</item>
@@ -40,7 +53,7 @@
         <item name="backgroundTint">@color/thirdary_color</item>
         <item name="android:hint">@string/search_bar_hint</item>
         <item name="defaultMarginsEnabled">false</item>
-        <item name="android:fontFamily">@font/font_tab</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
         '       <!--    put hint color one    -->
     </style>
 
@@ -57,5 +70,18 @@
         <item name="android:background">@null</item>
     </style>
 
-
+    <!--Bottom App Bar Layout Style Local-->
+    <style name="BottomAppBar.Style.Local" parent="">
+        <item name="iconSize">24dp</item>
+        <item name="iconPadding">11dp</item>
+        <item name="iconTint">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="textStartPadding">0dp</item>
+        <item name="fontFamily">@font/din_regular</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="rippleColor">@color/six_color</item>
+        <item name="android:backgroundTint">@android:color/black</item>
+        <item name="android:maxWidth">256dp</item>
+    </style>
 </resources>

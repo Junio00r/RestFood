@@ -1,6 +1,9 @@
-<resources>
-    <string name="app_name">restaurant</string>
-    <string name="button_enter">Enter</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">RestFood</string>
+
+    <string name="button_enter">ENTER</string>
+    <string name="button_sign_up">SIGN UP</string>
+    <string name="text_message_put_name">Insira Seu Nome</string>
     <string name="text_userName">Insira o seu nome</string>
     <string name="text_userTable">Insira o número da sua Mesa</string>
     <string name="tab_item_entradas">Entradas</string>
@@ -13,4 +16,9 @@
     <!--  Section Food  -->
     <string name="text_food_name">Food Name</string>
     <string name="image_food">Food Name</string>
+
+    <!--  BottomAppBar  -->
+    <string name="floating_button_cancel" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="floating_button_realizar_pedido">REALIZAR PEDIDO</string>
+
 </resources>

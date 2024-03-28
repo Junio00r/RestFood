@@ -38,10 +38,10 @@ interface FoodDao {
     fun getFoodsBySection(foodSection: FoodSection): List<Food?>
 
     @Query("SELECT * FROM foods WHERE mId = :foodId")
-    fun getFoodById(foodId: Int): Food?
+    fun getFoodById(foodId: Long): Food?
 
     @Query("SELECT COUNT(mId) FROM foods")
-    fun getFoodsSize(): Int
+    fun getFoodsSize(): Long
 
     @Query("SELECT * FROM foods")
     fun getAllFoods(): List<Food?>
