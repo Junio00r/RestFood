@@ -15,12 +15,12 @@ import com.devmobile.android.restaurant.enums.TempoPreparo
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListener, Scrolled {
+class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickListener,
+    Scrolled {
     private lateinit var binding: ActivityMenuBinding
     private lateinit var searchViewFoods: SearchView
     private lateinit var imageFilterButton: ImageFilterButton
@@ -53,18 +53,19 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
         setExtendedFAT()
     }
 
+    // Métodos de inicialização...
     private fun setTabLayouts() {
 
         val tabsNameId = addTabsName()
         tabFragmentsInstances = addFragmentsTabSection()
         tabFragmentsInstances.forEach {
-            it.setClickNotifyBridge(this)
-            it.setScrollListenerForNotify(this)
+//            it.addCheckboxClickListener(this)
+            it.addScrollListener(this)
         }
 
         val tabLayout = binding.tabFoodSectionsMenuActivity
         val viewPager2 = binding.pagerFoodSectionsMenuActivity
-        val fragmentTabAdapter = FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsInstances)
+        val fragmentTabAdapter = FragmentTabAdapter(this, tabFragmentsInstances)
 
         viewPager2.adapter = fragmentTabAdapter
 
@@ -203,7 +204,6 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
         )
     }
 
-    // Métodos de inicialização...
     private fun addFragmentsTabSection(): Array<FragmentTabFoodSection> {
 
         return arrayOf(
@@ -259,7 +259,6 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
         }
     }
 
-
     // Metodo de captura de evento de clique...
     override fun onClick(v: View) {
 
@@ -274,7 +273,7 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
 
                 Toast.makeText(
                     this,
-                    "Seu pedido foi enviado para o balcão do\n" + "restaurante!",
+                    "Seu pedido foi enviado para o balcão do restaurante!",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -285,7 +284,6 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
             }
         }
     }
-
 
     // Métodos de implementacoes de interfaces criadas
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {

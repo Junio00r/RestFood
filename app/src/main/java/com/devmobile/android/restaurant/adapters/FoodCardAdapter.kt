@@ -1,7 +1,6 @@
 package com.devmobile.android.restaurant.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
@@ -10,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.devmobile.android.restaurant.ClickNotification
+import com.devmobile.android.restaurant.CheckboxClickListener
 import com.devmobile.android.restaurant.Food
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.R
@@ -22,11 +21,12 @@ class FoodCardAdapter(
 
     private val foods: ArrayList<Food>, private val context: Context
 
-) : RecyclerView.Adapter<FoodCardViewHolder>(), ClickNotification {
+) : RecyclerView.Adapter<FoodCardViewHolder>(), CheckboxClickListener {
 
-    private var clickNotification: ClickNotification? = null
+    private var checkboxClickNotification: CheckboxClickListener? = null
     private val foodCardViewHolders = LinkedList<FoodCardViewHolder>()
 
+    // Métodos of RecyclerView.Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
 
         val inflater = LayoutInflater.from(context)
@@ -37,50 +37,38 @@ class FoodCardAdapter(
 
     override fun onBindViewHolder(holder: FoodCardViewHolder, position: Int) {
 
-        if (foods.size > 0) {
-
-            holder.imageFood.setImageResource(foods[position].mImageId)
-            holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
-            holder.textFoodName.text = foods[position].mName
-            holder.textTimeForPrepare.text = foods[position].mSection.getFoodSectionName()
-            holder.checkboxForSelectFood.setOnClickListener {
-                hasBeenCheckboxChecked(holder, false)
-            }
-
-            when (foods[position].mTimeToPrepare) {
-
-                TempoPreparo.LENTO -> {
-                    holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
-                    holder.textTimeForPrepare.text =
-                        "${TempoPreparo.LENTO.getTimeOfPrepareMinutes()} minutos"
-                }
-
-                TempoPreparo.NORMAL -> {
-
-                    holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_normal)
-                    holder.textTimeForPrepare.text =
-                        "${TempoPreparo.NORMAL.getTimeOfPrepareMinutes()} minutos"
-                }
-
-                TempoPreparo.RAPIDO -> {
-
-                    holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_rapido)
-                    holder.textTimeForPrepare.text =
-                        "${TempoPreparo.RAPIDO.getTimeOfPrepareMinutes()} minutos"
-                }
-            }
-        }
-    }
-
-    fun getFoodCardViewHoldersSelected(): LinkedList<FoodCardViewHolder>? {
-
-        foodCardViewHolders.all { foodViewHolder ->
-
-            foodViewHolder.isCheckboxChecked
-            return foodCardViewHolders
+        // Set CardViewHolder specifications
+        holder.imageFood.setImageResource(foods[position].mImageId)
+        holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
+        holder.textFoodName.text = foods[position].mName
+        holder.textTimeForPrepare.text = foods[position].mSection.getFoodSectionName()
+        holder.checkboxForSelectFood.setOnClickListener {
+            hasBeenCheckboxChecked(holder, false)
         }
 
-        return null
+        // Set icon time for prepare a food
+        when (foods[position].mTimeToPrepare) {
+
+            TempoPreparo.LENTO -> {
+                holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
+                holder.textTimeForPrepare.text =
+                    "${TempoPreparo.LENTO.getTimeOfPrepareMinutes()} minutos"
+            }
+
+            TempoPreparo.NORMAL -> {
+
+                holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_normal)
+                holder.textTimeForPrepare.text =
+                    "${TempoPreparo.NORMAL.getTimeOfPrepareMinutes()} minutos"
+            }
+
+            TempoPreparo.RAPIDO -> {
+
+                holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_rapido)
+                holder.textTimeForPrepare.text =
+                    "${TempoPreparo.RAPIDO.getTimeOfPrepareMinutes()} minutos"
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -88,18 +76,35 @@ class FoodCardAdapter(
         return foods.size
     }
 
-    fun setClickNotifyBridge(clickNotification: ClickNotification) {
 
-        if (this.clickNotification == null)
-            this.clickNotification = clickNotification
+    fun getFoodCardViewHoldersSelected(): List<FoodCardViewHolder> {
+
+        return foodCardViewHolders.filter { it.isCheckboxChecked }
+    }
+
+
+    fun cancelOrder() {
+
+        getFoodCardViewHoldersSelected().forEach {
+            unCheckCheckbox(it.checkboxForSelectFood)
+            it.isCheckboxChecked = false
+        }
+    }
+
+
+    // Listeners...
+    fun addCheckboxClickListener(checkboxClickListenerOfTabSection: CheckboxClickListener) {
+
+        if (this.checkboxClickNotification == null)
+            this.checkboxClickNotification = checkboxClickListenerOfTabSection
     }
 
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
 
         if (v.isCheckboxChecked) {
 
-            setButtonCheckboxUnchecked(v.checkboxForSelectFood)
-            clickNotification?.hasBeenCheckboxChecked(v, false)
+            unCheckCheckbox(v.checkboxForSelectFood)
+            checkboxClickNotification?.hasBeenCheckboxChecked(v, false)
             v.isCheckboxChecked = false
 
         } else {
@@ -108,42 +113,42 @@ class FoodCardAdapter(
                 foodCardViewHolders.add(v)
             }
 
-            setButtonCheckboxChecked(v.checkboxForSelectFood)
-            clickNotification?.hasBeenCheckboxChecked(v, true)
+            checkCheckbox(v.checkboxForSelectFood)
+            checkboxClickNotification?.hasBeenCheckboxChecked(v, true)
             v.isCheckboxChecked = true
         }
     }
 
-    private fun setButtonCheckboxUnchecked(checkboxChecked: MaterialCheckBox) {
+    // Change checkbox State after click it...
+    private fun unCheckCheckbox(checkboxChecked: MaterialCheckBox) {
 
-
-        val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
+        val incrementIcon: Drawable = ResourcesCompat.getDrawable(
             context.resources, R.drawable.ic_increment, null
         ) as Drawable
 
         checkboxChecked.apply {
+
             background = null
-            buttonDrawable = customIconDrawable
-            val corFiltro = Color.parseColor("#FF0000")
+            buttonDrawable = incrementIcon
             buttonDrawable!!.colorFilter = PorterDuffColorFilter(
                 context.getColor(R.color.primary_color), PorterDuff.Mode.SRC_IN
             )
         }
     }
 
-    private fun setButtonCheckboxChecked(checkboxUnchecked: MaterialCheckBox) {
+    private fun checkCheckbox(checkboxUnChecked: MaterialCheckBox) {
 
-        val customIconDrawable: Drawable = ResourcesCompat.getDrawable(
+        val decrementIcon: Drawable = ResourcesCompat.getDrawable(
             context.resources, R.drawable.ic_decrement, null
         ) as Drawable
-        val customButtonDrawable: Drawable = ResourcesCompat.getDrawable(
+        val customCheckboxButton: Drawable = ResourcesCompat.getDrawable(
             context.resources, R.drawable.bg_checkbox, null
         ) as Drawable
 
-        checkboxUnchecked.apply {
-            background = customButtonDrawable
-            buttonDrawable = customIconDrawable
-            val corFiltro = Color.parseColor("#FF0000")
+        checkboxUnChecked.apply {
+
+            background = customCheckboxButton
+            buttonDrawable = decrementIcon
             buttonDrawable!!.colorFilter = PorterDuffColorFilter(
                 context.getColor(R.color.thirdary_color), PorterDuff.Mode.SRC_IN
             )
