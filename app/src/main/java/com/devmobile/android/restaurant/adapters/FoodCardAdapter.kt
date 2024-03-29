@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -24,10 +23,12 @@ class FoodCardAdapter(
     private val foods: ArrayList<Food>, private val context: Context
 
 ) : RecyclerView.Adapter<FoodCardViewHolder>(), ClickNotification {
+
     private var clickNotification: ClickNotification? = null
     private val foodCardViewHolders = LinkedList<FoodCardViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
+
         val inflater = LayoutInflater.from(context)
         val foodViewInflated = inflater.inflate(R.layout.food_card_layout, parent, false)
 
@@ -41,46 +42,35 @@ class FoodCardAdapter(
             holder.imageFood.setImageResource(foods[position].mImageId)
             holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
             holder.textFoodName.text = foods[position].mName
-            holder.textTimeToPrepare.text = foods[position].mSection.getFoodSectionName()
-            holder.checkboxToSelectFood.setOnClickListener {
+            holder.textTimeForPrepare.text = foods[position].mSection.getFoodSectionName()
+            holder.checkboxForSelectFood.setOnClickListener {
                 hasBeenCheckboxChecked(holder, false)
             }
-
-//            if (foodCardViewHolders == null) {
-//
-//                foodCardViewHolders = arrayOf(holder)
-//            } else {
-//                if (!foodCardViewHolders!!.contains(holder)) {
-//                    foodCardViewHolders!![foodCardViewHolders!!.lastIndex] = holder
-//                }
-//            }
-//            holder.textFoodDescription.text = foods[position].mDescription
 
             when (foods[position].mTimeToPrepare) {
 
                 TempoPreparo.LENTO -> {
-                    holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
-                    holder.textTimeToPrepare.text =
+                    holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
+                    holder.textTimeForPrepare.text =
                         "${TempoPreparo.LENTO.getTimeOfPrepareMinutes()} minutos"
                 }
 
                 TempoPreparo.NORMAL -> {
 
-                    holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_normal)
-                    holder.textTimeToPrepare.text =
+                    holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_normal)
+                    holder.textTimeForPrepare.text =
                         "${TempoPreparo.NORMAL.getTimeOfPrepareMinutes()} minutos"
                 }
 
                 TempoPreparo.RAPIDO -> {
 
-                    holder.imageTimeToPrepare.setImageResource(R.drawable.ic_time_prepare_rapido)
-                    holder.textTimeToPrepare.text =
+                    holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_rapido)
+                    holder.textTimeForPrepare.text =
                         "${TempoPreparo.RAPIDO.getTimeOfPrepareMinutes()} minutos"
                 }
             }
         }
     }
-
 
     fun getFoodCardViewHoldersSelected(): LinkedList<FoodCardViewHolder>? {
 
@@ -92,20 +82,22 @@ class FoodCardAdapter(
         return null
     }
 
-    override fun getItemCount(): Int = foods.size
+    override fun getItemCount(): Int {
+
+        return foods.size
+    }
 
     fun setClickNotifyBridge(clickNotification: ClickNotification) {
-        if (this.clickNotification == null) {
 
+        if (this.clickNotification == null)
             this.clickNotification = clickNotification
-        }
     }
 
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
 
         if (v.isCheckboxChecked) {
 
-            setButtonCheckboxUnchecked(v.checkboxToSelectFood)
+            setButtonCheckboxUnchecked(v.checkboxForSelectFood)
             clickNotification?.hasBeenCheckboxChecked(v, false)
             v.isCheckboxChecked = false
 
@@ -115,7 +107,7 @@ class FoodCardAdapter(
                 foodCardViewHolders.add(v)
             }
 
-            setButtonCheckboxChecked(v.checkboxToSelectFood)
+            setButtonCheckboxChecked(v.checkboxForSelectFood)
             clickNotification?.hasBeenCheckboxChecked(v, true)
             v.isCheckboxChecked = true
         }

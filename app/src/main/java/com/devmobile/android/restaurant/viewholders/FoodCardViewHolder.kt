@@ -12,22 +12,17 @@ import com.google.android.material.textview.MaterialTextView
 class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var imageFood: ShapeableImageView
     var textFoodName: MaterialTextView
-    //    var textFoodDescription: MaterialTextView
-    var imageTimeToPrepare: ShapeableImageView
-    var textTimeToPrepare: MaterialTextView
-    var checkboxToSelectFood: MaterialCheckBox
+    var imageTimeForPrepare: ShapeableImageView
+    var textTimeForPrepare: MaterialTextView
+    var checkboxForSelectFood: MaterialCheckBox
     var isCheckboxChecked = false
 
     init {
 
         imageFood = view.findViewById(R.id.imageFood)
         textFoodName = view.findViewById(R.id.textFoodName)
-//        textFoodDescription = view.findViewById(R.id.textFoodDescription)
-        imageTimeToPrepare = view.findViewById(R.id.imageTimeToPrepare)
-        textTimeToPrepare = view.findViewById(R.id.textPrepareTime)
-        checkboxToSelectFood = view.findViewById(R.id.checkboxFood)
-
-        textFoodName.isSingleLine = true
-        textFoodName.textSize = 24f
+        imageTimeForPrepare = view.findViewById(R.id.imageTimeToPrepare)
+        textTimeForPrepare = view.findViewById(R.id.textPrepareTime)
+        checkboxForSelectFood = view.findViewById(R.id.checkboxFood)
     }
 }
