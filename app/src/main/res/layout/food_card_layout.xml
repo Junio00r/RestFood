@@ -22,7 +22,8 @@
             android:layout_height="74dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:importantForAccessibility="no" />
+            android:importantForAccessibility="no"
+            app:shapeAppearanceOverlay="@style/ImageRounded" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textFoodName"

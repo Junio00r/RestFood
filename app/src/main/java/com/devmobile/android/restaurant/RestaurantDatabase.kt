@@ -15,9 +15,11 @@ abstract class RestaurantDatabase : RoomDatabase() {
     abstract fun getUserDao(): UserDao
 
     companion object {
+
         private var instance: RestaurantDatabase? = null
 
         fun getInstance(context: Context): RestaurantDatabase {
+
             return instance ?: createDatabaseInstance(context)
         }
 

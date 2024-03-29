@@ -1,174 +1,182 @@
 package com.devmobile.android.restaurant
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.Filter
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout.LayoutParams
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.MarginLayoutParamsCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsAnimationCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isInvisible
-import androidx.core.view.marginStart
 import androidx.core.view.updateLayoutParams
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
-import java.io.FilterInputStream
-import java.io.FilterWriter
-
 
 class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
-    private lateinit var viewInflate: View
-    private lateinit var inputQuantity: TextInputEditText
-    private lateinit var foodCard: FoodCardViewHolder
-    lateinit var bottomSheetHidedNotification: BottomSheetNotification
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-    }
-
-    @SuppressLint("ResourceType", "UseCompatLoadingForDrawables")
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-
-        viewInflate = inflater.inflate(R.layout.modal_bottomsheet_layout, container, false)
-        val bottomSheetBehavior = (dialog as BottomSheetDialog).behavior
-        val bottomSheetLayoutRoot: ViewGroup =
-            viewInflate.findViewById(R.id.frameBottomSheetFoodSelectedBottomSheet)
-        bottomSheetBehavior.peekHeight = bottomSheetLayoutRoot.resources.displayMetrics.heightPixels
-
-        // AddedImageFood
-        var foodView: ShapeableImageView = viewInflate.findViewById(R.id.imageFoodBottomSheet)
-        val drawable = foodCard.imageFood.drawable
-        foodView.setImageDrawable(drawable)
-        foodView.scaleType = ImageView.ScaleType.CENTER_CROP
-        val bsFoodPreferences: TextInputEditText =
-            viewInflate.findViewById(R.id.textFoodPreferencesDescriptionsBottomSheet)
-        bsFoodPreferences.letterSpacing = 0.04f
-        var descriptionsHeight = bsFoodPreferences.height
-
-        bsFoodPreferences.post {
-            val teste = bsFoodPreferences.width
-            bsFoodPreferences.filters =
-                arrayOf(InputFilter.LengthFilter(bsFoodPreferences.width / 8))
-
-            descriptionsHeight = bsFoodPreferences.height
-        }
-        inputQuantity =
-            bottomSheetLayoutRoot.findViewById(R.id.edittextFoodQuantityPedidoBottomSheet)
-        val descriptions: MaterialTextView =
-            bottomSheetLayoutRoot.findViewById(R.id.textFoodDescriptionBottomSheet)
-        val bsFoodPreferencesHeight = bsFoodPreferences.height
-        var inputQuantityHasFocused = false
-
-        inputQuantity.setOnFocusChangeListener { view, hasFocus ->
-
-            inputQuantityHasFocused = hasFocus
-        }
-
-        activity?.let {
-            KeyboardVisibilityEvent.setEventListener(
-                it,
-                object : KeyboardVisibilityEventListener {
-                    override fun onVisibilityChanged(isOpen: Boolean) {
-
-                        if (isOpen) {
-                            if (inputQuantityHasFocused) {
-                                descriptions.updateLayoutParams { this.height -= 100 }
-
-                                bsFoodPreferences.updateLayoutParams { this.height = 0 }
-                                return
-                            }
-                        }
-
-                        if (inputQuantityHasFocused) {
-                            descriptions.updateLayoutParams { this.height += 100 }
-                            bsFoodPreferences.updateLayoutParams { this.height = descriptionsHeight }
-                        }
-                    }
-                }
-            )
-        }
-
-        init()
-        return viewInflate
-    }
+    private lateinit var bottomSheetLayout: View
+    private lateinit var textInputQuantity: TextInputEditText
+    private lateinit var foodCardViewHolder: FoodCardViewHolder
+    private lateinit var buttonDecrementFood: MaterialButton
+    private lateinit var buttonIncrementFood: MaterialButton
+    private var quantityOfFoods = 1
+    private lateinit var bottomSheetLayoutViewGroup: ViewGroup
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
+    private var hasInputQuantityFocused = false
+    private lateinit var foodPreferences: TextInputEditText
+    private var foodDescription: Int = 0
 
     companion object {
+
         const val TAG = "ModalBottomSheet"
         private const val INITIAL_COUNT = 1
     }
 
-    override fun onClick(v: View) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
-        if (v.id == R.id.buttonDecrementQuantityBottomSheet) {
+        bottomSheetLayout = inflater.inflate(R.layout.modal_bottomsheet_layout, container, false)
+        bottomSheetLayoutViewGroup =
+            bottomSheetLayout.findViewById(R.id.frameBottomSheetFoodViewGroup)
 
-            if (getEdittextFoodQuantity() - 1 >= 0) {
+        setBottomSheetBehavior()
+        setFoodImage()
+        setFoodPreferences()
 
-                inputQuantity.setText((getEdittextFoodQuantity() - 1).toString())
-            }
+        textInputQuantity = bottomSheetLayoutViewGroup.findViewById(R.id.textInputFoodQuantityOrder)
 
-        } else if (v.id == R.id.buttonIncrementQuantityBottomSheet) {
+        setInputQuantityFocus()
+        addKeyboardListener()
 
-            if ((getEdittextFoodQuantity() + 1).toString()
-                    .count() <= inputQuantity.getMaxLength()
-            ) {
+        init()
 
-                inputQuantity.setText((getEdittextFoodQuantity() + 1).toString())
-            }
+        return bottomSheetLayout
+    }
+
+    private fun setBottomSheetBehavior() {
+
+        bottomSheetBehavior = (dialog as BottomSheetDialog).behavior
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun setInputQuantityFocus() {
+
+        textInputQuantity.setOnFocusChangeListener { _, hasFocus ->
+
+            hasInputQuantityFocused = hasFocus
+        }
+    }
+
+    private fun setFoodImage() {
+
+        val imageFood: ShapeableImageView = bottomSheetLayout.findViewById(R.id.imageFood)
+        val drawable = foodCardViewHolder.imageFood.drawable
+
+        imageFood.setImageDrawable(drawable)
+        imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
+    }
+
+    private fun setFoodPreferences() {
+        foodPreferences = bottomSheetLayout.findViewById(R.id.textFoodPreferences)
+        foodPreferences.letterSpacing = 0.04f
+
+        foodPreferences.post {
+            foodPreferences.filters = arrayOf(InputFilter.LengthFilter(foodPreferences.width / 8))
+        }
+    }
+
+    private fun addKeyboardListener() {
+        val foodDescription: MaterialTextView =
+            bottomSheetLayoutViewGroup.findViewById(R.id.textFoodDescriptionBottomSheet)
+
+        requireActivity().let {
+            KeyboardVisibilityEvent.setEventListener(it, object : KeyboardVisibilityEventListener {
+                override fun onVisibilityChanged(isOpen: Boolean) {
+
+                    if (isOpen) {
+
+                        if (hasInputQuantityFocused) {
+
+                            foodDescription.updateLayoutParams { this.height -= 100 }
+                            foodPreferences.updateLayoutParams { this.height = 0 }
+
+                            return
+                        }
+                    }
+
+                    if (hasInputQuantityFocused) {
+
+                        foodDescription.updateLayoutParams { this.height += 100 }
+                        foodPreferences.updateLayoutParams {
+                            this.height = foodDescription.height
+                        }
+                    }
+                }
+            })
         }
     }
 
     private fun init() {
-        viewInflate.findViewById<Button>(R.id.buttonDecrementQuantityBottomSheet)
-            .setOnClickListener(this)
-        viewInflate.findViewById<Button>(R.id.buttonIncrementQuantityBottomSheet)
-            .setOnClickListener(this)
 
+        // Init views references
+        buttonDecrementFood = bottomSheetLayout.findViewById(R.id.buttonDecrementFoodsQuantity)
+        buttonIncrementFood = bottomSheetLayout.findViewById(R.id.buttonIncrementFoodsQuantity)
+        textInputQuantity = bottomSheetLayout.findViewById(R.id.textInputFoodQuantityOrder)
 
-        inputQuantity = viewInflate.findViewById(R.id.edittextFoodQuantityPedidoBottomSheet)
-        inputQuantity.setText(INITIAL_COUNT.toString())
+        // Set clickListener
+        buttonDecrementFood.setOnClickListener(this)
+        buttonIncrementFood.setOnClickListener(this)
+
+        // Set Initial Value
+        textInputQuantity.setText(INITIAL_COUNT.toString())
     }
 
-    private fun getEdittextFoodQuantity(): Int {
+    override fun onClick(button: View) {
 
-        return viewInflate.findViewById<TextInputEditText>(R.id.edittextFoodQuantityPedidoBottomSheet).text.toString()
-            .toInt()
-    }
+        val quantityCanDecremented = getTextInputValue() - 1 >= 0
+        val quantityCanIncremented = getTextInputValue() + 1 < textInputQuantity.length() * 10
 
-    private fun TextInputEditText.getMaxLength(): Int {
-        filters.forEach {
-            if (it is InputFilter.LengthFilter) {
-                return it.max
+        when (button) {
+
+            buttonDecrementFood -> {
+
+                if (quantityCanDecremented) {
+
+                    quantityOfFoods--
+                    textInputQuantity.setText((getTextInputValue() - 1).toString())
+                }
+
+                textInputQuantity.isCursorVisible = false
+                foodPreferences.isCursorVisible = false
+            }
+
+            buttonIncrementFood -> {
+
+                if (quantityCanIncremented) {
+
+                    quantityOfFoods++
+                    textInputQuantity.setText((getTextInputValue() + 1).toString())
+                }
+
+                textInputQuantity.isCursorVisible = false
+                foodPreferences.isCursorVisible = false
             }
         }
+    }
 
-        return -1
+    private fun getTextInputValue(): Int {
+
+        return textInputQuantity.text.toString().toInt()
     }
 
     fun setBottomSheetAttributes(v: FoodCardViewHolder) {
-        foodCard = v
+
+        foodCardViewHolder = v
     }
 }

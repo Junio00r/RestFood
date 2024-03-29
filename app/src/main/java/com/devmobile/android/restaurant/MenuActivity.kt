@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.core.view.ScrollingView
@@ -40,35 +41,23 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
+
             binding = ActivityMenuBinding.inflate(this.layoutInflater)
             setContentView(binding.root)
 
             init()
+
         } else {
 
         }
     }
-
 
     private fun init() {
 
         initSearchBarSpecifications()
         initTabLayoutSpecifications()
         initImageFilterButton()
-        initViewsParams()
         initExtendedFAT()
-    }
-
-    private fun initViewsParams() {
-
-//        binding.bottomAppBarMenuActivity.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-//
-//
-//            val bottomMarginParams = binding.linearlayoutMenuActivity.layoutParams as ViewGroup.MarginLayoutParams
-//            bottomMarginParams.bottomMargin = v.height
-//            val teste = v.height
-//            binding.linearlayoutMenuActivity.layoutParams = bottomMarginParams
-//        }
     }
 
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
@@ -95,7 +84,6 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
             it.setScrollListenerForNotify(this)
         }
         val foods = ArrayList<Food>()
-        val database = RestaurantDatabase.getInstance(this)
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
 
         if (foodDao.getFoodsSize() == 0) {
@@ -271,6 +259,12 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
             R.id.floatingButtonCancelFoodOrder -> {
 
                 tabFragmentsInstances.forEach { it.cancelFoodSelected() }
+            }
+
+            R.id.floatingButtonPayFoods -> {
+
+                Toast.makeText(this, "O seu pedido foi enviado para o Balcao!", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

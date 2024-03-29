@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant
 
-import androidx.compose.animation.fadeIn
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -43,7 +43,6 @@
 
     <!--  ShapeableImageView  -->
     <style name="ImageRounded">
-
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
     </style>
