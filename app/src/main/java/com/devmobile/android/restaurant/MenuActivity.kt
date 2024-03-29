@@ -1,41 +1,33 @@
 package com.devmobile.android.restaurant
 
-import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.utils.widget.ImageFilterButton
 import androidx.core.view.ScrollingView
-import androidx.core.view.doOnLayout
-import androidx.core.view.marginBottom
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.enums.TempoPreparo
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
-import java.lang.String
-import kotlin.math.abs
-import kotlin.math.absoluteValue
 
 
 class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListener, Scrolled {
     private lateinit var binding: ActivityMenuBinding
-    private lateinit var searchBarFoods: SearchBar
     private lateinit var searchViewFoods: SearchView
     private lateinit var imageFilterButton: ImageFilterButton
     private lateinit var tabFragmentsInstances: Array<FragmentTabFoodSection>
-    private var floatingButtonStillCanScrolledToDown = true
-    private var floatingButtonStillCanScrolledToUp = false
-    private var floatingButtonMarginWhenCreated: Int = 0
+    private lateinit var floatingButtonCancelFoodOrder: MaterialButton
+    private lateinit var floatingButtonPayFoods: MaterialButton
+    private lateinit var popupMenu: PopupMenu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,35 +46,35 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
 
     private fun init() {
 
-        initSearchBarSpecifications()
-        initTabLayoutSpecifications()
-        initImageFilterButton()
-        initExtendedFAT()
+        addFoodsInDatabase()
+        setSearchBarSpecifications()
+        setTabLayouts()
+        setFilterButton()
+        setExtendedFAT()
     }
 
-    override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
+    private fun setTabLayouts() {
 
-
-    }
-
-    private fun initTabLayoutSpecifications() {
-
-        val tabsNameId = arrayOf(
-            R.string.tab_item_entradas,
-            R.string.tab_item_pratos_principais,
-            R.string.tab_item_bebidas,
-            R.string.tab_item_sobremesas,
-        )
-        tabFragmentsInstances = arrayOf(
-            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.ENTRADA),
-            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.PRINCIPAL),
-            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.BEBIDA),
-            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.SOBREMESA),
-        )
+        val tabsNameId = addTabsName()
+        tabFragmentsInstances = addFragmentsTabSection()
         tabFragmentsInstances.forEach {
             it.setClickNotifyBridge(this)
             it.setScrollListenerForNotify(this)
         }
+
+        val tabLayout = binding.tabFoodSectionsMenuActivity
+        val viewPager2 = binding.pagerFoodSectionsMenuActivity
+        val fragmentTabAdapter = FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsInstances)
+
+        viewPager2.adapter = fragmentTabAdapter
+
+        TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
+            tab.text = getString(tabsNameId[position])
+        }.attach()
+    }
+
+    private fun addFoodsInDatabase() {
+
         val foods = ArrayList<Food>()
         val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
 
@@ -199,84 +191,113 @@ class MenuActivity : AppCompatActivity(), ClickNotification, View.OnClickListene
 
             foodDao.insertAll(foods as List<Food>)
         }
-        val tabLayout = binding.tabFoodSectionsMenuActivity
-        val viewPager2 = binding.pagerFoodSectionsMenuActivity
-        val fragmentTabAdapter =
-            FragmentTabAdapter(this, baseContext, tabsNameId, tabFragmentsInstances)
-
-        viewPager2.adapter = fragmentTabAdapter
-
-        TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
-            tab.text = getString(fragmentTabAdapter.tabsNameId[position])
-        }.attach()
     }
 
-    private fun initSearchBarSpecifications() {
-        this.searchBarFoods = binding.searchBarFoodsMenuActivity
-        this.searchViewFoods = binding.searchViewFoodsMenuActivity
+    private fun addTabsName(): Array<Int> {
+
+        return arrayOf(
+            R.string.tab_item_entradas,
+            R.string.tab_item_pratos_principais,
+            R.string.tab_item_bebidas,
+            R.string.tab_item_sobremesas,
+        )
+    }
+
+    // Métodos de inicialização...
+    private fun addFragmentsTabSection(): Array<FragmentTabFoodSection> {
+
+        return arrayOf(
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.ENTRADA),
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.PRINCIPAL),
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.BEBIDA),
+            FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.SOBREMESA)
+        )
+    }
+
+    private fun setSearchBarSpecifications() {
+        val searchBarFoods = binding.searchBarFoods
+        searchViewFoods = binding.searchViewFoods
 
         searchViewFoods.editText.setOnEditorActionListener { v, actionId, event ->
+
             searchBarFoods.setText(searchViewFoods.text)
-            searchViewFoods.hide()
+            searchViewFoods.show()
             false
         }
 
         searchViewFoods.setupWithSearchBar(searchBarFoods)
     }
 
-    private fun initImageFilterButton() {
+    private fun setExtendedFAT() {
 
-        this.imageFilterButton = binding.imageFilterButtonMenuActivity
-        val popupMenu = PopupMenu(
+        floatingButtonCancelFoodOrder = binding.floatingButtonCancelFoodOrder
+        floatingButtonPayFoods = binding.floatingButtonPayFoods
+
+        floatingButtonCancelFoodOrder.setOnClickListener(this)
+        floatingButtonPayFoods.setOnClickListener(this)
+    }
+
+    private fun setFilterButton() {
+
+        imageFilterButton = binding.imageFilterButtonMenuActivity
+        imageFilterButton.setOnClickListener(this)
+
+        addMenuOnFilterButton()
+    }
+
+    private fun addMenuOnFilterButton() {
+
+        popupMenu = PopupMenu(
             applicationContext, imageFilterButton, Gravity.START, 0, R.style.PopupMenu_View_Local
         )
 
         popupMenu.menuInflater.inflate(R.menu.searchbar_filter_options, popupMenu.menu)
 
-        imageFilterButton.setOnClickListener {
+        popupMenu.setOnMenuItemClickListener { menuItem ->
 
-            popupMenu.show()
-
-            popupMenu.setOnMenuItemClickListener { menuItem ->
-
-                return@setOnMenuItemClickListener true
-            }
-
+            return@setOnMenuItemClickListener true
         }
     }
 
-    private fun initExtendedFAT() {
 
-        binding.floatingButtonCancelFoodOrder.setOnClickListener(this)
-        binding.floatingButtonPayFoods.setOnClickListener(this)
-
-    }
-
+    // Metodo de captura de evento de clique...
     override fun onClick(v: View) {
 
-        when (v.id) {
+        when (v) {
 
-            R.id.floatingButtonCancelFoodOrder -> {
+            floatingButtonCancelFoodOrder -> {
 
                 tabFragmentsInstances.forEach { it.cancelFoodSelected() }
             }
 
-            R.id.floatingButtonPayFoods -> {
+            floatingButtonPayFoods -> {
 
-                Toast.makeText(this, "O seu pedido foi enviado para o Balcao!", Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(
+                    this,
+                    "Seu pedido foi enviado para o balcão do\n" + "restaurante!",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            imageFilterButton -> {
+
+                popupMenu.show()
             }
         }
     }
 
-    override fun hasBeenScrolled(data: ScrollingView, dx: Int, dy: Int) {
 
+    // Métodos de implementacoes de interfaces criadas
+    override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
+
+    }
+
+    override fun hasBeenScrolled(data: ScrollingView, dx: Int, dy: Int) {
 
         if (dy != 0) {
 
             hideFloatingButtonVertically(data, dy)
         }
-
     }
 
     private fun hideFloatingButtonVertically(recyclerViewOfFoodCards: ScrollingView, dy: Int) {

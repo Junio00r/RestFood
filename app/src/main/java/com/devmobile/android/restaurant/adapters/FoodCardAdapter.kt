@@ -75,6 +75,7 @@ class FoodCardAdapter(
     fun getFoodCardViewHoldersSelected(): LinkedList<FoodCardViewHolder>? {
 
         foodCardViewHolders.all { foodViewHolder ->
+
             foodViewHolder.isCheckboxChecked
             return foodCardViewHolders
         }
