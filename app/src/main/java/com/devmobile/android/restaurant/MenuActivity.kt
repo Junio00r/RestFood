@@ -17,10 +17,10 @@ import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
+import java.util.Locale
 
 
-class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickListener,
-    Scrolled {
+class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickListener, Scrolled {
     private lateinit var binding: ActivityMenuBinding
     private lateinit var searchViewFoods: SearchView
     private lateinit var imageFilterButton: ImageFilterButton
@@ -46,6 +46,11 @@ class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickLis
 
     private fun init() {
 
+        val teste = RestaurantDatabase.getInstance(this)
+        teste.clearAllTables()
+
+
+        setLocaleDefault()
         addFoodsInDatabase()
         setSearchBarSpecifications()
         setTabLayouts()
@@ -54,6 +59,10 @@ class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickLis
     }
 
     // Métodos de inicialização...
+    private fun setLocaleDefault() {
+        Locale.setDefault(Locale("pt", "BR"))
+    }
+
     private fun setTabLayouts() {
 
         val tabsNameId = addTabsName()
@@ -68,130 +77,9 @@ class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickLis
         val fragmentTabAdapter = FragmentTabAdapter(this, tabFragmentsInstances)
 
         viewPager2.adapter = fragmentTabAdapter
-
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
             tab.text = getString(tabsNameId[position])
         }.attach()
-    }
-
-    private fun addFoodsInDatabase() {
-
-        val foods = ArrayList<Food>()
-        val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
-
-        if (foodDao.getFoodsSize() == 0) {
-            foods.addAll(
-                listOf(
-                    Food(
-                        0,
-                        "Macarronada",
-                        FoodSection.ENTRADA,
-                        R.drawable.macarronada,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.LENTO,
-                        "Macarronado com Salsicha"
-                    ), Food(
-                        1,
-                        "Hamburger",
-                        FoodSection.ENTRADA,
-                        R.drawable.hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        2,
-                        "Lasanha",
-                        FoodSection.ENTRADA,
-                        R.drawable.lasanha,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.LENTO,
-                        "Lasanha Irlandesa"
-                    ), Food(
-                        3,
-                        "Feijoada",
-                        FoodSection.ENTRADA,
-                        R.drawable.feijoada,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.LENTO,
-                        "Feijoada Brasileira"
-                    ), Food(
-                        4,
-                        "Camarão",
-                        FoodSection.ENTRADA,
-                        R.drawable.camarao,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.NORMAL,
-                        "Camarao do Mar"
-                    ), Food(
-                        5,
-                        "Queijo",
-                        FoodSection.ENTRADA,
-                        R.drawable.queijo,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Queijo Fresco"
-                    ), Food(
-                        6,
-                        "Sopa",
-                        FoodSection.ENTRADA,
-                        R.drawable.sopa,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.NORMAL,
-                        "Sopa de Carne"
-                    ), Food(
-                        7,
-                        "Hamburg32er",
-                        FoodSection.ENTRADA,
-                        R.drawable.hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        18,
-                        "Nusmo",
-                        FoodSection.ENTRADA,
-                        R.drawable.hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        9,
-                        "Nusmo111",
-                        FoodSection.ENTRADA,
-                        R.drawable.hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        10,
-                        "Nusmo232",
-                        FoodSection.ENTRADA,
-                        R.drawable.hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        11,
-                        "Nusmo23",
-                        FoodSection.ENTRADA,
-                        R.drawable.hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        12,
-                        "Nusmo",
-                        FoodSection.ENTRADA,
-                        R.drawable.hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    )
-                )
-            )
-
-            foodDao.insertAll(foods as List<Food>)
-        }
     }
 
     private fun addTabsName(): Array<Int> {
@@ -212,6 +100,139 @@ class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickLis
             FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.BEBIDA),
             FragmentTabFoodSection(this, R.layout.tab_food_section_layout, FoodSection.SOBREMESA)
         )
+    }
+
+    private fun addFoodsInDatabase() {
+
+        val foods = ArrayList<Food>()
+        val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
+
+        if (foodDao.getFoodsSize() == 0) {
+            foods.addAll(
+                listOf(
+                    Food(
+                        0,
+                        "Macarronada",
+                        87F,
+                        FoodSection.ENTRADA,
+                        R.drawable.macarronada,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.LENTO,
+                        "Macarronado com Salsicha"
+                    ), Food(
+                        1,
+                        "Hamburger",
+                        35F,
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Big Hamburger"
+                    ), Food(
+                        2,
+                        "Lasanha",
+                        55F,
+                        FoodSection.ENTRADA,
+                        R.drawable.lasanha,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.LENTO,
+                        "Lasanha Irlandesa"
+                    ), Food(
+                        3,
+                        "Feijoada",
+                        133F,
+                        FoodSection.ENTRADA,
+                        R.drawable.feijoada,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.LENTO,
+                        "Feijoada Brasileira"
+                    ), Food(
+                        4,
+                        "Camarão",
+                        60F,
+                        FoodSection.ENTRADA,
+                        R.drawable.camarao,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.NORMAL,
+                        "Camarao do Mar"
+                    ), Food(
+                        5,
+                        "Queijo",
+                        30F,
+                        FoodSection.ENTRADA,
+                        R.drawable.queijo,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Queijo Fresco"
+                    ), Food(
+                        6,
+                        "Sopa",
+                        40F,
+                        FoodSection.ENTRADA,
+                        R.drawable.sopa,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.NORMAL,
+                        "Sopa de Carne"
+                    ), Food(
+                        7,
+                        "Hamburg32er",
+                        30F,
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Big Hamburger"
+                    ), Food(
+                        18,
+                        "Nusmo",
+                        29.90F,
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Big Hamburger"
+                    ), Food(
+                        9,
+                        "Nusmo111",
+                        9F,
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Big Hamburger"
+                    ), Food(
+                        10,
+                        "Nusmo232",
+                        59F,
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Big Hamburger"
+                    ), Food(
+                        11,
+                        "Nusmo23",
+                        19F,
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Big Hamburger"
+                    ), Food(
+                        12,
+                        "Nusmo",
+                        21.99F,
+                        FoodSection.ENTRADA,
+                        R.drawable.hamburguer,
+                        R.drawable.ic_time_prepare_lento,
+                        TempoPreparo.RAPIDO,
+                        "Big Hamburger"
+                    )
+                )
+            )
+
+            foodDao.insertAll(foods as List<Food>)
+        }
     }
 
     private fun setSearchBarSpecifications() {
@@ -272,9 +293,7 @@ class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickLis
             floatingButtonPayFoods -> {
 
                 Toast.makeText(
-                    this,
-                    "Seu pedido foi enviado para o balcão do restaurante!",
-                    Toast.LENGTH_LONG
+                    this, "Seu pedido foi enviado para o balcão do restaurante!", Toast.LENGTH_LONG
                 ).show()
             }
 

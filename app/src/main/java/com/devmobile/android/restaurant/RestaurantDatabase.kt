@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.devmobile.android.restaurant.dao.FoodDao
 import com.devmobile.android.restaurant.dao.UserDao
 
-@Database(version = 14, entities = [Food::class, User::class], exportSchema = false)
+@Database(version = 15, entities = [Food::class, User::class], exportSchema = false)
 abstract class RestaurantDatabase : RoomDatabase() {
 
     abstract fun getFoodDao(): FoodDao

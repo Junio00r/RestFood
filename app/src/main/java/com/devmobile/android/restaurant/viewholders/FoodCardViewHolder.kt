@@ -11,6 +11,7 @@ class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     var imageFood: ShapeableImageView
     var textFoodName: MaterialTextView
+    var textFoodPrice: MaterialTextView
     var imageTimeForPrepare: ShapeableImageView
     var textTimeForPrepare: MaterialTextView
     var checkboxForSelectFood: MaterialCheckBox
@@ -20,6 +21,7 @@ class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         imageFood = view.findViewById(R.id.imageFood)
         textFoodName = view.findViewById(R.id.textFoodName)
+        textFoodPrice = view.findViewById(R.id.textFoodPrice)
         imageTimeForPrepare = view.findViewById(R.id.imageTimeToPrepare)
         textTimeForPrepare = view.findViewById(R.id.textPrepareTime)
         checkboxForSelectFood = view.findViewById(R.id.checkboxFood)

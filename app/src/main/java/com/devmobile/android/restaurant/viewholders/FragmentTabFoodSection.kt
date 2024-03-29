@@ -41,6 +41,7 @@ class FragmentTabFoodSection(
     private var tabSectionCheckedClickNotification: CheckboxClickListener? = null
     private var isBottomSheetInflacting = false
     private lateinit var scrollListener: Scrolled
+    private lateinit var foodsSelected: LinkedList<Int>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -79,21 +80,6 @@ class FragmentTabFoodSection(
     fun cancelFoodSelected() {
 
         foodCardAdapter?.cancelOrder()
-//        foodCardAdapter?.getFoodCardViewHoldersSelected()?.forEach {
-//            foodCardAdapter!!.unCheckCheckbox(it.checkboxForSelectFood)
-//        }
-
-//        foodCardAdapter?.getFoodCardViewHoldersSelected().let { viewHolderLinkedList ->
-//
-//            viewHolderLinkedList?.forEach { foodCardViewHolder ->
-//                foodCardAdapter!!.hasBeenCheckboxChecked(
-//                    foodCardViewHolder, true
-//                )
-//            }
-//
-//            // Remove all CardViewHolders Save
-//            viewHolderLinkedList?.removeAll { !it.isCheckboxChecked }
-//        }
     }
 
     fun getQuantityOfFoodsChecked(): Int {

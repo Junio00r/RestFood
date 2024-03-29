@@ -10,12 +10,16 @@ import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.CheckboxClickListener
+import com.devmobile.android.restaurant.DecimalNumberFormatted
 import com.devmobile.android.restaurant.Food
 import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.enums.TempoPreparo
 import com.google.android.material.checkbox.MaterialCheckBox
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.util.LinkedList
+import java.util.Locale
 
 class FoodCardAdapter(
 
@@ -23,10 +27,10 @@ class FoodCardAdapter(
 
 ) : RecyclerView.Adapter<FoodCardViewHolder>(), CheckboxClickListener {
 
-    private var checkboxClickNotification: CheckboxClickListener? = null
+    private var checkboxClickListener: CheckboxClickListener? = null
     private val foodCardViewHolders = LinkedList<FoodCardViewHolder>()
 
-    // Métodos of RecyclerView.Adapter
+    // RecyclerView.Adapter Methods
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
 
         val inflater = LayoutInflater.from(context)
@@ -41,6 +45,7 @@ class FoodCardAdapter(
         holder.imageFood.setImageResource(foods[position].mImageId)
         holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
         holder.textFoodName.text = foods[position].mName
+        holder.textFoodPrice.text = DecimalNumberFormatted.format(foods[position].mFoodPrice)
         holder.textTimeForPrepare.text = foods[position].mSection.getFoodSectionName()
         holder.checkboxForSelectFood.setOnClickListener {
             hasBeenCheckboxChecked(holder, false)
@@ -95,8 +100,8 @@ class FoodCardAdapter(
     // Listeners...
     fun addCheckboxClickListener(checkboxClickListenerOfTabSection: CheckboxClickListener) {
 
-        if (this.checkboxClickNotification == null)
-            this.checkboxClickNotification = checkboxClickListenerOfTabSection
+        if (this.checkboxClickListener == null) this.checkboxClickListener =
+            checkboxClickListenerOfTabSection
     }
 
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
@@ -104,7 +109,7 @@ class FoodCardAdapter(
         if (v.isCheckboxChecked) {
 
             unCheckCheckbox(v.checkboxForSelectFood)
-            checkboxClickNotification?.hasBeenCheckboxChecked(v, false)
+            checkboxClickListener?.hasBeenCheckboxChecked(v, false)
             v.isCheckboxChecked = false
 
         } else {
@@ -114,7 +119,7 @@ class FoodCardAdapter(
             }
 
             checkCheckbox(v.checkboxForSelectFood)
-            checkboxClickNotification?.hasBeenCheckboxChecked(v, true)
+            checkboxClickListener?.hasBeenCheckboxChecked(v, true)
             v.isCheckboxChecked = true
         }
     }
