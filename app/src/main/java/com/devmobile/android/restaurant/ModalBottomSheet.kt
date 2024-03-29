@@ -20,16 +20,15 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventList
 
 class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var bottomSheetLayout: View
-    private lateinit var textInputQuantity: TextInputEditText
+    private lateinit var bottomSheetLayoutContainer: ViewGroup
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var foodCardViewHolder: FoodCardViewHolder
+    private lateinit var foodPreferences: TextInputEditText
+    private lateinit var textInputQuantity: TextInputEditText
+    private var hasInputQuantityFocused = false
     private lateinit var buttonDecrementFood: MaterialButton
     private lateinit var buttonIncrementFood: MaterialButton
     private var quantityOfFoods = 1
-    private lateinit var bottomSheetLayoutViewGroup: ViewGroup
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
-    private var hasInputQuantityFocused = false
-    private lateinit var foodPreferences: TextInputEditText
-    private var foodDescription: Int = 0
 
     companion object {
 
@@ -42,14 +41,14 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     ): View {
 
         bottomSheetLayout = inflater.inflate(R.layout.modal_bottomsheet_layout, container, false)
-        bottomSheetLayoutViewGroup =
+        bottomSheetLayoutContainer =
             bottomSheetLayout.findViewById(R.id.frameBottomSheetFoodViewGroup)
 
         setBottomSheetBehavior()
         setFoodImage()
         setFoodPreferences()
 
-        textInputQuantity = bottomSheetLayoutViewGroup.findViewById(R.id.textInputFoodQuantityOrder)
+        textInputQuantity = bottomSheetLayoutContainer.findViewById(R.id.textInputFoodQuantityOrder)
 
         setInputQuantityFocus()
         addKeyboardListener()
@@ -93,7 +92,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
 
     private fun addKeyboardListener() {
         val foodDescription: MaterialTextView =
-            bottomSheetLayoutViewGroup.findViewById(R.id.textFoodDescriptionBottomSheet)
+            bottomSheetLayoutContainer.findViewById(R.id.textFoodDescriptionBottomSheet)
 
         requireActivity().let {
             KeyboardVisibilityEvent.setEventListener(it, object : KeyboardVisibilityEventListener {
