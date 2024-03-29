@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.adapter.FragmentViewHolder
 import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
 
 class FragmentTabAdapter(
@@ -16,21 +15,16 @@ class FragmentTabAdapter(
 
     ) : FragmentStateAdapter(fragment) {
 
-    override fun onBindViewHolder(
-        holder: FragmentViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
-    ) {
+    override fun getItemCount(): Int {
 
-        super.onBindViewHolder(holder, position, payloads)
+        return fragments.size
     }
-
-    override fun getItemCount(): Int = fragments.size
 
     override fun createFragment(position: Int): Fragment {
 
         return fragments[position]
     }
 }
+
 
 

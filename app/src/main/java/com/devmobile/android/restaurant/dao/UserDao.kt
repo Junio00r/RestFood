@@ -6,9 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.devmobile.android.restaurant.Food
 import com.devmobile.android.restaurant.User
-import com.devmobile.android.restaurant.enums.FoodSection
 
 @Dao
 interface UserDao {
