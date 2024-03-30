@@ -14,54 +14,8 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:orientation="vertical"
-        android:paddingHorizontal="14dp">
-
-        <!--  AppBar of SearchBar  -->
-        <!--      Desabilitado para testar a rolagem da searchview  -->
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarSearchMenuActivity"
-            style="@style/AppBarLayout.Style.Local"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="14dp"
-            android:nestedScrollingEnabled="true">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp">
-
-                <com.google.android.material.search.SearchBar
-                    android:id="@+id/searchBarFoods"
-                    style="@style/SearchBar.Style.Local"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintEnd_toStartOf="@id/imageFilterButtonMenuActivity"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.utils.widget.ImageFilterButton
-                    android:id="@+id/imageFilterButtonMenuActivity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_toEndOf="@id/searchBarFoods"
-                    android:background="@drawable/ic_filter_list"
-                    app:layout_constraintBottom_toBottomOf="@id/searchBarFoods"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/searchBarFoods" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.google.android.material.search.SearchView
-            android:id="@+id/searchViewFoods"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:hint="@string/search_bar_hint">
-
-        </com.google.android.material.search.SearchView>
+        android:paddingHorizontal="14dp"
+        android:paddingTop="128dp">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabFoodSectionsMenuActivity"
@@ -78,13 +32,14 @@
 
     </LinearLayout>
 
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         style="@style/Widget.Material3.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@android:color/transparent"
+        android:backgroundTint="@color/seven_color"
         app:hideOnScroll="true">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

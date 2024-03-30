@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -56,9 +57,9 @@ class MenuActivity : AppCompatActivity(),
 
         setLocaleDefault()
         addFoodsInDatabase()
-        setSearchBarSpecifications()
+//        setSearchBarSpecifications()
         setTabLayouts()
-        setFilterButton()
+//        setFilterButton()
         setExtendedFAT()
     }
 
@@ -231,19 +232,19 @@ class MenuActivity : AppCompatActivity(),
         }
     }
 
-    private fun setSearchBarSpecifications() {
-        val searchBarFoods = binding.searchBarFoods
-        searchViewFoods = binding.searchViewFoods
-
-        searchViewFoods.editText.setOnEditorActionListener { v, actionId, event ->
-
-            searchBarFoods.setText(searchViewFoods.text)
-            searchViewFoods.show()
-            false
-        }
-
-        searchViewFoods.setupWithSearchBar(searchBarFoods)
-    }
+//    private fun setSearchBarSpecifications() {
+//        val searchBarFoods = binding.searchBarFoods
+//        searchViewFoods = binding.searchViewFoods
+//
+//        searchViewFoods.editText.setOnEditorActionListener { v, actionId, event ->
+//
+//            searchBarFoods.setText(searchViewFoods.text)
+//            searchViewFoods.show()
+//            false
+//        }
+//
+//        searchViewFoods.setupWithSearchBar(searchBarFoods)
+//    }
 
     private fun setExtendedFAT() {
 
@@ -254,13 +255,13 @@ class MenuActivity : AppCompatActivity(),
         floatingButtonPayFoods.setOnClickListener(this)
     }
 
-    private fun setFilterButton() {
-
-        imageFilterButton = binding.imageFilterButtonMenuActivity
-        imageFilterButton.setOnClickListener(this)
-
-        addMenuOnFilterButton()
-    }
+//    private fun setFilterButton() {
+//
+//        imageFilterButton = binding.imageFilterButtonMenuActivity
+//        imageFilterButton.setOnClickListener(this)
+//
+//        addMenuOnFilterButton()
+//    }
 
     private fun addMenuOnFilterButton() {
 
@@ -288,9 +289,8 @@ class MenuActivity : AppCompatActivity(),
 
             floatingButtonPayFoods -> {
 
-                Toast.makeText(
-                    this, "Seu pedido foi enviado para o balcão do restaurante!", Toast.LENGTH_LONG
-                ).show()
+                val intent = Intent(this, FinalizeOrderFragment::class.java)
+                startActivity(intent)
             }
 
             imageFilterButton -> {

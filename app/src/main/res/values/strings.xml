@@ -22,4 +22,8 @@
     <string name="floating_button_cancel" tools:ignore="ButtonCase">CANCELAR</string>
     <string name="floating_button_realizar_pedido">CONTINUAR</string>
 
+    <!--  Fragment Finalize Order  -->
+    <string name="button_realizar_pedido">REALIZAR PEDIDO</string>
+    <string name="text_total_to_pay">R$ </string>
+
 </resources>
