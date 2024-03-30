@@ -47,7 +47,7 @@
                     android:layout_height="0dp"
                     android:layout_marginEnd="4dp"
                     android:layout_toEndOf="@id/searchBarFoods"
-                    android:background="@drawable/ic_chip_filter_list"
+                    android:background="@drawable/ic_filter_list"
                     app:layout_constraintBottom_toBottomOf="@id/searchBarFoods"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/searchBarFoods" />
@@ -65,7 +65,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabFoodSectionsMenuActivity"
-            style="@style/Tab.Style.Local"
+            style="@style/TabSection.Style.Local"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabTextAppearance="@style/TabText.Layout.Style.Local" />
@@ -96,7 +96,7 @@
             android:layout_marginHorizontal="8dp"
             android:maxWidth="256dp"
             android:text="@string/floating_button_cancel"
-            app:icon="@drawable/baseline_close_24"
+            app:icon="@drawable/ic_close_24"
             app:iconSize="24dp" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -108,7 +108,7 @@
             android:layout_marginHorizontal="8dp"
             android:maxWidth="256dp"
             android:text="@string/floating_button_realizar_pedido"
-            app:icon="@drawable/baseline_attach_money_24"
+            app:icon="@drawable/ic_dollar_sign"
             app:iconSize="24dp" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 

@@ -111,9 +111,10 @@ class FragmentTabFoodSection(
         v: FoodCardViewHolder,
         isCheckboxChecked: Boolean
     ) {
-        val bottomSheet = ModalBottomSheet()
 
         if (isCheckboxChecked) {
+
+            val bottomSheet = ModalBottomSheet()
 
             bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
             bottomSheet.setBottomSheetAttributes(v)
@@ -127,8 +128,9 @@ class FragmentTabFoodSection(
         }
     }
 
-    override fun onAddedFood(foodPrice: Float, quantityAdded: Int) {
-        onFoodAddedCallback?.onAddedFood(foodPrice, quantityAdded)
+    override fun onAddedFood(foodPrice: Float, quantityAdded: Int, preferencesFood: String) {
+
+        onFoodAddedCallback?.onAddedFood(foodPrice, quantityAdded, preferencesFood)
     }
 
     /*

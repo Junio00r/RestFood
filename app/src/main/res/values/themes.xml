@@ -12,14 +12,14 @@
 
     </style>
 
-    <!--  Text Appearance on acess all app  -->
+    <!--  Text Appearance for access all app  -->
     <style name="TextAppearance.App" parent="TextAppearance.Material3.BodyLarge">
         <item name="fontFamily">@font/sul_sans_regular</item>
         <item name="android:fontFamily">@font/sul_sans_regular</item>
         <item name="android:textColor">@color/primary_color</item>
     </style>
 
-    <!--  Text Appearance on acess all app  -->
+    <!--  Text Appearance on access all app  -->
     <style name="SearchBar.App" parent="Widget.Material3.SearchBar">
 
     </style>

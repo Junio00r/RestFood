@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
@@ -28,7 +29,7 @@ class FoodCardAdapter(
 ) : RecyclerView.Adapter<FoodCardViewHolder>(), CheckboxClickListener {
 
     private var checkboxClickListener: CheckboxClickListener? = null
-    private val foodCardViewHolders = LinkedList<FoodCardViewHolder>()
+    private val foodCardViewHolders = ArrayList<FoodCardViewHolder>()
 
     // RecyclerView.Adapter Methods
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
@@ -41,18 +42,25 @@ class FoodCardAdapter(
 
     override fun onBindViewHolder(holder: FoodCardViewHolder, position: Int) {
 
+        val currentFood = foods[position]
+
         // Set CardViewHolder specifications
-        holder.imageFood.setImageResource(foods[position].mImageId)
+        holder.imageFood.setImageResource(currentFood.mImageId)
         holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
-        holder.textFoodName.text = foods[position].mName
-        holder.textFoodPrice.text = DecimalNumberFormatted.format(foods[position].mFoodPrice)
-        holder.textTimeForPrepare.text = foods[position].mSection.getFoodSectionName()
-        holder.checkboxForSelectFood.setOnClickListener {
+
+        holder.textFoodName.text = currentFood.mName
+
+        val formattedPrice = "R$ ${DecimalNumberFormatted.format(currentFood.mFoodPrice)}"
+        holder.textFoodPrice.text = formattedPrice
+
+        holder.textTimeForPrepare.text = currentFood.mSection.getFoodSectionName()
+
+        holder.checkboxForSelectFood.setOnCheckedChangeListener{_, _ ->
             hasBeenCheckboxChecked(holder, false)
         }
 
         // Set icon time for prepare a food
-        when (foods[position].mTimeToPrepare) {
+        when (currentFood.mTimeToPrepare) {
 
             TempoPreparo.LENTO -> {
                 holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
@@ -87,7 +95,6 @@ class FoodCardAdapter(
         return foodCardViewHolders.filter { it.isCheckboxChecked }
     }
 
-
     fun cancelOrder() {
 
         getFoodCardViewHoldersSelected().forEach {
@@ -95,7 +102,6 @@ class FoodCardAdapter(
             it.isCheckboxChecked = false
         }
     }
-
 
     // Listeners...
     fun addCheckboxClickListener(checkboxClickListenerOfTabSection: CheckboxClickListener) {
@@ -106,21 +112,23 @@ class FoodCardAdapter(
 
     override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
 
-        if (v.isCheckboxChecked) {
+        v?.let {
+            if (v.isCheckboxChecked) {
 
-            unCheckCheckbox(v.checkboxForSelectFood)
-            checkboxClickListener?.hasBeenCheckboxChecked(v, false)
-            v.isCheckboxChecked = false
+                unCheckCheckbox(v.checkboxForSelectFood)
+                checkboxClickListener?.hasBeenCheckboxChecked(v, false)
+                v.isCheckboxChecked = false
 
-        } else {
+            } else {
 
-            if (!foodCardViewHolders.contains(v)) {
-                foodCardViewHolders.add(v)
+                if (!foodCardViewHolders.contains(v)) {
+                    foodCardViewHolders.add(v)
+                }
+
+                checkCheckbox(v.checkboxForSelectFood)
+                checkboxClickListener?.hasBeenCheckboxChecked(v, true)
+                v.isCheckboxChecked = true
             }
-
-            checkCheckbox(v.checkboxForSelectFood)
-            checkboxClickListener?.hasBeenCheckboxChecked(v, true)
-            v.isCheckboxChecked = true
         }
     }
 

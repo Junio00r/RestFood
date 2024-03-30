@@ -181,9 +181,10 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
 
 
         foodPrice?.let {
-            this.onAddedCallbackOfTabSection?.onAddedFood(
+            onAddedCallbackOfTabSection?.onAddedFood(
                 it,
-                quantityOfFoods
+                quantityOfFoods,
+                foodPreferences.text.toString()
             )
         }
 

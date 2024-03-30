@@ -2,16 +2,16 @@
 
     <string name="app_name">RestFood</string>
 
+    <!--  Login Screen  -->
     <string name="button_enter">ENTER</string>
     <string name="button_sign_up">SIGN UP</string>
     <string name="text_message_put_name">Insira Seu Nome</string>
-    <string name="text_userName">Insira o seu nome</string>
-    <string name="text_userTable">Insira o número da sua Mesa</string>
+
+    <!--  Tab Sections  -->
     <string name="tab_item_entradas">Entradas</string>
     <string name="tab_item_pratos_principais">P. Principais</string>
     <string name="tab_item_bebidas">Bebidas</string>
     <string name="tab_item_sobremesas">Sobremesas</string>
-    <string name="tab_todos_itens">Todos</string>
     <string name="search_bar_hint">Search a Food</string>
 
     <!--  Section Food  -->
