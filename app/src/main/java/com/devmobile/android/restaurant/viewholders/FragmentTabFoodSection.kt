@@ -43,7 +43,7 @@ class FragmentTabFoodSection(
     private lateinit var scrollListener: Scrolled
     private lateinit var foodsSelected: LinkedList<Int>
     private var onFoodAddedCallback: FoodAddedCallback? = null
-    private val bottomSheet = ModalBottomSheet()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -111,6 +111,7 @@ class FragmentTabFoodSection(
         v: FoodCardViewHolder,
         isCheckboxChecked: Boolean
     ) {
+        val bottomSheet = ModalBottomSheet()
 
         if (isCheckboxChecked) {
 
