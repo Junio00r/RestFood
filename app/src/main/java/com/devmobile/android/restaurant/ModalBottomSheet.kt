@@ -48,8 +48,8 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         setBottomSheetBehavior()
         setFoodImage()
         setFoodPreferences()
+        foodPrice = (foodCardViewHolder.textFoodPrice.text to Float).second.MAX_VALUE
 
-        foodPrice = (foodCardViewHolder.textFoodPrice.text.toString().toFloat() to Float).second.MAX_VALUE
         textInputQuantity = bottomSheetLayoutContainer.findViewById(R.id.textInputFoodQuantityOrder)
 
         setInputQuantityFocus()
