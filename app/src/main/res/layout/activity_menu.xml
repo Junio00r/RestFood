@@ -92,7 +92,7 @@
             style="@style/BottomAppBar.Style.Local"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="8dp"
             android:maxWidth="256dp"
             android:text="@string/floating_button_cancel"
@@ -104,12 +104,12 @@
             style="@style/BottomAppBar.Style.Local"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="8dp"
-            android:gravity="center"
             android:maxWidth="256dp"
             android:text="@string/floating_button_realizar_pedido"
-            app:icon="@drawable/baseline_attach_money_24" />
+            app:icon="@drawable/baseline_attach_money_24"
+            app:iconSize="24dp" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

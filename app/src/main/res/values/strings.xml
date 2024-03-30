@@ -19,7 +19,7 @@
     <string name="image_food">Food Name</string>
 
     <!--  BottomAppBar  -->
-    <string name="floating_button_cancel" tools:ignore="ButtonCase">CANCEL</string>
-    <string name="floating_button_realizar_pedido">REALIZAR PEDIDO</string>
+    <string name="floating_button_cancel" tools:ignore="ButtonCase">CANCELAR</string>
+    <string name="floating_button_realizar_pedido">CONTINUAR</string>
 
 </resources>

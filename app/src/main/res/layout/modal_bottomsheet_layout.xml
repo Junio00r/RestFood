@@ -58,7 +58,7 @@
         android:breakStrategy="simple"
         android:hint="Coloque o que voce quer acrescentar a mais ou menos na comida"
         android:inputType="textMultiLine"
-        android:maxLength="200"
+        android:maxLength="300"
         android:padding="8dp" />
 
     <LinearLayout

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.CheckboxClickListener
 import com.devmobile.android.restaurant.CustomChipFilter
 import com.devmobile.android.restaurant.Food
+import com.devmobile.android.restaurant.FoodAddedCallback
 import com.devmobile.android.restaurant.ModalBottomSheet
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RestaurantDatabase
@@ -25,7 +26,7 @@ class FragmentTabFoodSection(
 
     private val context: Context, private val fragmentLayoutId: Int, fragmentSection: FoodSection
 
-) : Fragment(), CheckboxClickListener {
+) : Fragment(), CheckboxClickListener, FoodAddedCallback {
 
     private var id: Int? = null
     private lateinit var binding: TabFoodSectionLayoutBinding
@@ -36,12 +37,13 @@ class FragmentTabFoodSection(
     private var mFragmentSection = fragmentSection
     private val iconSize = 64f
     private val filtersChip = LinkedList<CustomChipFilter>()
-    private val bottomSheet = ModalBottomSheet()
     private lateinit var testeando: View
     private var tabSectionCheckedClickNotification: CheckboxClickListener? = null
     private var isBottomSheetInflacting = false
     private lateinit var scrollListener: Scrolled
     private lateinit var foodsSelected: LinkedList<Int>
+    private var onFoodAddedCallback: FoodAddedCallback? = null
+    private val bottomSheet = ModalBottomSheet()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -99,12 +101,22 @@ class FragmentTabFoodSection(
         this.scrollListener = scrollListenerOfMenuActivity
     }
 
-    override fun hasBeenCheckboxChecked(foodCardView: FoodCardViewHolder, isCheckboxChecked: Boolean) {
+    fun addOnFoodAddedCallback(onAddedCallbackOfMenuActivity: FoodAddedCallback) {
+
+        if (onFoodAddedCallback == null)
+            onFoodAddedCallback = onAddedCallbackOfMenuActivity
+    }
+
+    override fun hasBeenCheckboxChecked(
+        v: FoodCardViewHolder,
+        isCheckboxChecked: Boolean
+    ) {
 
         if (isCheckboxChecked) {
 
             bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
-            bottomSheet.setBottomSheetAttributes(foodCardView)
+            bottomSheet.setBottomSheetAttributes(v)
+            bottomSheet.addOnFoodAddedCallback(this)
 //            tabSectionCheckedClickNotification!!.hasBeenCheckboxChecked(v, true)
 
             Toast.makeText(context, "Testetee 1", Toast.LENGTH_LONG).show()
@@ -112,6 +124,10 @@ class FragmentTabFoodSection(
 //            tabSectionCheckedClickNotification!!.hasBeenCheckboxChecked(v, false)
             Toast.makeText(context, "Testetee 2", Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onAddedFood(foodPrice: Float, quantityAdded: Int) {
+        onFoodAddedCallback?.onAddedFood(foodPrice, quantityAdded)
     }
 
     /*

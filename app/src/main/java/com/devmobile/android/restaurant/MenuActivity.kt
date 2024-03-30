@@ -20,7 +20,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import java.util.Locale
 
 
-class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickListener, Scrolled {
+class MenuActivity : AppCompatActivity(),
+    CheckboxClickListener,
+    View.OnClickListener,
+    Scrolled,
+    FoodAddedCallback {
     private lateinit var binding: ActivityMenuBinding
     private lateinit var searchViewFoods: SearchView
     private lateinit var imageFilterButton: ImageFilterButton
@@ -69,6 +73,7 @@ class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickLis
         tabFragmentsInstances = addFragmentsTabSection()
         tabFragmentsInstances.forEach {
 //            it.addCheckboxClickListener(this)
+            it.addOnFoodAddedCallback(this)
             it.addScrollListener(this)
         }
 
@@ -315,6 +320,11 @@ class MenuActivity : AppCompatActivity(), CheckboxClickListener, View.OnClickLis
 
             hideFloatingButtonVertically(data, dy)
         }
+    }
+
+    override fun onAddedFood(foodPrice: Float, quantityAdded: Int) {
+
+        Toast.makeText(this, quantityAdded.toString(), Toast.LENGTH_SHORT).show()
     }
 
     private fun hideFloatingButtonVertically(recyclerViewOfFoodCards: ScrollingView, dy: Int) {

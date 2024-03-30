@@ -29,11 +29,12 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var buttonDecrementFood: MaterialButton
     private lateinit var buttonIncrementFood: MaterialButton
     private var quantityOfFoods = 1
+    private var onAddedCallbackOfTabSection: FoodAddedCallback? = null
+    private var foodPrice: Float? = null
 
     companion object {
 
         const val TAG = "ModalBottomSheet"
-        private const val INITIAL_COUNT = 1
     }
 
     override fun onCreateView(
@@ -48,6 +49,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         setFoodImage()
         setFoodPreferences()
 
+        foodPrice = (foodCardViewHolder.textFoodPrice.text.toString().toFloat() to Float).second.MAX_VALUE
         textInputQuantity = bottomSheetLayoutContainer.findViewById(R.id.textInputFoodQuantityOrder)
 
         setInputQuantityFocus()
@@ -133,7 +135,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         buttonIncrementFood.setOnClickListener(this)
 
         // Set Initial Value
-        textInputQuantity.setText(INITIAL_COUNT.toString())
+        textInputQuantity.setText(quantityOfFoods.toString())
     }
 
     override fun onClick(button: View) {
@@ -167,6 +169,25 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
                 foodPreferences.isCursorVisible = false
             }
         }
+    }
+
+    fun addOnFoodAddedCallback(onAddedCallbackOfTabSection: FoodAddedCallback) {
+
+        if (this.onAddedCallbackOfTabSection == null)
+            this.onAddedCallbackOfTabSection = onAddedCallbackOfTabSection
+    }
+
+    override fun onDestroy() {
+
+
+        foodPrice?.let {
+            this.onAddedCallbackOfTabSection?.onAddedFood(
+                it,
+                quantityOfFoods
+            )
+        }
+
+        super.onDestroy()
     }
 
     private fun getTextInputValue(): Int {
