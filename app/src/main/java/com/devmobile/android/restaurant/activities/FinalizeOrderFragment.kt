@@ -6,23 +6,30 @@ import android.view.View
 import android.widget.ExpandableListView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.ExpandableListAdapter
+import com.devmobile.android.restaurant.adapters.ExpandableListAdapter
 import com.devmobile.android.restaurant.databinding.FragmentFinalizeOrderBinding
+import com.devmobile.android.restaurant.enums.FoodSection
 import com.google.android.material.button.MaterialButton
-import java.util.LinkedList
+import kotlin.collections.ArrayList
 
 class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var binding: FragmentFinalizeOrderBinding
     private lateinit var buttonDoOrder: MaterialButton
     private lateinit var expandableListView: ExpandableListView
+    private val expandableListData = HashMap<FoodSection, ArrayList<Array<*>>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = FragmentFinalizeOrderBinding.inflate(this.layoutInflater)
-        setContentView(binding.root)
 
-        init()
+        intent?.let {
+
+            binding = FragmentFinalizeOrderBinding.inflate(this.layoutInflater)
+            setContentView(binding.root)
+
+            restoreData()
+            init()
+        }
     }
 
     private fun init() {
@@ -31,7 +38,8 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
         buttonDoOrder = binding.buttonRealizeOrder
         buttonDoOrder.setOnClickListener(this)
 
-        setExpandableList()
+        restoreData()
+        setExpandableListAdapter()
     }
 
     override fun onClick(v: View?) {
@@ -49,34 +57,30 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
         }
     }
 
-    private fun setExpandableList() {
+    private fun restoreData() {
 
+        val aux = intent.extras!!.size() / 5
+        val groupExpandableListData = ArrayList<Array<*>>()
 
-        val entradaSection = LinkedList<String>()
-        entradaSection.addAll(
-            listOf(
-                "Comida1",
-                "Comida2",
-                "Comida3",
-                "Comida4",
+        for (i in 0 until aux) {
+
+            val foodSectionOrdinal = intent.getIntExtra("foodSectionOrdinal_$i", -1)
+            val foodItemArray = arrayOf(
+                intent.getLongExtra("foodId_$i", -1),
+                intent.getStringExtra("foodName_$i"),
+                intent.getFloatExtra("foodPrice_$i", -1F),
+                intent.getIntExtra("foodSectionOrdinal_$i", -1),
+                intent.getIntExtra("quantityAdded_$i", -1)
             )
-        )
 
-        val principalSection = LinkedList<String>()
-        principalSection.addAll(
-            listOf(
-                "Comida1",
-                "Comida2",
-                "Comida3",
-                "Comida4",
-            )
-        )
+            groupExpandableListData.add(foodItemArray)
+            expandableListData[FoodSection.entries[foodSectionOrdinal]] = groupExpandableListData
+        }
+    }
 
-        val hashMap = HashMap<Int, LinkedList<String>>()
-        hashMap[0] = entradaSection
-        hashMap[1] = principalSection
+    private fun setExpandableListAdapter() {
 
-        val expandableListAdapter = ExpandableListAdapter(this, hashMap)
+        val expandableListAdapter = ExpandableListAdapter(this, expandableListData)
         expandableListView.setAdapter(expandableListAdapter)
     }
 }

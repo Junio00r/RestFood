@@ -167,7 +167,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
                         6,
                         "Sopa",
                         40F,
-                        FoodSection.ENTRADA,
+                        FoodSection.PRINCIPAL,
                         R.drawable.image_sopa,
                         R.drawable.ic_time_prepare_lento,
                         TempoPreparo.NORMAL,
@@ -280,18 +280,18 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
         var foodSectionOrdinal: Int
         var quantityAdded: Int
 
-        dataToRealizarPagamento.forEach {
-            foodId = it[0].toString().toLong()
-            foodName = it[1].toString()
-            foodPrice = it[2].toString().toFloat()
-            foodSectionOrdinal = it[3].toString().toInt()
-            quantityAdded = it[4].toString().toInt()
+        dataToRealizarPagamento.forEachIndexed { index, item ->
+            foodId = item[0].toString().toLong()
+            foodName = item[1].toString()
+            foodPrice = item[2].toString().toFloat()
+            foodSectionOrdinal = item[3].toString().toInt()
+            quantityAdded = item[4].toString().toInt()
 
-            intent.putExtra("foodId", foodId)
-            intent.putExtra("foodName", foodName)
-            intent.putExtra("foodPrice", foodPrice)
-            intent.putExtra("foodSectionOrdinal", foodSectionOrdinal)
-            intent.putExtra("quantityAdded", quantityAdded)
+            intent.putExtra("foodId_$index", foodId)
+            intent.putExtra("foodName_$index", foodName)
+            intent.putExtra("foodPrice_$index", foodPrice)
+            intent.putExtra("foodSectionOrdinal_$index", foodSectionOrdinal)
+            intent.putExtra("quantityAdded_$index", quantityAdded)
         }
     }
 

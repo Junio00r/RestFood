@@ -2,27 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:layout_marginVertical="8dp"
     android:background="@color/seven_color"
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingHorizontal="4dp"
     android:paddingVertical="22dp">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageFoodSection"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="26dp"
-        android:layout_weight="0.5"
-        android:scaleType="centerCrop" />
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textQuantityAndFood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
         android:layout_weight="2"
+        android:fontFamily="@font/din_regular"
+        android:textAlignment="textStart"
         android:textColor="@color/fourty_color"
         android:textSize="26sp" />
 
@@ -38,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/din_regular"
         android:textAlignment="textEnd"
         android:textColor="@color/primary_color"
         android:textSize="26sp" />
