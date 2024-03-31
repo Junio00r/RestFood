@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
+import kotlin.math.absoluteValue
 
 class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var bottomSheetLayout: View
@@ -29,7 +30,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var buttonDecrementFood: MaterialButton
     private lateinit var buttonIncrementFood: MaterialButton
     private var quantityOfFoods = 1
-    private var onAddedCallbackOfTabSection: FoodAddedCallback? = null
+    private var onAddedCallbackOfTabSection: FoodSelectedCallback? = null
     private var foodPrice: Float? = null
 
     companion object {
@@ -48,7 +49,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         setBottomSheetBehavior()
         setFoodImage()
         setFoodPreferences()
-        foodPrice = (foodCardViewHolder.textFoodPrice.text to Float).second.MAX_VALUE
+        foodPrice = foodCardViewHolder.textFoodPrice.text.substring(3).toFloat()
 
         textInputQuantity = bottomSheetLayoutContainer.findViewById(R.id.textInputFoodQuantityOrder)
 
@@ -171,7 +172,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         }
     }
 
-    fun addOnFoodAddedCallback(onAddedCallbackOfTabSection: FoodAddedCallback) {
+    fun addOnFoodAddedCallback(onAddedCallbackOfTabSection: FoodSelectedCallback) {
 
         if (this.onAddedCallbackOfTabSection == null)
             this.onAddedCallbackOfTabSection = onAddedCallbackOfTabSection
@@ -182,9 +183,11 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
 
         foodPrice?.let {
             onAddedCallbackOfTabSection?.onAddedFood(
-                it,
-                quantityOfFoods,
-                foodPreferences.text.toString()
+                foodCardViewHolder.foodId!!,
+                foodCardViewHolder.textFoodName.text.toString(),
+                it.absoluteValue,
+                null,
+                quantityOfFoods
             )
         }
 

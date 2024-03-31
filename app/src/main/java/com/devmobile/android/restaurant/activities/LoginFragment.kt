@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.activities
 
 import android.content.Intent
 import android.database.sqlite.SQLiteException
@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.devmobile.android.restaurant.RestaurantDatabase
+import com.devmobile.android.restaurant.User
 import com.devmobile.android.restaurant.dao.UserDao
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.google.android.material.button.MaterialButton

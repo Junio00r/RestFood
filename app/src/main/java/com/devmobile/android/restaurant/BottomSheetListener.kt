@@ -1,5 +1,5 @@
 package com.devmobile.android.restaurant
 
-interface BottomSheetNotification {
+interface BottomSheetListener {
     fun hasBottomSheetHided()
 }

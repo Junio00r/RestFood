@@ -44,6 +44,8 @@ class FoodCardAdapter(
 
         val currentFood = foods[position]
 
+        holder.foodId = currentFood.mId
+
         // Set CardViewHolder specifications
         holder.imageFood.setImageResource(currentFood.mImageId)
         holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -98,8 +100,7 @@ class FoodCardAdapter(
     fun cancelOrder() {
 
         getFoodCardViewHoldersSelected().forEach {
-            unCheckCheckbox(it.checkboxForSelectFood)
-            it.isCheckboxChecked = false
+            hasBeenCheckboxChecked(it, true)
         }
     }
 

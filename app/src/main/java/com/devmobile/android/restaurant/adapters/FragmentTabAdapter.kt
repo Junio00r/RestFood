@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant.adapters
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -10,7 +9,7 @@ import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
 class FragmentTabAdapter(
 
     fragment: FragmentActivity,
-    private val fragments: Array<FragmentTabFoodSection>,
+    private val fragmentsOfTab: Array<FragmentTabFoodSection>,
 
     ) : FragmentStateAdapter(fragment) {
 
@@ -26,12 +25,23 @@ class FragmentTabAdapter(
 
     override fun getItemCount(): Int {
 
-        return fragments.size
+        return fragmentsOfTab.size
     }
 
     override fun createFragment(position: Int): Fragment {
 
-        return fragments[position]
+        return fragmentsOfTab[position]
+    }
+
+    fun getQuantityOfFoodsSelected(): Int {
+
+        var totalOfFoodsSelected = 0
+
+        fragmentsOfTab.forEach {
+            totalOfFoodsSelected += it.getQuantityOfFoodsSelected()
+        }
+
+        return totalOfFoodsSelected
     }
 }
 

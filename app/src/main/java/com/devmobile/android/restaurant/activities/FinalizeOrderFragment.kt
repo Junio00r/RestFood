@@ -1,14 +1,12 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.activities
 
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.ExpandableListView
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.devmobile.android.restaurant.ExpandableListAdapter
 import com.devmobile.android.restaurant.databinding.FragmentFinalizeOrderBinding
 import com.google.android.material.button.MaterialButton
 import java.util.LinkedList

@@ -16,6 +16,7 @@ class DecimalNumberFormatted {
         }
 
         fun format(numberToFormat: String): String {
+
             val numberFormatted = NumberFormat.getInstance()
             numberFormatted.minimumFractionDigits = 2
             numberFormatted.isGroupingUsed = true

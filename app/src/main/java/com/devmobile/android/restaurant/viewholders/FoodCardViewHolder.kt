@@ -9,6 +9,7 @@ import com.google.android.material.textview.MaterialTextView
 
 class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+    var foodId: Long? = 0
     var imageFood: ShapeableImageView
     var textFoodName: MaterialTextView
     var textFoodPrice: MaterialTextView

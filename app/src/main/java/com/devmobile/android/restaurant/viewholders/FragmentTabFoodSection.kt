@@ -5,28 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.CheckboxClickListener
-import com.devmobile.android.restaurant.CustomChipFilter
 import com.devmobile.android.restaurant.Food
-import com.devmobile.android.restaurant.FoodAddedCallback
+import com.devmobile.android.restaurant.FoodSelectedCallback
 import com.devmobile.android.restaurant.ModalBottomSheet
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RestaurantDatabase
-import com.devmobile.android.restaurant.Scrolled
 import com.devmobile.android.restaurant.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.TabFoodSectionLayoutBinding
 import com.devmobile.android.restaurant.enums.FoodSection
-import java.util.LinkedList
 
 class FragmentTabFoodSection(
 
     private val context: Context, private val fragmentLayoutId: Int, fragmentSection: FoodSection
 
-) : Fragment(), CheckboxClickListener, FoodAddedCallback {
+) : Fragment(), CheckboxClickListener, FoodSelectedCallback {
 
     private var id: Int? = null
     private lateinit var binding: TabFoodSectionLayoutBinding
@@ -35,14 +31,8 @@ class FragmentTabFoodSection(
     private lateinit var foodDAO: RestaurantDatabase
     private lateinit var dataFoodsOfTabSections: ArrayList<Food>
     private var mFragmentSection = fragmentSection
-    private val iconSize = 64f
-    private val filtersChip = LinkedList<CustomChipFilter>()
-    private lateinit var testeando: View
     private var tabSectionCheckedClickNotification: CheckboxClickListener? = null
-    private var isBottomSheetInflacting = false
-    private lateinit var scrollListener: Scrolled
-    private lateinit var foodsSelected: LinkedList<Int>
-    private var onFoodAddedCallback: FoodAddedCallback? = null
+    private var onFoodAddedCallback: FoodSelectedCallback? = null
 
 
     override fun onCreateView(
@@ -65,132 +55,55 @@ class FragmentTabFoodSection(
         recyclerViewFoods.adapter = foodCardAdapter
         recyclerViewFoods.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        recyclerViewFoods.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                scrollListener.hasBeenScrolled(recyclerView, dx, dy)
-            }
-        })
-
-//        loadChipsOnFragment()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    // *
     fun cancelFoodSelected() {
 
         foodCardAdapter?.cancelOrder()
     }
 
-    fun getQuantityOfFoodsChecked(): Int {
+    fun getQuantityOfFoodsSelected(): Int {
 
         return foodCardAdapter?.getFoodCardViewHoldersSelected()?.size ?: 0
     }
 
-    // Listeners...
-//    fun addCheckboxClickListener(checkboxCLickListenerOfMenuActivity: CheckboxClickListener) {
-//
-//        if (this.tabSectionCheckedClickNotification == null) this.tabSectionCheckedClickNotification =
-//            checkboxCLickListenerOfMenuActivity
-//    }
+    fun addFoodAddedCallback(onAddedCallbackOfMenuActivity: FoodSelectedCallback) {
 
-    fun addScrollListener(scrollListenerOfMenuActivity: Scrolled) {
-
-        this.scrollListener = scrollListenerOfMenuActivity
-    }
-
-    fun addOnFoodAddedCallback(onAddedCallbackOfMenuActivity: FoodAddedCallback) {
-
-        if (onFoodAddedCallback == null)
-            onFoodAddedCallback = onAddedCallbackOfMenuActivity
+        if (onFoodAddedCallback == null) onFoodAddedCallback = onAddedCallbackOfMenuActivity
     }
 
     override fun hasBeenCheckboxChecked(
-        v: FoodCardViewHolder,
-        isCheckboxChecked: Boolean
+        v: FoodCardViewHolder, isCheckboxChecked: Boolean
     ) {
 
         if (isCheckboxChecked) {
 
             val bottomSheet = ModalBottomSheet()
-
             bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
             bottomSheet.setBottomSheetAttributes(v)
             bottomSheet.addOnFoodAddedCallback(this)
-//            tabSectionCheckedClickNotification!!.hasBeenCheckboxChecked(v, true)
-
-            Toast.makeText(context, "Testetee 1", Toast.LENGTH_LONG).show()
-        } else {
-//            tabSectionCheckedClickNotification!!.hasBeenCheckboxChecked(v, false)
-            Toast.makeText(context, "Testetee 2", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    override fun onAddedFood(foodPrice: Float, quantityAdded: Int, preferencesFood: String) {
-
-        onFoodAddedCallback?.onAddedFood(foodPrice, quantityAdded, preferencesFood)
-    }
-
-    /*
-    private fun loadChipsOnFragment() {
-        if (filtersChip.size == 0) {
-
-            createChips()
-            binding.let {
-                filtersChip.forEach { filter ->
-
-                    if (filter.parent != null) {
-                        (filter.parent as ViewGroup).removeView(filter)
-                    }
-                    it.chipGroupFilter.addView(filter)
-                }
-            }
 
         } else {
 
-            binding.let {
-                filtersChip.forEach { filter ->
-
-                    if (filter.parent != null) {
-                        (filter.parent as ViewGroup).removeView(filter)
-                    }
-                    it.chipGroupFilter.addView(filter)
-                }
-            }
+            onFoodAddedCallback?.onRemoveFood(v.foodId!!)
         }
     }
 
-    private fun createChips() {
+    override fun onAddedFood(
+        foodId: Long,
+        foodName: String?,
+        foodPrice: Float?,
+        sectionOnSelectedFoodOrdinal: FoodSection?,
+        quantityAdded: Int?
+    ) {
 
-        filtersChip.addAll(
-            arrayOf(
-                CustomChipFilter(
-                    requireContext(), "Ordenar", iconSize, null, R.drawable.ic_chip_filter
-                ),
-                CustomChipFilter(
-                    requireContext(),
-                    "Mais Recente",
-                    iconSize,
-                    R.drawable.ic_check_chip_filter,
-                    null
-                ),
-                CustomChipFilter(
-                    requireContext(),
-                    "Preparo Rápido",
-                    iconSize,
-                    R.drawable.ic_check_chip_filter,
-                    null
-                ),
-                CustomChipFilter(
-                    requireContext(),
-                    "Preparo Lento",
-                    iconSize,
-                    R.drawable.ic_check_chip_filter,
-                    null
-                ),
-            )
+        onFoodAddedCallback?.onAddedFood(
+            foodId, foodName, foodPrice, this.mFragmentSection, quantityAdded
         )
-    }*/
+    }
+
+    override fun onRemoveFood(foodId: Long, sectionOnSelectedFood: FoodSection?) {
+        onFoodAddedCallback?.onRemoveFood(foodId)
+    }
 }

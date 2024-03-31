@@ -1,38 +1,38 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.utils.widget.ImageFilterButton
-import androidx.core.view.ScrollingView
+import com.devmobile.android.restaurant.Food
+import com.devmobile.android.restaurant.FoodSelectedCallback
+import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.RestaurantDatabase
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.enums.TempoPreparo
-import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.Locale
 
 
-class MenuActivity : AppCompatActivity(),
-    CheckboxClickListener,
-    View.OnClickListener,
-    Scrolled,
-    FoodAddedCallback {
+class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCallback {
+
     private lateinit var binding: ActivityMenuBinding
-    private lateinit var searchViewFoods: SearchView
-    private lateinit var imageFilterButton: ImageFilterButton
     private lateinit var tabFragmentsInstances: Array<FragmentTabFoodSection>
     private lateinit var floatingButtonCancelFoodOrder: MaterialButton
     private lateinit var floatingButtonPayFoods: MaterialButton
-    private lateinit var popupMenu: PopupMenu
+    private lateinit var fragmentTabAdapter: FragmentTabAdapter
+    private var dataToRealizarPagamento = ArrayList<Array<*>>()
+
+    init {
+
+        Locale.setDefault(Locale("pt", "BR"))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,33 +54,26 @@ class MenuActivity : AppCompatActivity(),
         val teste = RestaurantDatabase.getInstance(this)
         teste.clearAllTables()
 
-
-        setLocaleDefault()
         addFoodsInDatabase()
-//        setSearchBarSpecifications()
         setTabLayouts()
-//        setFilterButton()
         setExtendedFAT()
     }
 
     // Métodos de inicialização...
-    private fun setLocaleDefault() {
-        Locale.setDefault(Locale("pt", "BR"))
-    }
-
     private fun setTabLayouts() {
 
         val tabsNameId = addTabsName()
+
         tabFragmentsInstances = addFragmentsTabSection()
         tabFragmentsInstances.forEach {
-//            it.addCheckboxClickListener(this)
-            it.addOnFoodAddedCallback(this)
-            it.addScrollListener(this)
+
+//                        it.addCheckboxClickListener(this)
+            it.addFoodAddedCallback(this)
         }
 
         val tabLayout = binding.tabFoodSectionsMenuActivity
         val viewPager2 = binding.pagerFoodSectionsMenuActivity
-        val fragmentTabAdapter = FragmentTabAdapter(this, tabFragmentsInstances)
+        fragmentTabAdapter = FragmentTabAdapter(this, tabFragmentsInstances)
 
         viewPager2.adapter = fragmentTabAdapter
         TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
@@ -232,20 +225,6 @@ class MenuActivity : AppCompatActivity(),
         }
     }
 
-//    private fun setSearchBarSpecifications() {
-//        val searchBarFoods = binding.searchBarFoods
-//        searchViewFoods = binding.searchViewFoods
-//
-//        searchViewFoods.editText.setOnEditorActionListener { v, actionId, event ->
-//
-//            searchBarFoods.setText(searchViewFoods.text)
-//            searchViewFoods.show()
-//            false
-//        }
-//
-//        searchViewFoods.setupWithSearchBar(searchBarFoods)
-//    }
-
     private fun setExtendedFAT() {
 
         floatingButtonCancelFoodOrder = binding.floatingButtonCancelFoodOrder
@@ -255,70 +234,85 @@ class MenuActivity : AppCompatActivity(),
         floatingButtonPayFoods.setOnClickListener(this)
     }
 
-//    private fun setFilterButton() {
-//
-//        imageFilterButton = binding.imageFilterButtonMenuActivity
-//        imageFilterButton.setOnClickListener(this)
-//
-//        addMenuOnFilterButton()
-//    }
+    private fun showWarning() {
 
-    private fun addMenuOnFilterButton() {
+        val message = "Selecione uma Comida para Realizar o Pedido!"
+        val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
 
-        popupMenu = PopupMenu(
-            applicationContext, imageFilterButton, Gravity.START, 0, R.style.PopupMenu_View_Local
-        )
-
-        popupMenu.menuInflater.inflate(R.menu.searchbar_filter_options, popupMenu.menu)
-
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-
-            return@setOnMenuItemClickListener true
-        }
+        toast.setGravity(Gravity.BOTTOM, 0, 440)
+        toast.show()
     }
 
-    // Metodo de captura de evento de clique...
     override fun onClick(v: View) {
 
         when (v) {
 
             floatingButtonCancelFoodOrder -> {
 
-                tabFragmentsInstances.forEach { it.cancelFoodSelected() }
+                if (canPlaceOrder()) tabFragmentsInstances.forEach { it.cancelFoodSelected() }
             }
 
             floatingButtonPayFoods -> {
 
-                val intent = Intent(this, FinalizeOrderFragment::class.java)
-                startActivity(intent)
+                if (canPlaceOrder()) startFinalizeOrderFragmentActivity()
+                else showWarning()
             }
+        }
+    }
 
-            imageFilterButton -> {
+    private fun canPlaceOrder(): Boolean {
 
-                popupMenu.show()
-            }
+        return fragmentTabAdapter.getQuantityOfFoodsSelected() > 0
+    }
+
+    private fun startFinalizeOrderFragmentActivity() {
+
+        val intent = Intent(this, FinalizeOrderFragment::class.java)
+        insertDataInIntent(intent)
+
+        startActivity(intent)
+    }
+
+    private fun insertDataInIntent(intent: Intent) {
+        var foodId: Long
+        var foodName: String
+        var foodPrice: Float
+        var foodSectionOrdinal: Int
+        var quantityAdded: Int
+
+        dataToRealizarPagamento.forEach {
+            foodId = it[0].toString().toLong()
+            foodName = it[1].toString()
+            foodPrice = it[2].toString().toFloat()
+            foodSectionOrdinal = it[3].toString().toInt()
+            quantityAdded = it[4].toString().toInt()
+
+            intent.putExtra("foodId", foodId)
+            intent.putExtra("foodName", foodName)
+            intent.putExtra("foodPrice", foodPrice)
+            intent.putExtra("foodSectionOrdinal", foodSectionOrdinal)
+            intent.putExtra("quantityAdded", quantityAdded)
         }
     }
 
     // Métodos de implementacoes de interfaces criadas
-    override fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean) {
+    override fun onAddedFood(
+        foodId: Long,
+        foodName: String?,
+        foodPrice: Float?,
+        sectionOnSelectedFoodOrdinal: FoodSection?,
+        quantityAdded: Int?
+    ) {
 
+        dataToRealizarPagamento.add(
+            arrayOf(foodId, foodName, foodPrice, sectionOnSelectedFoodOrdinal!!.ordinal, quantityAdded)
+        )
     }
 
-    override fun hasBeenScrolled(data: ScrollingView, dx: Int, dy: Int) {
+    override fun onRemoveFood(foodId: Long, sectionOnSelectedFood: FoodSection?) {
 
-        if (dy != 0) {
-
-            hideFloatingButtonVertically(data, dy)
+        dataToRealizarPagamento.removeIf {
+            it[0] == foodId
         }
-    }
-
-    override fun onAddedFood(foodPrice: Float, quantityAdded: Int, preferencesFood: String) {
-
-        Toast.makeText(this, quantityAdded.toString(), Toast.LENGTH_SHORT).show()
-    }
-
-    private fun hideFloatingButtonVertically(recyclerViewOfFoodCards: ScrollingView, dy: Int) {
-
     }
 }
