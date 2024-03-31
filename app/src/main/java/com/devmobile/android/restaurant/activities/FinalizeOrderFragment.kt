@@ -6,10 +6,12 @@ import android.view.View
 import android.widget.ExpandableListView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.devmobile.android.restaurant.DecimalNumberFormatted
 import com.devmobile.android.restaurant.adapters.ExpandableListAdapter
 import com.devmobile.android.restaurant.databinding.FragmentFinalizeOrderBinding
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import kotlin.collections.ArrayList
 
 class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
@@ -17,6 +19,7 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var buttonDoOrder: MaterialButton
     private lateinit var expandableListView: ExpandableListView
     private val expandableListData = HashMap<FoodSection, ArrayList<Array<*>>>()
+    private lateinit var textValorTotalDoPedido: MaterialTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +37,14 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
 
     private fun init() {
 
+        textValorTotalDoPedido = binding.textTotalToPay
         expandableListView = binding.expandableListView
         buttonDoOrder = binding.buttonRealizeOrder
         buttonDoOrder.setOnClickListener(this)
 
         restoreData()
         setExpandableListAdapter()
+        setValueTotalDoPedido()
     }
 
     override fun onClick(v: View?) {
@@ -60,7 +65,7 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
     private fun restoreData() {
 
         val aux = intent.extras!!.size() / 5
-        val groupExpandableListData = ArrayList<Array<*>>()
+        var groupExpandableListData = ArrayList<Array<*>>()
 
         for (i in 0 until aux) {
 
@@ -73,6 +78,11 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
                 intent.getIntExtra("quantityAdded_$i", -1)
             )
 
+            if (expandableListData[FoodSection.entries[foodSectionOrdinal]] == null) {
+
+                groupExpandableListData = ArrayList()
+            }
+
             groupExpandableListData.add(foodItemArray)
             expandableListData[FoodSection.entries[foodSectionOrdinal]] = groupExpandableListData
         }
@@ -82,5 +92,17 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
 
         val expandableListAdapter = ExpandableListAdapter(this, expandableListData)
         expandableListView.setAdapter(expandableListAdapter)
+    }
+
+    private fun setValueTotalDoPedido() {
+        var valueTotal = 0F
+
+        expandableListData.forEach { grouplist ->
+            grouplist.value.forEach { child ->
+                valueTotal += child[2].toString().toFloat() * child[4].toString().toInt()
+            }
+        }
+
+        textValorTotalDoPedido.text = "R$ ${DecimalNumberFormatted.format(valueTotal)}"
     }
 }

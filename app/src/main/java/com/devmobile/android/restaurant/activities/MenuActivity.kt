@@ -29,11 +29,6 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
     private lateinit var fragmentTabAdapter: FragmentTabAdapter
     private var dataToRealizarPagamento = ArrayList<Array<*>>()
 
-    init {
-
-        Locale.setDefault(Locale("pt", "BR"))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

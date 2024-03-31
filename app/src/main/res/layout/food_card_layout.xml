@@ -56,9 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:fontFamily="@font/sul_sans_regular"
-            android:maxLength="5"
+            android:maxLength="10"
             android:maxLines="1"
-            android:textColor="#616161"
+            android:textColor="@color/five_color"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/imageFood"
             app:layout_constraintStart_toStartOf="@id/textFoodName" />

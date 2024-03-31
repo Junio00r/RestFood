@@ -69,15 +69,13 @@ class ExpandableListAdapter(
             view = layoutInflater.inflate(R.layout.expandable_group_list_layout, null)
         }
 
-        expandableData[FoodSection.entries[groupPosition]]
-
         view?.let {
 
-            setGroupText(
+            setGroupResources(
                 it,
                 isExpanded,
-                expandableData.keys.elementAt(groupPosition),
                 groupPosition,
+                expandableData.keys.elementAt(groupPosition),
                 expandableData[FoodSection.entries[groupPosition]]!!
 
             )
@@ -86,50 +84,12 @@ class ExpandableListAdapter(
         return view
     }
 
-    override fun getChildView(
-        groupPosition: Int,
-        childPosition: Int,
-        isLastChild: Boolean,
-        convertView: View?,
-        parent: ViewGroup?
-    ): View {
-
-        var view = convertView
-
-        if (convertView == null) {
-
-            val layoutInflater = LayoutInflater.from(context)
-            view = layoutInflater.inflate(R.layout.expanadable_child_list_expandable, null)
-        }
-
-        expandableData[FoodSection.entries[groupPosition]]
-
-//        view?.let {
-//
-//            setGroupText(
-//                it,
-//                isExpanded,
-//                expandableData.keys.elementAt(groupPosition),
-//                groupPosition,
-//                expandableData[FoodSection.entries[groupPosition]]!!
-//
-//            )
-//        }
-
-        return view!!
-    }
-
-    override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
-
-        return false
-    }
-
     @SuppressLint("SetTextI18n")
-    private fun setGroupText(
+    private fun setGroupResources(
         v: View,
         isExpanded: Boolean,
-        foodSection: FoodSection,
         groupPosition: Int,
+        foodSection: FoodSection,
         groupListData: ArrayList<Array<*>>
     ) {
 
@@ -151,5 +111,66 @@ class ExpandableListAdapter(
         // Preenche os texts das views
         textGroupList.text = "${qtdFoodForSection}x  ${foodSection.getFoodSectionName()}"
         textValueTotalOfGroup.text = DecimalNumberFormatted.format(valueTotalForSection)
+    }
+
+    override fun getChildView(
+        groupPosition: Int,
+        childPosition: Int,
+        isLastChild: Boolean,
+        convertView: View?,
+        parent: ViewGroup?
+    ): View {
+
+        var view = convertView
+
+        if (convertView == null) {
+
+            val layoutInflater = LayoutInflater.from(context)
+            view = layoutInflater.inflate(R.layout.expanadable_child_list_expandable, null)
+        }
+
+        view?.let {
+
+            setChildResources(
+                it,
+                groupPosition,
+                childPosition,
+                expandableData.keys.elementAt(groupPosition),
+                expandableData[FoodSection.entries[groupPosition]]!!
+
+            )
+        }
+
+        return view!!
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setChildResources(
+        v: View,
+        groupPosition: Int,
+        childPosition: Int,
+        foodSection: FoodSection,
+        groupListData: ArrayList<Array<*>>
+    ) {
+
+        val textChild: MaterialTextView = v.findViewById(R.id.textItemName)
+        val textValueTotalOfGroup: MaterialTextView = v.findViewById(R.id.textItemPrice)
+
+        val qtdFoodForSection = groupListData[childPosition][4]
+        var valueTotalForQuantityFood = 0F
+
+        // Soma o valor em cada grupo da lista
+        valueTotalForQuantityFood = groupListData[childPosition][4].toString()
+            .toInt() * groupListData[childPosition][2].toString().toFloat()
+
+        // Preenche os texts das views
+        textChild.text =
+            "+ ${qtdFoodForSection}x ${groupListData[childPosition][1].toString()}"
+        textValueTotalOfGroup.text = DecimalNumberFormatted.format(valueTotalForQuantityFood)
+    }
+
+    override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
+
+        return false
     }
 }

@@ -52,8 +52,8 @@ class FoodCardAdapter(
 
         holder.textFoodName.text = currentFood.mName
 
-        val formattedPrice = "R$ ${DecimalNumberFormatted.format(currentFood.mFoodPrice)}"
-        holder.textFoodPrice.text = formattedPrice
+        val formattedPrice = DecimalNumberFormatted.format(currentFood.mFoodPrice)
+        holder.textFoodPrice.text = "R$ $formattedPrice"
 
         holder.textTimeForPrepare.text = currentFood.mSection.getFoodSectionName()
 

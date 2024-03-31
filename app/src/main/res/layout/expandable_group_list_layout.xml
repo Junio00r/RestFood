@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="88dp"
     android:background="@color/seven_color"
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingHorizontal="4dp"
-    android:paddingVertical="22dp">
+    android:paddingVertical="4dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textQuantityAndFood"
@@ -16,13 +16,14 @@
         android:layout_weight="2"
         android:fontFamily="@font/din_regular"
         android:textAlignment="textStart"
-        android:textColor="@color/fourty_color"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/primary_color"
         android:textSize="26sp" />
 
     <View
         android:layout_width="1dp"
         android:layout_height="52dp"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginVertical="16dp"
         android:background="@color/six_color" />
 
