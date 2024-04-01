@@ -12,14 +12,17 @@ import com.devmobile.android.restaurant.User
 import com.devmobile.android.restaurant.dao.UserDao
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
+import kotlin.coroutines.coroutineContext
 
 class LoginFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var buttonSignUp: MaterialButton
     private lateinit var buttonEnter: MaterialButton
-    private var userName: String? = null
-    private lateinit var userDao:UserDao
-    private lateinit var intent:Intent
+    private var userName: TextInputEditText? = null
+    private var mesaNumero: TextInputEditText? = null
+    private lateinit var userDao: UserDao
+    private lateinit var intent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,21 +34,13 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
             binding = FragmentLoginBinding.inflate(layoutInflater)
             setContentView(binding.root)
-
-            init()
+            initializeViews()
+            setListeners()
 
         } else {
 
-            startActivity(intent)
-            finish()
+            startMenuActivity()
         }
-    }
-
-    private fun init() {
-
-        initializeVariable()
-        setClickListener()
-        setInputFilter()
     }
 
     /**
@@ -55,44 +50,48 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
         when (v) {
 
-            buttonSignUp -> {
-
-                Toast.makeText(this, "Não Implementado", Toast.LENGTH_SHORT).show()
-            }
+            buttonSignUp -> showMessage("Não Implementado ainda")
 
             buttonEnter -> {
 
-                if (userName.isNullOrEmpty()) {
+                if (userName!!.text.isNullOrBlank()) {
 
-                    Toast.makeText(this, "Insira seu Nome", Toast.LENGTH_SHORT).show()
+                    showMessage("Insira seu Nome")
+
+                } else if (mesaNumero!!.text.isNullOrBlank()) {
+
+                    showMessage("Insira o numero da mesa")
 
                 } else {
 
-                    insertUser(User(1, userName!!))
-                    startActivity(intent)
-                    finish()
+                    insertUser(User(1, userName!!.text.toString()))
+                    startMenuActivity()
                 }
             }
         }
     }
 
-    private fun initializeVariable() {
+    private fun initializeViews() {
 
-        userName = binding.editUserName.toString()
+        userName = binding.editUserName
+        mesaNumero = binding.editTableNumber
         buttonSignUp = binding.buttonSignup
         buttonEnter = binding.buttonEnter
     }
 
-    private fun setClickListener() {
-
+    private fun setListeners() {
         buttonSignUp.setOnClickListener(this)
         buttonEnter.setOnClickListener(this)
     }
 
-    private fun setInputFilter() {
 
-        buttonSignUp.setOnClickListener(this)
-        buttonEnter.setOnClickListener(this)
+    private fun startMenuActivity() {
+        startActivity(intent)
+        finish()
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun insertUser(user: User) {

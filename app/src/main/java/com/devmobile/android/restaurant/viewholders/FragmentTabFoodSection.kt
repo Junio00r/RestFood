@@ -24,14 +24,12 @@ class FragmentTabFoodSection(
 
 ) : Fragment(), CheckboxClickListener, FoodSelectedCallback {
 
-    private var id: Int? = null
     private lateinit var binding: TabFoodSectionLayoutBinding
-    lateinit var recyclerViewFoods: RecyclerView
+    private lateinit var recyclerViewFoods: RecyclerView
     private var foodCardAdapter: FoodCardAdapter? = null
     private lateinit var foodDAO: RestaurantDatabase
     private lateinit var dataFoodsOfTabSections: ArrayList<Food>
     private var mFragmentSection = fragmentSection
-    private var tabSectionCheckedClickNotification: CheckboxClickListener? = null
     private var onFoodAddedCallback: FoodSelectedCallback? = null
 
 
@@ -40,18 +38,19 @@ class FragmentTabFoodSection(
     ): View? {
 
         // Criando aqui ao inves de colocar direto pelo contrutor
-        return LayoutInflater.from(context).inflate(R.layout.tab_food_section_layout, container)
+        return inflater.inflate(R.layout.tab_food_section_layout, container)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         binding = TabFoodSectionLayoutBinding.bind(view)
-        foodDAO = RestaurantDatabase.getInstance(context)
+        foodDAO = RestaurantDatabase.getInstance(requireContext())
         dataFoodsOfTabSections =
-            foodDAO.getFoodDao().getFoodsBySection(mFragmentSection) as ArrayList<Food>
+            mFragmentSection.let { foodDAO.getFoodDao().getFoodsBySection(it) } as ArrayList<Food>
 
         recyclerViewFoods = binding.recyclerFood
-        foodCardAdapter = FoodCardAdapter(dataFoodsOfTabSections, context)
-        foodCardAdapter!!.addCheckboxClickListener(this)
+        foodCardAdapter = FoodCardAdapter(dataFoodsOfTabSections, requireContext())
+        foodCardAdapter?.addCheckboxClickListener(this)
         recyclerViewFoods.adapter = foodCardAdapter
         recyclerViewFoods.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 

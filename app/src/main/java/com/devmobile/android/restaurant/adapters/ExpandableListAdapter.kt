@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
-import android.widget.ImageView
 import com.devmobile.android.restaurant.DecimalNumberFormatted
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.enums.FoodSection
-import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 import java.util.ArrayList
-import java.util.LinkedList
 
 class ExpandableListAdapter(
 
@@ -29,17 +26,17 @@ class ExpandableListAdapter(
 
     override fun getChildrenCount(groupPosition: Int): Int {
 
-        return expandableData[FoodSection.entries[groupPosition]]!!.size
+        return expandableData[FoodSection.entries[groupPosition]]?.size ?: 0
     }
 
     override fun getGroup(groupPosition: Int): ArrayList<Array<*>> {
 
-        return expandableData[FoodSection.entries[groupPosition]]!!
+        return expandableData[FoodSection.entries[groupPosition]] ?: ArrayList()
     }
 
-    override fun getChild(groupPosition: Int, childPosition: Int): Any? {
+    override fun getChild(groupPosition: Int, childPosition: Int): Any {
 
-        return expandableData[FoodSection.entries[groupPosition]]!![groupPosition][childPosition]
+        return  getGroup(groupPosition)[childPosition]
     }
 
     override fun getGroupId(groupPosition: Int): Long {
@@ -75,7 +72,7 @@ class ExpandableListAdapter(
                 it,
                 isExpanded,
                 groupPosition,
-                expandableData.keys.elementAt(groupPosition),
+                FoodSection.entries[groupPosition],
                 expandableData[FoodSection.entries[groupPosition]]!!
 
             )
@@ -99,12 +96,8 @@ class ExpandableListAdapter(
         var qtdFoodForSection = 0
         var valueTotalForSection = 0F
 
-        // Soma a quantida na determinada seção
         groupListData.forEach { qtdFoodForSection += it[4].toString().toInt() }
-
-        // Soma o valor em cada grupo da lista
         groupListData.forEach {
-
             valueTotalForSection += it[4].toString().toFloat() * it[2].toString().toFloat()
         }
 
@@ -135,7 +128,7 @@ class ExpandableListAdapter(
                 it,
                 groupPosition,
                 childPosition,
-                expandableData.keys.elementAt(groupPosition),
+                FoodSection.entries[groupPosition],
                 expandableData[FoodSection.entries[groupPosition]]!!
 
             )

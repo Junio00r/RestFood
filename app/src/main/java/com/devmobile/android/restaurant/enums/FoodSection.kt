@@ -1,23 +1,25 @@
 package com.devmobile.android.restaurant.enums
 
-enum class FoodSection(id: Int) {
-    ENTRADA(0) {
+/**
+ * Enum class with all foods sections
+ */
+enum class FoodSection {
+
+    ENTRADA {
         override fun getFoodSectionName(): String = "Entrada"
     },
-    PRINCIPAL(1) {
+    PRINCIPAL {
         override fun getFoodSectionName(): String = "Principal"
     },
-    BEBIDA(2) {
+    BEBIDA {
         override fun getFoodSectionName(): String = "Bebida"
     },
-    SOBREMESA(3) {
+    SOBREMESA {
         override fun getFoodSectionName(): String = "Sobremesa"
     };
 
-    fun getFoodSection(position: Int): FoodSection {
-
-        return entries[3]
-    }
-
+    /**
+     * @return a string of section name
+     */
     abstract fun getFoodSectionName(): String
 }

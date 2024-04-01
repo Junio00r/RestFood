@@ -15,7 +15,19 @@
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:paddingHorizontal="14dp"
-        android:paddingTop="128dp">
+        android:layout_marginBottom="80dp"
+        android:paddingTop="22dp">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/seven_color"
+            android:fontFamily="@font/din_regular"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="32sp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabFoodSectionsMenuActivity"
@@ -28,7 +40,8 @@
             android:id="@+id/pagerFoodSectionsMenuActivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:isScrollContainer="true"/>
 
     </LinearLayout>
 
@@ -40,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/seven_color"
-        app:hideOnScroll="true">
+        app:hideOnScroll="false">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingButtonCancelFoodOrder"

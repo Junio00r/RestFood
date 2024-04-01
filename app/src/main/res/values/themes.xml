@@ -6,6 +6,7 @@
         <!--  Set text appearance all texts of App  -->
         <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
         <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
+        <item name="android:windowBackground">@color/thirdary_color</item>
 
 
         <item name="materialSearchBarStyle">@style/SearchBar.App</item>

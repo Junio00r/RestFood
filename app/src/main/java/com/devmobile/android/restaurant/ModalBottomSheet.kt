@@ -24,6 +24,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var bottomSheetLayoutContainer: ViewGroup
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var foodCardViewHolder: FoodCardViewHolder
+    private lateinit var foodDescription: MaterialTextView
     private lateinit var foodPreferences: TextInputEditText
     private lateinit var textInputQuantity: TextInputEditText
     private var hasInputQuantityFocused = false
@@ -48,6 +49,7 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
 
         setBottomSheetBehavior()
         setFoodImage()
+        setFoodDescriptions()
         setFoodPreferences()
         foodPrice = foodCardViewHolder.textFoodPrice.text.substring(3).toFloat()
 
@@ -82,6 +84,11 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
 
         imageFood.setImageDrawable(drawable)
         imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
+    }
+
+    private fun setFoodDescriptions() {
+        foodDescription = bottomSheetLayout.findViewById(R.id.textFoodDescriptionBottomSheet)
+        foodDescription.text = foodCardViewHolder.textFoodDescriptions
     }
 
     private fun setFoodPreferences() {
@@ -166,16 +173,14 @@ class ModalBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
                     textInputQuantity.setText((getTextInputValue() + 1).toString())
                 }
 
-                textInputQuantity.isCursorVisible = false
-                foodPreferences.isCursorVisible = false
             }
         }
     }
 
     fun addOnFoodAddedCallback(onAddedCallbackOfTabSection: FoodSelectedCallback) {
 
-        if (this.onAddedCallbackOfTabSection == null)
-            this.onAddedCallbackOfTabSection = onAddedCallbackOfTabSection
+        if (this.onAddedCallbackOfTabSection == null) this.onAddedCallbackOfTabSection =
+            onAddedCallbackOfTabSection
     }
 
     override fun onDestroy() {

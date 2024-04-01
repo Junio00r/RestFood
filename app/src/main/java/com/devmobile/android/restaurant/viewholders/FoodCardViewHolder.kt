@@ -17,6 +17,7 @@ class FoodCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var textTimeForPrepare: MaterialTextView
     var checkboxForSelectFood: MaterialCheckBox
     var isCheckboxChecked = false
+    lateinit var textFoodDescriptions: String
 
     init {
 

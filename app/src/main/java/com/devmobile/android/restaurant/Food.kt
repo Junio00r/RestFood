@@ -6,6 +6,13 @@ import androidx.room.PrimaryKey
 import com.devmobile.android.restaurant.enums.FoodSection
 import com.devmobile.android.restaurant.enums.TempoPreparo
 
+/**
+ *
+ * Food data class that is stored in Room as "foods" table name
+ * @property mId auto id generate for database
+ * @property mName foodName
+ *
+ */
 @Entity(tableName = "foods")
 data class Food(
     @PrimaryKey(autoGenerate = false) var mId: Long,

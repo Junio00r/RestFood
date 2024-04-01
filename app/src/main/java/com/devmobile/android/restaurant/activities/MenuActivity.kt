@@ -5,24 +5,23 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.devmobile.android.restaurant.Food
+import androidx.fragment.app.FragmentActivity
 import com.devmobile.android.restaurant.FoodSelectedCallback
+import com.devmobile.android.restaurant.InsertDataOnDatabase
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RestaurantDatabase
 import com.devmobile.android.restaurant.adapters.FragmentTabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
 import com.devmobile.android.restaurant.enums.FoodSection
-import com.devmobile.android.restaurant.enums.TempoPreparo
 import com.devmobile.android.restaurant.viewholders.FragmentTabFoodSection
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
-import java.util.Locale
 
 
-class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCallback {
+class MenuActivity : FragmentActivity(), FoodSelectedCallback, View.OnClickListener {
 
     private lateinit var binding: ActivityMenuBinding
+
     private lateinit var tabFragmentsInstances: Array<FragmentTabFoodSection>
     private lateinit var floatingButtonCancelFoodOrder: MaterialButton
     private lateinit var floatingButtonPayFoods: MaterialButton
@@ -32,16 +31,10 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (savedInstanceState == null) {
+        binding = ActivityMenuBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-            binding = ActivityMenuBinding.inflate(this.layoutInflater)
-            setContentView(binding.root)
-
-            init()
-
-        } else {
-
-        }
+        init()
     }
 
     private fun init() {
@@ -49,7 +42,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
         val teste = RestaurantDatabase.getInstance(this)
         teste.clearAllTables()
 
-        addFoodsInDatabase()
+        InsertDataOnDatabase.addFoodDataToDatabase(this)
         setTabLayouts()
         setExtendedFAT()
     }
@@ -62,7 +55,6 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
         tabFragmentsInstances = addFragmentsTabSection()
         tabFragmentsInstances.forEach {
 
-//                        it.addCheckboxClickListener(this)
             it.addFoodAddedCallback(this)
         }
 
@@ -96,142 +88,17 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
         )
     }
 
-    private fun addFoodsInDatabase() {
-
-        val foods = ArrayList<Food>()
-        val foodDao = RestaurantDatabase.getInstance(this).getFoodDao()
-
-        if (foodDao.getFoodsSize() == 0) {
-            foods.addAll(
-                listOf(
-                    Food(
-                        0,
-                        "Macarronada",
-                        87F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_macarronada,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.LENTO,
-                        "Macarronado com Salsicha"
-                    ), Food(
-                        1,
-                        "Hamburger",
-                        35F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        2,
-                        "Lasanha",
-                        55F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_lasanha,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.LENTO,
-                        "Lasanha Irlandesa"
-                    ), Food(
-                        3,
-                        "Feijoada",
-                        133F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_feijoada,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.LENTO,
-                        "Feijoada Brasileira"
-                    ), Food(
-                        4,
-                        "Camarão",
-                        60F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_camarao,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.NORMAL,
-                        "Camarao do Mar"
-                    ), Food(
-                        5,
-                        "Queijo",
-                        30F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_queijo,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Queijo Fresco"
-                    ), Food(
-                        6,
-                        "Sopa",
-                        40F,
-                        FoodSection.PRINCIPAL,
-                        R.drawable.image_sopa,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.NORMAL,
-                        "Sopa de Carne"
-                    ), Food(
-                        7,
-                        "Hamburg32er",
-                        30F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        133,
-                        "Casca de Ovo",
-                        30F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        7878,
-                        "Pudin",
-                        30F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        144,
-                        "Peixada",
-                        30F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    ), Food(
-                        98,
-                        "Bolo",
-                        30F,
-                        FoodSection.ENTRADA,
-                        R.drawable.image_hamburguer,
-                        R.drawable.ic_time_prepare_lento,
-                        TempoPreparo.RAPIDO,
-                        "Big Hamburger"
-                    )
-                )
-            )
-
-            foodDao.insertAll(foods as List<Food>)
-        }
-    }
-
     private fun setExtendedFAT() {
 
         floatingButtonCancelFoodOrder = binding.floatingButtonCancelFoodOrder
         floatingButtonPayFoods = binding.floatingButtonPayFoods
-
         floatingButtonCancelFoodOrder.setOnClickListener(this)
         floatingButtonPayFoods.setOnClickListener(this)
     }
 
     private fun showWarning() {
 
-        val message = "Selecione uma Comida para Realizar o Pedido!"
+        val message = "Selecione uma comida para Realizar o Pedido!"
         val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
 
         toast.setGravity(Gravity.BOTTOM, 0, 440)
@@ -244,7 +111,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
 
             floatingButtonCancelFoodOrder -> {
 
-                if (canPlaceOrder()) tabFragmentsInstances.forEach { it.cancelFoodSelected() }
+                if (canPlaceOrder()) tabFragmentsInstances!!.forEach { it.cancelFoodSelected() }
             }
 
             floatingButtonPayFoods -> {
@@ -263,8 +130,8 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
     private fun startFinalizeOrderFragmentActivity() {
 
         val intent = Intent(this, FinalizeOrderFragment::class.java)
-        insertDataInIntent(intent)
 
+        insertDataInIntent(intent)
         startActivity(intent)
     }
 
@@ -300,14 +167,14 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener, FoodSelectedCall
     ) {
 
         dataToRealizarPagamento.add(
-            arrayOf(foodId, foodName, foodPrice, sectionOnSelectedFoodOrdinal!!.ordinal, quantityAdded)
+            arrayOf(
+                foodId, foodName, foodPrice, sectionOnSelectedFoodOrdinal!!.ordinal, quantityAdded
+            )
         )
     }
 
     override fun onRemoveFood(foodId: Long, sectionOnSelectedFood: FoodSection?) {
 
-        dataToRealizarPagamento.removeIf {
-            it[0] == foodId
-        }
+        dataToRealizarPagamento.removeIf { it[0] == foodId }
     }
 }

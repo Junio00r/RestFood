@@ -3,9 +3,10 @@
     <string name="app_name">RestFood</string>
 
     <!--  Login Screen  -->
-    <string name="button_enter">ENTER</string>
-    <string name="button_sign_up">SIGN UP</string>
+    <string name="button_enter">ENTRAR</string>
+    <string name="button_sign_up">CADASTRAR</string>
     <string name="text_message_put_name">Insira Seu Nome</string>
+    <string name="text_message_put_table_number">Insira o numero da sua mesa</string>
 
     <!--  Tab Sections  -->
     <string name="tab_item_entradas">Entradas</string>
@@ -18,12 +19,16 @@
     <string name="text_food_name">Food Name</string>
     <string name="image_food">Food Name</string>
 
+    <!--  Bottom Sheet  -->
+    <string name="text_food_preferences">Voce quer que acrescentem algo a mais ou a menos na comida?</string>
+    <string name="text_food_drecription">Descrição da comida</string>
+
     <!--  BottomAppBar  -->
     <string name="floating_button_cancel" tools:ignore="ButtonCase">CANCELAR</string>
     <string name="floating_button_realizar_pedido">CONTINUAR</string>
 
     <!--  Fragment Finalize Order  -->
     <string name="button_realizar_pedido">REALIZAR PEDIDO</string>
-    <string name="text_total_to_pay">R$ </string>
+    <string name="text_total_to_pay">R$ 0.00</string>
 
 </resources>

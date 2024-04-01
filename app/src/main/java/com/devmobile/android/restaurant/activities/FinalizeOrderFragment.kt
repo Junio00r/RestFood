@@ -18,20 +18,22 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var binding: FragmentFinalizeOrderBinding
     private lateinit var buttonDoOrder: MaterialButton
     private lateinit var expandableListView: ExpandableListView
-    private val expandableListData = HashMap<FoodSection, ArrayList<Array<*>>>()
     private lateinit var textValorTotalDoPedido: MaterialTextView
+    private val expandableListData = HashMap<FoodSection, ArrayList<Array<*>>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (savedInstanceState == null) {
 
-        intent?.let {
+            intent?.let {
 
-            binding = FragmentFinalizeOrderBinding.inflate(this.layoutInflater)
-            setContentView(binding.root)
+                binding = FragmentFinalizeOrderBinding.inflate(this.layoutInflater)
+                setContentView(binding.root)
 
-            restoreData()
-            init()
+                restoreDataOfIntent()
+                init()
+            }
         }
     }
 
@@ -42,50 +44,10 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
         buttonDoOrder = binding.buttonRealizeOrder
         buttonDoOrder.setOnClickListener(this)
 
-        restoreData()
+        val dataRestored = restoreDataOfIntent()
+        setExpandableData(dataRestored)
         setExpandableListAdapter()
-        setValueTotalDoPedido()
-    }
-
-    override fun onClick(v: View?) {
-
-        when (v) {
-
-            buttonDoOrder -> {
-
-                val message = "Seu pedido foi enviado para o balcão do restaurante"
-                val toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
-
-                toast.setGravity(Gravity.BOTTOM, 0, 440)
-                toast.show()
-            }
-        }
-    }
-
-    private fun restoreData() {
-
-        val aux = intent.extras!!.size() / 5
-        var groupExpandableListData = ArrayList<Array<*>>()
-
-        for (i in 0 until aux) {
-
-            val foodSectionOrdinal = intent.getIntExtra("foodSectionOrdinal_$i", -1)
-            val foodItemArray = arrayOf(
-                intent.getLongExtra("foodId_$i", -1),
-                intent.getStringExtra("foodName_$i"),
-                intent.getFloatExtra("foodPrice_$i", -1F),
-                intent.getIntExtra("foodSectionOrdinal_$i", -1),
-                intent.getIntExtra("quantityAdded_$i", -1)
-            )
-
-            if (expandableListData[FoodSection.entries[foodSectionOrdinal]] == null) {
-
-                groupExpandableListData = ArrayList()
-            }
-
-            groupExpandableListData.add(foodItemArray)
-            expandableListData[FoodSection.entries[foodSectionOrdinal]] = groupExpandableListData
-        }
+        putValueTotalDoPedido()
     }
 
     private fun setExpandableListAdapter() {
@@ -94,15 +56,67 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
         expandableListView.setAdapter(expandableListAdapter)
     }
 
-    private fun setValueTotalDoPedido() {
+    private fun restoreDataOfIntent(): ArrayList<Array<*>> {
+
+        val quantityOfChildFood = intent.extras!!.size() / 5
+        val dataRestored = ArrayList<Array<*>>()
+
+        for (i in 0 until quantityOfChildFood) {
+
+            val foodItemArray = arrayOf(
+                intent.getLongExtra("foodId_$i", -1),
+                intent.getStringExtra("foodName_$i"),
+                intent.getFloatExtra("foodPrice_$i", -1F),
+                intent.getIntExtra("foodSectionOrdinal_$i", -1),
+                intent.getIntExtra("quantityAdded_$i", -1)
+            )
+            dataRestored.add(foodItemArray)
+        }
+
+        return dataRestored
+    }
+
+    private fun setExpandableData(dataRestored: ArrayList<Array<*>>) {
+
+        dataRestored.forEach { item ->
+
+            val sectionOrdinal = item[3] as Int
+            val foodSection = FoodSection.entries.getOrNull(sectionOrdinal)
+
+            foodSection?.let {
+                expandableListData.computeIfAbsent(foodSection) { ArrayList() }.add(item)
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+
+        when (v) {
+
+            buttonDoOrder -> placeAnOrder()
+        }
+    }
+
+    private fun placeAnOrder() {
+
+        val message = "Seu pedido foi enviado para o balcão do restaurante"
+        val toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
+
+        toast.setGravity(Gravity.BOTTOM, 0, 440)
+        toast.show()
+    }
+
+    private fun putValueTotalDoPedido() {
+
         var valueTotal = 0F
 
-        expandableListData.forEach { grouplist ->
-            grouplist.value.forEach { child ->
+        expandableListData.forEach { group ->
+            group.value.forEach { child ->
                 valueTotal += child[2].toString().toFloat() * child[4].toString().toInt()
             }
         }
 
-        textValorTotalDoPedido.text = "R$ ${DecimalNumberFormatted.format(valueTotal)}"
+        val textValueTotal = "R$ ${DecimalNumberFormatted.format(valueTotal)}"
+        textValorTotalDoPedido.text = textValueTotal
     }
 }

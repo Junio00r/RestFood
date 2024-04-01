@@ -4,5 +4,5 @@ import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
 
 interface CheckboxClickListener {
 
-    fun hasBeenCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean)
+    fun isCheckboxChecked(v: FoodCardViewHolder, isCheckboxChecked: Boolean)
 }
