@@ -72,7 +72,7 @@ class FragmentTabFoodSection(
         if (onFoodAddedCallback == null) onFoodAddedCallback = onAddedCallbackOfMenuActivity
     }
 
-    override fun hasBeenCheckboxChecked(
+    override fun isCheckboxChecked(
         v: FoodCardViewHolder, isCheckboxChecked: Boolean
     ) {
 
