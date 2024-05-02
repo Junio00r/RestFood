@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:paddingHorizontal="14dp"
+        android:paddingTop="22dp">
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textAppName"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/seven_color"
+            android:fontFamily="@font/din_regular"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="32sp" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabFoodSectionsMenuActivity"
+            style="@style/TabSection.Style.Local"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextAppearance="@style/TabText.Layout.Style.Local" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pagerFoodSectionsMenuActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:isScrollContainer="true" />
+
+    </LinearLayout>
+
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.Material3.BottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/seven_color"
+        app:hideOnScroll="false">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/floatingButtonCancelFoodOrder"
+            style="@style/BottomAppBar.Style.Local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="8dp"
+            android:maxWidth="256dp"
+            android:text="@string/floating_button_cancel"
+            app:icon="@drawable/ic_close_24"
+            app:iconSize="24dp" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/floatingButtonPayFoods"
+            style="@style/BottomAppBar.Style.Local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="8dp"
+            android:maxWidth="256dp"
+            android:text="@string/floating_button_realizar_pedido"
+            app:icon="@drawable/ic_dollar_sign"
+            app:iconSize="24dp" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

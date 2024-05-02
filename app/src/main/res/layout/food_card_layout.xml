@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardViewFod"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="2dp"
@@ -10,10 +10,10 @@
     app:strokeColor="@color/six_color">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/relativeCardChild"
+        android:id="@+id/constraintCardChild"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/thirdary_color"
+        android:background="@color/white"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -26,8 +26,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageFood"
-            android:layout_width="74dp"
-            android:layout_height="74dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:importantForAccessibility="no"
@@ -45,7 +45,7 @@
             android:fontFamily="@font/sul_sans_regular"
             android:maxLength="20"
             android:maxLines="1"
-            android:textColor="@color/primary_color"
+            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@id/imageFood"
             app:layout_constraintTop_toTopOf="@id/imageFood" />
@@ -89,7 +89,6 @@
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_marginEnd="4dp"
-            android:button="@drawable/ic_increment"
             android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

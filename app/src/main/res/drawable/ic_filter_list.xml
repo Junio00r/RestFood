@@ -5,7 +5,7 @@
     android:width="48dp">
 
     <path
-        android:fillColor="@color/thirdary_color"
+        android:fillColor="@color/white"
         android:pathData="M426.7,768h170.7v-85.3h-170.7v85.3zM128,256v85.3h768v-85.3L128,256zM256,554.7h512v-85.3L256,469.3v85.3z" />
 
 </vector>

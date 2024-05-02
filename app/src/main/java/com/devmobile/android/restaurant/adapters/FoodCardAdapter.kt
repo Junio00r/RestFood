@@ -6,33 +6,30 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.devmobile.android.restaurant.CheckboxClickListener
-import com.devmobile.android.restaurant.DecimalNumberFormatted
-import com.devmobile.android.restaurant.Food
-import com.devmobile.android.restaurant.viewholders.FoodCardViewHolder
+import com.devmobile.android.restaurant.viewmodel.IOnCheckCheckbox
+import com.devmobile.android.restaurant.model.localdata.Food
+import com.devmobile.android.restaurant.viewmodel.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.enums.TempoPreparo
 import com.google.android.material.checkbox.MaterialCheckBox
 
 class FoodCardAdapter(
 
     private val foods: ArrayList<Food>, private val context: Context
 
-) : RecyclerView.Adapter<FoodCardViewHolder>(), CheckboxClickListener {
+) : RecyclerView.Adapter<FoodCardViewHolder>(), IOnCheckCheckbox {
 
-    private var checkboxClickListener: CheckboxClickListener? = null
+    private var checkboxClickListener: IOnCheckCheckbox? = null
     private val foodCardViewHolders = ArrayList<FoodCardViewHolder>()
 
     // RecyclerView.Adapter Methods
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodCardViewHolder {
 
         val inflater = LayoutInflater.from(context)
-        val foodViewInflated = inflater.inflate(R.layout.food_card_layout, parent, false)
+        val foodCardViewInflated = inflater.inflate(R.layout.food_card_layout, parent, false)
 
-        return FoodCardViewHolder(foodViewInflated)
+        return FoodCardViewHolder(foodCardViewInflated)
     }
 
     override fun getItemCount(): Int {
@@ -42,49 +39,7 @@ class FoodCardAdapter(
 
     override fun onBindViewHolder(holder: FoodCardViewHolder, position: Int) {
 
-        val currentFood = foods[position]
-
-        holder.foodId = currentFood.mId
-
-        // Set CardViewHolder specifications
-        holder.imageFood.setImageResource(currentFood.mImageId)
-        holder.imageFood.scaleType = ImageView.ScaleType.CENTER_CROP
-
-        holder.textFoodName.text = currentFood.mName
-        holder.textFoodDescriptions = currentFood.mDescription.toString()
-
-        val formattedPrice = DecimalNumberFormatted.format(currentFood.mFoodPrice)
-        holder.textFoodPrice.text = "R$ $formattedPrice"
-
-        holder.textTimeForPrepare.text = currentFood.mSection.getFoodSectionName()
-
-        holder.checkboxForSelectFood.setOnCheckedChangeListener { _, _ ->
-            isCheckboxChecked(holder, false)
-        }
-
-        // Set icon time for prepare a food
-        when (currentFood.mTimeToPrepare) {
-
-            TempoPreparo.LENTO -> {
-                holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_lento)
-                holder.textTimeForPrepare.text =
-                    "${TempoPreparo.LENTO.getTimeOfPrepareMinutes()} minutos"
-            }
-
-            TempoPreparo.NORMAL -> {
-
-                holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_normal)
-                holder.textTimeForPrepare.text =
-                    "${TempoPreparo.NORMAL.getTimeOfPrepareMinutes()} minutos"
-            }
-
-            TempoPreparo.RAPIDO -> {
-
-                holder.imageTimeForPrepare.setImageResource(R.drawable.ic_time_prepare_rapido)
-                holder.textTimeForPrepare.text =
-                    "${TempoPreparo.RAPIDO.getTimeOfPrepareMinutes()} minutos"
-            }
-        }
+        holder.setDataOfFoodCard(foods[position])
     }
 
     fun getFoodCardViewHoldersSelected(): List<FoodCardViewHolder> {
@@ -100,7 +55,7 @@ class FoodCardAdapter(
     }
 
     // Listeners...
-    fun addCheckboxClickListener(checkboxClickListenerOfTabSection: CheckboxClickListener) {
+    fun addCheckboxClickListener(checkboxClickListenerOfTabSection: IOnCheckCheckbox) {
 
         if (this.checkboxClickListener == null) {
             this.checkboxClickListener = checkboxClickListenerOfTabSection
@@ -141,7 +96,7 @@ class FoodCardAdapter(
             background = null
             buttonDrawable = incrementIcon
             buttonDrawable!!.colorFilter = PorterDuffColorFilter(
-                context.getColor(R.color.primary_color), PorterDuff.Mode.SRC_IN
+                context.getColor(R.color.black), PorterDuff.Mode.SRC_IN
             )
         }
     }
@@ -160,7 +115,7 @@ class FoodCardAdapter(
             background = customCheckboxButton
             buttonDrawable = decrementIcon
             buttonDrawable!!.colorFilter = PorterDuffColorFilter(
-                context.getColor(R.color.thirdary_color), PorterDuff.Mode.SRC_IN
+                context.getColor(R.color.white), PorterDuff.Mode.SRC_IN
             )
         }
     }

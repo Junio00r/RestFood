@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_color">#000000</color>
-    <color name="secondary_color">#C8A800</color>
-    <color name="thirdary_color">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="orange">#C8A800</color>
     <color name="fourty_color">#C5C5C5</color>
     <color name="five_color">#989898</color>
     <color name="six_color">#DADADA</color>
