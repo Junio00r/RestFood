@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.viewmodel.enums
+package com.devmobile.android.restaurant.model.enums
 
 /**
  * Enum class with all times to prepare a food

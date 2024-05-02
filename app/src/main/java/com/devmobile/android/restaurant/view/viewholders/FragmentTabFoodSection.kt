@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.viewmodel.viewholders
+package com.devmobile.android.restaurant.view.viewholders
 
 import android.content.Context
 import android.os.Bundle
@@ -14,9 +14,9 @@ import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
 import com.devmobile.android.restaurant.view.elements.ModalBottomSheet
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.remotedata.RestaurantDatabase
-import com.devmobile.android.restaurant.adapters.FoodCardAdapter
+import com.devmobile.android.restaurant.viewmodel.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewFoodsBinding
-import com.devmobile.android.restaurant.viewmodel.enums.FoodSection
+import com.devmobile.android.restaurant.model.enums.FoodSection
 
 class FragmentTabFoodSection(
 

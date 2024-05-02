@@ -3,8 +3,8 @@ package com.devmobile.android.restaurant.model.localdata
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.devmobile.android.restaurant.viewmodel.enums.FoodSection
-import com.devmobile.android.restaurant.viewmodel.enums.TempoPreparo
+import com.devmobile.android.restaurant.model.enums.FoodSection
+import com.devmobile.android.restaurant.model.enums.TempoPreparo
 
 /**
  *

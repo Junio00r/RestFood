@@ -1,6 +1,6 @@
 package com.devmobile.android.restaurant.viewmodel
 
-import com.devmobile.android.restaurant.viewmodel.enums.FoodSection
+import com.devmobile.android.restaurant.model.enums.FoodSection
 
 interface IOnSelectFood {
 

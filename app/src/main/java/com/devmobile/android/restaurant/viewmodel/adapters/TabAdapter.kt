@@ -1,10 +1,10 @@
-package com.devmobile.android.restaurant.adapters
+package com.devmobile.android.restaurant.viewmodel.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.adapter.FragmentViewHolder
-import com.devmobile.android.restaurant.viewmodel.viewholders.FragmentTabFoodSection
+import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
 
 class TabAdapter(
 

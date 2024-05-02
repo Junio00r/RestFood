@@ -4,8 +4,8 @@ import android.content.Context
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.remotedata.RestaurantDatabase
 import com.devmobile.android.restaurant.model.localdata.Food
-import com.devmobile.android.restaurant.viewmodel.enums.FoodSection
-import com.devmobile.android.restaurant.viewmodel.enums.TempoPreparo
+import com.devmobile.android.restaurant.model.enums.FoodSection
+import com.devmobile.android.restaurant.model.enums.TempoPreparo
 
 // Temporary Class
 class InsertDataOnDatabase {

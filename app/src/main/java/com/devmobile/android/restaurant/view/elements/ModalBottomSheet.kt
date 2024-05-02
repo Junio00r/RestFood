@@ -9,7 +9,7 @@ import android.widget.ImageView
 import androidx.core.view.updateLayoutParams
 import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.viewmodel.viewholders.FoodCardViewHolder
+import com.devmobile.android.restaurant.view.viewholders.FoodCardViewHolder
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

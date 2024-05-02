@@ -1,6 +1,6 @@
 package com.devmobile.android.restaurant.viewmodel
 
-import com.devmobile.android.restaurant.viewmodel.viewholders.FoodCardViewHolder
+import com.devmobile.android.restaurant.view.viewholders.FoodCardViewHolder
 
 interface IOnCheckCheckbox {
 

@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.adapters
+package com.devmobile.android.restaurant.viewmodel.adapters
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -10,7 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.viewmodel.IOnCheckCheckbox
 import com.devmobile.android.restaurant.model.localdata.Food
-import com.devmobile.android.restaurant.viewmodel.viewholders.FoodCardViewHolder
+import com.devmobile.android.restaurant.view.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.R
 import com.google.android.material.checkbox.MaterialCheckBox
 

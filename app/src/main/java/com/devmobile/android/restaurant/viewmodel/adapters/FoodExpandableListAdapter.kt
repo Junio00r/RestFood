@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.adapters
+package com.devmobile.android.restaurant.viewmodel.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import com.devmobile.android.restaurant.viewmodel.ZoneNumberFormat
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.viewmodel.enums.FoodSection
+import com.devmobile.android.restaurant.model.enums.FoodSection
 import com.google.android.material.textview.MaterialTextView
 import java.util.ArrayList
 
