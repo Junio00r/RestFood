@@ -1,9 +1,8 @@
-package com.devmobile.android.restaurant.model.remotedata
+package com.devmobile.android.restaurant.model.repository
 
 import android.content.Context
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.remotedata.RestaurantDatabase
-import com.devmobile.android.restaurant.model.localdata.Food
+import com.devmobile.android.restaurant.model.Food
 import com.devmobile.android.restaurant.model.enums.FoodSection
 import com.devmobile.android.restaurant.model.enums.TempoPreparo
 

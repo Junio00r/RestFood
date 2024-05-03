@@ -7,9 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.model.remotedata.RestaurantDatabase
-import com.devmobile.android.restaurant.model.localdata.User
-import com.devmobile.android.restaurant.model.remotedata.dao.IUserDao
+import com.devmobile.android.restaurant.model.repository.RestaurantDatabase
+import com.devmobile.android.restaurant.model.User
+import com.devmobile.android.restaurant.model.repository.dao.IUserDao
 import com.devmobile.android.restaurant.databinding.FragmentUserAuthenticationBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText

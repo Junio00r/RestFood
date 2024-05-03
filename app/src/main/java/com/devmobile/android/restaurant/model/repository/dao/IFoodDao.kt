@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.remotedata.dao
+package com.devmobile.android.restaurant.model.repository.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.devmobile.android.restaurant.model.localdata.Food
+import com.devmobile.android.restaurant.model.Food
 import com.devmobile.android.restaurant.model.enums.FoodSection
 
 @Dao

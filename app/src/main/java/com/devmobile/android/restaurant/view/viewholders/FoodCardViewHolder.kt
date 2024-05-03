@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.localdata.Food
+import com.devmobile.android.restaurant.model.Food
 import com.devmobile.android.restaurant.model.enums.TempoPreparo
 import com.devmobile.android.restaurant.viewmodel.ZoneNumberFormat
 import com.google.android.material.checkbox.MaterialCheckBox

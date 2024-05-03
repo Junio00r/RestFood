@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.viewmodel.IOnCheckCheckbox
-import com.devmobile.android.restaurant.model.localdata.Food
+import com.devmobile.android.restaurant.model.Food
 import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
 import com.devmobile.android.restaurant.view.elements.ModalBottomSheet
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.remotedata.RestaurantDatabase
+import com.devmobile.android.restaurant.model.repository.RestaurantDatabase
 import com.devmobile.android.restaurant.viewmodel.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewFoodsBinding
 import com.devmobile.android.restaurant.model.enums.FoodSection

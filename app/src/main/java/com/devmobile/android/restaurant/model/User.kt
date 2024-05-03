@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.localdata
+package com.devmobile.android.restaurant.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

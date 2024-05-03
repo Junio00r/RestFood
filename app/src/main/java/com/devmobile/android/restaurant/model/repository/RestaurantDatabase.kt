@@ -1,13 +1,13 @@
-package com.devmobile.android.restaurant.model.remotedata
+package com.devmobile.android.restaurant.model.repository
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.devmobile.android.restaurant.model.localdata.Food
-import com.devmobile.android.restaurant.model.remotedata.dao.IFoodDao
-import com.devmobile.android.restaurant.model.remotedata.dao.IUserDao
-import com.devmobile.android.restaurant.model.localdata.User
+import com.devmobile.android.restaurant.model.Food
+import com.devmobile.android.restaurant.model.repository.dao.IFoodDao
+import com.devmobile.android.restaurant.model.repository.dao.IUserDao
+import com.devmobile.android.restaurant.model.User
 
 @Database(version = 18, entities = [Food::class, User::class], exportSchema = false)
 abstract class RestaurantDatabase : RoomDatabase() {
