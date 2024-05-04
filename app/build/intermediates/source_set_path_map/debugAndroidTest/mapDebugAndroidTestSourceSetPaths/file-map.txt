@@ -1,0 +1,35 @@
+com.devmobile.android.restaurant.test.app-androidTest-0 C:\PraticasCursoAndroid\restaurant\app\build\generated\res\resValues\androidTest\debug
+com.devmobile.android.restaurant.test.app-mergeDebugAndroidTestResources-1 C:\PraticasCursoAndroid\restaurant\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.devmobile.android.restaurant.test.app-mergeDebugAndroidTestResources-2 C:\PraticasCursoAndroid\restaurant\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.devmobile.android.restaurant.test.app-debugAndroidTest-3 C:\PraticasCursoAndroid\restaurant\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
+com.devmobile.android.restaurant.test.app-core-1.5.0-4 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\00440eb5d99f94e92ea59df43bededba\transformed\core-1.5.0\res
+com.devmobile.android.restaurant.test.app-activity-1.8.2-5 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\04763811cd48b2776eea6fb04bc48253\transformed\activity-1.8.2\res
+com.devmobile.android.restaurant.test.app-lifecycle-viewmodel-2.7.0-6 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\0815f17554b9becb24d333543c9747e2\transformed\lifecycle-viewmodel-2.7.0\res
+com.devmobile.android.restaurant.test.app-core-ktx-1.12.0-7 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\0d9b07c5f8554e7ba8b188ac08710e51\transformed\core-ktx-1.12.0\res
+com.devmobile.android.restaurant.test.app-activity-ktx-1.8.2-8 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\14208da5d84b84e4d2afccf9c9620c25\transformed\activity-ktx-1.8.2\res
+com.devmobile.android.restaurant.test.app-lifecycle-process-2.7.0-9 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\16b43c9f16860fa9967bab5c36a9b257\transformed\lifecycle-process-2.7.0\res
+com.devmobile.android.restaurant.test.app-savedstate-1.2.1-10 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\1985e51bbe58cdd8450a08f1533e7af6\transformed\savedstate-1.2.1\res
+com.devmobile.android.restaurant.test.app-lifecycle-runtime-ktx-2.7.0-11 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\2a7ffdb9c3aefe7e702aeded7f4ac165\transformed\lifecycle-runtime-ktx-2.7.0\res
+com.devmobile.android.restaurant.test.app-annotation-experimental-1.4.0-12 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\3304c05e7b401c7a9d91f413575dae80\transformed\annotation-experimental-1.4.0\res
+com.devmobile.android.restaurant.test.app-activity-compose-1.8.2-13 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\505526b356c17e6ea48e4f54e3b5819c\transformed\activity-compose-1.8.2\res
+com.devmobile.android.restaurant.test.app-ui-text-release-14 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\5304f2fba463598d56e12fedf8ffd248\transformed\ui-text-release\res
+com.devmobile.android.restaurant.test.app-profileinstaller-1.3.0-15 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\570692652a194c454cf6b2aae5f07609\transformed\profileinstaller-1.3.0\res
+com.devmobile.android.restaurant.test.app-startup-runtime-1.1.1-16 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\592985fcdc4bef99ba2aa4d19a1cb353\transformed\startup-runtime-1.1.1\res
+com.devmobile.android.restaurant.test.app-lifecycle-runtime-2.7.0-17 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\625b00d5bd912844df0b04f2c4c0bc1e\transformed\lifecycle-runtime-2.7.0\res
+com.devmobile.android.restaurant.test.app-ui-release-18 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\68e267427716610b1f9d74db0507821a\transformed\ui-release\res
+com.devmobile.android.restaurant.test.app-lifecycle-viewmodel-savedstate-2.7.0-19 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\6ac81a1136d4b6b7147d43dc7d3fa741\transformed\lifecycle-viewmodel-savedstate-2.7.0\res
+com.devmobile.android.restaurant.test.app-ui-graphics-release-20 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\84d17b7505823a9f40c457a68bd484bb\transformed\ui-graphics-release\res
+com.devmobile.android.restaurant.test.app-lifecycle-viewmodel-ktx-2.7.0-21 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\924add3539b724fc1fbd7d4e58775fab\transformed\lifecycle-viewmodel-ktx-2.7.0\res
+com.devmobile.android.restaurant.test.app-core-runtime-2.2.0-22 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\932327ea3dffbc2adf533f4f63fa2c73\transformed\core-runtime-2.2.0\res
+com.devmobile.android.restaurant.test.app-ui-unit-release-23 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\964dd904f6e4a3aee60046987263272f\transformed\ui-unit-release\res
+com.devmobile.android.restaurant.test.app-ui-test-release-24 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\9c7e6ef404f83737017f489481055342\transformed\ui-test-release\res
+com.devmobile.android.restaurant.test.app-runtime-release-25 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\a7f9802e20155839bd897f54be2a8bd5\transformed\runtime-release\res
+com.devmobile.android.restaurant.test.app-ui-test-junit4-release-26 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\abd40bda2940ac4743885ea90e6b18b1\transformed\ui-test-junit4-release\res
+com.devmobile.android.restaurant.test.app-ui-util-release-27 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\aeb83c150bd31998c0a412a91c00dcea\transformed\ui-util-release\res
+com.devmobile.android.restaurant.test.app-ui-geometry-release-28 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\c5ea708c8eefb3c39592f69c8fa1604c\transformed\ui-geometry-release\res
+com.devmobile.android.restaurant.test.app-savedstate-ktx-1.2.1-29 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\cb9a90fdfee783fd348ec5cccb9df84b\transformed\savedstate-ktx-1.2.1\res
+com.devmobile.android.restaurant.test.app-lifecycle-livedata-core-2.7.0-30 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\ce4982bd4b4d35c5c0c3800faed665e2\transformed\lifecycle-livedata-core-2.7.0\res
+com.devmobile.android.restaurant.test.app-emoji2-1.3.0-31 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\d4cdb897ab347c5ba2c165b197e8ffb5\transformed\emoji2-1.3.0\res
+com.devmobile.android.restaurant.test.app-core-1.12.0-32 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\daf3e89d272ffc9a87792c2d38cc33e7\transformed\core-1.12.0\res
+com.devmobile.android.restaurant.test.app-customview-poolingcontainer-1.0.0-33 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\f1705f8fe2024b9729f42fbb877992f8\transformed\customview-poolingcontainer-1.0.0\res
+com.devmobile.android.restaurant.test.app-runtime-saveable-release-34 C:\Users\Junior Oliveira\.gradle\caches\transforms-3\f87224c24ff5f5fe41d8f5d195a704d3\transformed\runtime-saveable-release\res

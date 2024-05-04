@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <color name="black">#000000</color>
+    <color name="five_color">#989898</color>
+    <color name="fourty_color">#C5C5C5</color>
+    <color name="orange">#C8A800</color>
+    <color name="seven_color">#FDFDFD</color>
+    <color name="six_color">#DADADA</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">RestFood</string>
+    <string name="button_enter">ENTRAR</string>
+    <string name="button_realizar_pedido">REALIZAR PEDIDO</string>
+    <string name="button_sign_up">CADASTRAR</string>
+    <string name="floating_button_cancel" ns1:ignore="ButtonCase">CANCELAR</string>
+    <string name="floating_button_realizar_pedido">CONTINUAR</string>
+    <string name="image_food">Food Name</string>
+    <string name="search_bar_hint">Search a Food</string>
+    <string name="tab_item_bebidas">Bebidas</string>
+    <string name="tab_item_entradas">Entradas</string>
+    <string name="tab_item_pratos_principais">P. Principais</string>
+    <string name="tab_item_sobremesas">Sobremesas</string>
+    <string name="text_food_drecription">Descrição da comida</string>
+    <string name="text_food_name">Food Name</string>
+    <string name="text_food_preferences">Voce quer que acrescentem algo a mais ou a menos na comida?</string>
+    <string name="text_message_put_name">Insira Seu Nome</string>
+    <string name="text_message_put_table_number">Insira o numero da sua mesa</string>
+    <string name="text_total_to_pay">R$ 0.00</string>
+    <style name="AppBarLayout.Style.Local" parent="Widget.Material3.AppBarLayout">
+        <item name="android:background">@null</item>
+    </style>
+    <style name="BottomAppBar.Style.Local" parent="">
+        <item name="iconSize">24dp</item>
+        <item name="iconPadding">11dp</item>
+        <item name="iconTint">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="textStartPadding">0dp</item>
+        <item name="fontFamily">@font/din_regular</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="rippleColor">@color/six_color</item>
+        <item name="android:backgroundTint">@android:color/black</item>
+        <item name="android:maxWidth">256dp</item>
+    </style>
+    <style name="Button.Login.Style.Local" parent="">
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="rippleColor">@color/white</item>
+        <item name="backgroundTint">@color/black</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="PopupMenu.View.Local" parent="Widget.Material3.PopupMenu">
+        <item name="android:popupElevation">20dp</item>
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
+        <item name="android:popupBackground">@drawable/bg_popup_menu</item>
+    </style>
+    <style name="RestaurantThemeLight" parent="Theme.Material3.Light.NoActionBar">
+
+        
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
+        <item name="android:windowBackground">@color/white</item>
+
+
+        <item name="materialSearchBarStyle">@style/SearchBar.App</item>
+
+    </style>
+    <style name="SearchBar.App" parent="Widget.Material3.SearchBar">
+
+    </style>
+    <style name="SearchBar.Style.Local" parent="Widget.Material3.SearchBar">
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:hint">@string/search_bar_hint</item>
+        <item name="defaultMarginsEnabled">false</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+        '       
+    </style>
+    <style name="SearchView.Style.Local" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.SearchBar</item>
+        <item name="android:hint">@string/search_bar_hint</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+    <style name="Shapeable.ImageRounded.Style.Local" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="TabSection.Style.Local" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@drawable/bg_radius_tab_layout</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorColor">@color/orange</item>
+        <item name="tabSelectedTextColor">@color/orange</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabTextColor">@color/black</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabRippleColor">@color/fourty_color</item>
+    </style>
+    <style name="TabText.Layout.Style.Local" parent="Widget.AppCompat.ActionBar.TabBar">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+    <style name="TextAppearance.App" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/sul_sans_regular</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
