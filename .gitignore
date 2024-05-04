@@ -6,6 +6,7 @@
 /build
 /captures
 /app/.idea
+/app/build
 .externalNativeBuild
 .cxx
 local.properties
