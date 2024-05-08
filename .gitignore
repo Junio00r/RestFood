@@ -7,7 +7,6 @@
 /captures
 /app/.idea
 /app/build
-/app/proguard-rules.pro
 .externalNativeBuild
 .cxx
 local.properties
