@@ -1,16 +1,14 @@
-package com.devmobile.android.restaurant.model.repository
+package com.devmobile.android.restaurant.model.repository.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.devmobile.android.restaurant.model.Food
-import com.devmobile.android.restaurant.model.repository.dao.IFoodDao
-import com.devmobile.android.restaurant.model.repository.dao.IUserDao
-import com.devmobile.android.restaurant.model.User
+import com.devmobile.android.restaurant.model.entities.Food
+import com.devmobile.android.restaurant.model.entities.User
 
 @Database(version = 18, entities = [Food::class, User::class], exportSchema = false)
-abstract class RestaurantDatabase : RoomDatabase() {
+abstract class RestaurantLocalDatabase : RoomDatabase() {
 
     abstract fun getFoodDao(): IFoodDao
 
@@ -18,17 +16,17 @@ abstract class RestaurantDatabase : RoomDatabase() {
 
     companion object {
 
-        private var _instance: RestaurantDatabase? = null
+        private var _instance: RestaurantLocalDatabase? = null
 
-        fun getInstance(context: Context): RestaurantDatabase {
+        fun getInstance(context: Context): RestaurantLocalDatabase {
 
             return _instance ?: createDatabaseInstance(context)
         }
 
-        private fun createDatabaseInstance(context: Context): RestaurantDatabase {
+        private fun createDatabaseInstance(context: Context): RestaurantLocalDatabase {
             return Room.databaseBuilder(
                 context,
-                RestaurantDatabase::class.java, "restaurant-database"
+                RestaurantLocalDatabase::class.java, "restaurant-database"
             )
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()

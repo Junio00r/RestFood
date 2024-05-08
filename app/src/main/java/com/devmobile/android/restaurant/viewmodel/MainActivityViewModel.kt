@@ -1,4 +1,6 @@
 package com.devmobile.android.restaurant.viewmodel
 
-class MainActivityViewModel {
+import androidx.lifecycle.ViewModel
+
+class MainActivityViewModel : ViewModel() {
 }

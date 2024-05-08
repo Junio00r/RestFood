@@ -1,8 +1,8 @@
-package com.devmobile.android.restaurant.model.repository
+package com.devmobile.android.restaurant.model.repository.local
 
 import android.content.Context
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.Food
+import com.devmobile.android.restaurant.model.entities.Food
 import com.devmobile.android.restaurant.model.enums.FoodSection
 import com.devmobile.android.restaurant.model.enums.TempoPreparo
 
@@ -13,7 +13,7 @@ class InsertDataOnDatabase {
 
         fun addFoodDataToDatabase(context: Context) {
             val foods = ArrayList<Food>()
-            val foodDao = RestaurantDatabase.getInstance(context).getFoodDao()
+            val foodDao = RestaurantLocalDatabase.getInstance(context).getFoodDao()
 
             if (foodDao.getQuantityOfFoods() == 0) {
 

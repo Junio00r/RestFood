@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.view.elements
+package com.devmobile.android.restaurant.view.customelements
 
 import android.os.Bundle
 import android.text.InputFilter

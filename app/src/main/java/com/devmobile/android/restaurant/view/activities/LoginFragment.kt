@@ -7,9 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.model.repository.RestaurantDatabase
-import com.devmobile.android.restaurant.model.User
-import com.devmobile.android.restaurant.model.repository.dao.IUserDao
+import com.devmobile.android.restaurant.model.repository.local.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.entities.User
+import com.devmobile.android.restaurant.model.repository.local.IUserDao
 import com.devmobile.android.restaurant.databinding.FragmentUserAuthenticationBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -26,7 +26,7 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        userDao = RestaurantDatabase.getInstance(this).getUserDao()
+        userDao = RestaurantLocalDatabase.getInstance(this).getUserDao()
         intent = Intent(this, MainActivity::class.java)
 
         if (userDao.getQuantityOfUsers() == 0) {
@@ -63,7 +63,7 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
                 } else {
 
-                    insertUser(User(1, userName!!.text.toString()))
+                    insertUser(User(1, userName!!.text.toString(), "teste"))
                     startMenuActivity()
                 }
             }

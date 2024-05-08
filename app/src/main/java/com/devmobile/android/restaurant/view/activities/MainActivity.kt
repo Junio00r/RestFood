@@ -12,6 +12,7 @@ import com.devmobile.android.restaurant.viewmodel.adapters.TabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMainBinding
 import com.devmobile.android.restaurant.model.enums.FoodSection
 import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
+import com.devmobile.android.restaurant.viewmodel.MainActivityViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -29,6 +30,8 @@ class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
     private lateinit var tabFragmentsInstances: Array<FragmentTabFoodSection>
 
     private var dataToRealizarPagamento = ArrayList<Array<*>>()
+
+    private val mainActivityViewModel = MainActivityViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

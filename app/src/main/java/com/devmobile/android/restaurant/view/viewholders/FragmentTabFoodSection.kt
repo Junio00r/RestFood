@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.viewmodel.IOnCheckCheckbox
-import com.devmobile.android.restaurant.model.Food
+import com.devmobile.android.restaurant.model.entities.Food
 import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
-import com.devmobile.android.restaurant.view.elements.ModalBottomSheet
+import com.devmobile.android.restaurant.view.customelements.ModalBottomSheet
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.repository.RestaurantDatabase
+import com.devmobile.android.restaurant.model.repository.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.viewmodel.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewFoodsBinding
 import com.devmobile.android.restaurant.model.enums.FoodSection
@@ -27,7 +27,7 @@ class FragmentTabFoodSection(
     private lateinit var binding: LayoutRecyclerviewFoodsBinding
     private lateinit var recyclerViewFoods: RecyclerView
     private var foodCardAdapter: FoodCardAdapter? = null
-    private lateinit var foodDAO: RestaurantDatabase
+    private lateinit var foodDAO: RestaurantLocalDatabase
     private lateinit var dataFoodsOfTabSections: ArrayList<Food>
     private var mFragmentSection = fragmentSection
     private var onFoodAddedCallback: IOnSelectFood? = null
@@ -43,7 +43,7 @@ class FragmentTabFoodSection(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding = LayoutRecyclerviewFoodsBinding.bind(view)
-        foodDAO = RestaurantDatabase.getInstance(requireContext())
+        foodDAO = RestaurantLocalDatabase.getInstance(requireContext())
         dataFoodsOfTabSections =
             mFragmentSection.let { foodDAO.getFoodDao().getFoodsBySection(it) } as ArrayList<Food>
 
