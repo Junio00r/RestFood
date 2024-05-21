@@ -6,11 +6,12 @@ import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class RegisterRepository(private val context: Context) {
 
     companion object {
-        val authenticationTag = "Authentication"
+        const val authenticationTag = "Authentication"
     }
 
     suspend fun register(user: User): Boolean {
@@ -24,7 +25,7 @@ class RegisterRepository(private val context: Context) {
 
                 return@withContext true
 
-            } catch (e: Exception) {
+            } catch (e: IOException) {
 
                 Log.e(authenticationTag, "Não foi possível inserir o usuario no banco de dados")
             }

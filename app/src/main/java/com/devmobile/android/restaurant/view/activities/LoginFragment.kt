@@ -11,8 +11,7 @@ import com.devmobile.android.restaurant.databinding.FragmentUserAuthenticationBi
 import com.devmobile.android.restaurant.model.repository.localdata.IUserDao
 import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
 import com.devmobile.android.restaurant.viewmodel.LoginViewModel
-import com.devmobile.android.restaurant.viewmodel.LoginViewModelFactory
-import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
+import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
@@ -31,7 +30,7 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
     // ViewModels
     private val loginViewModel: LoginViewModel by viewModels() {
-        LoginViewModelFactory(loginRepository = LoginRepository(this))
+        ViewModelFactory(repository = LoginRepository(this))
     }
     private val registerActivity: Activity? = null
 
