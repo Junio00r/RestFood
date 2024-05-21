@@ -67,10 +67,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="24dp"
-        android:autofillHints="username"
+        android:autofillHints="emailAddress"
         android:background="@drawable/bg_radius_layout"
         android:backgroundTint="#F8F8F8"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:maxLength="100"
         android:maxLines="1"
         android:padding="14dp"
@@ -102,44 +102,44 @@
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="32dp"
-        android:autofillHints="username"
+        android:autofillHints="password"
         android:background="@drawable/bg_radius_layout"
         android:backgroundTint="#F8F8F8"
-        android:inputType="number"
-        android:maxLength="6"
+        android:inputType="textPassword"
+        android:maxLength="16"
         android:maxLines="1"
         android:padding="14dp"
         android:textColor="@color/black"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@id/buttonSignup"
+        app:layout_constraintBottom_toTopOf="@id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonSignup"
+        android:id="@+id/buttonRegister"
         style="@style/Button.Login.Style.Local"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="64dp"
-        android:text="@string/button_sign_up"
+        android:layout_marginBottom="40dp"
+        android:text="@string/button_register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guidelineHorizontal"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonEnter"
+        android:id="@+id/buttonLogin"
         style="@style/Button.Login.Style.Local"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:text="@string/button_enter"
-        app:layout_constraintBottom_toBottomOf="@id/buttonSignup"
+        android:text="@string/button_login"
+        app:layout_constraintBottom_toBottomOf="@id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/guidelineHorizontal"
-        app:layout_constraintTop_toTopOf="@+id/buttonSignup" />
+        app:layout_constraintTop_toTopOf="@+id/buttonRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

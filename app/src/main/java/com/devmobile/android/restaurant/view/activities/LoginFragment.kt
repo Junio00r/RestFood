@@ -1,86 +1,76 @@
 package com.devmobile.android.restaurant.view.activities
 
+import android.app.Activity
 import android.content.Intent
-import android.database.sqlite.SQLiteException
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.model.repository.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.entities.User
-import com.devmobile.android.restaurant.model.repository.local.IUserDao
 import com.devmobile.android.restaurant.databinding.FragmentUserAuthenticationBinding
+import com.devmobile.android.restaurant.model.repository.localdata.IUserDao
+import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
+import com.devmobile.android.restaurant.viewmodel.LoginViewModel
+import com.devmobile.android.restaurant.viewmodel.LoginViewModelFactory
+import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var binding: FragmentUserAuthenticationBinding
+
     private lateinit var buttonSignUp: MaterialButton
-    private lateinit var buttonEnter: MaterialButton
-    private var userName: TextInputEditText? = null
-    private var mesaNumero: TextInputEditText? = null
+    private lateinit var buttonSignIn: MaterialButton
+
+    private var userEmail: TextInputEditText? = null
+    private var userPassword: TextInputEditText? = null
+
     private lateinit var userDao: IUserDao
+
     private lateinit var intent: Intent
+
+    // ViewModels
+    private val loginViewModel: LoginViewModel by viewModels() {
+        LoginViewModelFactory(loginRepository = LoginRepository(this))
+    }
+    private val registerActivity: Activity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        userDao = RestaurantLocalDatabase.getInstance(this).getUserDao()
-        intent = Intent(this, MainActivity::class.java)
+        binding = FragmentUserAuthenticationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        if (userDao.getQuantityOfUsers() == 0) {
+        initializeViews()
+        setListeners()
 
-            binding = FragmentUserAuthenticationBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-            initializeViews()
-            setListeners()
-
-        } else {
-
-            startMenuActivity()
-        }
     }
 
     /**
-     * Ainda irei tratar os casos em que o usuário faz muitaas requisitando login/cadastro
+     * Ainda irei tratar os casos em que o usuário faz muitaas requisicoes login/cadastro
      */
     override fun onClick(v: View) {
 
         when (v) {
 
-            buttonSignUp -> showMessage("Não Implementado ainda")
+            buttonSignUp -> registerActivity!!
 
-            buttonEnter -> {
-
-                if (userName!!.text.isNullOrBlank()) {
-
-                    showMessage("Insira seu Nome")
-
-                } else if (mesaNumero!!.text.isNullOrBlank()) {
-
-                    showMessage("Insira o numero da mesa")
-
-                } else {
-
-                    insertUser(User(1, userName!!.text.toString(), "teste"))
-                    startMenuActivity()
-                }
-            }
+            buttonSignIn -> loginViewModel.login(userEmail!!, userPassword!!)
         }
     }
 
     private fun initializeViews() {
 
-        userName = binding.editUserName
-        mesaNumero = binding.editTableNumber
-        buttonSignUp = binding.buttonSignup
-        buttonEnter = binding.buttonEnter
+        userEmail = binding.editUserName
+        userPassword = binding.editTableNumber
+        buttonSignUp = binding.buttonRegister
+        buttonSignIn = binding.buttonLogin
     }
 
     private fun setListeners() {
+
         buttonSignUp.setOnClickListener(this)
-        buttonEnter.setOnClickListener(this)
+        buttonSignIn.setOnClickListener(this)
     }
 
 
@@ -91,17 +81,5 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
     private fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun insertUser(userRepository: User) {
-
-        try {
-
-            userDao.insertUser(userRepository)
-
-        } catch (e: SQLiteException) {
-
-            Log.e("DatabaseError", "Erro ao inserir dados no banco de dados", e);
-        }
     }
 }

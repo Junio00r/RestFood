@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.local
+package com.devmobile.android.restaurant.model.repository.localdata
 
 import android.content.Context
 import com.devmobile.android.restaurant.R

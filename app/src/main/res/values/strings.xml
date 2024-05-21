@@ -3,10 +3,10 @@
     <string name="app_name">RestFood</string>
 
     <!--  Login Screen  -->
-    <string name="button_enter">ENTRAR</string>
-    <string name="button_sign_up">CADASTRAR</string>
-    <string name="text_message_put_name">Insira Seu Nome</string>
-    <string name="text_message_put_table_number">Insira o numero da sua mesa</string>
+    <string name="button_login">LOGIN</string>
+    <string name="button_register">REGISTER</string>
+    <string name="text_message_put_name">Email</string>
+    <string name="text_message_put_table_number">Password</string>
 
     <!--  Tab Sections  -->
     <string name="tab_item_entradas">Entradas</string>

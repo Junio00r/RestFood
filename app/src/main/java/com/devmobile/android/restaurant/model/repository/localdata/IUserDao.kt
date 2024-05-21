@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.local
+package com.devmobile.android.restaurant.model.repository.localdata
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -48,8 +48,8 @@ interface IUserDao {
      * @param userId The ID of the user to be retrieved.
      * @return The user with the specified ID or null if not found.
      */
-    @Query("SELECT * FROM users WHERE id = :userId")
-    fun findUserById(userId: Long): User?
+    @Query("SELECT * FROM users WHERE id = :userID")
+    fun findUserById(userID: Long): User?
 
     /**
      * Retrieves a user from the database based on the name.
@@ -59,6 +59,9 @@ interface IUserDao {
      */
     @Query("SELECT * FROM users WHERE name = :userName")
     fun findUserByName(userName: String): User?
+
+    @Query("SELECT * FROM users WHERE email = :userEmail")
+    fun findUserByEmail(userEmail: String): User?
 
     /**
      * Retrieves the total number of users in the database.

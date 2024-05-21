@@ -13,7 +13,7 @@ import com.devmobile.android.restaurant.model.entities.Food
 import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
 import com.devmobile.android.restaurant.view.customelements.ModalBottomSheet
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.repository.local.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.viewmodel.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewFoodsBinding
 import com.devmobile.android.restaurant.model.enums.FoodSection

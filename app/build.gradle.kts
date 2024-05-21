@@ -108,6 +108,8 @@ dependencies {
 
     // Dependencias para implementar arquitetura MVVM
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
 
     // Retrofit - Biblioteca de requisições REST
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
