@@ -1,9 +1,7 @@
 package com.devmobile.android.restaurant.view.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
@@ -15,7 +13,7 @@ import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
-class LoginFragment : FragmentActivity(), View.OnClickListener {
+class LoginFragment : FragmentActivity() {
     private lateinit var binding: FragmentUserAuthenticationBinding
 
     private lateinit var buttonSignUp: MaterialButton
@@ -29,10 +27,10 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var intent: Intent
 
     // ViewModels
-    private val loginViewModel: LoginViewModel by viewModels() {
+    private val loginViewModel: LoginViewModel by viewModels {
         ViewModelFactory(repository = LoginRepository(this))
     }
-    private val registerActivity: Activity? = null
+    private val registerActivity = RegisterFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +46,21 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
     /**
      * Ainda irei tratar os casos em que o usuário faz muitaas requisicoes login/cadastro
      */
-    override fun onClick(v: View) {
-
-        when (v) {
-
-            buttonSignUp -> registerActivity!!
-
-            buttonSignIn -> loginViewModel.login(userEmail!!, userPassword!!)
-        }
-    }
+//    override fun onClick(v: View) {
+//
+//        when (v) {
+//
+//            buttonSignUp -> {
+//
+//                intent = Intent(this, RegisterFragment::class.java)
+//                startActivity(intent)
+//                finish()
+//            }
+//
+//
+//            buttonSignIn -> loginViewModel.login(userEmail!!, userPassword!!)
+//        }
+//    }
 
     private fun initializeViews() {
 
@@ -68,17 +72,32 @@ class LoginFragment : FragmentActivity(), View.OnClickListener {
 
     private fun setListeners() {
 
-        buttonSignUp.setOnClickListener(this)
-        buttonSignIn.setOnClickListener(this)
+        buttonSignUp.setOnClickListener {
+
+            startRegisterActivity(Intent(this, RegisterFragment::class.java))
+        }
+
+        buttonSignIn.setOnClickListener {
+
+            startMenuActivity(Intent(this, LoginFragment::class.java))
+        }
     }
 
+    private fun startRegisterActivity(intent: Intent) {
 
-    private fun startMenuActivity() {
+        startActivity(intent)
+    }
+
+    private fun startMenuActivity(intent: Intent) {
+
+        loginViewModel.login(userEmail!!, userPassword!!)
+
         startActivity(intent)
         finish()
     }
 
     private fun showMessage(message: String) {
+
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

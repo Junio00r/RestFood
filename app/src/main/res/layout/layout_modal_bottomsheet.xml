@@ -41,7 +41,7 @@
         android:layout_alignStart="@id/imageFood"
         android:layout_alignEnd="@id/imageFood"
         android:layout_marginHorizontal="8dp"
-        android:hint="@string/text_food_drecription"
+        android:hint="@string/text_food_description"
         android:padding="16dp" />
 
     <com.google.android.material.textfield.TextInputEditText

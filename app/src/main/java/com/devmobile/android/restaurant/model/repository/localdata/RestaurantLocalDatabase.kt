@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.devmobile.android.restaurant.model.entities.Food
 import com.devmobile.android.restaurant.model.entities.User
 
-@Database(version = 18, entities = [Food::class, User::class], exportSchema = false)
+@Database(version = 29, entities = [Food::class, User::class], exportSchema = false)
 abstract class RestaurantLocalDatabase : RoomDatabase() {
 
     abstract fun getFoodDao(): IFoodDao

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="registerView"
+            type="com.devmobile.android.restaurant.view.activities.RegisterFragment" />
+
+        <variable
+            name="registerViewModel"
+            type="com.devmobile.android.restaurant.viewmodel.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp">
+
+        <include
+            android:id="@+id/textUserName"
+            layout="@layout/layout_text_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/textUserLastName"
+            layout="@layout/layout_text_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="32dp"
+            app:layout_constraintEnd_toEndOf="@id/textUserName"
+            app:layout_constraintStart_toStartOf="@id/textUserName"
+            app:layout_constraintTop_toBottomOf="@id/textUserName" />
+
+        <include
+            android:id="@+id/textEmail"
+            layout="@layout/layout_text_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="32dp"
+            app:layout_constraintEnd_toEndOf="@id/textUserLastName"
+            app:layout_constraintStart_toStartOf="@id/textUserLastName"
+            app:layout_constraintTop_toBottomOf="@id/textUserLastName" />
+
+        <include
+            android:id="@+id/textUserPassword"
+            layout="@layout/layout_text_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="32dp"
+            app:layout_constraintEnd_toEndOf="@id/textEmail"
+            app:layout_constraintStart_toStartOf="@id/textEmail"
+            app:layout_constraintTop_toBottomOf="@id/textEmail" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineVertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCancelRegister"
+            style="@style/Button.Login.Style.Local"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/din_regular"
+            android:letterSpacing="0"
+            android:onClick="@{() -> registerView.cancelRegister()}"
+            android:text="@string/button_cancel_register"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:backgroundTint="@color/fourty_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonConfirmRegister"
+            style="@style/Button.Login.Style.Local"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/din_regular"
+            android:letterSpacing="0"
+            android:onClick="@{() -> registerView.register()}"
+            android:text="@string/button_confirm_register"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:backgroundTint="@color/fourty_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineVertical" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

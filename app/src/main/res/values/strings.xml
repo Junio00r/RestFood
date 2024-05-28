@@ -8,6 +8,10 @@
     <string name="text_message_put_name">Email</string>
     <string name="text_message_put_table_number">Password</string>
 
+    <!--  Register Screen  -->
+    <string name="button_cancel_register" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="button_confirm_register">REGISTER</string>
+
     <!--  Tab Sections  -->
     <string name="tab_item_entradas">Entradas</string>
     <string name="tab_item_pratos_principais">P. Principais</string>
@@ -21,7 +25,7 @@
 
     <!--  Bottom Sheet  -->
     <string name="text_food_preferences">Voce quer que acrescentem algo a mais ou a menos na comida?</string>
-    <string name="text_food_drecription">Descrição da comida</string>
+    <string name="text_food_description">Descrição da comida</string>
 
     <!--  BottomAppBar  -->
     <string name="floating_button_cancel" tools:ignore="ButtonCase">CANCELAR</string>

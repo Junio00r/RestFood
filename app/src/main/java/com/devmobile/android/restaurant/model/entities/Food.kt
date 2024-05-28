@@ -10,11 +10,11 @@ import com.devmobile.android.restaurant.model.enums.TempoPreparo
 @Entity(tableName = "foods")
 data class Food(
     @PrimaryKey(autoGenerate = false) val mId: Long,
-    @ColumnInfo(name = "name") val mName: String,
-    @ColumnInfo(name = "foodPrice") val mFoodPrice: Float,
-    @ColumnInfo(name = "section") val mSection: FoodSection,
-    @ColumnInfo(name = "imageId") val mImageId: Int,
-    @ColumnInfo(name = "timeIconId") val mTimeIconId: Int,
-    @ColumnInfo(name = "timeToPrepare") val mTimeToPrepare: TempoPreparo,
-    @ColumnInfo(name = "description") val mDescription: String? = "Food"
+    @ColumnInfo(name = "name") var mName: String,
+    @ColumnInfo(name = "foodPrice") var mFoodPrice: Float,
+    @ColumnInfo(name = "section") var mSection: FoodSection,
+    @ColumnInfo(name = "imageId") var mImageId: Int,
+    @ColumnInfo(name = "timeIconId") var mTimeIconId: Int,
+    @ColumnInfo(name = "timeToPrepare") var mTimeToPrepare: TempoPreparo,
+    @ColumnInfo(name = "description") var mDescription: String? = "Food"
 )
