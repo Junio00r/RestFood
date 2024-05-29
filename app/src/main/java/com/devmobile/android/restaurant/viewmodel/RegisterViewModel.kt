@@ -22,6 +22,10 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
     private val _userPasswordError = MutableLiveData<String?>()
     val userPasswordError = _userPasswordError
 
+    companion object {
+        const val VALID_DATA = "VALID"
+    }
+
     fun register(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ): Boolean {
@@ -54,20 +58,25 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
         if (!InputPatterns.matcher(InputPatterns.USERNAME_PATTERN, userName)) {
 
-            _userNameError.value = "Valor inválido"
-            return false
+            _userNameError.value = "Invalid Name"
+        } else {
+            _userNameError.value = VALID_DATA
         }
 
         if (!InputPatterns.matcher(InputPatterns.USERNAME_PATTERN, userEmail)) {
 
-            _userEmailError.value = "Valor inválido"
-            return false
+            _userEmailError.value = "Invalid Email"
+        } else {
+            _userEmailError.value = VALID_DATA
         }
 
         if (!InputPatterns.matcher(InputPatterns.USERNAME_PATTERN, userPassword)) {
 
-            _userPasswordError.value = "Valor inválido"
+            _userPasswordError.value = "Passwords Don't Correspondent"
+
             return false
+        } else {
+            _userPasswordError.value = VALID_DATA
         }
 
         return true

@@ -26,10 +26,46 @@ class RegisterFragment : FragmentActivity() {
 
         registerBinding = DataBindingUtil.setContentView(this, R.layout.fragment_register_user)
         registerBinding.registerView = this
+
+        subscribeObservables()
+    }
+
+    private fun subscribeObservables() {
+
+        registerViewModel.userNameError.observe(this) {
+
+            if (it != RegisterViewModel.VALID_DATA) {
+                registerBinding.textUserName.textinputForm.error = it
+            } else {
+                registerBinding.textUserName.textinputForm.error = null
+            }
+        }
+
+        registerViewModel.userEmailError.observe(this) {
+
+            if (it != RegisterViewModel.VALID_DATA) {
+
+                registerBinding.textEmail.textinputForm.error = it
+            } else {
+
+                registerBinding.textEmail.textinputForm.error = null
+            }
+        }
+
+        registerViewModel.userPasswordError.observe(this) {
+
+            if (it != RegisterViewModel.VALID_DATA) {
+                registerBinding.textUserPassword.textinputForm.error = it
+            } else {
+                registerBinding.textUserPassword.textinputForm.error = null
+            }
+        }
     }
 
     @CalledFromXML
+
     fun register() {
+
         val userName = registerBinding.textUserName.textinputForm.editText?.text.toString()
         val userLastName = registerBinding.textUserLastName.textinputForm.editText?.text.toString()
         val userEmail = registerBinding.textEmail.textinputForm.editText?.text.toString()
