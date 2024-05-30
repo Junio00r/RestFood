@@ -6,12 +6,12 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.viewmodel.adapters.TabAdapter
 import com.devmobile.android.restaurant.databinding.ActivityMainBinding
 import com.devmobile.android.restaurant.model.enums.FoodSection
 import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
+import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
+import com.devmobile.android.restaurant.viewmodel.adapters.TabAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -137,20 +137,20 @@ class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
         var quantityAdded: Int
 
         dataToRealizarPagamento.forEachIndexed { index, item ->
-            foodId              = item[0].toString().toLong()
-            foodName            = item[1].toString()
-            foodPrice           = item[2].toString().toFloat()
-            foodSectionOrdinal  = item[3].toString().toInt()
-            quantityAdded       = item[4].toString().toInt()
+            foodId = item[0].toString().toLong()
+            foodName = item[1].toString()
+            foodPrice = item[2].toString().toFloat()
+            foodSectionOrdinal = item[3].toString().toInt()
+            quantityAdded = item[4].toString().toInt()
 
             intent.putExtra("foodId_$index", foodId)
-            
+
             intent.putExtra("foodName_$index", foodName)
-            
+
             intent.putExtra("foodPrice_$index", foodPrice)
-            
+
             intent.putExtra("foodSectionOrdinal_$index", foodSectionOrdinal)
-            
+
             intent.putExtra("quantityAdded_$index", quantityAdded)
         }
     }
@@ -176,15 +176,6 @@ class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
         dataToRealizarPagamento.removeIf { it[0] == foodId }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-    }
-
     override fun onStart() {
         super.onStart()
 
@@ -192,13 +183,6 @@ class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
         setExtendedFloatingButtons()
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }
 
 

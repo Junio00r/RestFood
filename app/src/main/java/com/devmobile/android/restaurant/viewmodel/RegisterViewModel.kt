@@ -36,15 +36,17 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ): Boolean {
 
-        if (!isDataValids(userName, userLastName, userEmail, userPassword)) {
+        if (!isValidData(userName, userEmail, userPassword)) {
 
             return false
         }
 
+        loadingProgress.value = LoadState.Loading
+
         val newUser = User(
             null,
             userName!!.trim(),
-            userLastName!!.trim(),
+            userLastName?.matches(InputPatterns.TEXT_PATTERN.toRegex()).toString(),
             userEmail!!.trim(),
             userPassword!!.trim(),
         )
@@ -54,9 +56,6 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
             try {
 
                 registerRepository.register(newUser)
-
-                // Apenas para teste
-                loadingProgress.value = LoadState.Loading
 
             } catch (e: SQLTimeoutException) {
 
@@ -71,20 +70,17 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         return true
     }
 
-    private fun isDataValids(
-        userName: String?, lastName: String?, userEmail: String?, userPassword: String?
+    private fun isValidData(
+        userName: String?, userEmail: String?, userPassword: String?
     ): Boolean {
+
+        var result = true
 
         if (!InputPatterns.matcher(InputPatterns.TEXT_PATTERN, userName)) {
 
             _userNameError.value = "Invalid Name."
-        } else {
-            _userNameError.value = VALID_DATA
-        }
+            result = false
 
-        if (!InputPatterns.matcher(InputPatterns.TEXT_PATTERN, lastName)) {
-
-            _userNameError.value = "Invalid Name."
         } else {
             _userNameError.value = VALID_DATA
         }
@@ -92,6 +88,8 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         if (!InputPatterns.matcher(InputPatterns.EMAIL_PATTERN, userEmail)) {
 
             _userEmailError.value = "Invalid Email."
+            result = false
+
         } else {
             _userEmailError.value = VALID_DATA
         }
@@ -100,11 +98,12 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
             _userPasswordError.value =
                 "Password have must in minimum 8 characters, three numbers and at least one special character ($,*, -)."
-            return false
+            result = false
+
         } else {
             _userPasswordError.value = VALID_DATA
         }
 
-        return true
+        return result
     }
 }

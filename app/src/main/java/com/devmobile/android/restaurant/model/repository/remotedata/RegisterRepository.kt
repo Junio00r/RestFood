@@ -22,6 +22,7 @@ class RegisterRepository(private val context: Context) {
             try {
 
                 userDao.insertUser(user)
+                Thread.sleep(5000)
 
                 return@withContext true
 

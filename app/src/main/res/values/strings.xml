@@ -2,6 +2,9 @@
 
     <string name="app_name">RestFood</string>
 
+    <!-- The text with resource will be set dynamically in code -->
+    <string name="dynamic_content">Dynamic Content</string>
+
     <!--  Login Screen  -->
     <string name="button_login">LOGIN</string>
     <string name="button_register">REGISTER</string>

@@ -1,7 +1,9 @@
 package com.devmobile.android.restaurant.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
@@ -54,12 +56,18 @@ class RegisterFragment : FragmentActivity() {
         registerBinding.textUserPassword.textinputForm.hint = "Password"
 
         // Set InputType
+        textUserName.textinputForm.editText!!.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+        textUserLastName.textinputForm.editText!!.inputType =
+            InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         textUserEmail.textinputForm.editText!!.inputType =
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         textUserPassword.textinputForm.editText!!.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+        // Other paramters
         textUserPassword.textinputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
 
         textUserPassword.textinputForm.isEndIconVisible = true
+        textUserPassword.textinputForm.isCounterEnabled = true
     }
 
     private fun subscribeObservables() {
@@ -103,14 +111,20 @@ class RegisterFragment : FragmentActivity() {
 
                 is LoadState.Loading -> {
 
+                    val teste = ActivityLoading()
+                    val intent = Intent(this, ActivityLoading::class.java)
+                    startActivity(intent)
+
+                    Log.i("Teste", "Logging")
                 }
 
                 is LoadState.NotLoading -> {
-
+                    Log.e("Teste", "Not Logging")
                 }
 
                 is LoadState.Error -> {
 
+                    Log.e("Teste", "Error")
                 }
             }
         }

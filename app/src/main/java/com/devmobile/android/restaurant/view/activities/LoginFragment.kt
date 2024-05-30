@@ -42,25 +42,6 @@ class LoginFragment : FragmentActivity() {
 
     }
 
-    /**
-     * Ainda irei tratar os casos em que o usuário faz muitaas requisicoes login/cadastro
-     */
-//    override fun onClick(v: View) {
-//
-//        when (v) {
-//
-//            buttonSignUp -> {
-//
-//                intent = Intent(this, RegisterFragment::class.java)
-//                startActivity(intent)
-//                finish()
-//            }
-//
-//
-//            buttonSignIn -> loginViewModel.login(userEmail!!, userPassword!!)
-//        }
-//    }
-
     private fun initializeViews() {
 
         userEmail = binding.editUserName
