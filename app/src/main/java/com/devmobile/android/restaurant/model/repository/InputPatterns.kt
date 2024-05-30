@@ -6,20 +6,17 @@ class InputPatterns {
 
     companion object {
 
-        val USERNAME_PATTERN: Pattern = Pattern.compile(
+        val TEXT_PATTERN: Pattern = Pattern.compile(
             "^(?=.*[a-zA-Z])\\w{3,25}\$"
         )
 
         val EMAIL_PATTERN: Pattern = Pattern.compile(
-            "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])\\S{6,}\$"
+            "/[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi"
         )
 
         val PASSWORD_PATTERN: Pattern = Pattern.compile(
 
-            "^" + "(?=.*[@#$%^&+=])" +     // at least 1 special character
-                    "(?=\\S+$)" +            // no white spaces
-                    ".{4,}" +                // at least 4 characters
-                    "$"
+            "(?=^.{8,}\$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*\$"
         )
 
         fun matcher(pattern: Pattern, data: String?): Boolean {
@@ -27,16 +24,16 @@ class InputPatterns {
             if (data != null) {
                 return when (pattern) {
 
-                    USERNAME_PATTERN -> {
-                        return USERNAME_PATTERN.matcher(data).matches()
+                    TEXT_PATTERN -> {
+                        return TEXT_PATTERN.matcher(data.trim()).matches()
                     }
 
                     EMAIL_PATTERN -> {
-                        return EMAIL_PATTERN.matcher(data).matches()
+                        return EMAIL_PATTERN.matcher(data.trim()).matches()
                     }
 
                     PASSWORD_PATTERN -> {
-                        return PASSWORD_PATTERN.matcher(data).matches()
+                        return PASSWORD_PATTERN.matcher(data.trim()).matches()
                     }
 
                     else -> {

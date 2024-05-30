@@ -2,7 +2,6 @@ package com.devmobile.android.restaurant.view.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import com.devmobile.android.restaurant.databinding.FragmentUserAuthenticationBinding
@@ -95,9 +94,5 @@ class LoginFragment : FragmentActivity() {
         startActivity(intent)
         finish()
     }
-
-    private fun showMessage(message: String) {
-
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 }
+

@@ -1,12 +1,15 @@
 package com.devmobile.android.restaurant.view.activities
 
 import android.os.Bundle
+import android.text.InputType
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentRegisterUserBinding
+import com.devmobile.android.restaurant.databinding.LayoutTextInputBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
@@ -14,7 +17,11 @@ import com.google.android.material.textfield.TextInputLayout
 
 class RegisterFragment : FragmentActivity() {
     private lateinit var registerBinding: FragmentRegisterUserBinding
-    private lateinit var inputData: Array<TextInputLayout>
+
+    private lateinit var textUserName: LayoutTextInputBinding
+    private lateinit var textUserLastName: LayoutTextInputBinding
+    private lateinit var textUserEmail: LayoutTextInputBinding
+    private lateinit var textUserPassword: LayoutTextInputBinding
 
     private val registerRepository = RegisterRepository(this)
     private val registerViewModel: RegisterViewModel by viewModels {
@@ -24,52 +31,98 @@ class RegisterFragment : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // init layout
         registerBinding = DataBindingUtil.setContentView(this, R.layout.fragment_register_user)
         registerBinding.registerView = this
 
+        // initialize variables
+        textUserName = registerBinding.textUserName
+        textUserLastName = registerBinding.textUserLastName
+        textUserEmail = registerBinding.textUserEmail
+        textUserPassword = registerBinding.textUserPassword
+
+        // methods
         subscribeObservables()
+        setParameters()
+    }
+
+    private fun setParameters() {
+        // Set Hints
+        registerBinding.textUserName.textinputForm.hint = "Username"
+        registerBinding.textUserLastName.textinputForm.hint = "Lastname"
+        registerBinding.textUserEmail.textinputForm.hint = "UserEmail"
+        registerBinding.textUserPassword.textinputForm.hint = "Password"
+
+        // Set InputType
+        textUserEmail.textinputForm.editText!!.inputType =
+            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        textUserPassword.textinputForm.editText!!.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        textUserPassword.textinputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+
+        textUserPassword.textinputForm.isEndIconVisible = true
     }
 
     private fun subscribeObservables() {
 
-        registerViewModel.userNameError.observe(this) {
+        registerViewModel.userNameError.observe(this) { error ->
 
-            if (it != RegisterViewModel.VALID_DATA) {
-                registerBinding.textUserName.textinputForm.error = it
+            if (error != RegisterViewModel.VALID_DATA) {
+
+                textUserName.textinputForm.error = error
             } else {
-                registerBinding.textUserName.textinputForm.error = null
+
+                textUserName.textinputForm.error = null
             }
         }
 
-        registerViewModel.userEmailError.observe(this) {
+        registerViewModel.userEmailError.observe(this) { error ->
 
-            if (it != RegisterViewModel.VALID_DATA) {
+            if (error != RegisterViewModel.VALID_DATA) {
 
-                registerBinding.textEmail.textinputForm.error = it
+                textUserEmail.textinputForm.error = error
             } else {
 
-                registerBinding.textEmail.textinputForm.error = null
+                textUserEmail.textinputForm.error = null
             }
         }
 
-        registerViewModel.userPasswordError.observe(this) {
+        registerViewModel.userPasswordError.observe(this) { error ->
 
-            if (it != RegisterViewModel.VALID_DATA) {
-                registerBinding.textUserPassword.textinputForm.error = it
+            if (error != RegisterViewModel.VALID_DATA) {
+
+                textUserPassword.textinputForm.error = error
             } else {
-                registerBinding.textUserPassword.textinputForm.error = null
+
+                textUserPassword.textinputForm.error = null
+            }
+        }
+
+        registerViewModel.loadingProgress.observe(this) { loadState ->
+
+            when (loadState) {
+
+                is LoadState.Loading -> {
+
+                }
+
+                is LoadState.NotLoading -> {
+
+                }
+
+                is LoadState.Error -> {
+
+                }
             }
         }
     }
 
     @CalledFromXML
-
     fun register() {
 
-        val userName = registerBinding.textUserName.textinputForm.editText?.text.toString()
-        val userLastName = registerBinding.textUserLastName.textinputForm.editText?.text.toString()
-        val userEmail = registerBinding.textEmail.textinputForm.editText?.text.toString()
-        val userPassword = registerBinding.textUserPassword.textinputForm.editText?.text.toString()
+        val userName = textUserName.textinputForm.editText?.text.toString()
+        val userLastName = textUserLastName.textinputForm.editText?.text.toString()
+        val userEmail = textUserEmail.textinputForm.editText?.text.toString()
+        val userPassword = textUserPassword.textinputForm.editText?.text.toString()
 
         registerViewModel.register(userName, userLastName, userEmail, userPassword)
     }
