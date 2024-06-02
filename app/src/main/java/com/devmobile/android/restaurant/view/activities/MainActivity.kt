@@ -32,11 +32,6 @@ class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if (savedInstanceState == null) {
-            println("adkjaldkjadjj")
-        } else {
-            println("adkjaldkjadjj")
-        }
 
         super.onCreate(savedInstanceState)
 

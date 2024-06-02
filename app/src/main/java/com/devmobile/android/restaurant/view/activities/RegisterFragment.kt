@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant.view.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -106,16 +105,11 @@ class RegisterFragment : FragmentActivity() {
         }
 
         registerViewModel.loadingProgress.observe(this) { loadState ->
-
             when (loadState) {
 
                 is LoadState.Loading -> {
-
-                    val teste = ActivityLoading()
-                    val intent = Intent(this, ActivityLoading::class.java)
-                    startActivity(intent)
-
                     Log.i("Teste", "Logging")
+                    LoadingActivity.start(this)
                 }
 
                 is LoadState.NotLoading -> {
@@ -123,7 +117,6 @@ class RegisterFragment : FragmentActivity() {
                 }
 
                 is LoadState.Error -> {
-
                     Log.e("Teste", "Error")
                 }
             }

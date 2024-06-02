@@ -14,11 +14,9 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".view.activities.ActivityLoading"
+            android:name=".view.activities.LoadingActivity"
             android:exported="true"
-            android:label="Restaurant"
-            android:theme="@style/RestaurantThemeLight">
-        </activity>
+            android:theme="@style/RestaurantThemeLight" />
 
         <activity
             android:name=".view.activities.LoginFragment"
@@ -34,23 +32,18 @@
         <activity
             android:name=".view.activities.RegisterFragment"
             android:exported="false"
-            android:theme="@style/RestaurantThemeLight"
-            tools:ignore="AppLinkUrlError">
-        </activity>
+            android:theme="@style/RestaurantThemeLight" />
 
         <activity
             android:name=".view.activities.MainActivity"
             android:exported="true"
             android:label="Restaurant"
-            android:theme="@style/RestaurantThemeLight">
-        </activity>
+            android:theme="@style/RestaurantThemeLight" />
 
         <activity
             android:name=".view.activities.FinalizeOrderFragment"
             android:exported="false"
-            android:theme="@style/RestaurantThemeLight"
-            tools:ignore="AppLinkUrlError">
-        </activity>
+            android:theme="@style/RestaurantThemeLight" />
 
     </application>
 </manifest>
