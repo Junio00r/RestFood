@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,42 +33,40 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         const val VALID_DATA = "VALID"
     }
 
-    fun register(
+    suspend fun register(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
-    ): Boolean {
+    ) {
 
-        if (!isValidData(userName, userEmail, userPassword)) {
+        if (isValidData(userName, userEmail, userPassword)) {
 
-            return false
+            _loadingProgress.postValue(LoadState.Loading)
+
+            val newUser = User(
+                null,
+                userName!!.trim(),
+                userLastName?.matches(InputPatterns.TEXT_PATTERN.toRegex()).toString(),
+                userEmail!!.trim(),
+                userPassword!!.trim(),
+            )
+
+            viewModelScope.launch {
+
+                try {
+
+                    registerRepository.createAccount(newUser)
+
+                    Log.d(
+                        "RegisterViewModel",
+                        "Registration successful, updating to NotLoading"
+                    )
+                    _loadingProgress.postValue(LoadState.NotLoading(true))
+
+                } catch (e: SQLTimeoutException) {
+                    Log.e("RegisterViewModel", "Registration error: ${e.message}")
+                    _loadingProgress.postValue(LoadState.Error(Throwable("Teste: Error")))
+                }
+            }.join()
         }
-
-        loadingProgress.value = LoadState.Loading
-
-        val newUser = User(
-            null,
-            userName!!.trim(),
-            userLastName?.matches(InputPatterns.TEXT_PATTERN.toRegex()).toString(),
-            userEmail!!.trim(),
-            userPassword!!.trim(),
-        )
-
-        viewModelScope.launch {
-
-            try {
-
-                registerRepository.register(newUser)
-
-            } catch (e: SQLTimeoutException) {
-
-                // Apenas para teste
-                loadingProgress.value = LoadState.Error(throw e)
-            }
-
-            // Apenas para teste
-            loadingProgress.value = LoadState.NotLoading(true)
-        }
-
-        return true
     }
 
     private fun isValidData(

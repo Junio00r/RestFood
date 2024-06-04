@@ -2,6 +2,8 @@ package com.devmobile.android.restaurant.model.repository.remotedata
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.LoadState
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.Dispatchers
@@ -10,14 +12,17 @@ import java.io.IOException
 
 class RegisterRepository(private val context: Context) {
 
+    private val _registerProgress = MutableLiveData<LoadState>()
+    val registerProgress = _registerProgress
+
     companion object {
         const val authenticationTag = "Authentication"
     }
 
-    suspend fun register(user: User): Boolean {
+    suspend fun createAccount(user: User): Boolean {
         val userDao = RestaurantLocalDatabase.getInstance(context).getUserDao()
 
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
 
             try {
 
@@ -26,12 +31,14 @@ class RegisterRepository(private val context: Context) {
 
                 return@withContext true
 
+
             } catch (e: IOException) {
 
-                Log.e(authenticationTag, "Não foi possível inserir o usuario no banco de dados")
+                Log.e("Teste", "Não foi possível inserir o usuario no banco de dados")
             }
-        }
 
-        return false
+
+            false
+        }
     }
 }

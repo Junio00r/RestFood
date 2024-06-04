@@ -1,11 +1,14 @@
 package com.devmobile.android.restaurant.view.activities
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.R
@@ -15,6 +18,7 @@ import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepo
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class RegisterFragment : FragmentActivity() {
     private lateinit var registerBinding: FragmentRegisterUserBinding
@@ -105,19 +109,37 @@ class RegisterFragment : FragmentActivity() {
         }
 
         registerViewModel.loadingProgress.observe(this) { loadState ->
+
             when (loadState) {
 
                 is LoadState.Loading -> {
                     Log.i("Teste", "Logging")
-                    LoadingActivity.start(this)
+
+                    // Start loading animation
+                    startActivity(Intent(this, LoadingActivity::class.java))
                 }
 
                 is LoadState.NotLoading -> {
                     Log.e("Teste", "Not Logging")
+
+                    // Stop loading animation
+                    LoadingActivity.stop()
+
+                    startActivity(
+                        Intent(this, MainActivity::class.java),
+                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+                    )
+
+                    // RegisterActivity is no longer necessary
+                    finish()
                 }
 
                 is LoadState.Error -> {
-                    Log.e("Teste", "Error")
+
+                    Log.e("Teste", "Teste: Error")
+
+                    // Stop loading animation
+                    LoadingActivity.stop()
                 }
             }
         }
@@ -131,7 +153,11 @@ class RegisterFragment : FragmentActivity() {
         val userEmail = textUserEmail.textinputForm.editText?.text.toString()
         val userPassword = textUserPassword.textinputForm.editText?.text.toString()
 
-        registerViewModel.register(userName, userLastName, userEmail, userPassword)
+
+        lifecycleScope.launch {
+
+            registerViewModel.register(userName, userLastName, userEmail, userPassword)
+        }
     }
 
     @CalledFromXML
