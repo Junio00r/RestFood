@@ -2,40 +2,72 @@ package com.devmobile.android.restaurant.model.repository.remotedata
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabaseCorruptException
+import android.database.sqlite.SQLiteException
 import android.util.Log
+import com.devmobile.android.restaurant.model.AccountException
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.sql.SQLTimeoutException
 
 class RegisterRepository(private val context: Context) {
 
-    suspend fun createAccount(user: User): Boolean {
+    suspend fun createAccount(user: User) {
         val userDao = RestaurantLocalDatabase.getInstance(context).getUserDao()
 
         return withContext(Dispatchers.IO) {
 
-        try {
+            try {
 
-                userDao.insertUser(user)
+                val isNotEmailRegistered = userDao.hasEmailRegistered(user.email) == 0
 
-                delay(5000)
-                return@withContext true
+                if (isNotEmailRegistered) {
 
+                    userDao.insertUser(user)
+                } else {
+
+                    throw AccountException()
+                }
+
+            } catch (e: AccountException) {
+
+                Log.e(
+                    "Teste",
+                    "Account creating exception: Email already registered on database"
+                )
+                throw e
 
             } catch (e: IOException) {
 
-                Log.e("Teste", "Não foi possível inserir o usuario no banco de dados")
-            } catch (e: SQLTimeoutException) {
-                Log.e("Teste", "Error Creating Account: ${e.message}")
-            } catch (e: SQLiteDatabaseCorruptException) {
-                Log.e("Teste", "Error Creating Account: ${e.message}")
-            }
+                Log.e(
+                    "Test RegisterRepository",
+                    "IO database exception to create account: ${e.message}"
+                )
+                throw e
 
-            return@withContext false
+            } catch (e: SQLiteDatabaseCorruptException) {
+
+                Log.e(
+                    "Test RegisterRepository", "Database corrupt: ${e.message}"
+                )
+                throw e
+
+            } catch (e: SQLiteException) {
+
+                Log.e(
+                    "Test RegisterRepository", "SQL exception while creating account: ${e.message}"
+                )
+                throw e
+
+            } catch (e: Exception) {
+
+                Log.e(
+                    "Test RegisterRepository",
+                    "Unexpected exception while creating account: ${e.message}"
+                )
+                throw e
+            }
         }
     }
 }

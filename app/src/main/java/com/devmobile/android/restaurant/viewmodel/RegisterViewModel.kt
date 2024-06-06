@@ -1,14 +1,17 @@
 package com.devmobile.android.restaurant.viewmodel
 
-import android.util.Log
+import android.database.sqlite.SQLiteDatabaseCorruptException
+import android.database.sqlite.SQLiteException
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
+import com.devmobile.android.restaurant.model.AccountException
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class RegisterViewModel(private val registerRepository: RegisterRepository) : ViewModel() {
 
@@ -52,18 +55,36 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
                 try {
 
+                    // throw exception
                     registerRepository.createAccount(newUser)
 
                     _loadingProgress.value = LoadState.NotLoading(true)
 
+                } catch (e: AccountException) {
+
+                    _userEmailError.value = "Test Email is invalid or already taken"
+                    _loadingProgress.value =
+                        LoadState.Error(Throwable("Test It was not possible create account"))
+
+                } catch (e: IOException) {
+
+                    _loadingProgress.value =
+                        LoadState.Error(Throwable("Test It was not possible create account"))
+
+                } catch (e: SQLiteDatabaseCorruptException) {
+
+                    _loadingProgress.value =
+                        LoadState.Error(Throwable("Test It was not possible create account"))
+
+                } catch (e: SQLiteException) {
+
+                    _loadingProgress.value =
+                        LoadState.Error(Throwable("Test It was not possible create account"))
+
                 } catch (e: Exception) {
 
-                    Log.e(
-                        "Teste classname: RegisterViewModel",
-                        "Error Creating Account: ${e.message}"
-                    )
                     _loadingProgress.value =
-                        LoadState.Error(Throwable("Teste Error: Request timeout create account"))
+                        LoadState.Error(Throwable("Test It was not possible create account"))
 
                 }
             }
@@ -76,34 +97,32 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
         var result = true
 
-        if (!InputPatterns.matcher(InputPatterns.TEXT_PATTERN, userName)) {
+        if (InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, userName)) {
 
-            _userNameError.value = "Invalid Name."
-            result = false
-
-        } else {
             _userNameError.value = VALID_DATA
+        } else {
+            _userNameError.value = InputPatterns.TEXT_NAME_ERROR_MESSAGE
+            result = false
         }
 
-        if (!InputPatterns.matcher(InputPatterns.EMAIL_PATTERN, userEmail)) {
+        if (InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, userEmail)) {
 
-            _userEmailError.value = "Invalid Email."
-            result = false
-
-        } else {
             _userEmailError.value = VALID_DATA
+        } else {
+            _userEmailError.value = InputPatterns.EMAIL_ERROR_MESSAGE
+            result = false
         }
 
-        if (!InputPatterns.matcher(InputPatterns.PASSWORD_PATTERN, userPassword)) {
+        if (InputPatterns.isMatch(InputPatterns.PASSWORD_PATTERN, userPassword)) {
 
-            _userPasswordError.value =
-                "Password have must in minimum 8 characters, three numbers and at least one special character ($,*, -)."
-            result = false
+            _userPasswordError.value = VALID_DATA
 
         } else {
-            _userPasswordError.value = VALID_DATA
+            _userPasswordError.value = InputPatterns.PASSWORD_ERROR_MESSAGE
+            result = false
         }
 
         return result
     }
+
 }

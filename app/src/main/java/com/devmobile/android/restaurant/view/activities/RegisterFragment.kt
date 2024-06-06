@@ -2,6 +2,8 @@ package com.devmobile.android.restaurant.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.InputType
 import android.util.Log
 import androidx.activity.viewModels
@@ -13,9 +15,9 @@ import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentRegisterUserBinding
 import com.devmobile.android.restaurant.databinding.LayoutTextInputBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
+import com.devmobile.android.restaurant.view.customelements.LoadingTransition
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class RegisterFragment : AppCompatActivity() {
@@ -75,34 +77,31 @@ class RegisterFragment : AppCompatActivity() {
 
         registerViewModel.userNameError.observe(this) { error ->
 
-            if (error != RegisterViewModel.VALID_DATA) {
-
-                textUserName.textinputForm.error = error
-            } else {
+            if (error == RegisterViewModel.VALID_DATA) {
 
                 textUserName.textinputForm.error = null
+            } else {
+                textUserName.textinputForm.error = error
             }
         }
 
         registerViewModel.userEmailError.observe(this) { error ->
 
-            if (error != RegisterViewModel.VALID_DATA) {
-
-                textUserEmail.textinputForm.error = error
-            } else {
+            if (error == RegisterViewModel.VALID_DATA) {
 
                 textUserEmail.textinputForm.error = null
+            } else {
+                textUserEmail.textinputForm.error = error
             }
         }
 
         registerViewModel.userPasswordError.observe(this) { error ->
 
-            if (error != RegisterViewModel.VALID_DATA) {
-
-                textUserPassword.textinputForm.error = error
-            } else {
+            if (error == RegisterViewModel.VALID_DATA) {
 
                 textUserPassword.textinputForm.error = null
+            } else {
+                textUserPassword.textinputForm.error = error
             }
         }
 
@@ -121,18 +120,20 @@ class RegisterFragment : AppCompatActivity() {
 
                 is LoadState.NotLoading -> {
 
-                    startActivity(Intent(this, MainActivity::class.java))
-
-                    LoadingTransition.getInstance(null).stop()
-
                     Log.i("Teste: RegisterFragment", "Stop Loading Screen")
 
-                    finish()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                        LoadingTransition.getInstance(null).stop()
+                    }, 5000)
                 }
 
                 is LoadState.Error -> {
 
                     LoadingTransition.getInstance(null).stop()
+                    showError(loadState.error.message.toString())
+
                     Log.e("Teste: RegisterFragment", "Interrupt Loading Screen")
                 }
             }
@@ -154,5 +155,9 @@ class RegisterFragment : AppCompatActivity() {
     fun cancelRegister() {
 
         finish()
+    }
+
+    private fun showError(errorMessage: String) {
+
     }
 }

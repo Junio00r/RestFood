@@ -6,6 +6,18 @@ class InputPatterns {
 
     companion object {
 
+        // Error Messages
+        const val TEXT_ERROR_MESSAGE =
+
+            "Texto não pode conter caracteres (!, @ # $ ¨ %) especias, numeros e nem espaços"
+        const val TEXT_NAME_ERROR_MESSAGE = "Name invalid"
+
+        const val PASSWORD_ERROR_MESSAGE =
+            "Password have must in minimum 8 characters, three numbers and at least one special character (\$,*, -)."
+
+        const val EMAIL_ERROR_MESSAGE = "Email is invalid or already taken"
+
+        // Patterns
         val TEXT_PATTERN: Pattern = Pattern.compile(
             "^(?=.*[a-zA-Z])\\w{3,25}\$"
         )
@@ -19,10 +31,12 @@ class InputPatterns {
             "(?=^.{8,}\$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*\$"
         )
 
-        fun matcher(pattern: Pattern, data: String?): Boolean {
+
+        // Function
+        fun isMatch(patternToCheck: Pattern, data: String?): Boolean {
 
             if (data != null) {
-                return when (pattern) {
+                return when (patternToCheck) {
 
                     TEXT_PATTERN -> {
                         return TEXT_PATTERN.matcher(data.trim()).matches()

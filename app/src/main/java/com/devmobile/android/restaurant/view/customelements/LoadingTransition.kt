@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.view.activities
+package com.devmobile.android.restaurant.view.customelements
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.internal.synchronized
 
 class LoadingTransition : Fragment() {
 
@@ -17,7 +15,6 @@ class LoadingTransition : Fragment() {
         @Volatile
         private var myInstance: LoadingTransition? = null
 
-        @OptIn(InternalCoroutinesApi::class)
         fun getInstance(layoutID: Int?): LoadingTransition {
 
             return myInstance ?: synchronized(this) {
