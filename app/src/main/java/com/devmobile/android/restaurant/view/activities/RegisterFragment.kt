@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -14,6 +15,7 @@ import com.devmobile.android.restaurant.databinding.LayoutTextInputBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class RegisterFragment : AppCompatActivity() {
@@ -112,21 +114,25 @@ class RegisterFragment : AppCompatActivity() {
 
                     LoadingTransition
                         .getInstance(R.layout.layout_loading)
-                        .startTransition(supportFragmentManager, R.id.registerContainer, null)
+                        .start(supportFragmentManager, R.id.registerContainer, null)
 
                     Log.i("Teste: RegisterFragment", "Start Loading Screen")
                 }
 
                 is LoadState.NotLoading -> {
 
-                    LoadingTransition.getInstance(null).stopTransition()
+                    startActivity(Intent(this, MainActivity::class.java))
+
+                    LoadingTransition.getInstance(null).stop()
 
                     Log.i("Teste: RegisterFragment", "Stop Loading Screen")
+
                     finish()
                 }
 
                 is LoadState.Error -> {
 
+                    LoadingTransition.getInstance(null).stop()
                     Log.e("Teste: RegisterFragment", "Interrupt Loading Screen")
                 }
             }

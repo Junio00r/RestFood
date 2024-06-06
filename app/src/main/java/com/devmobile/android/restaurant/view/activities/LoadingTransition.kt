@@ -29,7 +29,7 @@ class LoadingTransition : Fragment() {
         }
     }
 
-    fun startTransition(fragmentManager: FragmentManager, containerId: Int, layoutID: Int?) {
+    fun start(fragmentManager: FragmentManager, containerId: Int, layoutID: Int?) {
 
         myInstance?.let {
 
@@ -37,7 +37,7 @@ class LoadingTransition : Fragment() {
         }
     }
 
-    fun stopTransition() {
+    fun stop() {
 
         myInstance?.let {
 
