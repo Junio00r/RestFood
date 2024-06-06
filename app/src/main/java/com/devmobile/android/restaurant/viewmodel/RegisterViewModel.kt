@@ -9,7 +9,6 @@ import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import kotlinx.coroutines.launch
-import java.sql.SQLTimeoutException
 
 class RegisterViewModel(private val registerRepository: RegisterRepository) : ViewModel() {
 
@@ -33,13 +32,13 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         const val VALID_DATA = "VALID"
     }
 
-    suspend fun register(
+    fun register(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ) {
 
         if (isValidData(userName, userEmail, userPassword)) {
 
-            _loadingProgress.postValue(LoadState.Loading)
+            _loadingProgress.value = LoadState.Loading
 
             val newUser = User(
                 null,
@@ -55,17 +54,19 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
                     registerRepository.createAccount(newUser)
 
-                    Log.d(
-                        "RegisterViewModel",
-                        "Registration successful, updating to NotLoading"
-                    )
-                    _loadingProgress.postValue(LoadState.NotLoading(true))
+                    _loadingProgress.value = LoadState.NotLoading(true)
 
-                } catch (e: SQLTimeoutException) {
-                    Log.e("RegisterViewModel", "Registration error: ${e.message}")
-                    _loadingProgress.postValue(LoadState.Error(Throwable("Teste: Error")))
+                } catch (e: Exception) {
+
+                    Log.e(
+                        "Teste classname: RegisterViewModel",
+                        "Error Creating Account: ${e.message}"
+                    )
+                    _loadingProgress.value =
+                        LoadState.Error(Throwable("Teste Error: Request timeout create account"))
+
                 }
-            }.join()
+            }
         }
     }
 

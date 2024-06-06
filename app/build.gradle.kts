@@ -40,12 +40,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_18.toString()
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
+//    buildFeatures {
+//        compose = true
+//    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.5.10"
+//    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -61,8 +61,7 @@ dependencies {
     val roomVersion = "2.6.1"
     val uiVersion = "1.6.7"
 
-    // compose
-
+    // Compose
     implementation("androidx.compose.ui:ui:$uiVersion")
     implementation("androidx.compose.ui:ui-graphics:$uiVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$uiVersion")
@@ -115,12 +114,13 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
-    // Espresso dependencies
+    // Espresso
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.test:runner:1.5.2")
-    androidTestImplementation("androidx.test:rules:1.5.0")
 
     // Junit
     testImplementation("junit:junit:4.13.2")
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
 }
