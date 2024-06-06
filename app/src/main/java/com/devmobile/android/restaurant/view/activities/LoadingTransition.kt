@@ -18,7 +18,8 @@ class LoadingTransition : Fragment() {
         private var myInstance: LoadingTransition? = null
 
         @OptIn(InternalCoroutinesApi::class)
-        fun getInstance(layoutID: Int): LoadingTransition {
+        fun getInstance(layoutID: Int?): LoadingTransition {
+
             return myInstance ?: synchronized(this) {
                 myInstance ?: LoadingTransition().also {
                     it.transitionLayoutID = layoutID

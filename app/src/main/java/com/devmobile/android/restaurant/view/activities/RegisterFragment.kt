@@ -113,10 +113,13 @@ class RegisterFragment : AppCompatActivity() {
                     LoadingTransition
                         .getInstance(R.layout.layout_loading)
                         .startTransition(supportFragmentManager, R.id.registerContainer, null)
+
                     Log.i("Teste: RegisterFragment", "Start Loading Screen")
                 }
 
                 is LoadState.NotLoading -> {
+
+                    LoadingTransition.getInstance(null).stopTransition()
 
                     Log.i("Teste: RegisterFragment", "Stop Loading Screen")
                     finish()
