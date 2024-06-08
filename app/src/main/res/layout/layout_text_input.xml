@@ -2,24 +2,19 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="registerActivity"
-            type="com.devmobile.android.restaurant.view.activities.RegisterFragment" />
-    </data>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textinput_form"
+        android:id="@+id/textInputForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeWidth="1dp"
-        app:counterMaxLength="20">
+        android:maxLength="20"
+        app:boxStrokeWidth="1dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:breakStrategy="@null"
-            android:lines="1" />
+            android:inputType="textNoSuggestions" />
 
     </com.google.android.material.textfield.TextInputLayout>
 </layout>

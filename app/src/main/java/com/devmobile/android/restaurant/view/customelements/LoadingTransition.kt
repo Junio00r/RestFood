@@ -1,6 +1,7 @@
 package com.devmobile.android.restaurant.view.customelements
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class LoadingTransition : Fragment() {
             it.activity?.supportFragmentManager?.beginTransaction()?.remove(it)?.commit()
         }
         myInstance = null
+        Log.i("Test", "Executou aqquiiiiiii 22222")
     }
 
     override fun onCreateView(

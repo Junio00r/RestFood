@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.text.InputType" />
+
         <variable
             name="registerView"
             type="com.devmobile.android.restaurant.view.activities.RegisterFragment" />
@@ -96,7 +98,7 @@
             android:layout_marginBottom="32dp"
             android:fontFamily="@font/din_regular"
             android:letterSpacing="0"
-            android:onClick="@{() -> registerView.register()}"
+            android:onClick="@{() -> registerView.startRequestRegister()}"
             android:text="@string/button_confirm_register"
             android:textColor="@color/black"
             android:textSize="18sp"

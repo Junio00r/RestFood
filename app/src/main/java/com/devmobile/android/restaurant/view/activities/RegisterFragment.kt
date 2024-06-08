@@ -8,7 +8,6 @@ import android.text.InputType
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.R
@@ -18,6 +17,7 @@ import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepo
 import com.devmobile.android.restaurant.view.customelements.LoadingTransition
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class RegisterFragment : AppCompatActivity() {
@@ -37,7 +37,9 @@ class RegisterFragment : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // init layout
-        registerBinding = DataBindingUtil.setContentView(this, R.layout.fragment_register_user)
+        registerBinding = FragmentRegisterUserBinding.inflate(layoutInflater)
+        setContentView(registerBinding.root)
+
         registerBinding.registerView = this
 
         // initialize variables
@@ -53,24 +55,26 @@ class RegisterFragment : AppCompatActivity() {
 
     private fun setParameters() {
         // Set Hints
-        registerBinding.textUserName.textinputForm.hint = "Username"
-        registerBinding.textUserLastName.textinputForm.hint = "Lastname"
-        registerBinding.textUserEmail.textinputForm.hint = "UserEmail"
-        registerBinding.textUserPassword.textinputForm.hint = "Password"
+        registerBinding.textUserName.textInputForm.hint = "Username"
+        registerBinding.textUserLastName.textInputForm.hint = "Lastname"
+        registerBinding.textUserEmail.textInputForm.hint = "UserEmail"
+        registerBinding.textUserPassword.textInputForm.hint = "Password"
 
-        // Set InputType
-        textUserName.textinputForm.editText!!.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        textUserLastName.textinputForm.editText!!.inputType =
+//        // Set InputType
+        textUserName.textInputEditText.inputType =
             InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        textUserEmail.textinputForm.editText!!.inputType =
+        textUserLastName.textInputEditText.inputType =
+            InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+        textUserEmail.textInputEditText.inputType =
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        textUserPassword.textinputForm.editText!!.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        textUserPassword.textInputEditText.inputType =
+            InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         // Other paramters
-        textUserPassword.textinputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+        textUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
 
-        textUserPassword.textinputForm.isEndIconVisible = true
-        textUserPassword.textinputForm.isCounterEnabled = true
+        textUserPassword.textInputForm.isEndIconVisible = true
+        textUserPassword.textInputForm.isCounterEnabled = true
     }
 
     private fun subscribeObservables() {
@@ -79,9 +83,9 @@ class RegisterFragment : AppCompatActivity() {
 
             if (error == RegisterViewModel.VALID_DATA) {
 
-                textUserName.textinputForm.error = null
+                textUserName.textInputForm.error = null
             } else {
-                textUserName.textinputForm.error = error
+                textUserName.textInputForm.error = error
             }
         }
 
@@ -89,9 +93,9 @@ class RegisterFragment : AppCompatActivity() {
 
             if (error == RegisterViewModel.VALID_DATA) {
 
-                textUserEmail.textinputForm.error = null
+                textUserEmail.textInputForm.error = null
             } else {
-                textUserEmail.textinputForm.error = error
+                textUserEmail.textInputForm.error = error
             }
         }
 
@@ -99,9 +103,9 @@ class RegisterFragment : AppCompatActivity() {
 
             if (error == RegisterViewModel.VALID_DATA) {
 
-                textUserPassword.textinputForm.error = null
+                textUserPassword.textInputForm.error = null
             } else {
-                textUserPassword.textinputForm.error = error
+                textUserPassword.textInputForm.error = error
             }
         }
 
@@ -111,42 +115,44 @@ class RegisterFragment : AppCompatActivity() {
 
                 is LoadState.Loading -> {
 
-                    LoadingTransition
-                        .getInstance(R.layout.layout_loading)
+                    LoadingTransition.getInstance(R.layout.layout_loading)
                         .start(supportFragmentManager, R.id.registerContainer, null)
-
-                    Log.i("Teste: RegisterFragment", "Start Loading Screen")
                 }
 
                 is LoadState.NotLoading -> {
 
-                    Log.i("Teste: RegisterFragment", "Stop Loading Screen")
+                    Handler(Looper.getMainLooper()).postDelayed(
+                        {
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        }, 3000
+                    )
 
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                        LoadingTransition.getInstance(null).stop()
-                    }, 5000)
+                    Handler(Looper.getMainLooper()).postDelayed(
+                        {
+                            LoadingTransition.getInstance(null).stop()
+
+                        }, 6000
+                    )
                 }
 
                 is LoadState.Error -> {
 
                     LoadingTransition.getInstance(null).stop()
-                    showError(loadState.error.message.toString())
 
-                    Log.e("Teste: RegisterFragment", "Interrupt Loading Screen")
+                    showError(loadState.error.message.toString())
                 }
             }
         }
     }
 
     @CalledFromXML
-    fun register() {
+    fun startRequestRegister() {
 
-        val userName = textUserName.textinputForm.editText?.text.toString()
-        val userLastName = textUserLastName.textinputForm.editText?.text.toString()
-        val userEmail = textUserEmail.textinputForm.editText?.text.toString()
-        val userPassword = textUserPassword.textinputForm.editText?.text.toString()
+        val userName = textUserName.textInputForm.editText?.text.toString()
+        val userLastName = textUserLastName.textInputForm.editText?.text.toString()
+        val userEmail = textUserEmail.textInputForm.editText?.text.toString()
+        val userPassword = textUserPassword.textInputForm.editText?.text.toString()
 
         registerViewModel.register(userName, userLastName, userEmail, userPassword)
     }
@@ -158,6 +164,6 @@ class RegisterFragment : AppCompatActivity() {
     }
 
     private fun showError(errorMessage: String) {
-
+        Snackbar.make(registerBinding.registerContainer, errorMessage, 2000).show()
     }
 }

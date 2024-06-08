@@ -10,6 +10,6 @@ data class User(
     @PrimaryKey(autoGenerate = true) val id: Long?,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "lastname") var lastname: String?,
-    @ColumnInfo(name = "email") val email: String,
-    @ColumnInfo(name = "password") val password: String,
+    @ColumnInfo(name = "email") var email: String,
+    @ColumnInfo(name = "password") var password: String,
 )
