@@ -32,17 +32,24 @@ class LoadingTransition : Fragment() {
         myInstance?.let {
 
             fragmentManager.beginTransaction().add(containerId, it).commit()
+            Log.i("Test", "Have an instance and starting")
         }
+        Log.i("Test", "Iniciando o Loading Transition 22222")
     }
 
     fun stop() {
 
         myInstance?.let {
-
-            it.activity?.supportFragmentManager?.beginTransaction()?.remove(it)?.commit()
+            Log.i("Test", "Have been an instance 1")
+            it.requireActivity().supportFragmentManager.beginTransaction().remove(it).commit()
+            Log.i("Test", "Have been an instance 2")
         }
+
         myInstance = null
-        Log.i("Test", "Executou aqquiiiiiii 22222")
+        Log.i(
+            "Test",
+            "Finalizando o Loading Transition 22222\n" + "-----------------------------------------------------"
+        )
     }
 
     override fun onCreateView(

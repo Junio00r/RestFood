@@ -19,6 +19,7 @@ import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.flow.emptyFlow
 
 class RegisterFragment : AppCompatActivity() {
     private lateinit var registerBinding: FragmentRegisterUserBinding
@@ -27,6 +28,8 @@ class RegisterFragment : AppCompatActivity() {
     private lateinit var textUserLastName: LayoutTextInputBinding
     private lateinit var textUserEmail: LayoutTextInputBinding
     private lateinit var textUserPassword: LayoutTextInputBinding
+
+    private val flowss = emptyFlow<Unit>()
 
     private val registerRepository = RegisterRepository(this)
     private val registerViewModel: RegisterViewModel by viewModels {
@@ -51,24 +54,21 @@ class RegisterFragment : AppCompatActivity() {
         // methods
         subscribeObservables()
         setParameters()
+        startRequestRegister()
     }
 
     private fun setParameters() {
         // Set Hints
-        registerBinding.textUserName.textInputForm.hint = "Username"
+        registerBinding.textUserName.textInputForm.hint = "Username*"
         registerBinding.textUserLastName.textInputForm.hint = "Lastname"
-        registerBinding.textUserEmail.textInputForm.hint = "UserEmail"
-        registerBinding.textUserPassword.textInputForm.hint = "Password"
+        registerBinding.textUserEmail.textInputForm.hint = "UserEmail*"
+        registerBinding.textUserPassword.textInputForm.hint = "Password*"
 
 //        // Set InputType
-        textUserName.textInputEditText.inputType =
-            InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        textUserLastName.textInputEditText.inputType =
-            InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        textUserEmail.textInputEditText.inputType =
-            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        textUserPassword.textInputEditText.inputType =
-            InputType.TYPE_TEXT_VARIATION_PASSWORD
+        textUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+        textUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+        textUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        textUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         // Other paramters
         textUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
@@ -121,6 +121,7 @@ class RegisterFragment : AppCompatActivity() {
 
                 is LoadState.NotLoading -> {
 
+                    Log.i("Test", "Passou aqui")
                     Handler(Looper.getMainLooper()).postDelayed(
                         {
                             startActivity(Intent(this, MainActivity::class.java))
@@ -140,7 +141,7 @@ class RegisterFragment : AppCompatActivity() {
 
                     LoadingTransition.getInstance(null).stop()
 
-                    showError(loadState.error.message.toString())
+                    showErrorMessage(loadState.error.message ?: "Error")
                 }
             }
         }
@@ -154,6 +155,7 @@ class RegisterFragment : AppCompatActivity() {
         val userEmail = textUserEmail.textInputForm.editText?.text.toString()
         val userPassword = textUserPassword.textInputForm.editText?.text.toString()
 
+        Log.i("Test", "Entrou aos 1 ------ ${System.currentTimeMillis()}")
         registerViewModel.register(userName, userLastName, userEmail, userPassword)
     }
 
@@ -163,7 +165,30 @@ class RegisterFragment : AppCompatActivity() {
         finish()
     }
 
-    private fun showError(errorMessage: String) {
-        Snackbar.make(registerBinding.registerContainer, errorMessage, 2000).show()
+    private fun showErrorMessage(errorMessage: String) {
+
+        val mySnackBar = Snackbar.make(registerBinding.registerContainer, errorMessage, 2000)
+
+        mySnackBar.setAction("OK") {
+            mySnackBar.dismiss()
+        }.show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Log.i("Test", "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        Log.i("Test", "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        Log.i("Test", "onDestroy")
     }
 }

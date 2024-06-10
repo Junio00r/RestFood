@@ -10,6 +10,7 @@ import com.devmobile.android.restaurant.model.AccountException
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -55,16 +56,14 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
                 try {
 
-                    // throw exception
                     registerRepository.createAccount(newUser)
-
                     _loadingProgress.value = LoadState.NotLoading(true)
 
                 } catch (e: AccountException) {
 
                     _userEmailError.value = "Test Email is invalid or already taken"
                     _loadingProgress.value =
-                        LoadState.Error(Throwable("Test It was not possible create account"))
+                        LoadState.Error(Throwable("Test Email is invalid or already taken"))
 
                 } catch (e: IOException) {
 
@@ -85,9 +84,9 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
                     _loadingProgress.value =
                         LoadState.Error(Throwable("Test It was not possible create account"))
-
                 }
             }
+
         }
     }
 
