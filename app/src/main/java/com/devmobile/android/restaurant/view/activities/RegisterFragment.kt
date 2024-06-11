@@ -10,7 +10,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.LoadState
-import com.devmobile.android.restaurant.ICalledFromXML
+import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentRegisterUserBinding
@@ -145,7 +145,7 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         }
     }
 
-    @ICalledFromXML
+    @CalledFromXML
     fun startRequestRegister() {
 
         val userName = textUserName.textInputForm.editText?.text.toString()
@@ -156,7 +156,7 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         registerViewModel.registerTrigger(userName, userLastName, userEmail, userPassword)
     }
 
-    @ICalledFromXML
+    @CalledFromXML
     fun cancelRegister() {
 
         finish()
