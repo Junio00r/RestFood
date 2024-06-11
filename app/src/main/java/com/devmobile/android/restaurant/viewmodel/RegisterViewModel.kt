@@ -10,10 +10,13 @@ import com.devmobile.android.restaurant.model.AccountException
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import java.io.IOException
 
+@OptIn(FlowPreview::class)
 class RegisterViewModel(private val registerRepository: RegisterRepository) : ViewModel() {
 
     private val _userNameError = MutableLiveData<String?>()
@@ -32,11 +35,25 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
     private val _loadingProgress = MutableLiveData<LoadState>()
     val loadingProgress = _loadingProgress
 
+    private val _registerDebounceFlow = MutableSharedFlow<ArrayList<String>>()
+
     companion object {
         const val VALID_DATA = "VALID"
     }
 
-    fun register(
+    init {
+
+        viewModelScope.launch {
+
+            _registerDebounceFlow.debounce(500).collect {
+
+                register(it.removeFirst(), it.removeFirst(), it.removeFirst(), it.removeFirst())
+            }
+        }
+    }
+
+
+    private fun register(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ) {
 
@@ -124,4 +141,21 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         return result
     }
 
+    suspend fun registerTrigger(
+        userName: String, userLastName: String, userEmail: String, userPassword: String
+    ) {
+
+        // Will implement an builder pattern here
+        val arguments: ArrayList<String> = ArrayList()
+        arguments.add(userName)
+        arguments.add(userLastName)
+        arguments.add(userEmail)
+        arguments.add(userPassword)
+
+        viewModelScope.launch {
+            _registerDebounceFlow.emit(
+                arguments
+            )
+        }
+    }
 }

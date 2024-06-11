@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 // Versão para testes offlines
+// Ainda irei implementar algum tipo de builder pattern
 @Entity(tableName = "users")
 data class User(
     @PrimaryKey(autoGenerate = true) val id: Long?,

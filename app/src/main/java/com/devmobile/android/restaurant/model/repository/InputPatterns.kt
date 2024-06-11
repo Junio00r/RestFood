@@ -8,9 +8,8 @@ class InputPatterns {
 
         // Error Messages
         const val TEXT_ERROR_MESSAGE =
-
-            "Texto não pode conter caracteres (!, @ # $ ¨ %) especias, numeros e nem espaços"
-        const val TEXT_NAME_ERROR_MESSAGE = "Name invalid"
+            "Texto não pode conter letras (!, @ # $ ¨ %) especias, numeros e nem espaços"
+        const val TEXT_NAME_ERROR_MESSAGE = "Invalid Name. The name must contain only letters"
 
         const val PASSWORD_ERROR_MESSAGE =
             "Password have must in minimum 8 characters, three numbers and at least one special character (\$,*, -)."
@@ -19,7 +18,7 @@ class InputPatterns {
 
         // Patterns
         val TEXT_PATTERN: Pattern = Pattern.compile(
-            "^(?=.*[a-zA-Z])\\w{3,25}\$"
+            "^(?=.*[a-zA-Z])[a-zA-Z]{3,25}\$"
         )
 
         val EMAIL_PATTERN: Pattern = Pattern.compile(

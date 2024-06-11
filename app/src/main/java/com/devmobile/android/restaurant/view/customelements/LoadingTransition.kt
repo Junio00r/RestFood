@@ -41,7 +41,7 @@ class LoadingTransition : Fragment() {
 
         myInstance?.let {
             Log.i("Test", "Have been an instance 1")
-            it.requireActivity().supportFragmentManager.beginTransaction().remove(it).commit()
+            it.activity?.supportFragmentManager?.beginTransaction()?.remove(it)?.commit()
             Log.i("Test", "Have been an instance 2")
         }
 

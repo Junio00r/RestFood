@@ -6,10 +6,13 @@ import android.os.Handler
 import android.os.Looper
 import android.text.InputType
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import com.devmobile.android.restaurant.CalledFromXML
+import com.devmobile.android.restaurant.ICalledFromXML
+import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentRegisterUserBinding
 import com.devmobile.android.restaurant.databinding.LayoutTextInputBinding
@@ -19,17 +22,15 @@ import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 
-class RegisterFragment : AppCompatActivity() {
+class RegisterFragment : AppCompatActivity(), IShowError {
     private lateinit var registerBinding: FragmentRegisterUserBinding
 
     private lateinit var textUserName: LayoutTextInputBinding
     private lateinit var textUserLastName: LayoutTextInputBinding
     private lateinit var textUserEmail: LayoutTextInputBinding
     private lateinit var textUserPassword: LayoutTextInputBinding
-
-    private val flowss = emptyFlow<Unit>()
 
     private val registerRepository = RegisterRepository(this)
     private val registerViewModel: RegisterViewModel by viewModels {
@@ -54,15 +55,14 @@ class RegisterFragment : AppCompatActivity() {
         // methods
         subscribeObservables()
         setParameters()
-        startRequestRegister()
     }
 
     private fun setParameters() {
         // Set Hints
-        registerBinding.textUserName.textInputForm.hint = "Username*"
+        registerBinding.textUserName.textInputForm.hint = "Username *"
         registerBinding.textUserLastName.textInputForm.hint = "Lastname"
-        registerBinding.textUserEmail.textInputForm.hint = "UserEmail*"
-        registerBinding.textUserPassword.textInputForm.hint = "Password*"
+        registerBinding.textUserEmail.textInputForm.hint = "UserEmail *"
+        registerBinding.textUserPassword.textInputForm.hint = "Password *"
 
 //        // Set InputType
         textUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
@@ -147,7 +147,7 @@ class RegisterFragment : AppCompatActivity() {
         }
     }
 
-    @CalledFromXML
+    @ICalledFromXML
     fun startRequestRegister() {
 
         val userName = textUserName.textInputForm.editText?.text.toString()
@@ -155,40 +155,30 @@ class RegisterFragment : AppCompatActivity() {
         val userEmail = textUserEmail.textInputForm.editText?.text.toString()
         val userPassword = textUserPassword.textInputForm.editText?.text.toString()
 
-        Log.i("Test", "Entrou aos 1 ------ ${System.currentTimeMillis()}")
-        registerViewModel.register(userName, userLastName, userEmail, userPassword)
+        lifecycleScope.launch {
+
+            registerViewModel.registerTrigger(userName, userLastName, userEmail, userPassword)
+        }
     }
 
-    @CalledFromXML
+    @ICalledFromXML
     fun cancelRegister() {
 
         finish()
     }
 
-    private fun showErrorMessage(errorMessage: String) {
+    private fun opacityViews() {
+        textUserName.textInputForm.visibility = View.GONE
+        textUserLastName.textInputForm.visibility = View.GONE
+        textUserEmail.textInputForm.visibility = View.GONE
+        textUserPassword.textInputForm.visibility = View.GONE
+    }
 
+    override fun showErrorMessage(errorMessage: String) {
         val mySnackBar = Snackbar.make(registerBinding.registerContainer, errorMessage, 2000)
 
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        Log.i("Test", "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        Log.i("Test", "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        Log.i("Test", "onDestroy")
     }
 }
