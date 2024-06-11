@@ -1,7 +1,6 @@
 package com.devmobile.android.restaurant.view.customelements
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,29 +26,16 @@ class LoadingTransition : Fragment() {
         }
     }
 
-    fun start(fragmentManager: FragmentManager, containerId: Int, layoutID: Int?) {
+    fun start(fragmentManager: FragmentManager, containerId: Int) {
 
-        myInstance?.let {
-
-            fragmentManager.beginTransaction().add(containerId, it).commit()
-            Log.i("Test", "Have an instance and starting")
-        }
-        Log.i("Test", "Iniciando o Loading Transition 22222")
+        myInstance?.let { fragmentManager.beginTransaction().add(containerId, it).commit() }
     }
 
-    fun stop() {
+    fun stop(fragmentManager: FragmentManager) {
 
-        myInstance?.let {
-            Log.i("Test", "Have been an instance 1")
-            it.activity?.supportFragmentManager?.beginTransaction()?.remove(it)?.commit()
-            Log.i("Test", "Have been an instance 2")
-        }
+        myInstance?.let { fragmentManager.beginTransaction().remove(it).commit() }
 
         myInstance = null
-        Log.i(
-            "Test",
-            "Finalizando o Loading Transition 22222\n" + "-----------------------------------------------------"
-        )
     }
 
     override fun onCreateView(

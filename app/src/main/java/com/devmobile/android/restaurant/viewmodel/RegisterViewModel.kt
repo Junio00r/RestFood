@@ -141,7 +141,7 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         return result
     }
 
-    suspend fun registerTrigger(
+    fun registerTrigger(
         userName: String, userLastName: String, userEmail: String, userPassword: String
     ) {
 
@@ -153,9 +153,7 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         arguments.add(userPassword)
 
         viewModelScope.launch {
-            _registerDebounceFlow.emit(
-                arguments
-            )
+            _registerDebounceFlow.emit(arguments)
         }
     }
 }

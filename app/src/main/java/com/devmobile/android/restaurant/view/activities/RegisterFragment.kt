@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.ICalledFromXML
 import com.devmobile.android.restaurant.IShowError
@@ -22,7 +21,6 @@ import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 
 class RegisterFragment : AppCompatActivity(), IShowError {
     private lateinit var registerBinding: FragmentRegisterUserBinding
@@ -116,7 +114,7 @@ class RegisterFragment : AppCompatActivity(), IShowError {
                 is LoadState.Loading -> {
 
                     LoadingTransition.getInstance(R.layout.layout_loading)
-                        .start(supportFragmentManager, R.id.registerContainer, null)
+                        .start(supportFragmentManager, R.id.registerContainer)
                 }
 
                 is LoadState.NotLoading -> {
@@ -131,15 +129,15 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
                     Handler(Looper.getMainLooper()).postDelayed(
                         {
-                            LoadingTransition.getInstance(null).stop()
+                            LoadingTransition.getInstance(null).stop(supportFragmentManager)
 
-                        }, 6000
+                        }, 4000
                     )
                 }
 
                 is LoadState.Error -> {
 
-                    LoadingTransition.getInstance(null).stop()
+                    LoadingTransition.getInstance(null).stop(supportFragmentManager)
 
                     showErrorMessage(loadState.error.message ?: "Error")
                 }
@@ -155,10 +153,7 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         val userEmail = textUserEmail.textInputForm.editText?.text.toString()
         val userPassword = textUserPassword.textInputForm.editText?.text.toString()
 
-        lifecycleScope.launch {
-
-            registerViewModel.registerTrigger(userName, userLastName, userEmail, userPassword)
-        }
+        registerViewModel.registerTrigger(userName, userLastName, userEmail, userPassword)
     }
 
     @ICalledFromXML
