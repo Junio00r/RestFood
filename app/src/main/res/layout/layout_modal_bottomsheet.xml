@@ -20,7 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:background="@color/fourty_color" />
+        android:background="@color/gray_two" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageFood"

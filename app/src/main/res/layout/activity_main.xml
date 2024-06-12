@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginBottom="20dp"
-            android:background="@color/seven_color"
+            android:background="@color/gray_light_one"
             android:fontFamily="@font/din_regular"
             android:gravity="center"
             android:text="@string/app_name"
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/seven_color"
+        android:backgroundTint="@color/gray_light_one"
         app:hideOnScroll="false">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

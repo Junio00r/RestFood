@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/seven_color"
+    android:background="@color/gray_light_one"
     android:padding="32dp">
 
     <ExpandableListView
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="32dp"
-        android:background="@color/fourty_color"
+        android:background="@color/gray_two"
         app:layout_constraintBottom_toTopOf="@id/textTotalToPay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,17 +23,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class RegisterFragment : AppCompatActivity(), IShowError {
+
     private lateinit var registerBinding: FragmentRegisterUserBinding
+    private var isVisible = true
 
-    private lateinit var textUserName: LayoutTextInputBinding
-    private lateinit var textUserLastName: LayoutTextInputBinding
-    private lateinit var textUserEmail: LayoutTextInputBinding
-    private lateinit var textUserPassword: LayoutTextInputBinding
-
-    private val registerRepository = RegisterRepository(this)
     private val registerViewModel: RegisterViewModel by viewModels {
         ViewModelFactory(registerRepository)
     }
+
+    private val registerRepository = RegisterRepository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +43,6 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         registerBinding.lifecycleOwner = this
         registerBinding.registerView = this
 
-        // initialize variables
-        textUserName = registerBinding.textUserName
-        textUserLastName = registerBinding.textUserLastName
-        textUserEmail = registerBinding.textUserEmail
-        textUserPassword = registerBinding.textUserPassword
-
         // methods
         subscribeObservables()
         setTextInputParameters()
@@ -59,41 +50,44 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
     private fun setTextInputParameters() {
 
-        // Set Hints
-        registerBinding.textUserName.textInputForm.hint = "Username *"
-        registerBinding.textUserLastName.textInputForm.hint = "Lastname"
-        registerBinding.textUserEmail.textInputForm.hint = "UserEmail *"
-        registerBinding.textUserPassword.textInputForm.hint = "Password *"
+        registerBinding.apply {
 
-        // Set InputType
-        textUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        textUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        textUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        textUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            // Set Hints
+            textUserName.textInputForm.hint = "Username *"
+            textUserLastName.textInputForm.hint = "Lastname"
+            textUserEmail.textInputForm.hint = "UserEmail *"
+            textUserPassword.textInputForm.hint = "Password *"
 
-        // Set icons
-        textUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
-        textUserPassword.textInputForm.isEndIconVisible = true
+            // Set InputType
+            textUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            textUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            textUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            textUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
-        // Enable Counter
-        textUserPassword.textInputForm.isCounterEnabled = true
+            // Set icons
+            textUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+            textUserPassword.textInputForm.isEndIconVisible = true
+
+            // Enable Counter
+            textUserPassword.textInputForm.isCounterEnabled = true
+        }
     }
 
     private fun subscribeObservables() {
 
         registerViewModel.userNameError.observe(this@RegisterFragment) { error ->
 
-            handleError(textUserPassword, error)
+            handleError(registerBinding.textUserName, error)
         }
 
         registerViewModel.userEmailError.observe(this@RegisterFragment) { error ->
 
-            handleError(textUserPassword, error)
+            handleError(registerBinding.textUserEmail, error)
         }
 
         registerViewModel.userPasswordError.observe(this@RegisterFragment) { error ->
 
-            handleError(textUserPassword, error)
+            handleError(registerBinding.textUserPassword, error)
         }
 
         registerViewModel.loadingProgress.observe(this@RegisterFragment) { loadState ->
@@ -126,7 +120,6 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
             is LoadState.NotLoading -> {
 
-                Log.i("Test", "Passou aqui")
                 Handler(Looper.getMainLooper()).postDelayed(
                     {
                         startActivity(Intent(this@RegisterFragment, MainActivity::class.java))
@@ -145,26 +138,51 @@ class RegisterFragment : AppCompatActivity(), IShowError {
             is LoadState.Error -> {
 
                 LoadingTransition.getInstance(null).stop(supportFragmentManager)
-
                 showErrorMessage(loadState.error.message ?: "Error")
             }
         }
     }
 
-    private fun opacityViews() {
-        textUserName.textInputForm.visibility = View.GONE
-        textUserLastName.textInputForm.visibility = View.GONE
-        textUserEmail.textInputForm.visibility = View.GONE
-        textUserPassword.textInputForm.visibility = View.GONE
+    private fun changeVisibilityState() {
+
+        if (isVisible) {
+
+            registerBinding.apply {
+
+//                textUserName.textInputForm.visibility = View.GONE
+//                textUserLastName.textInputForm.visibility = View.GONE
+//                textUserEmail.textInputForm.visibility = View.GONE
+//                textUserPassword.textInputForm.visibility = View.GONE
+
+                buttonCancelRegister.isClickable = false
+                buttonConfirmRegister.isClickable = false
+            }
+            isVisible = false
+
+        } else {
+
+            registerBinding.apply {
+
+//                textUserName.textInputForm.visibility = View.VISIBLE
+//                textUserLastName.textInputForm.visibility = View.VISIBLE
+//                textUserEmail.textInputForm.visibility = View.VISIBLE
+//                textUserPassword.textInputForm.visibility = View.VISIBLE
+
+                buttonCancelRegister.isClickable = true
+                buttonConfirmRegister.isClickable = true
+            }
+
+            isVisible = true
+        }
     }
 
     @CalledFromXML
     fun startRequestRegister() {
 
-        val userName = textUserName.textInputForm.editText?.text.toString()
-        val userLastName = textUserLastName.textInputForm.editText?.text.toString()
-        val userEmail = textUserEmail.textInputForm.editText?.text.toString()
-        val userPassword = textUserPassword.textInputForm.editText?.text.toString()
+        val userName = registerBinding.textUserName.textInputForm.editText?.text.toString()
+        val userLastName = registerBinding.textUserLastName.textInputForm.editText?.text.toString()
+        val userEmail = registerBinding.textUserEmail.textInputForm.editText?.text.toString()
+        val userPassword = registerBinding.textUserPassword.textInputForm.editText?.text.toString()
 
         registerViewModel.registerTrigger(userName, userLastName, userEmail, userPassword)
     }

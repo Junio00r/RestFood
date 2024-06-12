@@ -83,7 +83,7 @@
             android:text="@string/button_cancel_register"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:backgroundTint="@color/fourty_color"
+            app:backgroundTint="@color/gray_two"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
             app:layout_constraintStart_toStartOf="parent" />
@@ -102,7 +102,7 @@
             android:text="@string/button_confirm_register"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:backgroundTint="@color/fourty_color"
+            app:backgroundTint="@color/gray_two"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineVertical" />

@@ -16,7 +16,7 @@
         android:layout_marginEnd="26dp"
         android:layout_weight="2"
         android:fontFamily="@font/din_regular"
-        android:textColor="@color/fourty_color"
+        android:textColor="@color/gray_two"
         android:textSize="24sp" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/din_regular"
-        android:textColor="@color/fourty_color"
+        android:textColor="@color/gray_two"
         android:textSize="24sp" />
 
 </LinearLayout>
