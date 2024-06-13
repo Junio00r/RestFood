@@ -27,8 +27,10 @@
         <activity
             android:name=".view.activities.RegisterFragment"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/RestaurantThemeLight"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateVisible"
+            tools:ignore="DiscouragedApi" />
 
         <activity
             android:name=".view.activities.MainActivity"

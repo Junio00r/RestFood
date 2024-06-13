@@ -38,30 +38,30 @@
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="32dp"
+            android:layout_marginVertical="86dp"
             app:layout_constraintEnd_toEndOf="@id/textUserName"
             app:layout_constraintStart_toStartOf="@id/textUserName"
-            app:layout_constraintTop_toBottomOf="@id/textUserName" />
+            app:layout_constraintTop_toTopOf="@id/textUserName" />
 
         <include
             android:id="@+id/textUserEmail"
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="32dp"
+            android:layout_marginVertical="86dp"
             app:layout_constraintEnd_toEndOf="@id/textUserLastName"
             app:layout_constraintStart_toStartOf="@id/textUserLastName"
-            app:layout_constraintTop_toBottomOf="@id/textUserLastName" />
+            app:layout_constraintTop_toTopOf="@id/textUserLastName" />
 
         <include
             android:id="@+id/textUserPassword"
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="32dp"
+            android:layout_marginVertical="86dp"
             app:layout_constraintEnd_toEndOf="@id/textUserEmail"
             app:layout_constraintStart_toStartOf="@id/textUserEmail"
-            app:layout_constraintTop_toBottomOf="@id/textUserEmail" />
+            app:layout_constraintTop_toTopOf="@id/textUserEmail" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineVertical"

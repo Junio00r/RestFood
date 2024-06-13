@@ -35,14 +35,12 @@ class RegisterFragment : AppCompatActivity(), IShowError {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        registerBinding = DataBindingUtil.setContentView(
-            this, R.layout.fragment_register_user
-        )
+        registerBinding = DataBindingUtil.setContentView(this, R.layout.fragment_register_user)
 
         registerBinding.lifecycleOwner = this
         registerBinding.registerView = this
 
-        // methods
+        // functions
         subscribeObservables()
         setTextInputParameters()
     }
@@ -52,9 +50,9 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         registerBinding.apply {
 
             // Set Hints
-            textUserName.textInputForm.hint = "Username *"
+            textUserName.textInputForm.hint = "Name *"
             textUserLastName.textInputForm.hint = "Lastname"
-            textUserEmail.textInputForm.hint = "UserEmail *"
+            textUserEmail.textInputForm.hint = "Email *"
             textUserPassword.textInputForm.hint = "Password *"
 
             // Set InputType
@@ -199,4 +197,5 @@ class RegisterFragment : AppCompatActivity(), IShowError {
             mySnackBar.dismiss()
         }.show()
     }
+
 }

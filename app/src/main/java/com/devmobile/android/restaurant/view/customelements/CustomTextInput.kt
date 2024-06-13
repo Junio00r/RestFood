@@ -14,11 +14,13 @@ class CustomTextInput @JvmOverloads constructor(
 
     companion object {
 
-        const val FILTER_MAX_LENGTH = 30
-        const val HORIZONTAL_PADDING = 14
         const val DEFAULT_WIDTH = 256
         const val DEFAULT_HEIGHT = 180
+        val lengthFilter = InputFilter.LengthFilter(50)
+    }
 
+    init {
+        textSize = 17F
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
@@ -60,11 +62,13 @@ class CustomTextInput @JvmOverloads constructor(
 
     override fun setFilters(filters: Array<out InputFilter>?) {
 
-        val currentFilters = getFilters()
+        var currentFilters = getFilters()
 
-        val myFilters: Array<out InputFilter> =
-            arrayOf(*currentFilters, InputFilter.LengthFilter(FILTER_MAX_LENGTH))
+        if (currentFilters.isEmpty()) {
 
-        super.setFilters(myFilters)
+            currentFilters = arrayOf(*currentFilters, lengthFilter)
+        }
+
+        super.setFilters(currentFilters)
     }
 }
