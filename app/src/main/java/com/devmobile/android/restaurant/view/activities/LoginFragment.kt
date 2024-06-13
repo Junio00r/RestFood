@@ -29,7 +29,6 @@ class LoginFragment : FragmentActivity() {
     private val loginViewModel: LoginViewModel by viewModels {
         ViewModelFactory(repository = LoginRepository(this))
     }
-    private val registerActivity = RegisterFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,7 +3,9 @@ package com.devmobile.android.restaurant.view.customelements
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.devmobile.android.restaurant.R
 import com.google.android.material.textfield.TextInputEditText
 
@@ -19,7 +21,14 @@ class CustomTextInput @JvmOverloads constructor(
         const val DEFAULT_WIDTH = 256
         const val DEFAULT_HEIGHT = 180
 
-        val hintColor = R.color.orange
+    }
+
+    init {
+
+        context.apply {
+            val defaultHintColor = ContextCompat.getColor(context, R.color.orange)
+            Log.d("Testing CustomTextInput", "Default hint color: ${this@CustomTextInput}")
+        }
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {

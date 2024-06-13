@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/textInputForm"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:boxStrokeWidth="1dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputForm"
+    <com.devmobile.android.restaurant.view.customelements.CustomTextInput
+        android:id="@+id/textInputEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/gray_one"
-        app:boxStrokeWidth="1dp">
+        android:maxLength="20"
+        android:paddingHorizontal="12dp" />
 
-        <com.devmobile.android.restaurant.view.customelements.CustomTextInput
-            android:id="@+id/textInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="20"
-            android:paddingHorizontal="12dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-</layout>
+</com.google.android.material.textfield.TextInputLayout>
