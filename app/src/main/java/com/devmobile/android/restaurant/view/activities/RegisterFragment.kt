@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -29,11 +28,6 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
     private val registerViewModel: RegisterViewModel by viewModels {
         ViewModelFactory(registerRepository)
-    }
-
-    init {
-
-        Log.d("Testing RegisterFragment", "Instance Created: ${this@RegisterFragment}")
     }
 
     private val registerRepository = RegisterRepository(this)
