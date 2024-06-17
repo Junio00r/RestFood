@@ -9,7 +9,7 @@
     app:boxStrokeWidth="1dp"
     app:hintTextColor="@color/black">
 
-    <com.devmobile.android.restaurant.view.customelements.CustomTextInput
+    <com.devmobile.android.restaurant.view.customelements.TextInput
         android:id="@+id/textInputEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

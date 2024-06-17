@@ -24,7 +24,6 @@
 
         <include
             android:id="@+id/textUserName"
-            style="@style/Widget.AppCompat.TextView"
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

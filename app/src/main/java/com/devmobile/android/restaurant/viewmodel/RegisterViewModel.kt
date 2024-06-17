@@ -2,6 +2,7 @@ package com.devmobile.android.restaurant.viewmodel
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,30 +13,48 @@ import com.devmobile.android.restaurant.model.repository.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
+
+data class RegisterUIState(
+    var name: String? = null,
+    var lastName: String? = null,
+    var email: String? = null,
+    var password: String? = null
+)
 
 @OptIn(FlowPreview::class)
 class RegisterViewModel(private val registerRepository: RegisterRepository) : ViewModel() {
 
+    // RegisterFragment UI State
+    private val _registerUIState = MutableStateFlow(RegisterUIState())
+    val registerUIState: StateFlow<RegisterUIState> = _registerUIState.asStateFlow()
+
+    // Errors
     private val _userNameError = MutableLiveData<String?>()
-    val userNameError = _userNameError
+    val userNameError: LiveData<String?> = _userNameError
 
     private val _userLastNameError = MutableLiveData<String?>()
-    val userLastNameError = _userLastNameError
+    val userLastNameError: LiveData<String?> = _userLastNameError
 
     private val _userEmailError = MutableLiveData<String?>()
-    val userEmailError = _userEmailError
+    val userEmailError: LiveData<String?> = _userEmailError
 
     private val _userPasswordError = MutableLiveData<String?>()
-    val userPasswordError = _userPasswordError
+    val userPasswordError: LiveData<String?> = _userPasswordError
 
-    // Loading live data
+
+    // Loading Live Data
     private val _loadingProgress = MutableLiveData<LoadState>()
-    val loadingProgress = _loadingProgress
+    val loadingProgress: LiveData<LoadState> = _loadingProgress
 
-    private val _registerDebounceFlow = MutableSharedFlow<ArrayList<String>>()
+    // For Debounce Pattern
+    private val _registerDebounceFlow = MutableSharedFlow<Unit?>()
 
     companion object {
         const val VALID_DATA = "VALID"
@@ -43,15 +62,18 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
     init {
 
+        // Scopes on init block isn't recommended
         viewModelScope.launch {
 
+            // debounce Flow for register new user
             _registerDebounceFlow.debounce(500).collect {
 
-                register(it.removeFirst(), it.removeFirst(), it.removeFirst(), it.removeFirst())
+                with(_registerUIState.value) {
+                    register(name, lastName, email, password)
+                }
             }
         }
     }
-
 
     private fun register(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
@@ -141,19 +163,20 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         return result
     }
 
-    fun registerTrigger(
-        userName: String, userLastName: String, userEmail: String, userPassword: String
+    fun updateUIState(
+        newName: String? = null, newLastName: String? = null, newEmail: String? = null, newPassword: String? = null
     ) {
+        _registerUIState.value = _registerUIState.value.copy(
+            name = newName ?: _registerUIState.value.name,
+            lastName = newLastName ?: _registerUIState.value.lastName,
+            email = newEmail ?: _registerUIState.value.email,
+            password = newPassword ?: _registerUIState.value.password
+        )
+    }
 
-        // Will implement an builder pattern here
-        val arguments: ArrayList<String> = ArrayList()
-        arguments.add(userName)
-        arguments.add(userLastName)
-        arguments.add(userEmail)
-        arguments.add(userPassword)
-
+    fun registerTrigger() {
         viewModelScope.launch {
-            _registerDebounceFlow.emit(arguments)
+            _registerDebounceFlow.emit(Unit)
         }
     }
 }

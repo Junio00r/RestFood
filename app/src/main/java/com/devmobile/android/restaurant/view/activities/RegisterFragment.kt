@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
@@ -20,34 +23,37 @@ import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class RegisterFragment : AppCompatActivity(), IShowError {
 
-    private lateinit var registerBinding: FragmentRegisterUserBinding
+    private lateinit var _registerBinding: FragmentRegisterUserBinding
     private var isVisible = true
 
-    private val registerViewModel: RegisterViewModel by viewModels {
+    private val registerRepository = RegisterRepository(this)
+
+    private val _registerViewModel: RegisterViewModel by viewModels {
         ViewModelFactory(registerRepository)
     }
-
-    private val registerRepository = RegisterRepository(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        registerBinding = DataBindingUtil.setContentView(this, R.layout.fragment_register_user)
+        _registerBinding = DataBindingUtil.setContentView(this, R.layout.fragment_register_user)
 
-        registerBinding.lifecycleOwner = this
-        registerBinding.registerView = this
+        _registerBinding.lifecycleOwner = this
+        _registerBinding.registerView = this
 
         // functions
         subscribeObservables()
         setTextInputParameters()
+        getUIState()
+        _registerBinding.invalidateAll()
     }
 
     private fun setTextInputParameters() {
 
-        registerBinding.apply {
+        _registerBinding.apply {
 
             // Set Hints
             textUserName.textInputForm.hint = "Name *"
@@ -72,24 +78,45 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
     private fun subscribeObservables() {
 
-        registerViewModel.userNameError.observe(this@RegisterFragment) { error ->
+        with(_registerBinding) {
 
-            handleError(registerBinding.textUserName, error)
-        }
+            _registerViewModel.userNameError.observe(this@RegisterFragment) { error ->
 
-        registerViewModel.userEmailError.observe(this@RegisterFragment) { error ->
+                handleError(textUserName, error)
+            }
 
-            handleError(registerBinding.textUserEmail, error)
-        }
+            _registerViewModel.userEmailError.observe(this@RegisterFragment) { error ->
 
-        registerViewModel.userPasswordError.observe(this@RegisterFragment) { error ->
+                handleError(textUserEmail, error)
+            }
 
-            handleError(registerBinding.textUserPassword, error)
-        }
+            _registerViewModel.userPasswordError.observe(this@RegisterFragment) { error ->
 
-        registerViewModel.loadingProgress.observe(this@RegisterFragment) { loadState ->
+                handleError(textUserPassword, error)
+            }
 
-            handleLoadState(loadState)
+            _registerViewModel.loadingProgress.observe(this@RegisterFragment) { loadState ->
+
+                handleLoadState(loadState)
+            }
+
+            // Listeners after text changed
+            textUserName.textInputEditText.doAfterTextChanged {
+
+                _registerViewModel.updateUIState(newName = it.toString())
+            }
+
+            textUserLastName.textInputEditText.doAfterTextChanged {
+                _registerViewModel.updateUIState(newLastName = it.toString())
+            }
+
+            textUserEmail.textInputEditText.doAfterTextChanged {
+                _registerViewModel.updateUIState(newEmail = it.toString())
+            }
+
+            textUserPassword.textInputEditText.doAfterTextChanged {
+                _registerViewModel.updateUIState(newPassword = it.toString())
+            }
         }
     }
 
@@ -135,16 +162,37 @@ class RegisterFragment : AppCompatActivity(), IShowError {
             is LoadState.Error -> {
 
                 LoadingTransition.getInstance(null).stop(supportFragmentManager)
-                showErrorMessage(loadState.error.message ?: "Error")
+                showErrorMessage(loadState.error.message ?: "Login Error")
             }
         }
+    }
+
+    private fun getUIState() {
+
+        lifecycleScope.launch {
+            // repeatOnLifecycle launches the block in a new coroutine every time the
+            // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
+            _registerViewModel.registerUIState.collect { uiState ->
+                with(_registerBinding) {
+                    Log.i(
+                        "Fragment",
+                        "${_registerBinding}:${_registerBinding.textUserName} Pegou UI"
+                    )
+                    Log.i("Fragment", "${uiState.name}")
+                    textUserName.textInputEditText.setText(uiState.name)
+                    textUserLastName.textInputEditText.setText(uiState.lastName)
+                    textUserEmail.textInputEditText.setText(uiState.email)
+                    textUserPassword.textInputEditText.setText(uiState.password)
+                }
+            }
+        }.cancel()
     }
 
     private fun changeVisibilityState() {
 
         if (isVisible) {
 
-            registerBinding.apply {
+            _registerBinding.apply {
 
 //                textUserName.textInputForm.visibility = View.GONE
 //                textUserLastName.textInputForm.visibility = View.GONE
@@ -158,7 +206,7 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
         } else {
 
-            registerBinding.apply {
+            _registerBinding.apply {
 
 //                textUserName.textInputForm.visibility = View.VISIBLE
 //                textUserLastName.textInputForm.visibility = View.VISIBLE
@@ -176,12 +224,7 @@ class RegisterFragment : AppCompatActivity(), IShowError {
     @CalledFromXML
     fun startRequestRegister() {
 
-        val userName = registerBinding.textUserName.textInputForm.editText?.text.toString()
-        val userLastName = registerBinding.textUserLastName.textInputForm.editText?.text.toString()
-        val userEmail = registerBinding.textUserEmail.textInputForm.editText?.text.toString()
-        val userPassword = registerBinding.textUserPassword.textInputForm.editText?.text.toString()
-
-        registerViewModel.registerTrigger(userName, userLastName, userEmail, userPassword)
+        _registerViewModel.registerTrigger()
     }
 
     @CalledFromXML
@@ -191,11 +234,40 @@ class RegisterFragment : AppCompatActivity(), IShowError {
     }
 
     override fun showErrorMessage(errorMessage: String) {
-        val mySnackBar = Snackbar.make(registerBinding.registerContainer, errorMessage, 2000)
+        val mySnackBar = Snackbar.make(_registerBinding.registerContainer, errorMessage, 2000)
 
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("UI State", "onRestart")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("UI State", "onStart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("UI State", "onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("UI State", "onResume")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("UI State", "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("UI State", "Lifecycle.State.DESTROYED onDestroy")
+    }
 }

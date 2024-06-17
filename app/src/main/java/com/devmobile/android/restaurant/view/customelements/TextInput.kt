@@ -8,7 +8,7 @@ import android.view.View
 import com.google.android.material.textfield.TextInputEditText
 
 @SuppressLint("ViewConstructor", "ResourceAsColor")
-class CustomTextInput @JvmOverloads constructor(
+class TextInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.R.attr.editTextStyle
 ) : TextInputEditText(context, attrs, defStyleAttr) {
 
