@@ -48,7 +48,6 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         subscribeObservables()
         setTextInputParameters()
         getUIState()
-        _registerBinding.invalidateAll()
     }
 
     private fun setTextInputParameters() {
