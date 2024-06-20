@@ -1,14 +1,24 @@
 package com.devmobile.android.restaurant.viewmodel
 
+import android.os.Bundle
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 
-class ViewModelFactory(private val repository: Any) : ViewModelProvider.Factory {
+class ViewModelFactory(
+    private val repository: Any,
+    ownerOfStateToSave: SavedStateRegistryOwner,
+    defaultValuesForNulls: Bundle? = null
+) : AbstractSavedStateViewModelFactory(ownerOfStateToSave, defaultValuesForNulls) {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-
+    override fun <T : ViewModel> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T {
         return when {
 
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
@@ -27,7 +37,7 @@ class ViewModelFactory(private val repository: Any) : ViewModelProvider.Factory 
                 if (repository as? RegisterRepository != null) {
 
                     @Suppress("UNCHECKED_CAST")
-                    RegisterViewModel(repository) as T
+                    RegisterViewModel(repository, handle) as T
 
                 } else {
 

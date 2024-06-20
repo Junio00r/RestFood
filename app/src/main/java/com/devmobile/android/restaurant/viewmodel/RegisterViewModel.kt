@@ -4,36 +4,55 @@ import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
-import com.devmobile.android.restaurant.model.AccountException
+import com.devmobile.android.restaurant.AccountException
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 data class RegisterUIState(
-    var name: String? = null,
-    var lastName: String? = null,
-    var email: String? = null,
-    var password: String? = null
+    val name: String? = null,
+    val lastName: String? = null,
+    val email: String? = null,
+    val password: String? = null
 )
 
 @OptIn(FlowPreview::class)
-class RegisterViewModel(private val registerRepository: RegisterRepository) : ViewModel() {
+class RegisterViewModel(
+    private val registerRepository: RegisterRepository,
+    private val uiState: SavedStateHandle
+) : ViewModel() {
 
-    // RegisterFragment UI State
-    private val _registerUIState = MutableStateFlow(RegisterUIState())
-    val registerUIState: StateFlow<RegisterUIState> = _registerUIState.asStateFlow()
+    // UIState
+    val userName: String? get() = uiState["NAME"]
+    val userLastName: String? get() = uiState["LAST_NAME"]
+    val userEmail: String? get() = uiState["EMAIL"]
+    val userPassword: String? get() = uiState["PASSWORD"]
+
+    fun onNameChanged(newName: String) {
+        uiState["NAME"] = newName
+    }
+
+    fun onLastNameChanged(newName: String) {
+        uiState["LAST_NAME"] = newName
+    }
+
+    fun onEmailChanged(newName: String) {
+        uiState["EMAIL"] = newName
+    }
+
+    fun onPasswordChanged(newName: String) {
+        uiState["PASSWORD"] = newName
+    }
 
     // Errors
     private val _userNameError = MutableLiveData<String?>()
@@ -55,6 +74,9 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
 
     // For Debounce Pattern
     private val _registerDebounceFlow = MutableSharedFlow<Unit?>()
+
+    // RegisterFragment UI State
+    private val _registerUIState = MutableStateFlow(RegisterUIState())
 
     companion object {
         const val VALID_DATA = "VALID"
@@ -161,17 +183,6 @@ class RegisterViewModel(private val registerRepository: RegisterRepository) : Vi
         }
 
         return result
-    }
-
-    fun updateUIState(
-        newName: String? = null, newLastName: String? = null, newEmail: String? = null, newPassword: String? = null
-    ) {
-        _registerUIState.value = _registerUIState.value.copy(
-            name = newName ?: _registerUIState.value.name,
-            lastName = newLastName ?: _registerUIState.value.lastName,
-            email = newEmail ?: _registerUIState.value.email,
-            password = newPassword ?: _registerUIState.value.password
-        )
     }
 
     fun registerTrigger() {

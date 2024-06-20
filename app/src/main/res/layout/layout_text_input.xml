@@ -4,9 +4,11 @@
     android:id="@+id/textInputForm"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:textColorHint="@color/gray_one"
     app:boxStrokeColor="@color/black"
     app:boxStrokeWidth="1dp"
+    app:cursorColor="@color/black"
     app:hintTextColor="@color/black">
 
     <com.devmobile.android.restaurant.view.customelements.TextInput

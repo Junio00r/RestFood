@@ -71,4 +71,15 @@ class TextInput @JvmOverloads constructor(
 
         super.setFilters(currentFilters)
     }
+
+    override fun onTextChanged(
+        text: CharSequence?,
+        start: Int,
+        lengthBefore: Int,
+        lengthAfter: Int
+    ) {
+        super.onTextChanged(text, start, lengthBefore, lengthAfter)
+    }
+
+
 }

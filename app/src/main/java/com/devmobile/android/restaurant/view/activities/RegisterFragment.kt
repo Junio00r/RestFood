@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
@@ -23,7 +21,6 @@ import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 
 class RegisterFragment : AppCompatActivity(), IShowError {
 
@@ -33,7 +30,9 @@ class RegisterFragment : AppCompatActivity(), IShowError {
     private val registerRepository = RegisterRepository(this)
 
     private val _registerViewModel: RegisterViewModel by viewModels {
-        ViewModelFactory(registerRepository)
+        ViewModelFactory(
+            repository = registerRepository, ownerOfStateToSave = this, defaultValuesForNulls = null
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +42,6 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
         _registerBinding.lifecycleOwner = this
         _registerBinding.registerView = this
-
-        // functions
-        subscribeObservables()
-        setTextInputParameters()
-        getUIState()
     }
 
     private fun setTextInputParameters() {
@@ -101,20 +95,19 @@ class RegisterFragment : AppCompatActivity(), IShowError {
 
             // Listeners after text changed
             textUserName.textInputEditText.doAfterTextChanged {
-
-                _registerViewModel.updateUIState(newName = it.toString())
+                _registerViewModel.onNameChanged(it.toString())
             }
 
             textUserLastName.textInputEditText.doAfterTextChanged {
-                _registerViewModel.updateUIState(newLastName = it.toString())
+                _registerViewModel.onLastNameChanged(it.toString())
             }
 
             textUserEmail.textInputEditText.doAfterTextChanged {
-                _registerViewModel.updateUIState(newEmail = it.toString())
+                _registerViewModel.onEmailChanged(it.toString())
             }
 
             textUserPassword.textInputEditText.doAfterTextChanged {
-                _registerViewModel.updateUIState(newPassword = it.toString())
+                _registerViewModel.onPasswordChanged(it.toString())
             }
         }
     }
@@ -167,58 +160,14 @@ class RegisterFragment : AppCompatActivity(), IShowError {
     }
 
     private fun getUIState() {
-
-        lifecycleScope.launch {
-            // repeatOnLifecycle launches the block in a new coroutine every time the
-            // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
-            _registerViewModel.registerUIState.collect { uiState ->
-                with(_registerBinding) {
-                    Log.i(
-                        "Fragment",
-                        "${_registerBinding}:${_registerBinding.textUserName} Pegou UI"
-                    )
-                    Log.i("Fragment", "${uiState.name}")
-                    textUserName.textInputEditText.setText(uiState.name)
-                    textUserLastName.textInputEditText.setText(uiState.lastName)
-                    textUserEmail.textInputEditText.setText(uiState.email)
-                    textUserPassword.textInputEditText.setText(uiState.password)
-                }
-            }
-        }.cancel()
-    }
-
-    private fun changeVisibilityState() {
-
-        if (isVisible) {
-
-            _registerBinding.apply {
-
-//                textUserName.textInputForm.visibility = View.GONE
-//                textUserLastName.textInputForm.visibility = View.GONE
-//                textUserEmail.textInputForm.visibility = View.GONE
-//                textUserPassword.textInputForm.visibility = View.GONE
-
-                buttonCancelRegister.isClickable = false
-                buttonConfirmRegister.isClickable = false
-            }
-            isVisible = false
-
-        } else {
-
-            _registerBinding.apply {
-
-//                textUserName.textInputForm.visibility = View.VISIBLE
-//                textUserLastName.textInputForm.visibility = View.VISIBLE
-//                textUserEmail.textInputForm.visibility = View.VISIBLE
-//                textUserPassword.textInputForm.visibility = View.VISIBLE
-
-                buttonCancelRegister.isClickable = true
-                buttonConfirmRegister.isClickable = true
-            }
-
-            isVisible = true
+        with(_registerBinding) {
+            textUserName.textInputEditText.setText(_registerViewModel.userName)
+            textUserLastName.textInputEditText.setText(_registerViewModel.userLastName)
+            textUserEmail.textInputEditText.setText(_registerViewModel.userEmail)
+            textUserPassword.textInputEditText.setText(_registerViewModel.userPassword)
         }
     }
+
 
     @CalledFromXML
     fun startRequestRegister() {
@@ -240,33 +189,10 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         }.show()
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        Log.d("UI State", "onRestart")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("UI State", "onStart")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("UI State", "onPause")
-    }
-
     override fun onResume() {
+        subscribeObservables()
+        setTextInputParameters()
+        getUIState()
         super.onResume()
-        Log.d("UI State", "onResume")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("UI State", "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("UI State", "Lifecycle.State.DESTROYED onDestroy")
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
 import android.util.Log
-import com.devmobile.android.restaurant.model.AccountException
+import com.devmobile.android.restaurant.AccountException
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.Dispatchers

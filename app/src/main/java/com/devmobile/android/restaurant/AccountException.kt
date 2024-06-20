@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model
+package com.devmobile.android.restaurant
 
 class AccountException(
     message: String? = "Access account exception",

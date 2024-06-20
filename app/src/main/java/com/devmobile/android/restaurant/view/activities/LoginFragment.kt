@@ -27,7 +27,7 @@ class LoginFragment : FragmentActivity() {
 
     // ViewModels
     private val loginViewModel: LoginViewModel by viewModels {
-        ViewModelFactory(repository = LoginRepository(this))
+        ViewModelFactory(repository = LoginRepository(this), this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
