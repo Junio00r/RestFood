@@ -33,10 +33,14 @@ class RegisterViewModel(
 ) : ViewModel() {
 
     // UIState
-    val userName: String? get() = uiState["NAME"]
-    val userLastName: String? get() = uiState["LAST_NAME"]
-    val userEmail: String? get() = uiState["EMAIL"]
-    val userPassword: String? get() = uiState["PASSWORD"]
+    val userName: String
+        get() = uiState["NAME"] ?: ""
+    val userLastName: String
+        get() = uiState["LAST_NAME"] ?: ""
+    val userEmail: String
+        get() = uiState["EMAIL"] ?: ""
+    val userPassword: String
+        get() = uiState["PASSWORD"] ?: ""
 
     fun onNameChanged(newName: String) {
         uiState["NAME"] = newName
@@ -147,7 +151,6 @@ class RegisterViewModel(
                         LoadState.Error(Throwable("Test It was not possible create account"))
                 }
             }
-
         }
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -189,10 +190,35 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         }.show()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("Fragment", "onRestart")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("Fragment", "onStart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Fragment", "onPause")
+    }
+
     override fun onResume() {
         subscribeObservables()
         setTextInputParameters()
         getUIState()
         super.onResume()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Fragment", "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Fragment", "Lifecycle.State.DESTROYED onDestroy")
     }
 }
