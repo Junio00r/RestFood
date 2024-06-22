@@ -2,6 +2,7 @@ package com.devmobile.android.restaurant.viewmodel
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -105,7 +106,7 @@ class RegisterViewModel(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ) {
 
-        if (isValidData(userName, userEmail, userPassword)) {
+        if (isValidData(userName, userLastName, userEmail, userPassword)) {
 
             _loadingProgress.value = LoadState.Loading
 
@@ -155,7 +156,7 @@ class RegisterViewModel(
     }
 
     private fun isValidData(
-        userName: String?, userEmail: String?, userPassword: String?
+        userName: String?, userLastName: String?, userEmail: String?, userPassword: String?
     ): Boolean {
 
         var result = true
@@ -166,6 +167,18 @@ class RegisterViewModel(
         } else {
             _userNameError.value = InputPatterns.TEXT_NAME_ERROR_MESSAGE
             result = false
+        }
+
+        if (userLastName != null) {
+
+            Log.d("ViewModel", "Email dahfflhjajfjk")
+            if (InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, userLastName)) {
+
+                _userNameError.value = VALID_DATA
+            } else {
+                _userNameError.value = InputPatterns.TEXT_NAME_ERROR_MESSAGE
+                result = false
+            }
         }
 
         if (InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, userEmail)) {

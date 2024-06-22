@@ -23,6 +23,7 @@ class TextInput @JvmOverloads constructor(
 
     init {
         textSize = 17F
+        isCursorVisible = true
         addTextChangedListener(this)
     }
 
@@ -62,6 +63,7 @@ class TextInput @JvmOverloads constructor(
 
         setMeasuredDimension(textInputWidth, textInputHeight)
     }
+
 
     override fun setFilters(filters: Array<out InputFilter>?) {
 

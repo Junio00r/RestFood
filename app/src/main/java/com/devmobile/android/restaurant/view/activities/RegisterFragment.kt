@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
@@ -23,17 +26,21 @@ import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
-class RegisterFragment : AppCompatActivity(), IShowError {
+class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
     private lateinit var _registerBinding: FragmentRegisterUserBinding
-    private var isVisible = true
 
     private val registerRepository = RegisterRepository(this)
 
+    // I prefer to use the SavedStateHandle for practices
     private val _registerViewModel: RegisterViewModel by viewModels {
         ViewModelFactory(
             repository = registerRepository, ownerOfStateToSave = this, defaultValuesForNulls = null
         )
+    }
+
+    init {
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -190,35 +197,39 @@ class RegisterFragment : AppCompatActivity(), IShowError {
         }.show()
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        Log.d("Fragment", "onRestart")
-    }
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("Fragment", "onStart")
-    }
+        when (event) {
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("Fragment", "onPause")
-    }
+            Lifecycle.Event.ON_CREATE -> {
 
-    override fun onResume() {
-        subscribeObservables()
-        setTextInputParameters()
-        getUIState()
-        super.onResume()
-    }
+            }
 
-    override fun onStop() {
-        super.onStop()
-        Log.d("Fragment", "onStop")
-    }
+            Lifecycle.Event.ON_START -> {
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("Fragment", "Lifecycle.State.DESTROYED onDestroy")
+            }
+
+            Lifecycle.Event.ON_RESUME -> {
+                subscribeObservables()
+                setTextInputParameters()
+                getUIState()
+            }
+
+            Lifecycle.Event.ON_PAUSE -> {
+
+            }
+
+            Lifecycle.Event.ON_STOP -> {
+
+            }
+
+            Lifecycle.Event.ON_DESTROY -> {
+
+            }
+
+            Lifecycle.Event.ON_ANY -> {
+                TODO()
+            }
+        }
     }
 }

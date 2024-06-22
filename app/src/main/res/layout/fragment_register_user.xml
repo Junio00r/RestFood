@@ -5,7 +5,6 @@
     <data>
 
         <import type="android.text.InputType" />
-
         <variable
             name="registerView"
             type="com.devmobile.android.restaurant.view.activities.RegisterFragment" />
