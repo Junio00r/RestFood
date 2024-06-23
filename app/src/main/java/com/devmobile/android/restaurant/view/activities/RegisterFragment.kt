@@ -7,12 +7,13 @@ import android.os.Looper
 import android.text.InputType
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
@@ -32,15 +33,15 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
 
     private val registerRepository = RegisterRepository(this)
 
+    init {
+        lifecycle.addObserver(this)
+    }
+
     // I prefer to use the SavedStateHandle for practices
     private val _registerViewModel: RegisterViewModel by viewModels {
         ViewModelFactory(
             repository = registerRepository, ownerOfStateToSave = this, defaultValuesForNulls = null
         )
-    }
-
-    init {
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -228,7 +229,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
             }
 
             Lifecycle.Event.ON_ANY -> {
-                TODO()
+
             }
         }
     }
