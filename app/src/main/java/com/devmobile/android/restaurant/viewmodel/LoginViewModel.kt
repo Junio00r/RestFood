@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.model.repository.AuthenticationResult
-import com.devmobile.android.restaurant.model.repository.InputPatterns
+import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
 import kotlinx.coroutines.launch
 

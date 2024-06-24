@@ -7,19 +7,16 @@ import android.os.Looper
 import android.text.InputType
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentRegisterUserBinding
-import com.devmobile.android.restaurant.databinding.LayoutTextInputBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import com.devmobile.android.restaurant.view.customelements.LoadingTransition
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
@@ -31,17 +28,19 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
 
     private lateinit var _registerBinding: FragmentRegisterUserBinding
 
+    // I prefer to use the SavedStateHandle for practices
+    private val _registerViewModel: RegisterViewModel by viewModels {
+        ViewModelFactory(
+            repository = registerRepository,
+            ownerOfStateToSave = this,
+            defaultValuesForNulls = null
+        )
+    }
+
     private val registerRepository = RegisterRepository(this)
 
     init {
         lifecycle.addObserver(this)
-    }
-
-    // I prefer to use the SavedStateHandle for practices
-    private val _registerViewModel: RegisterViewModel by viewModels {
-        ViewModelFactory(
-            repository = registerRepository, ownerOfStateToSave = this, defaultValuesForNulls = null
-        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,19 +81,24 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
 
         with(_registerBinding) {
 
-            _registerViewModel.userNameError.observe(this@RegisterFragment) { error ->
+            _registerViewModel.nameErrorPropagator.observe(this@RegisterFragment) { error ->
 
-                handleError(textUserName, error)
+                textUserName.textInputForm.error = error
             }
 
-            _registerViewModel.userEmailError.observe(this@RegisterFragment) { error ->
+            _registerViewModel.lastNameErrorPropagator.observe(this@RegisterFragment) { error ->
 
-                handleError(textUserEmail, error)
+                textUserLastName.textInputForm.error = error
             }
 
-            _registerViewModel.userPasswordError.observe(this@RegisterFragment) { error ->
+            _registerViewModel.emailErrorPropagator.observe(this@RegisterFragment) { error ->
 
-                handleError(textUserPassword, error)
+                textUserEmail.textInputForm.error = error
+            }
+
+            _registerViewModel.passwordErrorPropagator.observe(this@RegisterFragment) { error ->
+
+                textUserPassword.textInputForm.error = error
             }
 
             _registerViewModel.loadingProgress.observe(this@RegisterFragment) { loadState ->
@@ -118,18 +122,6 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
             textUserPassword.textInputEditText.doAfterTextChanged {
                 _registerViewModel.onPasswordChanged(it.toString())
             }
-        }
-    }
-
-    private fun handleError(inputText: LayoutTextInputBinding, error: String?) {
-
-        if (error == RegisterViewModel.VALID_DATA) {
-
-            inputText.textInputForm.error = null
-
-        } else {
-
-            inputText.textInputForm.error = error
         }
     }
 
@@ -211,6 +203,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
             }
 
             Lifecycle.Event.ON_RESUME -> {
+
                 subscribeObservables()
                 setTextInputParameters()
                 getUIState()

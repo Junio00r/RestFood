@@ -2,7 +2,6 @@ package com.devmobile.android.restaurant.viewmodel
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -10,27 +9,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.AccountException
+import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.model.entities.User
-import com.devmobile.android.restaurant.model.repository.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import java.io.IOException
-
-data class RegisterUIState(
-    val name: String? = null,
-    val lastName: String? = null,
-    val email: String? = null,
-    val password: String? = null
-)
+import java.util.regex.Pattern
 
 @OptIn(FlowPreview::class)
 class RegisterViewModel(
-    private val registerRepository: RegisterRepository,
-    private val uiState: SavedStateHandle
+    private val registerRepository: RegisterRepository, private val uiState: SavedStateHandle
 ) : ViewModel() {
 
     // UIState
@@ -60,17 +51,17 @@ class RegisterViewModel(
     }
 
     // Errors
-    private val _userNameError = MutableLiveData<String?>()
-    val userNameError: LiveData<String?> = _userNameError
+    private val _nameErrorPropagator = MutableLiveData<String?>()
+    val nameErrorPropagator: LiveData<String?> = _nameErrorPropagator
 
-    private val _userLastNameError = MutableLiveData<String?>()
-    val userLastNameError: LiveData<String?> = _userLastNameError
+    private val _lastNameErrorPropagator = MutableLiveData<String?>()
+    val lastNameErrorPropagator: LiveData<String?> = _lastNameErrorPropagator
 
-    private val _userEmailError = MutableLiveData<String?>()
-    val userEmailError: LiveData<String?> = _userEmailError
+    private val _emailErrorPropagator = MutableLiveData<String?>()
+    val emailErrorPropagator: LiveData<String?> = _emailErrorPropagator
 
-    private val _userPasswordError = MutableLiveData<String?>()
-    val userPasswordError: LiveData<String?> = _userPasswordError
+    private val _passwordErrorPropagator = MutableLiveData<String?>()
+    val passwordErrorPropagator: LiveData<String?> = _passwordErrorPropagator
 
 
     // Loading Live Data
@@ -79,9 +70,6 @@ class RegisterViewModel(
 
     // For Debounce Pattern
     private val _registerDebounceFlow = MutableSharedFlow<Unit?>()
-
-    // RegisterFragment UI State
-    private val _registerUIState = MutableStateFlow(RegisterUIState())
 
     companion object {
         const val VALID_DATA = "VALID"
@@ -95,10 +83,14 @@ class RegisterViewModel(
             // debounce Flow for register new user
             _registerDebounceFlow.debounce(500).collect {
 
-                with(_registerUIState.value) {
-                    register(name, lastName, email, password)
-                }
+                register(userName, userLastName, userEmail, userPassword)
             }
+        }
+    }
+
+    fun registerTrigger() {
+        viewModelScope.launch {
+            _registerDebounceFlow.emit(Unit)
         }
     }
 
@@ -127,7 +119,7 @@ class RegisterViewModel(
 
                 } catch (e: AccountException) {
 
-                    _userEmailError.value = "Test Email is invalid or already taken"
+                    _emailErrorPropagator.value = "Test Email is invalid or already taken"
                     _loadingProgress.value =
                         LoadState.Error(Throwable("Test Email is invalid or already taken"))
 
@@ -159,51 +151,58 @@ class RegisterViewModel(
         userName: String?, userLastName: String?, userEmail: String?, userPassword: String?
     ): Boolean {
 
-        var result = true
+        val isNameValid = isDataRequiredValid(
+            data = userName,
+            inputPattern = InputPatterns.TEXT_PATTERN,
+            errorPropagator = _nameErrorPropagator
+        )
 
-        if (InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, userName)) {
+        val isLastNameValid = isDataOptionalValid(
+            data = userLastName,
+            inputPattern = InputPatterns.TEXT_PATTERN,
+            errorPropagator = _lastNameErrorPropagator
+        )
 
-            _userNameError.value = VALID_DATA
-        } else {
-            _userNameError.value = InputPatterns.TEXT_NAME_ERROR_MESSAGE
-            result = false
-        }
+        val isEmailValid = isDataRequiredValid(
+            data = userEmail,
+            inputPattern = InputPatterns.EMAIL_PATTERN,
+            errorPropagator = _emailErrorPropagator
+        )
 
-        if (userLastName != null) {
+        val isPassword = isDataRequiredValid(
+            data = userPassword,
+            inputPattern = InputPatterns.PASSWORD_PATTERN,
+            errorPropagator = _passwordErrorPropagator
+        )
 
-            Log.d("ViewModel", "Email dahfflhjajfjk")
-            if (InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, userLastName)) {
-
-                _userNameError.value = VALID_DATA
-            } else {
-                _userNameError.value = InputPatterns.TEXT_NAME_ERROR_MESSAGE
-                result = false
-            }
-        }
-
-        if (InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, userEmail)) {
-
-            _userEmailError.value = VALID_DATA
-        } else {
-            _userEmailError.value = InputPatterns.EMAIL_ERROR_MESSAGE
-            result = false
-        }
-
-        if (InputPatterns.isMatch(InputPatterns.PASSWORD_PATTERN, userPassword)) {
-
-            _userPasswordError.value = VALID_DATA
-
-        } else {
-            _userPasswordError.value = InputPatterns.PASSWORD_ERROR_MESSAGE
-            result = false
-        }
-
-        return result
+        return isNameValid and isLastNameValid and isEmailValid and isPassword
     }
 
-    fun registerTrigger() {
-        viewModelScope.launch {
-            _registerDebounceFlow.emit(Unit)
+    private fun isDataRequiredValid(data: String?, inputPattern: Pattern, errorPropagator: MutableLiveData<String?>): Boolean {
+
+        val isValid = InputPatterns.isMatch(inputPattern, data)
+
+        if (isValid.first) {
+
+            errorPropagator.value = null
+            return true
         }
+
+        errorPropagator.value = isValid.second
+        return false
+    }
+
+    private fun isDataOptionalValid(data: String?, inputPattern: Pattern, errorPropagator: MutableLiveData<String?>): Boolean {
+
+        val isValid = InputPatterns.isMatch(inputPattern, data)
+
+        if (data.isNullOrEmpty() or isValid.first) {
+
+            errorPropagator.value = null
+            return true
+        }
+
+        errorPropagator.value = isValid.second
+        return false
     }
 }
