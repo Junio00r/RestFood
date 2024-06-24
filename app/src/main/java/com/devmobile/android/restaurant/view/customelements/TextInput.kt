@@ -2,9 +2,7 @@ package com.devmobile.android.restaurant.view.customelements
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.Editable
 import android.text.InputFilter
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import com.google.android.material.textfield.TextInputEditText
@@ -12,7 +10,7 @@ import com.google.android.material.textfield.TextInputEditText
 @SuppressLint("ViewConstructor", "ResourceAsColor")
 class TextInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.R.attr.editTextStyle
-) : TextInputEditText(context, attrs, defStyleAttr), TextWatcher {
+) : TextInputEditText(context, attrs, defStyleAttr) {
 
     companion object {
 
@@ -22,9 +20,9 @@ class TextInput @JvmOverloads constructor(
     }
 
     init {
+
         textSize = 17F
         isCursorVisible = true
-        addTextChangedListener(this)
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
@@ -75,24 +73,5 @@ class TextInput @JvmOverloads constructor(
         }
 
         super.setFilters(currentFilters)
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        // Anything
-    }
-
-    override fun onTextChanged(
-        text: CharSequence?,
-        start: Int,
-        lengthBefore: Int,
-        lengthAfter: Int
-    ) {
-        // Anything
-    }
-
-    override fun afterTextChanged(s: Editable?) {
-        if (s != null) {
-            setSelection(s.length)
-        }
     }
 }

@@ -6,10 +6,10 @@ object InputPatterns {
 
 
     // Error Messages
-    const val TEXT_ERROR_MESSAGE = "Texto não pode conter letras (!, @ # $ ¨ %) especias, numeros e nem espaços"
-    const val TEXT_NAME_ERROR_MESSAGE = "Invalid Name. The name must contain only letters"
-    const val PASSWORD_ERROR_MESSAGE = "Password have must in minimum 8 characters, three numbers and at least one special character (\$,*, -)."
-    const val EMAIL_ERROR_MESSAGE = "Email is invalid or already taken"
+    private const val TEXT_ERROR_MESSAGE = "Texto não pode conter letras (!, @ # $ ¨ %) especias, numeros e nem espaços"
+    private const val TEXT_NAME_ERROR_MESSAGE = "Invalid Name. The name must contain only letters"
+    private const val PASSWORD_ERROR_MESSAGE = "Password have must in minimum 8 characters, three numbers and at least one special character (\$,*, -)."
+    private const val EMAIL_ERROR_MESSAGE = "Email is invalid or already taken"
 
     // Patterns
     @JvmStatic
@@ -38,13 +38,15 @@ object InputPatterns {
 
                 TEXT_PATTERN -> {
                     return Pair(
-                        TEXT_PATTERN.matcher(data.trim()).matches(), TEXT_NAME_ERROR_MESSAGE
+                        TEXT_PATTERN.matcher(data.trim()).matches(),
+                        TEXT_NAME_ERROR_MESSAGE
                     )
                 }
 
                 EMAIL_PATTERN -> {
                     return Pair(
-                        EMAIL_PATTERN.matcher(data.trim()).matches(), EMAIL_ERROR_MESSAGE
+                        EMAIL_PATTERN.matcher(data.trim()).matches(),
+                        EMAIL_ERROR_MESSAGE
                     )
                 }
 

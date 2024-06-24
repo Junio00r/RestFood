@@ -28,7 +28,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
 
     private lateinit var _registerBinding: FragmentRegisterUserBinding
 
-    // I prefer to use the SavedStateHandle for practices
+    // I prefer to use the SavedStateHandle to practices
     private val _registerViewModel: RegisterViewModel by viewModels {
         ViewModelFactory(
             repository = registerRepository,
@@ -40,6 +40,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
     private val registerRepository = RegisterRepository(this)
 
     init {
+
         lifecycle.addObserver(this)
     }
 
@@ -81,6 +82,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
 
         with(_registerBinding) {
 
+            // Errors observables
             _registerViewModel.nameErrorPropagator.observe(this@RegisterFragment) { error ->
 
                 textUserName.textInputForm.error = error
@@ -101,6 +103,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
                 textUserPassword.textInputForm.error = error
             }
 
+            // LoadState
             _registerViewModel.loadingProgress.observe(this@RegisterFragment) { loadState ->
 
                 handleLoadState(loadState)
@@ -162,10 +165,14 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
 
     private fun getUIState() {
         with(_registerBinding) {
-            textUserName.textInputEditText.setText(_registerViewModel.userName)
-            textUserLastName.textInputEditText.setText(_registerViewModel.userLastName)
-            textUserEmail.textInputEditText.setText(_registerViewModel.userEmail)
-            textUserPassword.textInputEditText.setText(_registerViewModel.userPassword)
+
+            textUserName.textInputEditText.append(_registerViewModel.userName)
+
+            textUserLastName.textInputEditText.append(_registerViewModel.userLastName)
+
+            textUserEmail.textInputEditText.append(_registerViewModel.userEmail)
+
+            textUserPassword.textInputEditText.append(_registerViewModel.userPassword)
         }
     }
 

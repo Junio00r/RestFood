@@ -71,10 +71,6 @@ class RegisterViewModel(
     // For Debounce Pattern
     private val _registerDebounceFlow = MutableSharedFlow<Unit?>()
 
-    companion object {
-        const val VALID_DATA = "VALID"
-    }
-
     init {
 
         // Scopes on init block isn't recommended
@@ -95,7 +91,10 @@ class RegisterViewModel(
     }
 
     private fun register(
-        userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
+        userName: String?,
+        userLastName: String? = "",
+        userEmail: String?,
+        userPassword: String?
     ) {
 
         if (isValidData(userName, userLastName, userEmail, userPassword)) {
@@ -178,7 +177,11 @@ class RegisterViewModel(
         return isNameValid and isLastNameValid and isEmailValid and isPassword
     }
 
-    private fun isDataRequiredValid(data: String?, inputPattern: Pattern, errorPropagator: MutableLiveData<String?>): Boolean {
+    private fun isDataRequiredValid(
+        data: String?,
+        inputPattern: Pattern,
+        errorPropagator: MutableLiveData<String?>
+    ): Boolean {
 
         val isValid = InputPatterns.isMatch(inputPattern, data)
 
@@ -192,7 +195,11 @@ class RegisterViewModel(
         return false
     }
 
-    private fun isDataOptionalValid(data: String?, inputPattern: Pattern, errorPropagator: MutableLiveData<String?>): Boolean {
+    private fun isDataOptionalValid(
+        data: String?,
+        inputPattern: Pattern,
+        errorPropagator: MutableLiveData<String?>
+    ): Boolean {
 
         val isValid = InputPatterns.isMatch(inputPattern, data)
 
