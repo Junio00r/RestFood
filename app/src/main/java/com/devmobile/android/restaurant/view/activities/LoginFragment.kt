@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.databinding.FragmentUserAuthenticationBinding
+import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.devmobile.android.restaurant.model.repository.localdata.IUserDao
 import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
 import com.devmobile.android.restaurant.viewmodel.LoginViewModel
@@ -13,7 +13,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginFragment : FragmentActivity() {
-    private lateinit var binding: FragmentUserAuthenticationBinding
+    private lateinit var binding: FragmentLoginBinding
 
     private lateinit var buttonSignUp: MaterialButton
     private lateinit var buttonSignIn: MaterialButton
@@ -33,7 +33,7 @@ class LoginFragment : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = FragmentUserAuthenticationBinding.inflate(layoutInflater)
+        binding = FragmentLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initializeViews()

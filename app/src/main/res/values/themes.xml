@@ -7,7 +7,6 @@
         <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
         <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="android:textColorHint">@color/orange</item>
         <item name="android:inputType">textNoSuggestions</item>
 
 

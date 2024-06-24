@@ -1,6 +1,7 @@
 package com.devmobile.android.restaurant.view.activities
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,7 +17,7 @@ import androidx.paging.LoadState
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.databinding.FragmentRegisterUserBinding
+import com.devmobile.android.restaurant.databinding.ActivityRegisterUserBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
 import com.devmobile.android.restaurant.view.customelements.LoadingTransition
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
@@ -26,7 +27,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
-    private lateinit var _registerBinding: FragmentRegisterUserBinding
+    private lateinit var _registerBinding: ActivityRegisterUserBinding
 
     // I prefer to use the SavedStateHandle to practices
     private val _registerViewModel: RegisterViewModel by viewModels {
@@ -47,7 +48,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _registerBinding = DataBindingUtil.setContentView(this, R.layout.fragment_register_user)
+        _registerBinding = DataBindingUtil.setContentView(this, R.layout.activity_register_user)
 
         _registerBinding.lifecycleOwner = this
         _registerBinding.registerView = this
@@ -176,7 +177,6 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
         }
     }
 
-
     @CalledFromXML
     fun startRequestRegister() {
 
@@ -192,6 +192,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
     override fun showErrorMessage(errorMessage: String) {
         val mySnackBar = Snackbar.make(_registerBinding.registerContainer, errorMessage, 2000)
 
+        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.green_light)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()
