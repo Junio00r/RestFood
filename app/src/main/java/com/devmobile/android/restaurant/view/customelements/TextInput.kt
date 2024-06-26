@@ -62,14 +62,24 @@ class TextInput @JvmOverloads constructor(
         setMeasuredDimension(textInputWidth, textInputHeight)
     }
 
+    /**
+     * Set the max of characters on input
+     * @param max number max
+     */
+    fun maxLength(max: Int) {
+        filters = arrayOf(InputFilter.LengthFilter(max))
+    }
+
 
     override fun setFilters(filters: Array<out InputFilter>?) {
 
-        var currentFilters = getFilters()
+        val currentFilters: Array<out InputFilter> = if (filters.isNullOrEmpty()) {
 
-        if (currentFilters.isEmpty()) {
+            arrayOf(*getFilters(), lengthFilter)
 
-            currentFilters = arrayOf(*currentFilters, lengthFilter)
+        } else {
+
+            filters
         }
 
         super.setFilters(currentFilters)

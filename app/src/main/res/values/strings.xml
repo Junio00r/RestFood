@@ -13,7 +13,7 @@
 
     <!--  Register Screen  -->
     <string name="button_cancel_register" tools:ignore="ButtonCase">CANCEL</string>
-    <string name="button_confirm_register">REGISTER</string>
+    <string name="button_confirm_register">NEXT</string>
 
     <!--  Tab Sections  -->
     <string name="tab_item_entradas">Entradas</string>
@@ -38,4 +38,5 @@
     <string name="button_realizar_pedido">REALIZAR PEDIDO</string>
     <string name="text_total_to_pay">R$ 0.00</string>
 
+    <string name="text_reeviar_codigo">Reenviar Código</string>
 </resources>

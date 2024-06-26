@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.view.activities
+package com.devmobile.android.restaurant.view.activities.authentication
 
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -19,13 +19,14 @@ import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityRegisterUserBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
+import com.devmobile.android.restaurant.view.activities.MainActivity
 import com.devmobile.android.restaurant.view.customelements.LoadingTransition
 import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
-class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver {
+class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
     private lateinit var _registerBinding: ActivityRegisterUserBinding
 
@@ -84,28 +85,28 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
         with(_registerBinding) {
 
             // Errors observables
-            _registerViewModel.nameErrorPropagator.observe(this@RegisterFragment) { error ->
+            _registerViewModel.nameErrorPropagator.observe(this@RegisterActivity) { error ->
 
                 textUserName.textInputForm.error = error
             }
 
-            _registerViewModel.lastNameErrorPropagator.observe(this@RegisterFragment) { error ->
+            _registerViewModel.lastNameErrorPropagator.observe(this@RegisterActivity) { error ->
 
                 textUserLastName.textInputForm.error = error
             }
 
-            _registerViewModel.emailErrorPropagator.observe(this@RegisterFragment) { error ->
+            _registerViewModel.emailErrorPropagator.observe(this@RegisterActivity) { error ->
 
                 textUserEmail.textInputForm.error = error
             }
 
-            _registerViewModel.passwordErrorPropagator.observe(this@RegisterFragment) { error ->
+            _registerViewModel.passwordErrorPropagator.observe(this@RegisterActivity) { error ->
 
                 textUserPassword.textInputForm.error = error
             }
 
             // LoadState
-            _registerViewModel.loadingProgress.observe(this@RegisterFragment) { loadState ->
+            _registerViewModel.loadingProgress.observe(this@RegisterActivity) { loadState ->
 
                 handleLoadState(loadState)
             }
@@ -135,30 +136,31 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
 
             is LoadState.Loading -> {
 
-                LoadingTransition.getInstance(R.layout.layout_loading)
-                    .start(supportFragmentManager, R.id.registerContainer)
+//                LoadingTransition.getInstance(R.layout.layout_loading)
+//                    .start(supportFragmentManager, R.id.registerContainer)
+                startActivity(Intent(this@RegisterActivity, VerificationActivity::class.java))
             }
 
             is LoadState.NotLoading -> {
 
-                Handler(Looper.getMainLooper()).postDelayed(
-                    {
-                        startActivity(Intent(this@RegisterFragment, MainActivity::class.java))
-                        finish()
-                    }, 3000
-                )
-
-                Handler(Looper.getMainLooper()).postDelayed(
-                    {
-                        LoadingTransition.getInstance(null).stop(supportFragmentManager)
-
-                    }, 4000
-                )
+//                Handler(Looper.getMainLooper()).postDelayed(
+//                    {
+//                        startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+//                        finish()
+//                    }, 3000
+//                )
+//
+//                Handler(Looper.getMainLooper()).postDelayed(
+//                    {
+//                        LoadingTransition.getInstance(null).stop(supportFragmentManager)
+//
+//                    }, 4000
+//                )
             }
 
             is LoadState.Error -> {
 
-                LoadingTransition.getInstance(null).stop(supportFragmentManager)
+//                LoadingTransition.getInstance(null).stop(supportFragmentManager)
                 showErrorMessage(loadState.error.message ?: "Login Error")
             }
         }
@@ -178,7 +180,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
     }
 
     @CalledFromXML
-    fun startRequestRegister() {
+    fun nextRegister() {
 
         _registerViewModel.registerTrigger()
     }
@@ -192,7 +194,7 @@ class RegisterFragment : AppCompatActivity(), IShowError, LifecycleEventObserver
     override fun showErrorMessage(errorMessage: String) {
         val mySnackBar = Snackbar.make(_registerBinding.registerContainer, errorMessage, 2000)
 
-        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.green_light)))
+        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.green_light_one)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()

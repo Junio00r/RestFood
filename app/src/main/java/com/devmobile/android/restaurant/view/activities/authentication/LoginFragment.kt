@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.view.activities
+package com.devmobile.android.restaurant.view.activities.authentication
 
 import android.content.Intent
 import android.os.Bundle
@@ -53,7 +53,7 @@ class LoginFragment : FragmentActivity() {
 
         buttonSignUp.setOnClickListener {
 
-            startRegisterActivity(Intent(this, RegisterFragment::class.java))
+            startRegisterActivity(Intent(this, RegisterActivity::class.java))
         }
 
         buttonSignIn.setOnClickListener {

@@ -99,7 +99,7 @@ class RegisterViewModel(
 
         if (isValidData(userName, userLastName, userEmail, userPassword)) {
 
-            _loadingProgress.value = LoadState.Loading
+//            _loadingProgress.value = LoadState.Loading
 
             val newUser = User(
                 null,
@@ -114,7 +114,7 @@ class RegisterViewModel(
                 try {
 
                     registerRepository.createAccount(newUser)
-                    _loadingProgress.value = LoadState.NotLoading(true)
+                    _loadingProgress.value = LoadState.Loading
 
                 } catch (e: AccountException) {
 
