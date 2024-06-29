@@ -4,12 +4,14 @@ import java.util.regex.Pattern
 
 object InputPatterns {
 
-
     // Error Messages
-    private const val TEXT_ERROR_MESSAGE = "Texto não pode conter letras (!, @ # $ ¨ %) especias, numeros e nem espaços"
+    private const val TEXT_ERROR_MESSAGE =
+        "Texto não pode conter letras (!, @ # $ ¨ %) especias, numeros e nem espaços"
     private const val TEXT_NAME_ERROR_MESSAGE = "Invalid Name. The name must contain only letters"
-    private const val PASSWORD_ERROR_MESSAGE = "Password have must in minimum 8 characters, three numbers and at least one special character (\$,*, -)."
+    private const val PASSWORD_ERROR_MESSAGE =
+        "Password have must in minimum 8 characters, three numbers and at least one special character (\$,*, -)."
     private const val EMAIL_ERROR_MESSAGE = "Email is invalid or already taken"
+    private const val NUMBER_ERROR_MESSAGE = "Deve conter apenas números"
 
     // Patterns
     @JvmStatic
@@ -26,6 +28,12 @@ object InputPatterns {
     val PASSWORD_PATTERN: Pattern = Pattern.compile(
 
         "(?=^.{8,}\$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*\$"
+    )
+
+    @JvmStatic
+    val UNITY_NUMBER_PATTERN: Pattern = Pattern.compile(
+
+        "/[0-9]/"
     )
 
 
@@ -54,6 +62,13 @@ object InputPatterns {
                     return Pair(
                         PASSWORD_PATTERN.matcher(data.trim()).matches(),
                         PASSWORD_ERROR_MESSAGE
+                    )
+                }
+
+                UNITY_NUMBER_PATTERN -> {
+                    return Pair(
+                        PASSWORD_PATTERN.matcher(data.trim()).matches(),
+                        NUMBER_ERROR_MESSAGE
                     )
                 }
 

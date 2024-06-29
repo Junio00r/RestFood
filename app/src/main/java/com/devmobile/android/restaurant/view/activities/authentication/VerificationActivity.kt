@@ -20,11 +20,12 @@ import com.google.android.material.snackbar.Snackbar
 class VerificationActivity : AppCompatActivity(), IShowError {
     private lateinit var _verificationBinding: ActivityVerificationCodeBinding
 
-    private val _verificationRepository = VerificationRepository(this)
+    private val _repository = VerificationRepository(this)
 
     private val _verificationViewModel: VerificationViewModel by viewModels {
+
         ViewModelFactory(
-            repository = _verificationRepository,
+            repository = _repository,
             ownerOfStateToSave = this,
             defaultValuesForNulls = null
         )
@@ -36,7 +37,11 @@ class VerificationActivity : AppCompatActivity(), IShowError {
         _verificationBinding = ActivityVerificationCodeBinding.inflate(layoutInflater)
         setContentView(_verificationBinding.root)
 
+        _verificationBinding.viewModel = _verificationViewModel
+
         with(_verificationBinding) {
+
+            code1.textInputEditText.requestFocus()
 
             // InputType
             code1.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
@@ -75,23 +80,20 @@ class VerificationActivity : AppCompatActivity(), IShowError {
     }
 
     private fun setObservables() {
+
         with(_verificationBinding) {
 
-            // validate of codes
-            _verificationViewModel.isCodeValid.observe(this@VerificationActivity) { isValid ->
+            _verificationViewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
 
-                if (isValid) {
+                if (error.isNullOrEmpty()) {
+
                     // make anything
-
-                } else {
-
-                    showErrorMessage("Os códigos são inválidos")
+                    showErrorMessage(error!!)
                 }
             }
 
             // TextInput text
             code1.textInputEditText.doAfterTextChanged {
-                code1.textInputEditText.requestFocus()
                 focus(code2.textInputEditText)
             }
 
@@ -112,8 +114,9 @@ class VerificationActivity : AppCompatActivity(), IShowError {
             }
 
             code6.textInputEditText.doAfterTextChanged {
+
                 sendCode()
-                disableInputs()
+                handleInputs()
             }
         }
     }
@@ -138,13 +141,14 @@ class VerificationActivity : AppCompatActivity(), IShowError {
             val code5 = code5.textInputEditText.text.toString()
             val code6 = code6.textInputEditText.text.toString()
 
-            _verificationViewModel.codeVerification(
-                code1, code2, code3, code4, code5, code6
+            _verificationViewModel.codeVerify(
+                codesEntered = arrayOf(code1, code2, code3, code4, code5, code6)
             )
         }
     }
 
-    private fun disableInputs() {
+    private fun handleInputs() {
+
         with(_verificationBinding) {
 
             code1.textInputEditText.isFocusable = false
@@ -158,6 +162,7 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
     @SuppressLint("ShowToast")
     override fun showErrorMessage(errorMessage: String) {
+
         val mySnackbar = Snackbar.make(_verificationBinding.container, errorMessage, 2000)
 
         mySnackbar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))

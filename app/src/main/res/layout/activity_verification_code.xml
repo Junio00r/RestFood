@@ -1,126 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textInformation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ellipsize="end"
-        android:inputType="none"
-        android:paddingEnd="8dp"
-        android:text="Verifique o codigo enviado para o E-mail test@gmail.com"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <LinearLayout
-        android:id="@+id/containerCodes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInformation"
-        tools:viewBindingIgnore="true">
+        <variable
+            name="viewModel"
+            type="com.devmobile.android.restaurant.viewmodel.VerificationViewModel" />
+    </data>
 
-        <include
-            android:id="@+id/code1"
-            layout="@layout/layout_text_input"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textInformation"
             android:layout_width="0dp"
-            android:layout_height="76dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:textSize="40sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:inputType="none"
+            android:paddingEnd="8dp"
+            android:text="@string/text_information_message"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry" />
 
-        <include
-            android:id="@+id/code2"
-            layout="@layout/layout_text_input"
+        <LinearLayout
+            android:id="@+id/containerCodes"
             android:layout_width="0dp"
-            android:layout_height="76dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@id/code1"
-            app:layout_constraintStart_toEndOf="@+id/code1"
-            app:layout_constraintTop_toTopOf="@id/code1" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInformation"
+            tools:viewBindingIgnore="true">
 
-        <include
-            android:id="@+id/code3"
-            layout="@layout/layout_text_input"
+            <include
+                android:id="@+id/code1"
+                layout="@layout/layout_text_input"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:textSize="40sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/code2"
+                layout="@layout/layout_text_input"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="@id/code1"
+                app:layout_constraintStart_toEndOf="@+id/code1"
+                app:layout_constraintTop_toTopOf="@id/code1" />
+
+            <include
+                android:id="@+id/code3"
+                layout="@layout/layout_text_input"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="@id/code2"
+                app:layout_constraintStart_toEndOf="@+id/code2"
+                app:layout_constraintTop_toTopOf="@id/code2" />
+
+            <include
+                android:id="@+id/code4"
+                layout="@layout/layout_text_input"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="@id/code3"
+                app:layout_constraintStart_toEndOf="@+id/code3"
+                app:layout_constraintTop_toTopOf="@id/code3" />
+
+            <include
+                android:id="@+id/code5"
+                layout="@layout/layout_text_input"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="@id/code4"
+                app:layout_constraintStart_toEndOf="@+id/code4"
+                app:layout_constraintTop_toTopOf="@id/code4"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <include
+                android:id="@+id/code6"
+                layout="@layout/layout_text_input"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="1"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="@id/code5"
+                app:layout_constraintStart_toEndOf="@+id/code5"
+                app:layout_constraintTop_toTopOf="@id/code5" />
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
-            android:layout_height="76dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@id/code2"
-            app:layout_constraintStart_toEndOf="@+id/code2"
-            app:layout_constraintTop_toTopOf="@id/code2" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:inputType="none"
+            android:onClick="@{() -> viewModel.resendCodeTrigger()}"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="@string/text_reeviar_codigo"
+            android:textColorHint="@color/gray_three"
+            android:textColorLink="@color/green_light_one"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/containerCodes"
+            app:layout_constraintTop_toBottomOf="@id/containerCodes" />
 
-        <include
-            android:id="@+id/code4"
-            layout="@layout/layout_text_input"
-            android:layout_width="0dp"
-            android:layout_height="76dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@id/code3"
-            app:layout_constraintStart_toEndOf="@+id/code3"
-            app:layout_constraintTop_toTopOf="@id/code3" />
-
-        <include
-            android:id="@+id/code5"
-            layout="@layout/layout_text_input"
-            android:layout_width="0dp"
-            android:layout_height="76dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@id/code4"
-            app:layout_constraintStart_toEndOf="@+id/code4"
-            app:layout_constraintTop_toTopOf="@id/code4"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <include
-            android:id="@+id/code6"
-            layout="@layout/layout_text_input"
-            android:layout_width="0dp"
-            android:layout_height="76dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@id/code5"
-            app:layout_constraintStart_toEndOf="@+id/code5"
-            app:layout_constraintTop_toTopOf="@id/code5" />
-    </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:inputType="none"
-        android:linksClickable="true"
-        android:paddingHorizontal="8dp"
-        android:text="@string/text_reeviar_codigo"
-        android:textColorHint="@color/gray_three"
-        android:textColorLink="@color/green_light_one"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/containerCodes"
-        app:layout_constraintStart_toStartOf="@id/containerCodes"
-        app:layout_constraintTop_toBottomOf="@id/containerCodes" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

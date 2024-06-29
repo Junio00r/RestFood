@@ -19,7 +19,7 @@ class VerificationRepository(private val context: Context) {
     private val _isCodesValid = MutableLiveData<Boolean>()
     val isCodeValid: LiveData<Boolean> = _isCodesValid
 
-    suspend fun codeVerification(vararg codes: Int) {
+    suspend fun codeVerification(codes: Array<String>) {
 
         return withContext(Dispatchers.IO) {
 
@@ -66,5 +66,9 @@ class VerificationRepository(private val context: Context) {
                 throw e
             }
         }
+    }
+
+    suspend fun verifyCodeEmail() {
+
     }
 }
