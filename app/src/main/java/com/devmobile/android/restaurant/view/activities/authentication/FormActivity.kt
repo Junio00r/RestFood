@@ -3,9 +3,8 @@ package com.devmobile.android.restaurant.view.activities.authentication
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.InputType
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -18,20 +17,18 @@ import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityRegisterUserBinding
-import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
-import com.devmobile.android.restaurant.view.activities.MainActivity
-import com.devmobile.android.restaurant.view.customelements.LoadingTransition
-import com.devmobile.android.restaurant.viewmodel.RegisterViewModel
+import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
+import com.devmobile.android.restaurant.viewmodel.FormViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
-class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
+class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
     private lateinit var _registerBinding: ActivityRegisterUserBinding
 
     // I prefer to use the SavedStateHandle to practices
-    private val _registerViewModel: RegisterViewModel by viewModels {
+    private val _registerViewModel: FormViewModel by viewModels {
         ViewModelFactory(
             repository = registerRepository,
             ownerOfStateToSave = this,
@@ -39,7 +36,7 @@ class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver
         )
     }
 
-    private val registerRepository = RegisterRepository(this)
+    private val registerRepository = FormRepository(this)
 
     init {
 
@@ -58,6 +55,8 @@ class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver
     private fun setTextInputParameters() {
 
         _registerBinding.apply {
+
+            textUserName.textInputEditText.requestFocus()
 
             // Set Hints
             textUserName.textInputForm.hint = "Name *"
@@ -85,28 +84,28 @@ class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver
         with(_registerBinding) {
 
             // Errors observables
-            _registerViewModel.nameErrorPropagator.observe(this@RegisterActivity) { error ->
+            _registerViewModel.nameErrorPropagator.observe(this@FormActivity) { error ->
 
                 textUserName.textInputForm.error = error
             }
 
-            _registerViewModel.lastNameErrorPropagator.observe(this@RegisterActivity) { error ->
+            _registerViewModel.lastNameErrorPropagator.observe(this@FormActivity) { error ->
 
                 textUserLastName.textInputForm.error = error
             }
 
-            _registerViewModel.emailErrorPropagator.observe(this@RegisterActivity) { error ->
+            _registerViewModel.emailErrorPropagator.observe(this@FormActivity) { error ->
 
                 textUserEmail.textInputForm.error = error
             }
 
-            _registerViewModel.passwordErrorPropagator.observe(this@RegisterActivity) { error ->
+            _registerViewModel.passwordErrorPropagator.observe(this@FormActivity) { error ->
 
                 textUserPassword.textInputForm.error = error
             }
 
             // LoadState
-            _registerViewModel.loadingProgress.observe(this@RegisterActivity) { loadState ->
+            _registerViewModel.loadingProgress.observe(this@FormActivity) { loadState ->
 
                 handleLoadState(loadState)
             }
@@ -136,32 +135,16 @@ class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver
 
             is LoadState.Loading -> {
 
-//                LoadingTransition.getInstance(R.layout.layout_loading)
-//                    .start(supportFragmentManager, R.id.registerContainer)
-                startActivity(Intent(this@RegisterActivity, VerificationActivity::class.java))
+                startActivity(Intent(this@FormActivity, VerificationActivity::class.java))
             }
 
             is LoadState.NotLoading -> {
-
-//                Handler(Looper.getMainLooper()).postDelayed(
-//                    {
-//                        startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
-//                        finish()
-//                    }, 3000
-//                )
-//
-//                Handler(Looper.getMainLooper()).postDelayed(
-//                    {
-//                        LoadingTransition.getInstance(null).stop(supportFragmentManager)
-//
-//                    }, 4000
-//                )
+                TODO()
             }
 
             is LoadState.Error -> {
 
-//                LoadingTransition.getInstance(null).stop(supportFragmentManager)
-                showErrorMessage(loadState.error.message ?: "Login Error")
+                showErrorMessage(loadState.error.message ?: "Register Error")
             }
         }
     }
@@ -205,11 +188,11 @@ class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver
         when (event) {
 
             Lifecycle.Event.ON_CREATE -> {
-
+                Log.i("Form","ON_CREATE")
             }
 
             Lifecycle.Event.ON_START -> {
-
+                Log.i("Form","ON_START")
             }
 
             Lifecycle.Event.ON_RESUME -> {
@@ -217,22 +200,23 @@ class RegisterActivity : AppCompatActivity(), IShowError, LifecycleEventObserver
                 subscribeObservables()
                 setTextInputParameters()
                 getUIState()
+                Log.i("Form","ON_RESUME")
             }
 
             Lifecycle.Event.ON_PAUSE -> {
-
+                Log.i("Form","ON_PAUSE")
             }
 
             Lifecycle.Event.ON_STOP -> {
-
+                Log.i("Form","ON_STOP")
             }
 
             Lifecycle.Event.ON_DESTROY -> {
-
+                Log.i("Form","ON_DESTROY")
             }
 
             Lifecycle.Event.ON_ANY -> {
-
+                Log.i("Form","ON_ANY")
             }
         }
     }

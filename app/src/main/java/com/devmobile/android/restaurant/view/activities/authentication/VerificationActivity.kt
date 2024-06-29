@@ -1,15 +1,34 @@
 package com.devmobile.android.restaurant.view.activities.authentication
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import com.devmobile.android.restaurant.IShowError
+import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
+import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
+import com.devmobile.android.restaurant.viewmodel.VerificationViewModel
+import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
-class VerificationActivity : AppCompatActivity() {
+class VerificationActivity : AppCompatActivity(), IShowError {
     private lateinit var _verificationBinding: ActivityVerificationCodeBinding
+
+    private val _verificationRepository = VerificationRepository(this)
+
+    private val _verificationViewModel: VerificationViewModel by viewModels {
+        ViewModelFactory(
+            repository = _verificationRepository,
+            ownerOfStateToSave = this,
+            defaultValuesForNulls = null
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +37,6 @@ class VerificationActivity : AppCompatActivity() {
         setContentView(_verificationBinding.root)
 
         with(_verificationBinding) {
-
-            // Init with focus
-            code1.textInputEditText.requestFocus()
 
             // InputType
             code1.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
@@ -61,28 +77,43 @@ class VerificationActivity : AppCompatActivity() {
     private fun setObservables() {
         with(_verificationBinding) {
 
-            code1.textInputEditText.doAfterTextChanged {
-                focus(code1.textInputEditText)
+            // validate of codes
+            _verificationViewModel.isCodeValid.observe(this@VerificationActivity) { isValid ->
+
+                if (isValid) {
+                    // make anything
+
+                } else {
+
+                    showErrorMessage("Os códigos são inválidos")
+                }
             }
 
-            code2.textInputEditText.doAfterTextChanged {
+            // TextInput text
+            code1.textInputEditText.doAfterTextChanged {
+                code1.textInputEditText.requestFocus()
                 focus(code2.textInputEditText)
             }
 
-            code3.textInputEditText.doAfterTextChanged {
+            code2.textInputEditText.doAfterTextChanged {
                 focus(code3.textInputEditText)
             }
 
-            code4.textInputEditText.doAfterTextChanged {
+            code3.textInputEditText.doAfterTextChanged {
                 focus(code4.textInputEditText)
             }
 
-            code5.textInputEditText.doAfterTextChanged {
+            code4.textInputEditText.doAfterTextChanged {
                 focus(code5.textInputEditText)
             }
 
+            code5.textInputEditText.doAfterTextChanged {
+                focus(code6.textInputEditText)
+            }
+
             code6.textInputEditText.doAfterTextChanged {
-                // check if code is valid on ViewModel
+                sendCode()
+                disableInputs()
             }
         }
     }
@@ -90,9 +121,46 @@ class VerificationActivity : AppCompatActivity() {
     private fun <T : EditText> focus(text: T?) {
 
         if (text != null) {
-            if (text.length() == 1) {
+            if (text.length() == 0) {
                 text.requestFocus()
             }
         }
+    }
+
+    private fun sendCode() {
+
+        with(_verificationBinding) {
+
+            val code1 = code1.textInputEditText.text.toString()
+            val code2 = code2.textInputEditText.text.toString()
+            val code3 = code3.textInputEditText.text.toString()
+            val code4 = code4.textInputEditText.text.toString()
+            val code5 = code5.textInputEditText.text.toString()
+            val code6 = code6.textInputEditText.text.toString()
+
+            _verificationViewModel.codeVerification(
+                code1, code2, code3, code4, code5, code6
+            )
+        }
+    }
+
+    private fun disableInputs() {
+        with(_verificationBinding) {
+
+            code1.textInputEditText.isFocusable = false
+            code2.textInputEditText.isFocusable = false
+            code3.textInputEditText.isFocusable = false
+            code4.textInputEditText.isFocusable = false
+            code5.textInputEditText.isFocusable = false
+            code6.textInputEditText.isFocusable = false
+        }
+    }
+
+    @SuppressLint("ShowToast")
+    override fun showErrorMessage(errorMessage: String) {
+        val mySnackbar = Snackbar.make(_verificationBinding.container, errorMessage, 2000)
+
+        mySnackbar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))
+        mySnackbar.show()
     }
 }

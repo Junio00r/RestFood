@@ -5,8 +5,9 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
+import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
 import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
-import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
+import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
 
 class ViewModelFactory(
     private val repository: Any,
@@ -33,11 +34,23 @@ class ViewModelFactory(
                 }
             }
 
-            modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                if (repository as? RegisterRepository != null) {
+            modelClass.isAssignableFrom(FormViewModel::class.java) -> {
+                if (repository as? FormRepository != null) {
 
                     @Suppress("UNCHECKED_CAST")
-                    RegisterViewModel(repository, handle) as T
+                    FormViewModel(repository, handle) as T
+
+                } else {
+
+                    throw ClassCastException("Não é possível fabricar uma intancia de Register Repository")
+                }
+            }
+
+            modelClass.isAssignableFrom(VerificationViewModel::class.java) -> {
+                if (repository as? VerificationRepository != null) {
+
+                    @Suppress("UNCHECKED_CAST")
+                    VerificationViewModel(repository, handle) as T
 
                 } else {
 

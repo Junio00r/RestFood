@@ -53,7 +53,7 @@ class LoginFragment : FragmentActivity() {
 
         buttonSignUp.setOnClickListener {
 
-            startRegisterActivity(Intent(this, RegisterActivity::class.java))
+            startRegisterActivity(Intent(this, FormActivity::class.java))
         }
 
         buttonSignIn.setOnClickListener {

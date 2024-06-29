@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.devmobile.android.restaurant.view.activities.authentication.RegisterActivity
+import com.devmobile.android.restaurant.view.activities.authentication.FormActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,7 +20,7 @@ import org.junit.runner.RunWith
 class RegisterTest {
 
     @get:Rule
-    val activityRule = ActivityScenarioRule(RegisterActivity::class.java)
+    val activityRule = ActivityScenarioRule(FormActivity::class.java)
 
     @Test
     fun testFillOutForm() {

@@ -10,8 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.AccountException
 import com.devmobile.android.restaurant.InputPatterns
-import com.devmobile.android.restaurant.model.entities.User
-import com.devmobile.android.restaurant.model.repository.remotedata.RegisterRepository
+import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
@@ -20,34 +19,34 @@ import java.io.IOException
 import java.util.regex.Pattern
 
 @OptIn(FlowPreview::class)
-class RegisterViewModel(
-    private val registerRepository: RegisterRepository, private val uiState: SavedStateHandle
+class FormViewModel(
+    private val registerRepository: FormRepository, private val handleUIState: SavedStateHandle
 ) : ViewModel() {
 
     // UIState
     val userName: String
-        get() = uiState["NAME"] ?: ""
+        get() = handleUIState["NAME"] ?: ""
     val userLastName: String
-        get() = uiState["LAST_NAME"] ?: ""
+        get() = handleUIState["LAST_NAME"] ?: ""
     val userEmail: String
-        get() = uiState["EMAIL"] ?: ""
+        get() = handleUIState["EMAIL"] ?: ""
     val userPassword: String
-        get() = uiState["PASSWORD"] ?: ""
+        get() = handleUIState["PASSWORD"] ?: ""
 
     fun onNameChanged(newName: String) {
-        uiState["NAME"] = newName
+        handleUIState["NAME"] = newName
     }
 
     fun onLastNameChanged(newName: String) {
-        uiState["LAST_NAME"] = newName
+        handleUIState["LAST_NAME"] = newName
     }
 
     fun onEmailChanged(newName: String) {
-        uiState["EMAIL"] = newName
+        handleUIState["EMAIL"] = newName
     }
 
     fun onPasswordChanged(newName: String) {
-        uiState["PASSWORD"] = newName
+        handleUIState["PASSWORD"] = newName
     }
 
     // Errors
@@ -79,7 +78,7 @@ class RegisterViewModel(
             // debounce Flow for register new user
             _registerDebounceFlow.debounce(500).collect {
 
-                register(userName, userLastName, userEmail, userPassword)
+                requestUserData(userName, userLastName, userEmail, userPassword)
             }
         }
     }
@@ -90,57 +89,41 @@ class RegisterViewModel(
         }
     }
 
-    private fun register(
-        userName: String?,
-        userLastName: String? = "",
-        userEmail: String?,
-        userPassword: String?
+    private fun requestUserData(
+        userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ) {
 
+
         if (isValidData(userName, userLastName, userEmail, userPassword)) {
-
-//            _loadingProgress.value = LoadState.Loading
-
-            val newUser = User(
-                null,
-                userName!!.trim(),
-                userLastName?.matches(InputPatterns.TEXT_PATTERN.toRegex()).toString(),
-                userEmail!!.trim(),
-                userPassword!!.trim(),
-            )
 
             viewModelScope.launch {
 
                 try {
 
-                    registerRepository.createAccount(newUser)
-                    _loadingProgress.value = LoadState.Loading
-
-                } catch (e: AccountException) {
-
-                    _emailErrorPropagator.value = "Test Email is invalid or already taken"
-                    _loadingProgress.value =
-                        LoadState.Error(Throwable("Test Email is invalid or already taken"))
+                    if (!registerRepository.hasEmailAlreadyRegistered(email = userEmail!!)) {
+                        _loadingProgress.value = LoadState.Loading
+                    }
 
                 } catch (e: IOException) {
 
                     _loadingProgress.value =
-                        LoadState.Error(Throwable("Test It was not possible create account"))
+                        LoadState.Error(Throwable("It was not possible create account"))
 
                 } catch (e: SQLiteDatabaseCorruptException) {
 
                     _loadingProgress.value =
-                        LoadState.Error(Throwable("Test It was not possible create account"))
+                        LoadState.Error(Throwable("It was not possible create account"))
 
                 } catch (e: SQLiteException) {
 
                     _loadingProgress.value =
-                        LoadState.Error(Throwable("Test It was not possible create account"))
+                        LoadState.Error(Throwable("It was not possible create account"))
 
-                } catch (e: Exception) {
+                } catch (e: AccountException) {
 
+                    _emailErrorPropagator.value = "Email is invalid or already taken"
                     _loadingProgress.value =
-                        LoadState.Error(Throwable("Test It was not possible create account"))
+                        LoadState.Error(Throwable("Email is invalid or already taken"))
                 }
             }
         }
@@ -178,9 +161,7 @@ class RegisterViewModel(
     }
 
     private fun isDataRequiredValid(
-        data: String?,
-        inputPattern: Pattern,
-        errorPropagator: MutableLiveData<String?>
+        data: String?, inputPattern: Pattern, errorPropagator: MutableLiveData<String?>
     ): Boolean {
 
         val isValid = InputPatterns.isMatch(inputPattern, data)
@@ -196,9 +177,7 @@ class RegisterViewModel(
     }
 
     private fun isDataOptionalValid(
-        data: String?,
-        inputPattern: Pattern,
-        errorPropagator: MutableLiveData<String?>
+        data: String?, inputPattern: Pattern, errorPropagator: MutableLiveData<String?>
     ): Boolean {
 
         val isValid = InputPatterns.isMatch(inputPattern, data)

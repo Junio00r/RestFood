@@ -5,44 +5,28 @@ import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
 import android.util.Log
 import com.devmobile.android.restaurant.AccountException
-import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class RegisterRepository(private val context: Context) {
+class FormRepository(private val context: Context) {
 
-    suspend fun createAccount(user: User) {
+    suspend fun hasEmailAlreadyRegistered(email: String): Boolean {
+
         val userDao = RestaurantLocalDatabase.getInstance(context).getUserDao()
+        var result: Boolean
 
-        return withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
 
             try {
 
-                val isNotEmailRegistered = userDao.hasEmailRegistered(user.email) == 0
-
-                if (isNotEmailRegistered) {
-
-                    userDao.insertUser(user)
-                } else {
-
-                    throw AccountException()
-                }
-
-            } catch (e: AccountException) {
-
-                Log.e(
-                    "Teste",
-                    "Account creating exception: Email already registered on database"
-                )
-                throw e
+                result = userDao.hasEmailRegistered(email) != 0
 
             } catch (e: IOException) {
 
                 Log.e(
-                    "Test RegisterRepository",
-                    "IO database exception to create account: ${e.message}"
+                    "RegisterRepository", "IO database exception to verify email: ${e.message}"
                 )
                 throw e
 
@@ -56,18 +40,19 @@ class RegisterRepository(private val context: Context) {
             } catch (e: SQLiteException) {
 
                 Log.e(
-                    "Test RegisterRepository", "SQL exception while creating account: ${e.message}"
+                    "RegisterRepository", "SQL exception while creating account: ${e.message}"
                 )
                 throw e
 
-            } catch (e: Exception) {
+            } catch (e: AccountException) {
 
                 Log.e(
-                    "Test RegisterRepository",
-                    "Unexpected exception while creating account: ${e.message}"
+                    "RegisterRepository",
+                    "Unexpected exception while check whether valid email : ${e.message}"
                 )
                 throw e
             }
         }
+        return result
     }
 }

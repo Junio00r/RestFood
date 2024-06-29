@@ -8,11 +8,11 @@
 
         <variable
             name="registerView"
-            type="com.devmobile.android.restaurant.view.activities.authentication.RegisterActivity" />
+            type="com.devmobile.android.restaurant.view.activities.authentication.FormActivity" />
 
         <variable
             name="registerViewModel"
-            type="com.devmobile.android.restaurant.viewmodel.RegisterViewModel" />
+            type="com.devmobile.android.restaurant.viewmodel.FormViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
