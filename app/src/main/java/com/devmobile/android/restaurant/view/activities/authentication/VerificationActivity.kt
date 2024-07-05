@@ -15,6 +15,7 @@ import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
+import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.VerificationViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -32,6 +33,8 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
         )
     }
 
+    private val codes = ArrayList<TextInput>()
+
     init {
         lifecycle.addObserver(this)
     }
@@ -45,31 +48,31 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
         _verificationBinding.viewModel = _verificationViewModel
         _verificationBinding.activity = this
 
+
         with(_verificationBinding) {
 
-            // InputType
-            code1.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
-            code2.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
-            code3.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
-            code4.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
-            code5.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
-            code6.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
+            codes.addAll(
+                arrayOf(
+                    code1.textInputEditText,
+                    code2.textInputEditText,
+                    code3.textInputEditText,
+                    code4.textInputEditText,
+                    code5.textInputEditText,
+                    code6.textInputEditText
+                )
+            )
 
-            // Text alignment
-            code1.textInputEditText.gravity = Gravity.CENTER
-            code2.textInputEditText.gravity = Gravity.CENTER
-            code3.textInputEditText.gravity = Gravity.CENTER
-            code4.textInputEditText.gravity = Gravity.CENTER
-            code5.textInputEditText.gravity = Gravity.CENTER
-            code6.textInputEditText.gravity = Gravity.CENTER
+            codes.forEach { code ->
 
-            // Max chars in text
-            code1.textInputEditText.maxLength(1)
-            code2.textInputEditText.maxLength(1)
-            code3.textInputEditText.maxLength(1)
-            code4.textInputEditText.maxLength(1)
-            code5.textInputEditText.maxLength(1)
-            code6.textInputEditText.maxLength(1)
+                // InputType
+                code.inputType = InputType.TYPE_CLASS_NUMBER
+
+                // Text Alignment
+                code.gravity = Gravity.CENTER
+
+                // Max Chars in Text
+                code.maxLength(1)
+            }
 
             // Layout text size
             code1.textInputForm.layoutParams.height = 300
@@ -170,45 +173,29 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
     private fun sendCode() {
 
-        with(_verificationBinding) {
-
-            val code11 = code1.textInputEditText.text.toString()
-            val code22 = code2.textInputEditText.text.toString()
-            val code33 = code3.textInputEditText.text.toString()
-            val code44 = code4.textInputEditText.text.toString()
-            val code55 = code5.textInputEditText.text.toString()
-            val code66 = code6.textInputEditText.text.toString()
-
-            _verificationViewModel.codeVerify(
-                codesEntered = arrayOf(code11, code22, code33, code44, code55, code66)
+        _verificationViewModel.codeVerify(
+            codesEntered = arrayOf(
+                codes[0].text.toString(),
+                codes[1].text.toString(),
+                codes[2].text.toString(),
+                codes[3].text.toString(),
+                codes[4].text.toString(),
+                codes[5].text.toString(),
             )
-        }
+        )
     }
 
     private fun handleFocus() {
 
-        with(_verificationBinding) {
+        codes.forEach {
 
-            code1.textInputEditText.isFocusable = false
-            code2.textInputEditText.isFocusable = false
-            code3.textInputEditText.isFocusable = false
-            code4.textInputEditText.isFocusable = false
-            code5.textInputEditText.isFocusable = false
-            code6.textInputEditText.isFocusable = false
+            it.isFocusable = false
         }
     }
 
-    override fun showErrorMessage(errorMessage: String) {
+    private fun changedResendTextColor(wasResendCode: Boolean) {
 
-        val mySnackbar = Snackbar.make(_verificationBinding.container, errorMessage, 2000)
-
-        mySnackbar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))
-        mySnackbar.show()
-    }
-
-    private fun changedResendTextColor(wasResendedCode: Boolean) {
-
-        if (wasResendedCode) {
+        if (wasResendCode) {
 
             _verificationBinding.textResendCode.setTextColor(
                 ColorStateList.valueOf(
@@ -230,24 +217,32 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
         }
     }
 
-    private fun getUIState() {
+    private fun rememberUIState() {
 
-        val codes = listOf(
-            Pair(_verificationBinding.code1.textInputEditText, _verificationViewModel.code1),
-            Pair(_verificationBinding.code2.textInputEditText, _verificationViewModel.code2),
-            Pair(_verificationBinding.code3.textInputEditText, _verificationViewModel.code3),
-            Pair(_verificationBinding.code4.textInputEditText, _verificationViewModel.code4),
-            Pair(_verificationBinding.code5.textInputEditText, _verificationViewModel.code5),
-            Pair(_verificationBinding.code6.textInputEditText, _verificationViewModel.code6)
+        val codesForRemember = listOf(
+            Pair(codes[0], _verificationViewModel.code1),
+            Pair(codes[1], _verificationViewModel.code2),
+            Pair(codes[2], _verificationViewModel.code3),
+            Pair(codes[3], _verificationViewModel.code4),
+            Pair(codes[4], _verificationViewModel.code5),
+            Pair(codes[5], _verificationViewModel.code6)
         )
 
-        codes.forEach { pair ->
+        codesForRemember.forEach { pair ->
 
             if (pair.second.isNotEmpty()) {
 
                 pair.first.setText(pair.second)
             }
         }
+    }
+
+    override fun showErrorMessage(errorMessage: String) {
+
+        val mySnackbar = Snackbar.make(_verificationBinding.container, errorMessage, 2000)
+
+        mySnackbar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))
+        mySnackbar.show()
     }
 
 
@@ -266,7 +261,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
             Lifecycle.Event.ON_RESUME -> {
 
                 setObservables()
-                getUIState()
+                rememberUIState()
             }
 
             Lifecycle.Event.ON_PAUSE -> {
