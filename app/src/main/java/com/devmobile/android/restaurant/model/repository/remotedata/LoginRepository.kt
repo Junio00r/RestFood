@@ -1,7 +1,7 @@
 package com.devmobile.android.restaurant.model.repository.remotedata
 
 import android.content.Context
-import com.devmobile.android.restaurant.model.repository.AuthenticationResult
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -9,18 +9,18 @@ import kotlinx.coroutines.withContext
 class LoginRepository(context: Context) {
     private val userDAO = RestaurantLocalDatabase.getInstance(context).getUserDao()
 
-    suspend fun login(email: String, password: String): AuthenticationResult {
+    suspend fun login(email: String, password: String): RequestResult {
 
         return withContext(Dispatchers.IO) {
 
             if (isValidCredentials(email, password)) {
 
-                return@withContext AuthenticationResult.Success(userDAO.findUserByEmail(email)!!)
+                return@withContext RequestResult.Success(userDAO.findUserByEmail(email)!!)
 
                 // Logging...
 
             } else {
-                return@withContext AuthenticationResult.Error(IllegalArgumentException("Error: Email or password invalid"))
+                return@withContext RequestResult.Error(IllegalArgumentException("Error: Email or password invalid"))
             }
         }
     }

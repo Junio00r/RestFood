@@ -150,14 +150,12 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
     }
 
     private fun getUIState() {
+
         with(_registerBinding) {
 
             textUserName.textInputEditText.append(_registerViewModel.userName)
-
             textUserLastName.textInputEditText.append(_registerViewModel.userLastName)
-
             textUserEmail.textInputEditText.append(_registerViewModel.userEmail)
-
             textUserPassword.textInputEditText.append(_registerViewModel.userPassword)
         }
     }
@@ -175,6 +173,7 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
     }
 
     override fun showErrorMessage(errorMessage: String) {
+
         val mySnackBar = Snackbar.make(_registerBinding.registerContainer, errorMessage, 2000)
 
         mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.green_light_one)))

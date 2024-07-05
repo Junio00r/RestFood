@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="activity"
+            type="com.devmobile.android.restaurant.view.activities.authentication.VerificationActivity" />
+
+        <variable
             name="viewModel"
             type="com.devmobile.android.restaurant.viewmodel.VerificationViewModel" />
     </data>
@@ -23,7 +27,8 @@
             android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:inputType="none"
-            android:paddingEnd="8dp"
+            app:fontFamily="@font/dosis_medium"
+            android:paddingEnd="120dp"
             android:text="@string/text_information_message"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,6 +124,7 @@
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textResendCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -128,10 +134,9 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:text="@string/text_reeviar_codigo"
-            android:textColorHint="@color/gray_three"
-            android:textColorLink="@color/green_light_one"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:fontFamily="@font/sul_sans_regular"
             app:layout_constraintStart_toStartOf="@id/containerCodes"
             app:layout_constraintTop_toBottomOf="@id/containerCodes" />
 

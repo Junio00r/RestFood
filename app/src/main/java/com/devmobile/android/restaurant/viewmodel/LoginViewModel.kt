@@ -4,14 +4,9 @@ import android.util.Patterns
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devmobile.android.restaurant.model.repository.AuthenticationResult
-import com.devmobile.android.restaurant.InputPatterns
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
 import kotlinx.coroutines.launch
-
-data class LoginStateUI(
-    val email: String? = null, val password: String? = null
-)
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -27,12 +22,12 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
                 when (loginResult) {
 
-                    is AuthenticationResult.Success -> {
+                    is RequestResult.Success -> {
 
                         println("Login Realizado Com Sucesso")
                     }
 
-                    is AuthenticationResult.Error -> {
+                    is RequestResult.Error -> {
 
                         println(loginResult.exception.message)
                     }

@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LoadState
 import com.devmobile.android.restaurant.AccountException
-import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +19,8 @@ import java.util.regex.Pattern
 
 @OptIn(FlowPreview::class)
 class FormViewModel(
-    private val registerRepository: FormRepository, private val handleUIState: SavedStateHandle
+    private val registerRepository: FormRepository,
+    private val handleUIState: SavedStateHandle
 ) : ViewModel() {
 
     // UIState

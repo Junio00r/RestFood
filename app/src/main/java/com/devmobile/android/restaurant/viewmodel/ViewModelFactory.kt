@@ -54,7 +54,7 @@ class ViewModelFactory(
 
                 } else {
 
-                    throw ClassCastException("Não é possível fabricar uma intancia de Register Repository")
+                    throw ClassCastException("Não é possível fabricar uma intancia de Verification Repository")
                 }
             }
 

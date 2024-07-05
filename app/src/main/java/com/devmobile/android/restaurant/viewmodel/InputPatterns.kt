@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.viewmodel
 
 import java.util.regex.Pattern
 
@@ -31,9 +31,9 @@ object InputPatterns {
     )
 
     @JvmStatic
-    val UNITY_NUMBER_PATTERN: Pattern = Pattern.compile(
+    val NUMBER_PATTERN: Pattern = Pattern.compile(
 
-        "/[0-9]/"
+        "^\\d+\$"
     )
 
 
@@ -65,9 +65,9 @@ object InputPatterns {
                     )
                 }
 
-                UNITY_NUMBER_PATTERN -> {
+                NUMBER_PATTERN -> {
                     return Pair(
-                        PASSWORD_PATTERN.matcher(data.trim()).matches(),
+                        NUMBER_PATTERN.matcher(data.trim()).matches(),
                         NUMBER_ERROR_MESSAGE
                     )
                 }

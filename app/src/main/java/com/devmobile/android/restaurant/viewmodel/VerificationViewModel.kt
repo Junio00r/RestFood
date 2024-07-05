@@ -1,36 +1,34 @@
 package com.devmobile.android.restaurant.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 class VerificationViewModel(
-    private val repository: VerificationRepository, private val handleUIState: SavedStateHandle
+    private val repository: VerificationRepository,
+    private val handleUIState: SavedStateHandle
 ) : ViewModel() {
 
     // UIState
-    private val code1: String
+    val code1: String
         get() = handleUIState["CODE_1"] ?: ""
-    private val code2: String
+    val code2: String
         get() = handleUIState["CODE_2"] ?: ""
-    private val code3: String
+    val code3: String
         get() = handleUIState["CODE_3"] ?: ""
-    private val code4: String
+    val code4: String
         get() = handleUIState["CODE_4"] ?: ""
-    private val code5: String
+    val code5: String
         get() = handleUIState["CODE_5"] ?: ""
-    private val code6: String
+    val code6: String
         get() = handleUIState["CODE_6"] ?: ""
 
     fun saveCode1(newCode: String) {
@@ -57,6 +55,9 @@ class VerificationViewModel(
         handleUIState["CODE_6"] = newCode
     }
 
+    private val _canResendCode = MutableLiveData<Boolean>()
+    val canResendCode: LiveData<Boolean> = _canResendCode
+
     private val _codeErrorPropagator = MutableLiveData<String?>()
     val codeErrorPropagator: LiveData<String?> = _codeErrorPropagator
 
@@ -64,13 +65,17 @@ class VerificationViewModel(
 
     init {
 
+        // coroutines scope on init block isn't recommended
         viewModelScope.launch {
-            _resendCode.debounce(10000).collect {
+            _resendCode.debounce(1000).collect {
+
+                _canResendCode.value = false
                 requestVerificationCode()
             }
         }
     }
 
+    // Functions
     fun resendCodeTrigger() {
 
         viewModelScope.launch {
@@ -78,14 +83,21 @@ class VerificationViewModel(
         }
     }
 
-    // Functions
+    private fun requestVerificationCode() {
+
+        viewModelScope.launch {
+
+            repository.verifyCodeEmail()
+        }
+    }
+
     fun codeVerify(codesEntered: Array<String>) {
 
         if (isCodePatternValid(codesEntered)) {
 
             viewModelScope.launch {
 
-                repository.codeVerification(codesEntered)
+                repository.verifyCodeEmail()
             }
 
         } else {
@@ -98,7 +110,7 @@ class VerificationViewModel(
 
         codesEntered.forEach { code ->
 
-            val check = InputPatterns.isMatch(InputPatterns.UNITY_NUMBER_PATTERN, code)
+            val check = InputPatterns.isMatch(InputPatterns.NUMBER_PATTERN, code)
 
             if (!check.first) {
 
@@ -107,12 +119,5 @@ class VerificationViewModel(
         }
 
         return true
-    }
-
-    private fun requestVerificationCode() {
-        viewModelScope.launch {
-
-            repository.verifyCodeEmail()
-        }
     }
 }
