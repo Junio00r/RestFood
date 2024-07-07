@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
-import android.widget.EditText
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -33,7 +33,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
         )
     }
 
-    private val codes = ArrayList<TextInput>()
+    private val _codes = ArrayList<TextInput>()
 
     init {
         lifecycle.addObserver(this)
@@ -51,7 +51,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         with(_verificationBinding) {
 
-            codes.addAll(
+            _codes.addAll(
                 arrayOf(
                     code1.textInputEditText,
                     code2.textInputEditText,
@@ -62,7 +62,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
                 )
             )
 
-            codes.forEach { code ->
+            _codes.forEach { code ->
 
                 // InputType
                 code.inputType = InputType.TYPE_CLASS_NUMBER
@@ -82,7 +82,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
             code5.textInputForm.layoutParams.height = 300
             code6.textInputForm.layoutParams.height = 300
 
-            code1.textInputEditText.requestFocus()
+            setFocus()
         }
     }
 
@@ -90,61 +90,51 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         with(_verificationBinding) {
 
-            // TextInput text
             code1.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode1(code1.textInputEditText.text.toString())
-                if (it.toString().isNotEmpty()) {
-
-                    focus(code2.textInputEditText)
-                }
+                _verificationViewModel.saveCode1(it.toString())
+                sendCode()
+                setFocus()
             }
 
             code2.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode2(code2.textInputEditText.text.toString())
-                if (it.toString().isNotEmpty()) {
-
-                    focus(code3.textInputEditText)
-                }
+                _verificationViewModel.saveCode2(it.toString())
+                sendCode()
+                setFocus()
             }
 
             code3.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode3(code3.textInputEditText.text.toString())
-                if (it.toString().isNotEmpty()) {
-
-                    focus(code4.textInputEditText)
-                }
+                _verificationViewModel.saveCode3(it.toString())
+                sendCode()
+                setFocus()
             }
 
             code4.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode4(code4.textInputEditText.text.toString())
-                if (it.toString().isNotEmpty()) {
-
-                    focus(code5.textInputEditText)
-                }
+                _verificationViewModel.saveCode4(it.toString())
+                sendCode()
+                setFocus()
             }
 
             code5.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode5(code5.textInputEditText.text.toString())
-                if (it.toString().isNotEmpty()) {
-
-                    focus(code6.textInputEditText)
-                }
+                _verificationViewModel.saveCode5(it.toString())
+                sendCode()
+                setFocus()
             }
 
             code6.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode6(code6.textInputEditText.text.toString())
+                _verificationViewModel.saveCode6(it.toString())
+                setFocus()
+                sendCode()
+            }
 
-                if (it.toString().isNotEmpty()) {
+            _verificationViewModel.isEnableInput.observe(this@VerificationActivity) { mayEnableInput ->
 
-                    sendCode()
-                    handleFocus()
-                }
+                mayFocusable(mayEnableInput)
             }
 
             _verificationViewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
@@ -158,16 +148,38 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
             _verificationViewModel.canResendCode.observe(this@VerificationActivity) { canResendCode ->
 
                 changedResendTextColor(canResendCode)
+                clearInput()
             }
         }
     }
 
-    private fun <T : EditText> focus(text: T?) {
+    private fun setFocus() {
 
-        if (text != null) {
-            if (text.length() == 0) {
-                text.requestFocus()
+        _codes.firstOrNull { it.text.isNullOrEmpty() }?.requestFocus()
+    }
+
+    private fun mayFocusable(isFocusable: Boolean) {
+
+        _codes.forEach {
+
+            if (isFocusable) {
+
+                it.isFocusable = true
+                it.isFocusableInTouchMode = true
+
+            } else {
+
+                it.isFocusable = false
+                it.isFocusableInTouchMode = false
             }
+        }
+    }
+
+    private fun clearInput() {
+
+        _codes.forEach {
+
+            it.text?.clear()
         }
     }
 
@@ -175,22 +187,14 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         _verificationViewModel.codeVerify(
             codesEntered = arrayOf(
-                codes[0].text.toString(),
-                codes[1].text.toString(),
-                codes[2].text.toString(),
-                codes[3].text.toString(),
-                codes[4].text.toString(),
-                codes[5].text.toString(),
+                _codes[0].text.toString(),
+                _codes[1].text.toString(),
+                _codes[2].text.toString(),
+                _codes[3].text.toString(),
+                _codes[4].text.toString(),
+                _codes[5].text.toString(),
             )
         )
-    }
-
-    private fun handleFocus() {
-
-        codes.forEach {
-
-            it.isFocusable = false
-        }
     }
 
     private fun changedResendTextColor(wasResendCode: Boolean) {
@@ -220,12 +224,12 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
     private fun rememberUIState() {
 
         val codesForRemember = listOf(
-            Pair(codes[0], _verificationViewModel.code1),
-            Pair(codes[1], _verificationViewModel.code2),
-            Pair(codes[2], _verificationViewModel.code3),
-            Pair(codes[3], _verificationViewModel.code4),
-            Pair(codes[4], _verificationViewModel.code5),
-            Pair(codes[5], _verificationViewModel.code6)
+            Pair(_codes[0], _verificationViewModel.code1),
+            Pair(_codes[1], _verificationViewModel.code2),
+            Pair(_codes[2], _verificationViewModel.code3),
+            Pair(_codes[3], _verificationViewModel.code4),
+            Pair(_codes[4], _verificationViewModel.code5),
+            Pair(_codes[5], _verificationViewModel.code6)
         )
 
         codesForRemember.forEach { pair ->

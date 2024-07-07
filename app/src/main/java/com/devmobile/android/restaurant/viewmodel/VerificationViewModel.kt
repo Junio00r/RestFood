@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -55,6 +56,9 @@ class VerificationViewModel(
         handleUIState["CODE_6"] = newCode
     }
 
+    private val _isEnableInput = MutableLiveData<Boolean>()
+    val isEnableInput: LiveData<Boolean> = _isEnableInput
+
     private val _canResendCode = MutableLiveData<Boolean>()
     val canResendCode: LiveData<Boolean> = _canResendCode
 
@@ -70,24 +74,18 @@ class VerificationViewModel(
             _resendCode.debounce(1000).collect {
 
                 _canResendCode.value = false
-                requestVerificationCode()
+                _isEnableInput.value = true
+                repository.verifyCodeEmail()
             }
         }
     }
 
     // Functions
+    @CalledFromXML
     fun resendCodeTrigger() {
 
         viewModelScope.launch {
             _resendCode.emit(Unit)
-        }
-    }
-
-    private fun requestVerificationCode() {
-
-        viewModelScope.launch {
-
-            repository.verifyCodeEmail()
         }
     }
 
@@ -97,7 +95,9 @@ class VerificationViewModel(
 
             viewModelScope.launch {
 
+                _isEnableInput.value = false
                 repository.verifyCodeEmail()
+                _canResendCode.value = true
             }
 
         } else {

@@ -11,6 +11,7 @@ import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
@@ -76,6 +77,6 @@ class VerificationRepository(
     }
 
     suspend fun verifyCodeEmail() {
-
+        delay(5000)
     }
 }
