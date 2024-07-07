@@ -84,4 +84,10 @@ class TextInput @JvmOverloads constructor(
 
         super.setFilters(currentFilters)
     }
+
+    override fun setFocusable(focusable: Boolean) {
+        super.setFocusable(focusable)
+
+        isFocusableInTouchMode = focusable
+    }
 }

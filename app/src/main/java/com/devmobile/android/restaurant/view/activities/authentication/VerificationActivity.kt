@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
-import android.view.View
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -135,6 +135,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
             _verificationViewModel.isEnableInput.observe(this@VerificationActivity) { mayEnableInput ->
 
                 mayFocusable(mayEnableInput)
+                setFocus()
             }
 
             _verificationViewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
@@ -148,7 +149,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
             _verificationViewModel.canResendCode.observe(this@VerificationActivity) { canResendCode ->
 
                 changedResendTextColor(canResendCode)
-                clearInput()
+                clearInput(_codes)
             }
         }
     }
@@ -162,24 +163,15 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         _codes.forEach {
 
-            if (isFocusable) {
-
-                it.isFocusable = true
-                it.isFocusableInTouchMode = true
-
-            } else {
-
-                it.isFocusable = false
-                it.isFocusableInTouchMode = false
-            }
+            it.isFocusable = isFocusable
         }
     }
 
-    private fun clearInput() {
+    private fun <T> clearInput(inputs: Collection<T>) where T : EditText {
 
-        _codes.forEach {
+        inputs.forEach {
 
-            it.text?.clear()
+            it.text.clear()
         }
     }
 

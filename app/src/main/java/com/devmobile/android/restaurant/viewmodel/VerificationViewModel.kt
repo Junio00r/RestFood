@@ -97,6 +97,7 @@ class VerificationViewModel(
 
                 _isEnableInput.value = false
                 repository.verifyCodeEmail()
+                _isEnableInput.value = true
                 _canResendCode.value = true
             }
 
