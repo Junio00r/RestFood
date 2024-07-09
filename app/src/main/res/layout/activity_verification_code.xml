@@ -17,30 +17,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarBack"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/black_two"
+            android:paddingStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
+            tools:ignore="RtlSymmetry" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textInformation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_margin="16dp"
             android:ellipsize="end"
             android:inputType="none"
-            app:fontFamily="@font/dosis_medium"
             android:paddingEnd="120dp"
             android:text="@string/text_information_message"
             android:textSize="20sp"
+            app:fontFamily="@font/dosis_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarBack"
             tools:ignore="RtlSymmetry" />
 
         <LinearLayout
             android:id="@+id/containerCodes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="28dp"
             android:baselineAligned="false"
             android:gravity="center"
@@ -70,7 +82,7 @@
                 android:layout_weight="1"
                 android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="@id/code1"
-                app:layout_constraintStart_toEndOf="@+id/code1"
+                app:layout_constraintStart_toEndOf="@id/code1"
                 app:layout_constraintTop_toTopOf="@id/code1" />
 
             <include
@@ -82,7 +94,7 @@
                 android:layout_weight="1"
                 android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="@id/code2"
-                app:layout_constraintStart_toEndOf="@+id/code2"
+                app:layout_constraintStart_toEndOf="@id/code2"
                 app:layout_constraintTop_toTopOf="@id/code2" />
 
             <include
@@ -94,7 +106,7 @@
                 android:layout_weight="1"
                 android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="@id/code3"
-                app:layout_constraintStart_toEndOf="@+id/code3"
+                app:layout_constraintStart_toEndOf="@id/code3"
                 app:layout_constraintTop_toTopOf="@id/code3" />
 
             <include
@@ -106,7 +118,7 @@
                 android:layout_weight="1"
                 android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="@id/code4"
-                app:layout_constraintStart_toEndOf="@+id/code4"
+                app:layout_constraintStart_toEndOf="@id/code4"
                 app:layout_constraintTop_toTopOf="@id/code4"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -119,7 +131,7 @@
                 android:layout_weight="1"
                 android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="@id/code5"
-                app:layout_constraintStart_toEndOf="@+id/code5"
+                app:layout_constraintStart_toEndOf="@id/code5"
                 app:layout_constraintTop_toTopOf="@id/code5" />
         </LinearLayout>
 
@@ -141,4 +153,5 @@
             app:layout_constraintTop_toBottomOf="@id/containerCodes" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

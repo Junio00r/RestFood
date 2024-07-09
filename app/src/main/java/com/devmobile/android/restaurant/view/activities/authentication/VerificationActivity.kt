@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.view.activities.authentication
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
@@ -11,6 +12,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavController
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
@@ -22,36 +24,37 @@ import com.google.android.material.snackbar.Snackbar
 
 class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
-    private lateinit var _verificationBinding: ActivityVerificationCodeBinding
-
+    // references
+    private lateinit var _viewBinding: ActivityVerificationCodeBinding
     private val _repository = VerificationRepository(this)
-
-    private val _verificationViewModel: VerificationViewModel by viewModels {
+    private val _viewModel: VerificationViewModel by viewModels {
 
         ViewModelFactory(
             repository = _repository, ownerOfStateToSave = this, defaultValuesForNulls = null
         )
     }
 
-    private val _codes = ArrayList<TextInput>()
+    // data
+    private val codes = ArrayList<TextInput>()
 
     init {
+
         lifecycle.addObserver(this)
     }
 
+    // Functions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _verificationBinding = ActivityVerificationCodeBinding.inflate(layoutInflater)
-        setContentView(_verificationBinding.root)
+        _viewBinding = ActivityVerificationCodeBinding.inflate(layoutInflater)
+        setContentView(_viewBinding.root)
 
-        _verificationBinding.viewModel = _verificationViewModel
-        _verificationBinding.activity = this
+        _viewBinding.viewModel = _viewModel
+        _viewBinding.activity = this
 
+        with(_viewBinding) {
 
-        with(_verificationBinding) {
-
-            _codes.addAll(
+            codes.addAll(
                 arrayOf(
                     code1.textInputEditText,
                     code2.textInputEditText,
@@ -62,7 +65,11 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
                 )
             )
 
-            _codes.forEach { code ->
+            toolbarBack.setNavigationOnClickListener {
+                navigationToBack()
+            }
+
+            codes.forEach { code ->
 
                 // InputType
                 code.inputType = InputType.TYPE_CLASS_NUMBER
@@ -88,57 +95,57 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
     private fun setObservables() {
 
-        with(_verificationBinding) {
+        with(_viewBinding) {
 
             code1.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode1(it.toString())
+                _viewModel.saveCode1(it.toString())
                 sendCode()
                 setFocus()
             }
 
             code2.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode2(it.toString())
+                _viewModel.saveCode2(it.toString())
                 sendCode()
                 setFocus()
             }
 
             code3.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode3(it.toString())
+                _viewModel.saveCode3(it.toString())
                 sendCode()
                 setFocus()
             }
 
             code4.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode4(it.toString())
+                _viewModel.saveCode4(it.toString())
                 sendCode()
                 setFocus()
             }
 
             code5.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode5(it.toString())
+                _viewModel.saveCode5(it.toString())
                 sendCode()
                 setFocus()
             }
 
             code6.textInputEditText.doAfterTextChanged {
 
-                _verificationViewModel.saveCode6(it.toString())
+                _viewModel.saveCode6(it.toString())
                 setFocus()
                 sendCode()
             }
 
-            _verificationViewModel.isEnableInput.observe(this@VerificationActivity) { mayEnableInput ->
+            _viewModel.isEnableInput.observe(this@VerificationActivity) { mayEnableInput ->
 
                 mayFocusable(mayEnableInput)
                 setFocus()
             }
 
-            _verificationViewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
+            _viewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
 
                 if (error.isNullOrEmpty()) {
 
@@ -146,22 +153,37 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
                 }
             }
 
-            _verificationViewModel.canResendCode.observe(this@VerificationActivity) { canResendCode ->
+            _viewModel.canResendCode.observe(this@VerificationActivity) { canResendCode ->
 
                 changedResendTextColor(canResendCode)
-                clearInput(_codes)
+
+                if (!canResendCode) {
+
+                    clearInput(codes)
+                }
             }
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun navigationToBack() {
+
+        if (NavController(this).popBackStack() == false) {
+            finish()
         }
     }
 
     private fun setFocus() {
 
-        _codes.firstOrNull { it.text.isNullOrEmpty() }?.requestFocus()
+        codes.firstOrNull {
+
+            it.text.isNullOrEmpty()
+        }?.requestFocus()
     }
 
     private fun mayFocusable(isFocusable: Boolean) {
 
-        _codes.forEach {
+        codes.forEach {
 
             it.isFocusable = isFocusable
         }
@@ -177,14 +199,14 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
     private fun sendCode() {
 
-        _verificationViewModel.codeVerify(
+        _viewModel.codesForVerify(
             codesEntered = arrayOf(
-                _codes[0].text.toString(),
-                _codes[1].text.toString(),
-                _codes[2].text.toString(),
-                _codes[3].text.toString(),
-                _codes[4].text.toString(),
-                _codes[5].text.toString(),
+                codes[0].text.toString(),
+                codes[1].text.toString(),
+                codes[2].text.toString(),
+                codes[3].text.toString(),
+                codes[4].text.toString(),
+                codes[5].text.toString(),
             )
         )
     }
@@ -193,7 +215,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         if (wasResendCode) {
 
-            _verificationBinding.textResendCode.setTextColor(
+            _viewBinding.textResendCode.setTextColor(
                 ColorStateList.valueOf(
                     getColor(
                         R.color.black_two
@@ -203,11 +225,9 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         } else {
 
-            _verificationBinding.textResendCode.setTextColor(
-                ColorStateList.valueOf(
-                    getColor(
-                        R.color.gray_two
-                    )
+            _viewBinding.textResendCode.setTextColor(
+                getColor(
+                    R.color.gray_two
                 )
             )
         }
@@ -215,16 +235,16 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
     private fun rememberUIState() {
 
-        val codesForRemember = listOf(
-            Pair(_codes[0], _verificationViewModel.code1),
-            Pair(_codes[1], _verificationViewModel.code2),
-            Pair(_codes[2], _verificationViewModel.code3),
-            Pair(_codes[3], _verificationViewModel.code4),
-            Pair(_codes[4], _verificationViewModel.code5),
-            Pair(_codes[5], _verificationViewModel.code6)
+        val codesForRememberWithValue = listOf(
+            Pair(codes[0], _viewModel.code1),
+            Pair(codes[1], _viewModel.code2),
+            Pair(codes[2], _viewModel.code3),
+            Pair(codes[3], _viewModel.code4),
+            Pair(codes[4], _viewModel.code5),
+            Pair(codes[5], _viewModel.code6)
         )
 
-        codesForRemember.forEach { pair ->
+        codesForRememberWithValue.forEach { pair ->
 
             if (pair.second.isNotEmpty()) {
 
@@ -235,12 +255,11 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
     override fun showErrorMessage(errorMessage: String) {
 
-        val mySnackbar = Snackbar.make(_verificationBinding.container, errorMessage, 2000)
+        val mySnackBar = Snackbar.make(_viewBinding.container, errorMessage, 2000)
 
-        mySnackbar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))
-        mySnackbar.show()
+        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))
+        mySnackBar.show()
     }
-
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
 

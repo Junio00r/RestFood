@@ -136,6 +136,7 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             is LoadState.Loading -> {
 
                 startActivity(Intent(this@FormActivity, VerificationActivity::class.java))
+                finish()
             }
 
             is LoadState.NotLoading -> {
@@ -187,11 +188,11 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
         when (event) {
 
             Lifecycle.Event.ON_CREATE -> {
-                Log.i("Form","ON_CREATE")
+                Log.i("Form", "ON_CREATE")
             }
 
             Lifecycle.Event.ON_START -> {
-                Log.i("Form","ON_START")
+                Log.i("Form", "ON_START")
             }
 
             Lifecycle.Event.ON_RESUME -> {
@@ -199,23 +200,23 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
                 subscribeObservables()
                 setTextInputParameters()
                 getUIState()
-                Log.i("Form","ON_RESUME")
+                Log.i("Form", "ON_RESUME")
             }
 
             Lifecycle.Event.ON_PAUSE -> {
-                Log.i("Form","ON_PAUSE")
+                Log.i("Form", "ON_PAUSE")
             }
 
             Lifecycle.Event.ON_STOP -> {
-                Log.i("Form","ON_STOP")
+                Log.i("Form", "ON_STOP")
             }
 
             Lifecycle.Event.ON_DESTROY -> {
-                Log.i("Form","ON_DESTROY")
+                Log.i("Form", "ON_DESTROY")
             }
 
             Lifecycle.Event.ON_ANY -> {
-                Log.i("Form","ON_ANY")
+                Log.i("Form", "ON_ANY")
             }
         }
     }

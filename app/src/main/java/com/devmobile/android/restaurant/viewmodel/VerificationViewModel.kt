@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
@@ -65,17 +66,28 @@ class VerificationViewModel(
     private val _codeErrorPropagator = MutableLiveData<String?>()
     val codeErrorPropagator: LiveData<String?> = _codeErrorPropagator
 
-    private val _resendCode = MutableSharedFlow<Unit>()
+    private val _requestForResendCode = MutableSharedFlow<Unit>()
 
     init {
 
         // coroutines scope on init block isn't recommended
         viewModelScope.launch {
-            _resendCode.debounce(1000).collect {
 
-                _canResendCode.value = false
-                _isEnableInput.value = true
-                repository.verifyCodeEmail()
+            _requestForResendCode.debounce(1000).collect {
+
+                if (_canResendCode.value == true || _canResendCode.value == null) {
+
+                    _canResendCode.value = false
+
+                    requestNewCodeForValidation()
+
+                    _isEnableInput.value = true
+
+                    delay(60000).let {
+
+                        _canResendCode.value = true
+                    }
+                }
             }
         }
     }
@@ -85,11 +97,12 @@ class VerificationViewModel(
     fun resendCodeTrigger() {
 
         viewModelScope.launch {
-            _resendCode.emit(Unit)
+
+            _requestForResendCode.emit(Unit)
         }
     }
 
-    fun codeVerify(codesEntered: Array<String>) {
+    fun codesForVerify(codesEntered: Array<String>) {
 
         if (isCodePatternValid(codesEntered)) {
 
@@ -97,8 +110,6 @@ class VerificationViewModel(
 
                 _isEnableInput.value = false
                 repository.verifyCodeEmail()
-                _isEnableInput.value = true
-                _canResendCode.value = true
             }
 
         } else {
@@ -120,5 +131,9 @@ class VerificationViewModel(
         }
 
         return true
+    }
+
+    private fun requestNewCodeForValidation() {
+
     }
 }
