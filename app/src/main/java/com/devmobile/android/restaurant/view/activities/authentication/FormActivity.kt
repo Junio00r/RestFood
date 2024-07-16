@@ -174,6 +174,8 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             textUserLastName.textInputEditText.setText(_registerViewModel.userLastName)
             textUserEmail.textInputEditText.setText(_registerViewModel.userEmail)
             textUserPassword.textInputEditText.setText(_registerViewModel.userPassword)
+
+            textUserName.textInputEditText.requestFocus()
         }
     }
 
