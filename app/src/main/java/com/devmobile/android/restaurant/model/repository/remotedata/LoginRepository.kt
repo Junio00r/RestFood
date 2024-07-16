@@ -15,7 +15,7 @@ class LoginRepository(context: Context) {
 
             if (isValidCredentials(email, password)) {
 
-                return@withContext RequestResult.Success(userDAO.findUserByEmail(email)!!)
+                return@withContext RequestResult.Success("userDAO.findUserByEmail(email)!!")
 
                 // Logging...
 

@@ -58,10 +58,8 @@ android {
 }
 
 dependencies {
-    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
     val roomVersion = "2.6.1"
     val uiVersion = "1.6.8"
-    val nav_version = "2.7.7"
 
     // Compose
     implementation("androidx.compose.ui:ui:$uiVersion")
@@ -125,22 +123,4 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test:runner:1.6.1")
     androidTestImplementation("androidx.test:rules:1.6.1")
-
-    // Java language implementation
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-
-    // Kotlin
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-
-    // Feature module Support
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
-
-    // Testing Navigation
-    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
-
-    // Jetpack Compose Integration
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-
 }

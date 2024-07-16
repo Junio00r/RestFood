@@ -8,20 +8,22 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.paging.LoadState
+import androidx.lifecycle.lifecycleScope
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityRegisterUserBinding
 import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
+import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.FormViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
@@ -38,18 +40,30 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
     private val registerRepository = FormRepository(this)
 
+    private val dataEditText = ArrayList<TextInput>()
+
     init {
 
         lifecycle.addObserver(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
-        _registerBinding = DataBindingUtil.setContentView(this, R.layout.activity_register_user)
+        _registerBinding = ActivityRegisterUserBinding.inflate(layoutInflater)
+        setContentView(_registerBinding.root)
 
-        _registerBinding.lifecycleOwner = this
         _registerBinding.registerView = this
+
+        dataEditText.addAll(
+            listOf(
+                _registerBinding.textUserName.textInputEditText,
+                _registerBinding.textUserLastName.textInputEditText,
+                _registerBinding.textUserEmail.textInputEditText,
+                _registerBinding.textUserPassword.textInputEditText
+            )
+        )
     }
 
     private fun setTextInputParameters() {
@@ -104,10 +118,12 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
                 textUserPassword.textInputForm.error = error
             }
 
-            // LoadState
-            _registerViewModel.loadingProgress.observe(this@FormActivity) { loadState ->
+            lifecycleScope.launch {
 
-                handleLoadState(loadState)
+                _registerViewModel.resultRequestData.collect { resultOfRequest ->
+
+                    handleLoadState(resultOfRequest)
+                }
             }
 
             // Listeners after text changed
@@ -129,23 +145,23 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
         }
     }
 
-    private fun handleLoadState(loadState: LoadState) {
+    private fun handleLoadState(requestOfResult: RequestResult?) {
 
-        when (loadState) {
+        when (requestOfResult) {
 
-            is LoadState.Loading -> {
+            is RequestResult.Success -> {
 
                 startActivity(Intent(this@FormActivity, VerificationActivity::class.java))
-                finish()
             }
 
-            is LoadState.NotLoading -> {
-                TODO()
+            is RequestResult.Error -> {
+
+                showErrorMessage(requestOfResult.exception.message ?: "Register Error")
             }
 
-            is LoadState.Error -> {
+            else -> {
 
-                showErrorMessage(loadState.error.message ?: "Register Error")
+                // Nothing
             }
         }
     }
@@ -154,10 +170,10 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
         with(_registerBinding) {
 
-            textUserName.textInputEditText.append(_registerViewModel.userName)
-            textUserLastName.textInputEditText.append(_registerViewModel.userLastName)
-            textUserEmail.textInputEditText.append(_registerViewModel.userEmail)
-            textUserPassword.textInputEditText.append(_registerViewModel.userPassword)
+            textUserName.textInputEditText.setText(_registerViewModel.userName)
+            textUserLastName.textInputEditText.setText(_registerViewModel.userLastName)
+            textUserEmail.textInputEditText.setText(_registerViewModel.userEmail)
+            textUserPassword.textInputEditText.setText(_registerViewModel.userPassword)
         }
     }
 
@@ -189,6 +205,8 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
             Lifecycle.Event.ON_CREATE -> {
                 Log.i("Form", "ON_CREATE")
+                subscribeObservables()
+                setTextInputParameters()
             }
 
             Lifecycle.Event.ON_START -> {
@@ -196,9 +214,6 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             }
 
             Lifecycle.Event.ON_RESUME -> {
-
-                subscribeObservables()
-                setTextInputParameters()
                 getUIState()
                 Log.i("Form", "ON_RESUME")
             }

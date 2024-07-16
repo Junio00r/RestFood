@@ -7,11 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LoadState
 import com.devmobile.android.restaurant.AccountException
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -64,8 +66,8 @@ class FormViewModel(
 
 
     // Loading Live Data
-    private val _loadingProgress = MutableLiveData<LoadState>()
-    val loadingProgress: LiveData<LoadState> = _loadingProgress
+    private val _resultRequestData = MutableSharedFlow<RequestResult>()
+    val resultRequestData: SharedFlow<RequestResult> = _resultRequestData.asSharedFlow()
 
     // For Debounce Pattern
     private val _registerDebounceFlow = MutableSharedFlow<Unit?>()
@@ -100,30 +102,32 @@ class FormViewModel(
 
                 try {
 
-                    if (!registerRepository.hasEmailAlreadyRegistered(email = userEmail!!)) {
-                        _loadingProgress.value = LoadState.Loading
+                    if (registerRepository.hasEmailAlreadyRegistered(email = userEmail!!)) {
+
+
+                        throw AccountException()
+
+                    } else {
+
+                        _resultRequestData.emit(RequestResult.Success())
                     }
 
                 } catch (e: IOException) {
 
-                    _loadingProgress.value =
-                        LoadState.Error(Throwable("It was not possible create account"))
+                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
 
                 } catch (e: SQLiteDatabaseCorruptException) {
 
-                    _loadingProgress.value =
-                        LoadState.Error(Throwable("It was not possible create account"))
+                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
 
                 } catch (e: SQLiteException) {
 
-                    _loadingProgress.value =
-                        LoadState.Error(Throwable("It was not possible create account"))
+                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
 
                 } catch (e: AccountException) {
 
                     _emailErrorPropagator.value = "Email is invalid or already taken"
-                    _loadingProgress.value =
-                        LoadState.Error(Throwable("Email is invalid or already taken"))
+                    _resultRequestData.emit(RequestResult.Error(Exception("Email is invalid or already taken")))
                 }
             }
         }

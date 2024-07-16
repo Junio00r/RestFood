@@ -30,7 +30,7 @@ class ViewModelFactory(
 
                 } else {
 
-                    throw ClassCastException("Não é possível fabricar uma intancia de Login Repository")
+                    throw ClassCastException("Isn't was possible create a ViewModel because Login Repository is incorrect")
                 }
             }
 
@@ -42,7 +42,7 @@ class ViewModelFactory(
 
                 } else {
 
-                    throw ClassCastException("Não é possível fabricar uma intancia de Register Repository")
+                    throw ClassCastException("Isn't was possible create a ViewModel because Register Repository is incorrect")
                 }
             }
 
@@ -54,7 +54,7 @@ class ViewModelFactory(
 
                 } else {
 
-                    throw ClassCastException("Não é possível fabricar uma intancia de Verification Repository")
+                    throw ClassCastException("Isn't was possible create a ViewModel because Verification Repository is incorrect")
                 }
             }
 

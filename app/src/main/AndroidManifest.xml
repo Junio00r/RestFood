@@ -17,7 +17,7 @@
         <activity
             android:name=".view.activities.authentication.LoginActivity"
             android:exported="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstancePerTask"
             android:theme="@style/RestaurantThemeLight">
 
             <intent-filter>
@@ -29,7 +29,7 @@
         <activity
             android:name=".view.activities.authentication.FormActivity"
             android:exported="false"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstancePerTask"
             android:screenOrientation="portrait"
             android:theme="@style/RestaurantThemeLight"
             android:windowSoftInputMode="adjustResize"
@@ -38,7 +38,7 @@
         <activity
             android:name=".view.activities.authentication.VerificationActivity"
             android:exported="false"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstancePerTask"
             android:screenOrientation="portrait"
             android:theme="@style/RestaurantThemeLight"
             android:windowSoftInputMode="adjustResize"
