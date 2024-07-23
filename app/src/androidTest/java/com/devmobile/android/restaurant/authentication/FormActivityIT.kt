@@ -4,10 +4,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
-import androidx.test.espresso.action.ViewActions.typeTextIntoFocusedView
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -27,35 +25,34 @@ class FormActivityIT {
 
     @Test
     fun testFillOutForm() {
+
         onView(
             allOf(
-                withId(R.id.inputUserName)
+                isDescendantOfA(withId(R.id.inputUserName)),
+                withId(R.id.textInputEditText)
             )
-        ).perform(typeText("Naruto"))
+        ).perform(typeText("Naruto"), closeSoftKeyboard())
 
-//        onView(withId(R.id.inputUserLastName))
-//            .perform(typeText("Uzumaki"), closeSoftKeyboard())
-//
-//        onView(withId(R.id.inputUserEmail))
-//            .perform(typeText("narutogenin@gmail.com"), closeSoftKeyboard())
-//
-//        onView(withId(R.id.inputUserPassword))
-//            .perform(typeText("ProximoHokage123#"), closeSoftKeyboard())
+        onView(
+            allOf(
+                isDescendantOfA(withId(R.id.inputUserLastName)),
+                withId(R.id.textInputEditText)
+            )
+        ).perform(typeText("Uzumaki"), closeSoftKeyboard())
 
+        onView(
+            allOf(
+                isDescendantOfA(withId(R.id.inputUserEmail)),
+                withId(R.id.textInputEditText)
+            )
+        ).perform(typeText("narutogenin@gmail.com"), closeSoftKeyboard())
 
-        // check
-//        onView(withId(R.id.inputUserName))
-//            .check(matches(withText("Naruto")))
-//
-//        onView(withId(R.id.inputUserLastName))
-//            .check(matches(withText("Uzumaki")))
-//
-//        onView(withId(R.id.inputUserEmail))
-//            .check(matches(withText("narutogenin@gmail.com")))
-//
-//        onView(withId(R.id.inputUserPassword))
-//            .check(matches(withText("ProximoHokage123#")))
-
+        onView(
+            allOf(
+                isDescendantOfA(withId(R.id.inputUserPassword)),
+                withId(R.id.textInputEditText)
+            )
+        ).perform(typeText("NarutoHokage123#"), closeSoftKeyboard())
 
         // finish account's register
         onView(withId(R.id.buttonConfirmRegister)).perform(click())
