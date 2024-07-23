@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.viewmodel
+package com.devmobile.android.restaurant.viewmodel.authentication
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.AccountException
 import com.devmobile.android.restaurant.RequestResult
-import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
+import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
+import com.devmobile.android.restaurant.viewmodel.InputPatterns
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

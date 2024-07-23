@@ -5,9 +5,12 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.devmobile.android.restaurant.model.repository.remotedata.FormRepository
-import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
-import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
+import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
+import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
+import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
+import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
+import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
+import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
 
 class ViewModelFactory(
     private val repository: Any,

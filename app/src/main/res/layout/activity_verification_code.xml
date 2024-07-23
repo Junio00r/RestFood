@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.devmobile.android.restaurant.viewmodel.VerificationViewModel" />
+            type="com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

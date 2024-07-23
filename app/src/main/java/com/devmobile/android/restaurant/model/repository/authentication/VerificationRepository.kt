@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.remotedata
+package com.devmobile.android.restaurant.model.repository.authentication
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabaseCorruptException

@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.viewmodel
+package com.devmobile.android.restaurant.viewmodel.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.CalledFromXML
-import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
+import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
+import com.devmobile.android.restaurant.viewmodel.InputPatterns
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow

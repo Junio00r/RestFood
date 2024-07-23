@@ -15,9 +15,9 @@ import androidx.lifecycle.LifecycleOwner
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
-import com.devmobile.android.restaurant.model.repository.remotedata.VerificationRepository
+import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
 import com.devmobile.android.restaurant.view.customelements.TextInput
-import com.devmobile.android.restaurant.viewmodel.VerificationViewModel
+import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 

@@ -1,11 +1,12 @@
-package com.devmobile.android.restaurant.viewmodel
+package com.devmobile.android.restaurant.viewmodel.authentication
 
 import android.util.Patterns
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.RequestResult
-import com.devmobile.android.restaurant.model.repository.remotedata.LoginRepository
+import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
+import com.devmobile.android.restaurant.viewmodel.InputPatterns
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {

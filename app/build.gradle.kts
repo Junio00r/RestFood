@@ -58,6 +58,7 @@ android {
 }
 
 dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     val roomVersion = "2.6.1"
     val uiVersion = "1.6.8"
 

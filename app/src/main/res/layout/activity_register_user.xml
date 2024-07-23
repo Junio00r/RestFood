@@ -12,7 +12,7 @@
 
         <variable
             name="registerViewModel"
-            type="com.devmobile.android.restaurant.viewmodel.FormViewModel" />
+            type="com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
         android:paddingHorizontal="16dp">
 
         <include
-            android:id="@+id/textUserName"
+            android:id="@+id/inputUserName"
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,34 +33,34 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <include
-            android:id="@+id/textUserLastName"
+            android:id="@+id/inputUserLastName"
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="86dp"
-            app:layout_constraintEnd_toEndOf="@id/textUserName"
-            app:layout_constraintStart_toStartOf="@id/textUserName"
-            app:layout_constraintTop_toTopOf="@id/textUserName" />
+            app:layout_constraintEnd_toEndOf="@id/inputUserName"
+            app:layout_constraintStart_toStartOf="@id/inputUserName"
+            app:layout_constraintTop_toTopOf="@id/inputUserName" />
 
         <include
-            android:id="@+id/textUserEmail"
+            android:id="@+id/inputUserEmail"
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="86dp"
-            app:layout_constraintEnd_toEndOf="@id/textUserLastName"
-            app:layout_constraintStart_toStartOf="@id/textUserLastName"
-            app:layout_constraintTop_toTopOf="@id/textUserLastName" />
+            app:layout_constraintEnd_toEndOf="@id/inputUserLastName"
+            app:layout_constraintStart_toStartOf="@id/inputUserLastName"
+            app:layout_constraintTop_toTopOf="@id/inputUserLastName" />
 
         <include
-            android:id="@+id/textUserPassword"
+            android:id="@+id/inputUserPassword"
             layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="86dp"
-            app:layout_constraintEnd_toEndOf="@id/textUserEmail"
-            app:layout_constraintStart_toStartOf="@id/textUserEmail"
-            app:layout_constraintTop_toTopOf="@id/textUserEmail" />
+            app:layout_constraintEnd_toEndOf="@id/inputUserEmail"
+            app:layout_constraintStart_toStartOf="@id/inputUserEmail"
+            app:layout_constraintTop_toTopOf="@id/inputUserEmail" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineVertical"
