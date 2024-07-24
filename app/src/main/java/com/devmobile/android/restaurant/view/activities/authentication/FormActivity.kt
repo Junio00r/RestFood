@@ -2,6 +2,7 @@ package com.devmobile.android.restaurant.view.activities.authentication
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import androidx.activity.viewModels
@@ -10,6 +11,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
@@ -46,7 +48,9 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
         lifecycle.addObserver(this)
     }
 
-    private fun initMembers() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
 
         _registerBinding = ActivityRegisterUserBinding.inflate(layoutInflater)
         setContentView(_registerBinding.root)
@@ -77,7 +81,8 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
             // Set InputType
             inputUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            inputUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            inputUserLastName.textInputEditText.inputType =
+                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             inputUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             inputUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
@@ -171,8 +176,6 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             inputUserLastName.textInputEditText.setText(_registerViewModel.userLastName)
             inputUserEmail.textInputEditText.setText(_registerViewModel.userEmail)
             inputUserPassword.textInputEditText.setText(_registerViewModel.userPassword)
-
-            inputUserName.textInputEditText.requestFocus()
         }
     }
 
@@ -204,9 +207,6 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
             Lifecycle.Event.ON_CREATE -> {
                 Log.i("Form", "ON_CREATE")
-                initMembers()
-                subscribeObservables()
-                setTextInputParameters()
             }
 
             Lifecycle.Event.ON_START -> {
@@ -214,6 +214,8 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             }
 
             Lifecycle.Event.ON_RESUME -> {
+                subscribeObservables()
+                setTextInputParameters()
                 getUIState()
                 Log.i("Form", "ON_RESUME")
             }

@@ -14,7 +14,7 @@ object InputPatterns {
     // Patterns
     @JvmStatic
     val TEXT_PATTERN: Pattern = Pattern.compile(
-        "^(?=.*[a-zA-Z])[a-zA-Z]{3}\$"
+        "^(?=.*[a-zA-Z])[a-zA-Z]{3,1000}\$"
     )
 
     @JvmStatic
