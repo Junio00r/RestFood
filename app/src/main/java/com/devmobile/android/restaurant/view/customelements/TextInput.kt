@@ -87,4 +87,10 @@ class TextInput @JvmOverloads constructor(
 
         isFocusableInTouchMode = focusable
     }
+
+    fun updateCursorPosition() {
+        text?.length?.let {
+            setSelection(it)
+        }
+    }
 }

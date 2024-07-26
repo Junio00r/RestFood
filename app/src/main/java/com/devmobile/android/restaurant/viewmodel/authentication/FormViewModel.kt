@@ -37,8 +37,6 @@ class FormViewModel(
         get() = handleUIState["EMAIL"] ?: ""
     val userPassword: String
         get() = handleUIState["PASSWORD"] ?: ""
-    val passwordInputType: Int
-        get() = handleUIState["PASSWORD_INPUT_TYPE"] ?: InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
     fun onNameChanged(newName: String) {
         handleUIState["NAME"] = newName
@@ -54,10 +52,6 @@ class FormViewModel(
 
     fun onPasswordChanged(newName: String) {
         handleUIState["PASSWORD"] = newName
-    }
-
-    fun onPasswordInputTypeChanged(newInputType: Int) {
-        handleUIState["END_ICON_STATE"] = newInputType
     }
 
     // Errors

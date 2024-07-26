@@ -79,9 +79,11 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
             // Setup InputType
             inputUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            inputUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            inputUserLastName.textInputEditText.inputType =
+                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             inputUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            inputUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            inputUserPassword.textInputEditText.inputType =
+                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
             // Setup icon
             inputUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
@@ -173,16 +175,7 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             inputUserLastName.textInputEditText.setText(_formViewModel.userLastName)
             inputUserEmail.textInputEditText.setText(_formViewModel.userEmail)
             inputUserPassword.textInputEditText.setText(_formViewModel.userPassword)
-
-            inputUserPassword.textInputForm.setEndIconOnClickListener {
-                if (inputUserPassword.textInputEditText.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
-                    inputUserPassword.textInputEditText.inputType =
-                        InputType.TYPE_TEXT_VARIATION_PASSWORD
-                } else {
-                    inputUserPassword.textInputEditText.inputType =
-                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                }
-            }
+            inputUserName.textInputEditText.updateCursorPosition()
         }
     }
 
