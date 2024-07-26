@@ -1,13 +1,11 @@
 package com.devmobile.android.restaurant.view.customelements
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.text.InputFilter
 import android.util.AttributeSet
 import android.view.View
 import com.google.android.material.textfield.TextInputEditText
 
-@SuppressLint("ViewConstructor", "ResourceAsColor")
 class TextInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.R.attr.editTextStyle
 ) : TextInputEditText(context, attrs, defStyleAttr) {
@@ -69,7 +67,6 @@ class TextInput @JvmOverloads constructor(
     fun maxLength(max: Int) {
         filters = arrayOf(InputFilter.LengthFilter(max))
     }
-
 
     override fun setFilters(filters: Array<out InputFilter>?) {
 

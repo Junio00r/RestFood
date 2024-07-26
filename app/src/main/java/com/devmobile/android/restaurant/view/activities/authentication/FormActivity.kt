@@ -11,13 +11,12 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RequestResult
-import com.devmobile.android.restaurant.databinding.ActivityRegisterUserBinding
+import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
@@ -28,18 +27,17 @@ import kotlinx.coroutines.launch
 
 class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
-    private lateinit var _registerBinding: ActivityRegisterUserBinding
+    private lateinit var _formBinding: ActivityFormDataBinding
 
     // I prefer to use the SavedStateHandle to practices
-    private val _registerViewModel: FormViewModel by viewModels {
+    private val _formViewModel: FormViewModel by viewModels {
         ViewModelFactory(
-            repository = registerRepository,
+            repository = formRepository,
             ownerOfStateToSave = this,
             defaultValuesForNulls = null
         )
     }
-
-    private val registerRepository = FormRepository(this)
+    private val formRepository = FormRepository(this)
 
     private val dataEditText = ArrayList<TextInput>()
 
@@ -52,24 +50,24 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
         super.onCreate(savedInstanceState)
 
-        _registerBinding = ActivityRegisterUserBinding.inflate(layoutInflater)
-        setContentView(_registerBinding.root)
+        _formBinding = ActivityFormDataBinding.inflate(layoutInflater)
+        setContentView(_formBinding.root)
 
-        _registerBinding.registerView = this
+        _formBinding.registerView = this
 
         dataEditText.addAll(
             listOf(
-                _registerBinding.inputUserName.textInputEditText,
-                _registerBinding.inputUserLastName.textInputEditText,
-                _registerBinding.inputUserEmail.textInputEditText,
-                _registerBinding.inputUserPassword.textInputEditText
+                _formBinding.inputUserName.textInputEditText,
+                _formBinding.inputUserLastName.textInputEditText,
+                _formBinding.inputUserEmail.textInputEditText,
+                _formBinding.inputUserPassword.textInputEditText
             )
         )
     }
 
-    private fun setTextInputParameters() {
+    private fun setUpInputEditText() {
 
-        _registerBinding.apply {
+        _formBinding.apply {
 
             inputUserName.textInputEditText.requestFocus()
 
@@ -79,50 +77,49 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             inputUserEmail.textInputForm.hint = "Email *"
             inputUserPassword.textInputForm.hint = "Password *"
 
-            // Set InputType
+            // Setup InputType
             inputUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            inputUserLastName.textInputEditText.inputType =
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            inputUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             inputUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            inputUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            inputUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
-            // Set icons
+            // Setup icon
             inputUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
-            inputUserPassword.textInputForm.isEndIconVisible = true
 
             // Enable Counter
             inputUserPassword.textInputForm.isCounterEnabled = true
+
         }
     }
 
     private fun subscribeObservables() {
 
-        with(_registerBinding) {
+        with(_formBinding) {
 
             // Errors observables
-            _registerViewModel.nameErrorPropagator.observe(this@FormActivity) { error ->
+            _formViewModel.nameErrorPropagator.observe(this@FormActivity) { error ->
 
                 inputUserName.textInputForm.error = error
             }
 
-            _registerViewModel.lastNameErrorPropagator.observe(this@FormActivity) { error ->
+            _formViewModel.lastNameErrorPropagator.observe(this@FormActivity) { error ->
 
                 inputUserLastName.textInputForm.error = error
             }
 
-            _registerViewModel.emailErrorPropagator.observe(this@FormActivity) { error ->
+            _formViewModel.emailErrorPropagator.observe(this@FormActivity) { error ->
 
                 inputUserEmail.textInputForm.error = error
             }
 
-            _registerViewModel.passwordErrorPropagator.observe(this@FormActivity) { error ->
+            _formViewModel.passwordErrorPropagator.observe(this@FormActivity) { error ->
 
                 inputUserPassword.textInputForm.error = error
             }
 
             lifecycleScope.launch {
 
-                _registerViewModel.resultRequestData.collect { resultOfRequest ->
+                _formViewModel.resultRequestData.collect { resultOfRequest ->
 
                     handleLoadState(resultOfRequest)
                 }
@@ -130,19 +127,19 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
             // Listeners after text changed
             inputUserName.textInputEditText.doAfterTextChanged {
-                _registerViewModel.onNameChanged(it.toString())
+                _formViewModel.onNameChanged(it.toString())
             }
 
             inputUserLastName.textInputEditText.doAfterTextChanged {
-                _registerViewModel.onLastNameChanged(it.toString())
+                _formViewModel.onLastNameChanged(it.toString())
             }
 
             inputUserEmail.textInputEditText.doAfterTextChanged {
-                _registerViewModel.onEmailChanged(it.toString())
+                _formViewModel.onEmailChanged(it.toString())
             }
 
             inputUserPassword.textInputEditText.doAfterTextChanged {
-                _registerViewModel.onPasswordChanged(it.toString())
+                _formViewModel.onPasswordChanged(it.toString())
             }
         }
     }
@@ -170,19 +167,29 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
     private fun getUIState() {
 
-        with(_registerBinding) {
+        with(_formBinding) {
 
-            inputUserName.textInputEditText.setText(_registerViewModel.userName)
-            inputUserLastName.textInputEditText.setText(_registerViewModel.userLastName)
-            inputUserEmail.textInputEditText.setText(_registerViewModel.userEmail)
-            inputUserPassword.textInputEditText.setText(_registerViewModel.userPassword)
+            inputUserName.textInputEditText.setText(_formViewModel.userName)
+            inputUserLastName.textInputEditText.setText(_formViewModel.userLastName)
+            inputUserEmail.textInputEditText.setText(_formViewModel.userEmail)
+            inputUserPassword.textInputEditText.setText(_formViewModel.userPassword)
+
+            inputUserPassword.textInputForm.setEndIconOnClickListener {
+                if (inputUserPassword.textInputEditText.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                    inputUserPassword.textInputEditText.inputType =
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD
+                } else {
+                    inputUserPassword.textInputEditText.inputType =
+                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                }
+            }
         }
     }
 
     @CalledFromXML
     fun nextRegister() {
 
-        _registerViewModel.registerTrigger()
+        _formViewModel.registerTrigger()
     }
 
     @CalledFromXML
@@ -193,7 +200,7 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
     override fun showErrorMessage(errorMessage: String) {
 
-        val mySnackBar = Snackbar.make(_registerBinding.registerContainer, errorMessage, 2000)
+        val mySnackBar = Snackbar.make(_formBinding.registerContainer, errorMessage, 2000)
 
         mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.green_light_one)))
         mySnackBar.setAction("OK") {
@@ -210,12 +217,14 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             }
 
             Lifecycle.Event.ON_START -> {
+
                 Log.i("Form", "ON_START")
             }
 
             Lifecycle.Event.ON_RESUME -> {
+
+                setUpInputEditText()
                 subscribeObservables()
-                setTextInputParameters()
                 getUIState()
                 Log.i("Form", "ON_RESUME")
             }

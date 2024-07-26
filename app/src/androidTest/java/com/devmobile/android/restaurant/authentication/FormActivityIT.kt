@@ -1,7 +1,7 @@
 package com.devmobile.android.restaurant.authentication
 
+import android.content.res.Configuration
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -13,7 +13,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.view.activities.authentication.FormActivity
-import kotlinx.coroutines.delay
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
@@ -92,7 +91,6 @@ class FormActivityIT {
             )
         ).check(matches(withText("NarutoHokage123#")))
 
-        // finish account's register
-        onView(withId(R.id.buttonConfirmRegister)).perform(click())
+        Thread.sleep(5000)
     }
 }

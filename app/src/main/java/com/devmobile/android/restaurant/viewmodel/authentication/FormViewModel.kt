@@ -2,6 +2,8 @@ package com.devmobile.android.restaurant.viewmodel.authentication
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
+import android.os.Parcelable
+import android.text.InputType
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -35,6 +37,8 @@ class FormViewModel(
         get() = handleUIState["EMAIL"] ?: ""
     val userPassword: String
         get() = handleUIState["PASSWORD"] ?: ""
+    val passwordInputType: Int
+        get() = handleUIState["PASSWORD_INPUT_TYPE"] ?: InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
     fun onNameChanged(newName: String) {
         handleUIState["NAME"] = newName
@@ -52,6 +56,10 @@ class FormViewModel(
         handleUIState["PASSWORD"] = newName
     }
 
+    fun onPasswordInputTypeChanged(newInputType: Int) {
+        handleUIState["END_ICON_STATE"] = newInputType
+    }
+
     // Errors
     private val _nameErrorPropagator = MutableLiveData<String?>()
     val nameErrorPropagator: LiveData<String?> = _nameErrorPropagator
@@ -65,10 +73,8 @@ class FormViewModel(
     private val _passwordErrorPropagator = MutableLiveData<String?>()
     val passwordErrorPropagator: LiveData<String?> = _passwordErrorPropagator
 
-
-    // Loading Live Data
-    private val _resultRequestData = MutableSharedFlow<RequestResult>()
-    val resultRequestData: SharedFlow<RequestResult> = _resultRequestData.asSharedFlow()
+    private val _resultRequestData = MutableSharedFlow<RequestResult?>()
+    val resultRequestData: SharedFlow<RequestResult?> = _resultRequestData.asSharedFlow()
 
     // For Debounce Pattern
     private val _registerDebounceFlow = MutableSharedFlow<Unit?>()
