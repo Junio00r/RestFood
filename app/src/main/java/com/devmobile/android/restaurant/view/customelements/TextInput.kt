@@ -89,8 +89,9 @@ class TextInput @JvmOverloads constructor(
     }
 
     fun updateCursorPosition() {
-        text?.length?.let {
-            setSelection(it)
+        text?.let {
+
+            setSelection(it.length)
         }
     }
 }
