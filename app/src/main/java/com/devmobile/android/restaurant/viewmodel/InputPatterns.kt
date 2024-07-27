@@ -27,7 +27,7 @@ object InputPatterns {
     @JvmStatic
     val PASSWORD_PATTERN: Pattern = Pattern.compile(
 
-        "(?=^.{8,}\$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*\$"
+        "(?=^.{8,}\$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[a-z]).*\$"
     )
 
     @JvmStatic
