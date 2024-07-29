@@ -78,13 +78,12 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             inputUserPassword.textInputForm.hint = "Password *"
 
             // Setup InputType
-            inputUserName.textInputEditText.inputType =
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            inputUserLastName.textInputEditText.inputType =
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            inputUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            inputUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             inputUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            inputUserPassword.textInputEditText.inputType =
-                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            inputUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+
+            inputUserEmail.textInputEditText.maxLength(254)
 
             // Setup icon
             inputUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE

@@ -65,7 +65,6 @@ android {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     val roomVersion = "2.6.1"
     val uiVersion = "1.6.8"
 
@@ -73,7 +72,7 @@ dependencies {
     implementation("androidx.compose.ui:ui:$uiVersion")
     implementation("androidx.compose.ui:ui-graphics:$uiVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$uiVersion")
-    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.activity:activity-compose:1.9.1")
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
 
@@ -85,7 +84,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.room:room-runtime:$roomVersion")
@@ -124,9 +123,9 @@ dependencies {
 
     // Espresso
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-
     // Junit
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     implementation("androidx.test.ext:junit-ktx:1.2.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test:runner:1.6.1")

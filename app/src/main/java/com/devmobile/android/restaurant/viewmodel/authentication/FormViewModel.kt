@@ -2,8 +2,6 @@ package com.devmobile.android.restaurant.viewmodel.authentication
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
-import android.os.Parcelable
-import android.text.InputType
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -71,7 +69,7 @@ class FormViewModel(
     val resultRequestData: SharedFlow<RequestResult?> = _resultRequestData.asSharedFlow()
 
     // For Debounce Pattern
-    private val _registerDebounceFlow = MutableSharedFlow<Unit?>()
+    private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
 
     init {
 
@@ -87,7 +85,9 @@ class FormViewModel(
     }
 
     fun registerTrigger() {
+
         viewModelScope.launch {
+
             _registerDebounceFlow.emit(Unit)
         }
     }
@@ -96,8 +96,9 @@ class FormViewModel(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ) {
 
-
+        // It may synchronized
         if (isValidData(userName, userLastName, userEmail, userPassword)) {
+
 
             viewModelScope.launch {
 
