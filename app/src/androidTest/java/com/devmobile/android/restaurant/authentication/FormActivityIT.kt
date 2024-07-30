@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant.authentication
 
-import android.content.res.Configuration
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
@@ -14,6 +13,7 @@ import androidx.test.filters.LargeTest
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.view.activities.authentication.FormActivity
 import org.hamcrest.Matchers.allOf
+import org.jetbrains.annotations.ApiStatus
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,7 +33,7 @@ class FormActivityIT {
                 isDescendantOfA(withId(R.id.inputUserName)),
                 withId(R.id.textInputEditText)
             )
-        ).perform(typeText("Naruto"))
+        ).perform(typeText("\"Naruto\""))
 
         onView(
             allOf(
@@ -68,7 +68,7 @@ class FormActivityIT {
                 isDescendantOfA(withId(R.id.inputUserName)),
                 withId(R.id.textInputEditText)
             )
-        ).check(matches(withText("Naruto")))
+        ).check(matches(withText("\"Naruto\"")))
 
         onView(
             allOf(

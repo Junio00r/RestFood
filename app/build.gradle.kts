@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.devmobile.android.restaurant"
-        minSdk = 30
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -77,7 +77,6 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
 
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$uiVersion")
 
     debugImplementation("androidx.compose.ui:ui-tooling:$uiVersion")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$uiVersion")
@@ -121,13 +120,20 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
-    // Espresso
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+
+    androidTestImplementation("androidx.test:core:1.6.1")
+
+
     // Junit
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
-    implementation("androidx.test.ext:junit-ktx:1.2.1")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.2.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
+
+    // Implementations tests
     androidTestImplementation("androidx.test:runner:1.6.1")
     androidTestImplementation("androidx.test:rules:1.6.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$uiVersion")
 }
