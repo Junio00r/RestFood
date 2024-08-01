@@ -66,7 +66,7 @@ android {
 dependencies {
 
     /* ------------------------------------------------------------------------------- *
-     *                         // Application Dependencies //                          *
+     *                     // Application Dependencies (APK) //                        *
      * ------------------------------------------------------------------------------- */
 
     // Compose
@@ -85,33 +85,24 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.12.0")
     implementation("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
-    implementation("androidx.room:room-runtime:2.6.1")
 
-    // To use Kotlin Symbol Processing (KSP)
+    // Room
     ksp("androidx.room:room-compiler:2.6.1")
-
+    implementation("androidx.room:room-runtime:2.6.1")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.6.1")
-
     // optional - RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:2.6.1")
-
     // optional - RxJava3 support for Room
     implementation("androidx.room:room-rxjava3:2.6.1")
-
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:2.6.1")
-
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:2.6.1")
 
-    // Dependencias para implementar arquitetura MVVM
+    // Dependencies to implements MVVM architecture
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-
-    // Retrofit - Biblioteca de requisições REST
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
 
     /* ------------------------------------------------------------------------------- *
