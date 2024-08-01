@@ -5,7 +5,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class FormActivityLT {
+class InputPatternsValidation {
 
     val validNames = arrayOf(
         "Ana-Maria",

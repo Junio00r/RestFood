@@ -49,7 +49,7 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
+        applicationContext
         _formBinding = ActivityFormDataBinding.inflate(layoutInflater)
         setContentView(_formBinding.root)
 

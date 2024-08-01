@@ -99,7 +99,6 @@ class FormViewModel(
         // It may synchronized
         if (isValidData(userName, userLastName, userEmail, userPassword)) {
 
-
             viewModelScope.launch {
 
                 try {

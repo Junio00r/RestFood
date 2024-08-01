@@ -4,7 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
-
 }
 
 android {
@@ -65,75 +64,98 @@ android {
 }
 
 dependencies {
-    val roomVersion = "2.6.1"
-    val uiVersion = "1.6.8"
+
+    /* ------------------------------------------------------------------------------- *
+     *                         // Application Dependencies //                          *
+     * ------------------------------------------------------------------------------- */
 
     // Compose
-    implementation("androidx.compose.ui:ui:$uiVersion")
-    implementation("androidx.compose.ui:ui-graphics:$uiVersion")
-    implementation("androidx.compose.ui:ui-tooling-preview:$uiVersion")
+    implementation("androidx.compose.ui:ui:1.6.8")
+    implementation("androidx.compose.ui:ui-graphics:1.6.8")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.8")
     implementation("androidx.activity:activity-compose:1.9.1")
     implementation("androidx.compose.material3:material3:1.2.1")
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
-
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
-
-    debugImplementation("androidx.compose.ui:ui-tooling:$uiVersion")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$uiVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.6.8")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.8")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.room:room-runtime:$roomVersion")
     implementation("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-runtime:2.6.1")
 
     // To use Kotlin Symbol Processing (KSP)
-    ksp("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:2.6.1")
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-ktx:2.6.1")
 
     // optional - RxJava2 support for Room
-    implementation("androidx.room:room-rxjava2:$roomVersion")
+    implementation("androidx.room:room-rxjava2:2.6.1")
 
     // optional - RxJava3 support for Room
-    implementation("androidx.room:room-rxjava3:$roomVersion")
+    implementation("androidx.room:room-rxjava3:2.6.1")
 
     // optional - Guava support for Room, including Optional and ListenableFuture
-    implementation("androidx.room:room-guava:$roomVersion")
-
-    // optional - Test helpers
-    testImplementation("androidx.room:room-testing:$roomVersion")
+    implementation("androidx.room:room-guava:2.6.1")
 
     // optional - Paging 3 Integration
-    implementation("androidx.room:room-paging:$roomVersion")
+    implementation("androidx.room:room-paging:2.6.1")
 
     // Dependencias para implementar arquitetura MVVM
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-
 
     // Retrofit - Biblioteca de requisições REST
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
 
-    androidTestImplementation("androidx.test:core:1.6.1")
+    /* ------------------------------------------------------------------------------- *
+     *                         // Implementation Tests //                              *
+     * ------------------------------------------------------------------------------- */
 
+    // others
+    androidTestImplementation("androidx.test:core:1.6.1")
+    androidTestImplementation("androidx.test:rules:1.6.1")
+    androidTestImplementation("androidx.test:runner:1.6.1")
+    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
 
     // Junit
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.8")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.2.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
 
-    // Implementations tests
-    androidTestImplementation("androidx.test:runner:1.6.1")
-    androidTestImplementation("androidx.test:rules:1.6.1")
+    // Espresso
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$uiVersion")
+
+
+    /* ------------------------------------------------------------------------------- *
+     *                              // Unit Tests //                                   *
+     * ------------------------------------------------------------------------------- */
+
+    // others
+    testImplementation("androidx.test:core:1.6.1")
+    testImplementation("androidx.test:core-ktx:1.6.1")
+    testImplementation("androidx.test:monitor:1.7.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.0")
+    testImplementation("org.robolectric:robolectric:4.2.1")
+
+    // Room
+    testImplementation("androidx.room:room-testing:2.6.1")
+
+    // Mockito - Mock
+    testImplementation("org.mockito:mockito-core:5.12.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+    testImplementation("io.mockk:mockk:1.13.12")
+
+    // Junit
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.3")
+    androidTestUtil("androidx.test:orchestrator:1.5.0")
+
 }
