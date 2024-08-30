@@ -1,31 +1,34 @@
 package com.devmobile.android.restaurant.view.customelements
 
 import android.content.Context
+import android.os.Bundle
+import android.os.Parcelable
 import android.text.InputFilter
 import android.util.AttributeSet
-import android.view.View
-import com.google.android.material.textfield.TextInputEditText
+import android.util.SparseArray
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.core.view.children
+import com.devmobile.android.restaurant.R
+
 
 class TextInput @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = android.R.attr.editTextStyle
-) : TextInputEditText(context, attrs, defStyleAttr) {
+    context: Context,
+    attrs: AttributeSet? = null,
+) : FrameLayout(context, attrs) {
 
     companion object {
-
-        const val DEFAULT_WIDTH = 256
-        const val DEFAULT_HEIGHT = 180
-        val lengthFilter = InputFilter.LengthFilter(50)
+        private const val SUPER_STATE_KEY = "SUPER_STATE_KEY"
+        private const val SPARSE_STATE_KEY = "SPARSE_STATE_KEY"
+        private const val DEFAULT_WIDTH = 256
+        private const val DEFAULT_HEIGHT = 180
+        private val lengthFilter = InputFilter.LengthFilter(50)
     }
 
     init {
 
-        textSize = 17F
-        isCursorVisible = true
-    }
-
-    override fun onVisibilityChanged(changedView: View, visibility: Int) {
-
-        changedView.isEnabled = visibility != INVISIBLE or INVISIBLE
+        LayoutInflater.from(context).inflate(R.layout.layout_text_input, this)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -60,38 +63,44 @@ class TextInput @JvmOverloads constructor(
         setMeasuredDimension(textInputWidth, textInputHeight)
     }
 
-    /**
-     * Set the max of characters on input
-     * @param max number max
-     */
-    fun maxLength(max: Int) {
-        filters = arrayOf(InputFilter.LengthFilter(max))
-    }
-
-    override fun setFilters(filters: Array<out InputFilter>?) {
-
-        val currentFilters: Array<out InputFilter> = if (filters.isNullOrEmpty()) {
-
-            arrayOf(*getFilters(), lengthFilter)
-
-        } else {
-
-            filters
-        }
-
-        super.setFilters(currentFilters)
-    }
-
     override fun setFocusable(focusable: Boolean) {
         super.setFocusable(focusable)
 
         isFocusableInTouchMode = focusable
     }
 
-    fun updateCursorPosition() {
-        text?.let {
-
-            setSelection(it.length)
+    override fun onSaveInstanceState(): Parcelable {
+        return Bundle().apply {
+            putParcelable(SUPER_STATE_KEY, super.onSaveInstanceState())
+            putSparseParcelableArray(SPARSE_STATE_KEY, saveChildViewStates())
         }
+    }
+
+    override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?) {
+        dispatchFreezeSelfOnly(container)
+    }
+
+    override fun dispatchRestoreInstanceState(container: SparseArray<Parcelable>) {
+        dispatchThawSelfOnly(container)
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        var newState = state
+        if (newState is Bundle) {
+            val childrenState = newState.getSparseParcelableArray<Parcelable>(SPARSE_STATE_KEY)
+            childrenState?.let { restoreChildViewStates(it) }
+            newState = newState.getParcelable(SUPER_STATE_KEY)
+        }
+        super.onRestoreInstanceState(newState)
+    }
+
+    private fun ViewGroup.saveChildViewStates(): SparseArray<Parcelable> {
+        val childViewStates = SparseArray<Parcelable>()
+        children.forEach { child -> child.saveHierarchyState(childViewStates) }
+        return childViewStates
+    }
+
+    private fun ViewGroup.restoreChildViewStates(childViewStates: SparseArray<Parcelable>) {
+        children.forEach { child -> child.restoreHierarchyState(childViewStates) }
     }
 }

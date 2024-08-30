@@ -5,15 +5,17 @@ import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
+import androidx.test.espresso.matcher.ViewMatchers.withChild
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.view.activities.authentication.FormActivity
+import com.google.android.material.textfield.TextInputLayout
 import org.hamcrest.Matchers.allOf
-import org.jetbrains.annotations.ApiStatus
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,29 +32,25 @@ class FormActivityIT {
 
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserName)),
-                withId(R.id.textInputEditText)
+                withChild(withId(R.id.inputUserName))
             )
-        ).perform(typeText("\"Naruto\""))
+        ).perform(typeText("Naruto"))
 
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserLastName)),
-                withId(R.id.textInputEditText)
+                withId(R.id.inputUserLastName)
             )
         ).perform(typeText("Uzumaki"))
 
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserEmail)),
-                withId(R.id.textInputEditText)
+                withId(R.id.inputUserEmail)
             )
         ).perform(typeText("narutogenin@gmail.com"))
 
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserPassword)),
-                withId(R.id.textInputEditText)
+                withId(R.id.inputUserPassword)
             )
         ).perform(typeText("NarutoHokage123#"), closeSoftKeyboard())
 
@@ -65,32 +63,28 @@ class FormActivityIT {
 
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserName)),
-                withId(R.id.textInputEditText)
+                withId(R.id.inputUserName)
             )
-        ).check(matches(withText("\"Naruto\"")))
-
+        ).check(matches(withText("Naruto")))
+4
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserLastName)),
-                withId(R.id.textInputEditText)
+                withId(R.id.inputUserLastName)
             )
         ).check(matches(withText("Uzumaki")))
 
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserEmail)),
-                withId(R.id.textInputEditText)
+                withId(R.id.inputUserEmail)
             )
         ).check(matches(withText("narutogenin@gmail.com")))
 
         onView(
             allOf(
-                isDescendantOfA(withId(R.id.inputUserPassword)),
-                withId(R.id.textInputEditText)
+                withId(R.id.inputUserPassword)
             )
         ).check(matches(withText("NarutoHokage123#")))
 
-        Thread.sleep(5000)
+//        Thread.sleep(5000)
     }
 }

@@ -12,7 +12,7 @@ import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
-class LoginActivity : FragmentActivity() {
+class   LoginActivity : FragmentActivity() {
     private lateinit var binding: FragmentLoginBinding
 
     private lateinit var buttonSignUp: MaterialButton

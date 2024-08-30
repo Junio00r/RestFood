@@ -18,6 +18,7 @@ abstract class RestaurantLocalDatabase : RoomDatabase() {
 
         private var _instance: RestaurantLocalDatabase? = null
 
+        @Synchronized
         fun getInstance(context: Context): RestaurantLocalDatabase {
 
             return _instance ?: createDatabaseInstance(context)

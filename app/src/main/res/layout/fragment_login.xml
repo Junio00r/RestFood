@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:saveEnabled="false"
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:saveEnabled="false"
         app:layout_constraintGuide_percent="0.5" />
 
     <LinearLayout
@@ -39,6 +41,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/dosis_medium"
             android:gravity="center"
+            android:saveEnabled="false"
             android:text="@string/app_name"
             android:textColor="@color/white"
             android:textFontWeight="800"
@@ -53,6 +56,7 @@
         android:layout_margin="8dp"
         android:fontFamily="@font/din_regular"
         android:gravity="start"
+        android:saveEnabled="false"
         android:text="@string/text_message_put_name"
         android:textColor="@color/gray_one"
         android:textSize="16sp"
@@ -88,6 +92,7 @@
         android:layout_margin="8dp"
         android:fontFamily="@font/din_regular"
         android:gravity="start"
+        android:saveEnabled="false"
         android:text="@string/text_message_put_table_number"
         android:textColor="@color/gray_one"
         android:textSize="16sp"
@@ -124,6 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="40dp"
+        android:saveEnabled="false"
         android:text="@string/button_register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guidelineHorizontal"
@@ -135,6 +141,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
+        android:saveEnabled="false"
         android:text="@string/button_login"
         app:layout_constraintBottom_toBottomOf="@id/buttonRegister"
         app:layout_constraintEnd_toEndOf="parent"

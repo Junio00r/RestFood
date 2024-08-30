@@ -14,7 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(AndroidJUnit4::class) // Class for uses Android Framework
 class DatabaseValidation {
 
     private val emailsUnregistered: Array<String> = arrayOf(
@@ -28,29 +28,7 @@ class DatabaseValidation {
         "henry.clark@info.com",
         "irene.martinez@service.co",
         "jackson.white@techmail.net",
-        "kelly.morris@personal.com",
-        "lucas.garcia@webmail.com",
-        "maria.rodriguez@education.org",
-        "nathan.baker@enterprise.com",
-        "olivia.james@office.net",
-        "peter.wilson@ecommerce.com",
-        "quinn.anderson@domain.co",
-        "rachel.wood@company.org",
-        "samuel.harris@business.net",
-        "tina.cooper@tech.org",
-        "ursula.martin@webmail.edu",
-        "victor.thompson@service.com",
-        "willa.morgan@info.net",
-        "xander.carter@personal.org",
-        "yasmine.bell@domain.com",
-        "zachary.davis@company.edu",
-        "amanda.jones@ecommerce.org",
-        "teste6@gmail.com",
-        "benjamin.taylor@workplace.net",
-        "carla.miller@enterprise.org",
-        "daniel.scott@business.com",
-        "elizabeth.Young@webmail.net",
-        "franklin.lee@techmail.org"
+        "kelly.morris@personal.com"
     )
 
     private val emailsRegistered: Array<String> = arrayOf(
@@ -72,8 +50,7 @@ class DatabaseValidation {
     fun insertNewsEmailsOnDatabase() {
 
         val context = ApplicationProvider.getApplicationContext<Context>()
-        database =
-            Room.inMemoryDatabaseBuilder(context, RestaurantLocalDatabase::class.java).build()
+        database = Room.inMemoryDatabaseBuilder(context, RestaurantLocalDatabase::class.java).build()
         userDao = database.getUserDao()
 
         emailsRegistered.forEachIndexed { index, email ->
@@ -90,14 +67,14 @@ class DatabaseValidation {
 
         emailsUnregistered.forEach { email ->
 
-            result = userDao.hasEmailRegistered(email) == 0
+            result = userDao.amountThisEmailRegistered(email) == 0
 
             assertTrue("Email Already Registered: $email", result)
         }
 
         emailsRegistered.forEach { email ->
 
-            result = userDao.hasEmailRegistered(email) > 0
+            result = userDao.amountThisEmailRegistered(email) > 0
 
             assertTrue("Email Unregistered: $email", result)
         }
@@ -105,7 +82,7 @@ class DatabaseValidation {
     }
 
     @Test
-    fun amount_Users() {
+    fun verify_Amount_Users() {
 
         var result: Boolean
 
@@ -124,6 +101,22 @@ class DatabaseValidation {
 
             assertTrue("Email Already Registered: $email", result)
         }
+    }
+
+    // Concurrent Possible Problems (inside-box)
+    // @Test
+    fun check_Synchrony_Insert() {
+
+    }
+
+    // @Test
+    fun check_Synchrony_Delete() {
+
+    }
+
+    // @Test
+    fun check_Synchrony_DeadLock() {
+
     }
 
     @After

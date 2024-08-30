@@ -15,10 +15,11 @@ import androidx.lifecycle.LifecycleOwner
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
+import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
 import com.devmobile.android.restaurant.view.customelements.TextInput
-import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
+import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
@@ -53,12 +54,12 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         codes.addAll(
             arrayOf(
-                _viewBinding.code1.textInputEditText,
-                _viewBinding.code2.textInputEditText,
-                _viewBinding.code3.textInputEditText,
-                _viewBinding.code4.textInputEditText,
-                _viewBinding.code5.textInputEditText,
-                _viewBinding.code6.textInputEditText
+//                _viewBinding.code1.textInputEditText,
+//                _viewBinding.code2.textInputEditText,
+//                _viewBinding.code3.textInputEditText,
+//                _viewBinding.code4.textInputEditText,
+//                _viewBinding.code5.textInputEditText,
+//                _viewBinding.code6.textInputEditText
             )
         )
     }
@@ -68,24 +69,24 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
         codes.forEach { code ->
 
             // InputType
-            code.inputType = InputType.TYPE_CLASS_NUMBER
+//            code.inputType = InputType.TYPE_CLASS_NUMBER
 
             // Text Alignment
-            code.gravity = Gravity.CENTER
+//            code.gravity = Gravity.CENTER
 
             // Max Chars in Text
-            code.maxLength(1)
+//            code.maxLength(1)
         }
 
         with(_viewBinding) {
 
             // Layout text size
-            code1.textInputForm.layoutParams.height = 300
-            code2.textInputForm.layoutParams.height = 300
-            code3.textInputForm.layoutParams.height = 300
-            code4.textInputForm.layoutParams.height = 300
-            code5.textInputForm.layoutParams.height = 300
-            code6.textInputForm.layoutParams.height = 300
+            code1.textInputEditText.layoutParams.height = 300
+            code2.textInputEditText.layoutParams.height = 300
+            code3.textInputEditText.layoutParams.height = 300
+            code4.textInputEditText.layoutParams.height = 300
+            code5.textInputEditText.layoutParams.height = 300
+            code6.textInputEditText.layoutParams.height = 300
 
             setFocus()
         }
@@ -113,7 +114,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
             if (!canResendCode) {
 
-                clearInput(codes)
+//                clearInput(codes)
             }
         }
 
@@ -122,59 +123,59 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
             navigationToBack()
         }
 
-        codes[0].doAfterTextChanged {
-
-            _viewModel.saveCode1(it.toString())
-            sendCode()
-            setFocus()
-        }
-
-        codes[1].doAfterTextChanged {
-
-            _viewModel.saveCode2(it.toString())
-            sendCode()
-            setFocus()
-        }
-
-        codes[2].doAfterTextChanged {
-
-            _viewModel.saveCode3(it.toString())
-            sendCode()
-            setFocus()
-        }
-
-        codes[3].doAfterTextChanged {
-
-            _viewModel.saveCode4(it.toString())
-            sendCode()
-            setFocus()
-        }
-
-        codes[4].doAfterTextChanged {
-
-            _viewModel.saveCode5(it.toString())
-            sendCode()
-            setFocus()
-        }
-
-        codes[5].doAfterTextChanged {
-
-            _viewModel.saveCode6(it.toString())
-            setFocus()
-            sendCode()
-        }
+//        codes[0].editText?.doAfterTextChanged {
+//
+//            _viewModel.saveCode1(it.toString())
+//            sendCode()
+//            setFocus()
+//        }
+//
+//        codes[1].editText?.doAfterTextChanged {
+//
+//            _viewModel.saveCode2(it.toString())
+//            sendCode()
+//            setFocus()
+//        }
+//
+//        codes[2].editText?.doAfterTextChanged {
+//
+//            _viewModel.saveCode3(it.toString())
+//            sendCode()
+//            setFocus()
+//        }
+//
+//        codes[3].editText?.doAfterTextChanged {
+//
+//            _viewModel.saveCode4(it.toString())
+//            sendCode()
+//            setFocus()
+//        }
+//
+//        codes[4].editText?.doAfterTextChanged {
+//
+//            _viewModel.saveCode5(it.toString())
+//            sendCode()
+//            setFocus()
+//        }
+//
+//        codes[5].editText?.doAfterTextChanged {
+//
+//            _viewModel.saveCode6(it.toString())
+//            setFocus()
+//            sendCode()
+//        }
     }
 
     private fun sendCode() {
 
         _viewModel.codesForVerify(
             codesEntered = arrayOf(
-                codes[0].text.toString(),
-                codes[1].text.toString(),
-                codes[2].text.toString(),
-                codes[3].text.toString(),
-                codes[4].text.toString(),
-                codes[5].text.toString(),
+//                codes[0].editText?.text.toString(),
+//                codes[1].editText?.text.toString(),
+//                codes[2].editText?.text.toString(),
+//                codes[3].editText?.text.toString(),
+//                codes[4].editText?.text.toString(),
+//                codes[5].editText?.text.toString(),
             )
         )
     }
@@ -185,10 +186,10 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
     private fun setFocus() {
 
-        codes.firstOrNull {
-
-            it.text.isNullOrEmpty()
-        }?.requestFocus()
+//        codes.firstOrNull {
+//
+//            it.editText?.text.isNullOrEmpty()
+//        }?.requestFocus()
     }
 
     private fun mayFocusable(isFocusable: Boolean) {
@@ -248,14 +249,25 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
             Pair(codes[5], _viewModel.code6)
         )
 
-        codesForRememberWithValue.forEach { pair ->
-
-            if (pair.second.isNotEmpty()) {
-
-                pair.first.setText(pair.second)
-            }
-        }
+//        codesForRememberWithValue.forEach { pair ->
+//
+//            if (pair.second.isNotEmpty()) {
+//
+//                pair.first.editText?.setText(pair.second)
+//            }
+//        }
     }
+
+//    private fun getInputs() : Array<out EditText> {
+//        return arrayOf(
+//            _viewBinding.code1.textInputEditText,
+//            _viewBinding.code2.textInputEditText,
+//            _viewBinding.code3.textInputEditText,
+//            _viewBinding.code4.textInputEditText,
+//            _viewBinding.code5.textInputEditText,
+//            _viewBinding.code6.textInputEditText
+//        )
+//    }
 
     override fun onStop() {
         Log.i("Verification", "onStoooooop --------------------------------------")

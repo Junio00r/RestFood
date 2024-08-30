@@ -8,88 +8,145 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
+import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.launch
 
-class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
+class FormActivity : AppCompatActivity(), IShowError {
 
     private lateinit var _formBinding: ActivityFormDataBinding
+
+    private val formRepository = FormRepository(this@FormActivity)
 
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
         ViewModelFactory(
             repository = formRepository,
-            ownerOfStateToSave = this,
+            ownerOfStateToSave = this@FormActivity,
             defaultValuesForNulls = null
         )
     }
-    private val formRepository = FormRepository(this)
 
-    private val dataEditText = ArrayList<TextInput>()
-
-    init {
-
-        lifecycle.addObserver(this)
-    }
+    private val dataEditText = ArrayList<TextInputLayout>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        applicationContext
+
         _formBinding = ActivityFormDataBinding.inflate(layoutInflater)
         setContentView(_formBinding.root)
 
-        _formBinding.registerView = this
+        _formBinding.registerView = this@FormActivity
 
         dataEditText.addAll(
+
             listOf(
-                _formBinding.inputUserName.textInputEditText,
-                _formBinding.inputUserLastName.textInputEditText,
-                _formBinding.inputUserEmail.textInputEditText,
-                _formBinding.inputUserPassword.textInputEditText
+                _formBinding.inputUserName.getChildAt(0) as TextInputLayout,
+                _formBinding.inputUserLastName.getChildAt(0) as TextInputLayout,
+                _formBinding.inputUserEmail.getChildAt(0) as TextInputLayout,
+                _formBinding.inputUserPassword.getChildAt(0) as TextInputLayout
             )
         )
+
+        Log.d("ViewModel", "onCreate ")
+        Log.d(
+            "ViewModel",
+            "\nvalues: NAME:${_formViewModel.userName}  LASTNAME:${_formViewModel.userLastName}  EMAIL:${_formViewModel.userEmail}  PASSWORD:${_formViewModel.userPassword}  "
+        )
+        Log.d("ViewModel", "\nviewModel: $_formViewModel")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("ViewModel", "onRestart")
+        Log.d(
+            "ViewModel",
+            "\nvalues: NAME:${_formViewModel.userName}  LASTNAME:${_formViewModel.userLastName}  EMAIL:${_formViewModel.userEmail}  PASSWORD:${_formViewModel.userPassword}  "
+        )
+        Log.d("ViewModel", "\nviewModel: $_formViewModel")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // call before changed
+        Log.d("ViewModel", "onStart")
+        Log.d(
+            "ViewModel",
+            "\nvalues: NAME:${_formViewModel.userName}  LASTNAME:${_formViewModel.userLastName}  EMAIL:${_formViewModel.userEmail}  PASSWORD:${_formViewModel.userPassword}  "
+        )
+        Log.d("ViewModel", "\nviewModel: $_formViewModel")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setUpInputEditText()
+        subscribeObservables()
+        Log.d("ViewModel", "onResume")
+        Log.d(
+            "ViewModel",
+            "\nvalues: NAME:${_formViewModel.userName}  LASTNAME:${_formViewModel.userLastName}  EMAIL:${_formViewModel.userEmail}  PASSWORD:${_formViewModel.userPassword}  "
+        )
+        Log.d("ViewModel", "\nviewModel: $_formViewModel")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ViewModel", "onPause")
+        Log.d(
+            "ViewModel",
+            "\nvalues: NAME:${_formViewModel.userName}  LASTNAME:${_formViewModel.userLastName}  EMAIL:${_formViewModel.userEmail}  PASSWORD:${_formViewModel.userPassword}  "
+        )
+        Log.d("ViewModel", "\nviewModel: $_formViewModel")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ViewModel", "onStop")
+        Log.d(
+            "ViewModel",
+            "\nvalues: NAME:${_formViewModel.userName}  LASTNAME:${_formViewModel.userLastName}  EMAIL:${_formViewModel.userEmail}  PASSWORD:${_formViewModel.userPassword}  "
+        )
+        Log.d("ViewModel", "\nviewModel: $_formViewModel")
     }
 
     private fun setUpInputEditText() {
 
         _formBinding.apply {
 
-            inputUserName.textInputEditText.requestFocus()
+            val anyHasFocus = dataEditText.any { it.hasFocus() }
+
+            if (!anyHasFocus) {
+                dataEditText[0].requestFocus()
+            }
 
             // Set Hints
-            inputUserName.textInputForm.hint = "Name *"
-            inputUserLastName.textInputForm.hint = "Lastname"
-            inputUserEmail.textInputForm.hint = "Email *"
-            inputUserPassword.textInputForm.hint = "Password *"
+            dataEditText[0].hint = "Name *"
+            dataEditText[1].hint = "Lastname"
+            dataEditText[2].hint = "Email *"
+            dataEditText[3].hint = "Password *"
 
             // Setup InputType
-            inputUserName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            inputUserLastName.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            inputUserEmail.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            inputUserPassword.textInputEditText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-
-            inputUserEmail.textInputEditText.maxLength(254)
-
-            // Setup icon
-            inputUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
-
-            // Enable Counter
-            inputUserPassword.textInputForm.isCounterEnabled = true
+//            inputUserName.editText?.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+//            inputUserLastName.editText?.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+//            inputUserEmail.editText?.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+//            inputUserPassword.editText?.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+//
+//            inputUserEmail.counterMaxLength = 256
+//
+//            // Setup icon
+//            // inputUserPassword.textInputForm.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+//
+//            // Enable Counter
+//            inputUserPassword.isCounterEnabled = true
 
         }
     }
@@ -101,54 +158,56 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
             // Errors observables
             _formViewModel.nameErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserName.textInputForm.error = error
+                dataEditText[0].error = error
             }
 
             _formViewModel.lastNameErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserLastName.textInputForm.error = error
+                dataEditText[1].error = error
             }
 
             _formViewModel.emailErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserEmail.textInputForm.error = error
+                dataEditText[2].error = error
             }
 
             _formViewModel.passwordErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserPassword.textInputForm.error = error
+                dataEditText[3].error = error
             }
 
-            lifecycleScope.launch {
+            _formViewModel.resultRequestData.observe(this@FormActivity) { resultOfRequest ->
 
-                _formViewModel.resultRequestData.collect { resultOfRequest ->
-
-                    handleLoadState(resultOfRequest)
-                }
+//                handleLoadState(resultOfRequest)
             }
 
             // Listeners after text changed
-            inputUserName.textInputEditText.doAfterTextChanged {
-                _formViewModel.onNameChanged(it.toString())
-            }
-
-            inputUserLastName.textInputEditText.doAfterTextChanged {
-                _formViewModel.onLastNameChanged(it.toString())
-            }
-
-            inputUserEmail.textInputEditText.doAfterTextChanged {
-                _formViewModel.onEmailChanged(it.toString())
-            }
-
-            inputUserPassword.textInputEditText.doAfterTextChanged {
-                _formViewModel.onPasswordChanged(it.toString())
-            }
+//            inputUserName.editText?.doAfterTextChanged { Log.d("ViewModel", "CHAMOU NAME")
+//                    _formViewModel.onNameChanged(it.toString())
+//            }
+//
+//            inputUserLastName.editText?.doAfterTextChanged {
+//                Log.d("ViewModel", "CHAMOU LASTNAME")
+//                _formViewModel.onLastNameChanged(it.toString())
+//            }
+//
+//            inputUserEmail.editText?.doAfterTextChanged {
+//                Log.d("ViewModel", "CHAMOU EMAIL")
+//                _formViewModel.onEmailChanged(it.toString())
+//            }
+//
+//            inputUserPassword.editText?.doAfterTextChanged {
+//                Log.d("ViewModel", "CHAMOU PASSWORD")
+//                _formViewModel.onPasswordChanged(it.toString())
+//            }
+            Log.d("ViewModel", "-------------------------------------")
         }
     }
 
     private fun handleLoadState(requestOfResult: RequestResult?) {
 
         when (requestOfResult) {
+
 
             is RequestResult.Success -> {
 
@@ -164,18 +223,6 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
 
                 // Nothing
             }
-        }
-    }
-
-    private fun getUIState() {
-
-        with(_formBinding) {
-
-            inputUserName.textInputEditText.setText(_formViewModel.userName)
-            inputUserLastName.textInputEditText.setText(_formViewModel.userLastName)
-            inputUserEmail.textInputEditText.setText(_formViewModel.userEmail)
-            inputUserPassword.textInputEditText.setText(_formViewModel.userPassword)
-            inputUserName.textInputEditText.updateCursorPosition()
         }
     }
 
@@ -199,44 +246,5 @@ class FormActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()
-    }
-
-    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-
-        when (event) {
-
-            Lifecycle.Event.ON_CREATE -> {
-                Log.i("Form", "ON_CREATE")
-            }
-
-            Lifecycle.Event.ON_START -> {
-
-                Log.i("Form", "ON_START")
-            }
-
-            Lifecycle.Event.ON_RESUME -> {
-
-                setUpInputEditText()
-                subscribeObservables()
-                getUIState()
-                Log.i("Form", "ON_RESUME")
-            }
-
-            Lifecycle.Event.ON_PAUSE -> {
-                Log.i("Form", "ON_PAUSE")
-            }
-
-            Lifecycle.Event.ON_STOP -> {
-                Log.i("Form", "ON_STOP")
-            }
-
-            Lifecycle.Event.ON_DESTROY -> {
-                Log.i("Form", "ON_DESTROY")
-            }
-
-            Lifecycle.Event.ON_ANY -> {
-                Log.i("Form", "ON_ANY")
-            }
-        }
     }
 }

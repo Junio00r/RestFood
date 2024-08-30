@@ -20,53 +20,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="16dp"
+        android:saveEnabled="false">
 
-        <include
+        <com.devmobile.android.restaurant.view.customelements.TextInput
             android:id="@+id/inputUserName"
-            layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
+            android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
+        <com.devmobile.android.restaurant.view.customelements.TextInput
             android:id="@+id/inputUserLastName"
-            layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="86dp"
+            android:layout_marginVertical="16dp"
+            android:background="@null"
             app:layout_constraintEnd_toEndOf="@id/inputUserName"
             app:layout_constraintStart_toStartOf="@id/inputUserName"
-            app:layout_constraintTop_toTopOf="@id/inputUserName" />
+            app:layout_constraintTop_toBottomOf="@id/inputUserName" />
 
-        <include
+        <com.devmobile.android.restaurant.view.customelements.TextInput
             android:id="@+id/inputUserEmail"
-            layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="86dp"
+            android:layout_marginVertical="16dp"
+            android:background="@null"
             app:layout_constraintEnd_toEndOf="@id/inputUserLastName"
             app:layout_constraintStart_toStartOf="@id/inputUserLastName"
-            app:layout_constraintTop_toTopOf="@id/inputUserLastName" />
+            app:layout_constraintTop_toBottomOf="@id/inputUserLastName" />
 
-        <include
+        <com.devmobile.android.restaurant.view.customelements.TextInput
             android:id="@+id/inputUserPassword"
-            layout="@layout/layout_text_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="86dp"
+            android:layout_marginVertical="16dp"
+            android:background="@null"
             app:layout_constraintEnd_toEndOf="@id/inputUserEmail"
             app:layout_constraintStart_toStartOf="@id/inputUserEmail"
-            app:layout_constraintTop_toTopOf="@id/inputUserEmail" />
+            app:layout_constraintTop_toBottomOf="@id/inputUserEmail" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineVertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:saveEnabled="false"
             app:layout_constraintGuide_percent="0.5" />
 
         <com.google.android.material.button.MaterialButton
@@ -79,6 +81,7 @@
             android:layout_marginBottom="32dp"
             android:fontFamily="@font/din_regular"
             android:onClick="@{() -> registerView.cancelRegister()}"
+            android:saveEnabled="false"
             android:text="@string/button_cancel_register"
             android:textColor="@color/black_two"
             android:textSize="18sp"
@@ -99,6 +102,7 @@
             android:layout_marginBottom="32dp"
             android:fontFamily="@font/din_regular"
             android:onClick="@{() -> registerView.nextRegister()}"
+            android:saveEnabled="false"
             android:text="@string/button_confirm_register"
             android:textColor="@color/white"
             android:textSize="18sp"

@@ -2,19 +2,17 @@ package com.devmobile.android.restaurant.viewmodel.authentication
 
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devmobile.android.restaurant.AccountException
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.viewmodel.InputPatterns
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -23,7 +21,7 @@ import java.util.regex.Pattern
 @OptIn(FlowPreview::class)
 class FormViewModel(
     private val registerRepository: FormRepository,
-    private val handleUIState: SavedStateHandle
+    private val handleUIState: SavedStateHandle,
 ) : ViewModel() {
 
     // UIState
@@ -37,19 +35,23 @@ class FormViewModel(
         get() = handleUIState["PASSWORD"] ?: ""
 
     fun onNameChanged(newName: String) {
+        Log.d("ViewModel", "changed Name: \"$newName\" $handleUIState ")
         handleUIState["NAME"] = newName
     }
 
-    fun onLastNameChanged(newName: String) {
-        handleUIState["LAST_NAME"] = newName
+    fun onLastNameChanged(newLastName: String) {
+        Log.d("ViewModel", "changed LastName: \"$newLastName\" $handleUIState")
+        handleUIState["LAST_NAME"] = newLastName
     }
 
-    fun onEmailChanged(newName: String) {
-        handleUIState["EMAIL"] = newName
+    fun onEmailChanged(newEmail: String) {
+        Log.d("ViewModel", "changed Email: \"$newEmail\" $handleUIState")
+        handleUIState["EMAIL"] = newEmail
     }
 
-    fun onPasswordChanged(newName: String) {
-        handleUIState["PASSWORD"] = newName
+    fun onPasswordChanged(newPassword: String) {
+        Log.d("ViewModel", "changed Password: \"$newPassword\" $handleUIState")
+        handleUIState["PASSWORD"] = newPassword
     }
 
     // Errors
@@ -65,15 +67,16 @@ class FormViewModel(
     private val _passwordErrorPropagator = MutableLiveData<String?>()
     val passwordErrorPropagator: LiveData<String?> = _passwordErrorPropagator
 
-    private val _resultRequestData = MutableSharedFlow<RequestResult?>()
-    val resultRequestData: SharedFlow<RequestResult?> = _resultRequestData.asSharedFlow()
+    private val _resultRequestData = MutableLiveData<RequestResult?>(null)
+    val resultRequestData: LiveData<RequestResult?> = _resultRequestData
 
     // For Debounce Pattern
-    private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     init {
 
         // Scopes on init block isn't recommended
+        setUpObservables()
         viewModelScope.launch {
 
             // debounce Flow for register new user
@@ -92,6 +95,19 @@ class FormViewModel(
         }
     }
 
+    private fun setUpObservables() {
+
+
+        viewModelScope.launch {
+
+            registerRepository.resultRequestData.collect { checkEmailValid ->
+
+                _resultRequestData.value = checkEmailValid
+            }
+
+        }
+    }
+
     private fun requestUserData(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ) {
@@ -103,32 +119,29 @@ class FormViewModel(
 
                 try {
 
-                    if (registerRepository.hasEmailAlreadyRegistered(email = userEmail!!)) {
+                    when (registerRepository.hasEmailAlreadyRegistered(userEmail!!)) {
 
+                        true -> _resultRequestData.value = RequestResult.Success()
 
-                        throw AccountException()
-
-                    } else {
-
-                        _resultRequestData.emit(RequestResult.Success())
+                        false -> _resultRequestData.value =
+                            RequestResult.Error(Exception("Email is invalid or already taken"))
                     }
 
                 } catch (e: IOException) {
 
-                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
+                    _resultRequestData.value =
+                        RequestResult.Error(Exception("It was not possible create account"))
 
                 } catch (e: SQLiteDatabaseCorruptException) {
 
-                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
+                    _resultRequestData.value =
+                        RequestResult.Error(Exception("It was not possible create account"))
 
                 } catch (e: SQLiteException) {
 
-                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
+                    _resultRequestData.value =
+                        RequestResult.Error(Exception("It was not possible create account"))
 
-                } catch (e: AccountException) {
-
-                    _emailErrorPropagator.value = "Email is invalid or already taken"
-                    _resultRequestData.emit(RequestResult.Error(Exception("Email is invalid or already taken")))
                 }
             }
         }
