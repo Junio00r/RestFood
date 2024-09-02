@@ -1,34 +1,50 @@
 package com.devmobile.android.restaurant.view.customelements
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.InputFilter
 import android.util.AttributeSet
 import android.util.SparseArray
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.core.view.children
 import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.extensions.maxLength
+import com.devmobile.android.restaurant.extensions.restoreChildViewStates
+import com.devmobile.android.restaurant.extensions.saveChildViewStates
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 
+@SuppressLint("MissingInflatedId")
 class TextInput @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-) : FrameLayout(context, attrs) {
+) : TextInputLayout(context, attrs) {
+
+    private val _layoutInflated =
+        LayoutInflater.from(context).inflate(R.layout.layout_text_input, this)
 
     companion object {
+
         private const val SUPER_STATE_KEY = "SUPER_STATE_KEY"
         private const val SPARSE_STATE_KEY = "SPARSE_STATE_KEY"
         private const val DEFAULT_WIDTH = 256
-        private const val DEFAULT_HEIGHT = 180
-        private val lengthFilter = InputFilter.LengthFilter(50)
+        private const val DEFAULT_HEIGHT = 296
     }
 
     init {
 
-        LayoutInflater.from(context).inflate(R.layout.layout_text_input, this)
+        getTextInput().isErrorEnabled = true
+        getTextInputEditText().textSize = 17F
+        getTextInputEditText().maxLength(50)
+    }
+
+    fun getTextInput(): TextInputLayout {
+        return _layoutInflated.findViewById(R.id.textInputContainer)
+    }
+
+    fun getTextInputEditText(): TextInputEditText {
+        return _layoutInflated.findViewById(R.id.textInputEditText)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -63,12 +79,6 @@ class TextInput @JvmOverloads constructor(
         setMeasuredDimension(textInputWidth, textInputHeight)
     }
 
-    override fun setFocusable(focusable: Boolean) {
-        super.setFocusable(focusable)
-
-        isFocusableInTouchMode = focusable
-    }
-
     override fun onSaveInstanceState(): Parcelable {
         return Bundle().apply {
             putParcelable(SUPER_STATE_KEY, super.onSaveInstanceState())
@@ -92,15 +102,5 @@ class TextInput @JvmOverloads constructor(
             newState = newState.getParcelable(SUPER_STATE_KEY)
         }
         super.onRestoreInstanceState(newState)
-    }
-
-    private fun ViewGroup.saveChildViewStates(): SparseArray<Parcelable> {
-        val childViewStates = SparseArray<Parcelable>()
-        children.forEach { child -> child.saveHierarchyState(childViewStates) }
-        return childViewStates
-    }
-
-    private fun ViewGroup.restoreChildViewStates(childViewStates: SparseArray<Parcelable>) {
-        children.forEach { child -> child.restoreHierarchyState(childViewStates) }
     }
 }

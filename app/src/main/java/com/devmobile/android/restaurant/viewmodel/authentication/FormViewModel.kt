@@ -25,13 +25,13 @@ class FormViewModel(
 ) : ViewModel() {
 
     // UIState
-    val userName: String
+    private val userName: String
         get() = handleUIState["NAME"] ?: ""
-    val userLastName: String
+    private val userLastName: String
         get() = handleUIState["LAST_NAME"] ?: ""
-    val userEmail: String
+    private val userEmail: String
         get() = handleUIState["EMAIL"] ?: ""
-    val userPassword: String
+    private val userPassword: String
         get() = handleUIState["PASSWORD"] ?: ""
 
     fun onNameChanged(newName: String) {

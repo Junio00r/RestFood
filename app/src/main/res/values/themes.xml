@@ -9,13 +9,12 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:inputType">textNoSuggestions</item>
 
-
         <item name="materialSearchBarStyle">@style/SearchBar.App</item>
 
     </style>
 
     <!--  Text Appearance for access all app  -->
-    <style name="TextAppearance.App" parent="TextAppearance.Material3.BodyLarge">
+    <style name="TextAppearance.App" parent="Widget.AppCompat.EditText">
         <item name="fontFamily">@font/sul_sans_regular</item>
         <item name="android:fontFamily">@font/sul_sans_regular</item>
         <item name="android:textColor">@color/black_two</item>

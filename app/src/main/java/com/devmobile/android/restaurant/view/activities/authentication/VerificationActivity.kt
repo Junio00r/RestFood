@@ -81,12 +81,12 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
         with(_viewBinding) {
 
             // Layout text size
-            code1.textInputEditText.layoutParams.height = 300
-            code2.textInputEditText.layoutParams.height = 300
-            code3.textInputEditText.layoutParams.height = 300
-            code4.textInputEditText.layoutParams.height = 300
-            code5.textInputEditText.layoutParams.height = 300
-            code6.textInputEditText.layoutParams.height = 300
+//            code1.textInputEditText.layoutParams.height = 300
+//            code2.textInputEditText.layoutParams.height = 300
+//            code3.textInputEditText.layoutParams.height = 300
+//            code4.textInputEditText.layoutParams.height = 300
+//            code5.textInputEditText.layoutParams.height = 300
+//            code6.textInputEditText.layoutParams.height = 300
 
             setFocus()
         }

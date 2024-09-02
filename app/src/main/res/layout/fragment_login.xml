@@ -61,8 +61,7 @@
         android:textColor="@color/gray_one"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/editUserName"
-        app:layout_constraintStart_toStartOf="@id/editUserName"
-        tools:layout_editor_absoluteY="38dp" />
+        app:layout_constraintStart_toStartOf="@id/editUserName" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editUserName"
@@ -97,8 +96,7 @@
         android:textColor="@color/gray_one"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/editTableNumber"
-        app:layout_constraintStart_toStartOf="@id/editTableNumber"
-        tools:layout_editor_absoluteY="38dp" />
+        app:layout_constraintStart_toStartOf="@id/editTableNumber" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editTableNumber"
