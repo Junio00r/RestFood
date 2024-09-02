@@ -3,15 +3,12 @@ package com.devmobile.android.restaurant.view.activities.authentication
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.Gravity
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
@@ -22,7 +19,7 @@ import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObserver {
+class VerificationActivity : AppCompatActivity(), IShowError {
 
     // references
     private lateinit var _viewBinding: ActivityVerificationCodeBinding
@@ -35,12 +32,7 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
     }
 
     // data
-    private val codes = ArrayList<TextInput>()
-
-    init {
-
-        lifecycle.addObserver(this)
-    }
+    private val _codes = ArrayList<TextInput>()
 
     // Functions
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,52 +44,48 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
         _viewBinding.viewModel = _viewModel
         _viewBinding.activity = this
 
-        codes.addAll(
+        _codes.addAll(
             arrayOf(
-//                _viewBinding.code1.textInputEditText,
-//                _viewBinding.code2.textInputEditText,
-//                _viewBinding.code3.textInputEditText,
-//                _viewBinding.code4.textInputEditText,
-//                _viewBinding.code5.textInputEditText,
-//                _viewBinding.code6.textInputEditText
+                _viewBinding.code1,
+                _viewBinding.code2,
+                _viewBinding.code3,
+                _viewBinding.code4,
+                _viewBinding.code5,
+                _viewBinding.code6
             )
         )
+
+        setObservables()
+        drawingViews()
     }
 
     private fun drawingViews() {
 
-        codes.forEach { code ->
+        _codes.forEach { code ->
 
             // InputType
-//            code.inputType = InputType.TYPE_CLASS_NUMBER
+            code.getTextInputEditText().inputType = InputType.TYPE_CLASS_NUMBER
 
             // Text Alignment
-//            code.gravity = Gravity.CENTER
+            code.getTextInputEditText().gravity = Gravity.CENTER
 
             // Max Chars in Text
-//            code.maxLength(1)
+            code.getTextInputEditText().maxLength(1)
+
+            code.updateLayoutParams { height = 300 }
+            code.getTextInput().updateLayoutParams { height = 300 }
+
+            code.isErrorEnabled = false
         }
 
-        with(_viewBinding) {
-
-            // Layout text size
-//            code1.textInputEditText.layoutParams.height = 300
-//            code2.textInputEditText.layoutParams.height = 300
-//            code3.textInputEditText.layoutParams.height = 300
-//            code4.textInputEditText.layoutParams.height = 300
-//            code5.textInputEditText.layoutParams.height = 300
-//            code6.textInputEditText.layoutParams.height = 300
-
-            setFocus()
-        }
+        restoreFocus()
     }
 
     private fun setObservables() {
 
-        _viewModel.isEnableInput.observe(this@VerificationActivity) { mayEnableInput ->
+        _viewModel.canStillEnterCodes.observe(this@VerificationActivity) { mayEnableInput ->
 
-            mayFocusable(mayEnableInput)
-            setFocus()
+            enableInputs(mayEnableInput)
         }
 
         _viewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
@@ -114,89 +102,77 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
             if (!canResendCode) {
 
-//                clearInput(codes)
+                clearInput(_codes.map { it.getTextInputEditText() })
             }
         }
 
         _viewBinding.toolbarBack.setNavigationOnClickListener {
 
-            navigationToBack()
+            finish()
         }
 
-//        codes[0].editText?.doAfterTextChanged {
-//
-//            _viewModel.saveCode1(it.toString())
-//            sendCode()
-//            setFocus()
-//        }
-//
-//        codes[1].editText?.doAfterTextChanged {
-//
-//            _viewModel.saveCode2(it.toString())
-//            sendCode()
-//            setFocus()
-//        }
-//
-//        codes[2].editText?.doAfterTextChanged {
-//
-//            _viewModel.saveCode3(it.toString())
-//            sendCode()
-//            setFocus()
-//        }
-//
-//        codes[3].editText?.doAfterTextChanged {
-//
-//            _viewModel.saveCode4(it.toString())
-//            sendCode()
-//            setFocus()
-//        }
-//
-//        codes[4].editText?.doAfterTextChanged {
-//
-//            _viewModel.saveCode5(it.toString())
-//            sendCode()
-//            setFocus()
-//        }
-//
-//        codes[5].editText?.doAfterTextChanged {
-//
-//            _viewModel.saveCode6(it.toString())
-//            setFocus()
-//            sendCode()
-//        }
+        _codes[0].getTextInputEditText().doAfterTextChanged {
+
+            _viewModel.saveCode1(it.toString())
+            restoreFocus()
+        }
+
+        _codes[1].getTextInputEditText().doAfterTextChanged {
+
+            _viewModel.saveCode2(it.toString())
+            restoreFocus()
+        }
+
+        _codes[2].getTextInputEditText().doAfterTextChanged {
+
+            _viewModel.saveCode3(it.toString())
+            restoreFocus()
+        }
+
+        _codes[3].getTextInputEditText().doAfterTextChanged {
+
+            _viewModel.saveCode4(it.toString())
+            restoreFocus()
+        }
+
+        _codes[4].getTextInputEditText().doAfterTextChanged {
+
+            _viewModel.saveCode5(it.toString())
+            restoreFocus()
+        }
+
+        _codes[5].getTextInputEditText().doAfterTextChanged {
+
+            _viewModel.saveCode6(it.toString())
+            restoreFocus()
+        }
     }
 
-    private fun sendCode() {
+    private fun transferCodes() {
 
-        _viewModel.codesForVerify(
-            codesEntered = arrayOf(
-//                codes[0].editText?.text.toString(),
-//                codes[1].editText?.text.toString(),
-//                codes[2].editText?.text.toString(),
-//                codes[3].editText?.text.toString(),
-//                codes[4].editText?.text.toString(),
-//                codes[5].editText?.text.toString(),
-            )
+        _viewModel.requestCodesValidation(
+
+            codesEntered = _codes.map { it.getTextInputEditText().text.toString() }
         )
     }
 
-    private fun navigationToBack() {
-        finish()
+    private fun restoreFocus() {
+
+        val nextInputEmpty = _codes.firstOrNull {
+
+            it.getTextInputEditText().text.isNullOrEmpty()
+        }?.requestFocus()
+
+        if (nextInputEmpty == null) {
+            transferCodes()
+        }
     }
 
-    private fun setFocus() {
+    private fun enableInputs(isFocusable: Boolean) {
 
-//        codes.firstOrNull {
-//
-//            it.editText?.text.isNullOrEmpty()
-//        }?.requestFocus()
-    }
+        _codes.forEach {
 
-    private fun mayFocusable(isFocusable: Boolean) {
-
-        codes.forEach {
-
-            it.isFocusable = isFocusable
+            it.isEnabled = isFocusable
         }
     }
 
@@ -236,82 +212,5 @@ class VerificationActivity : AppCompatActivity(), IShowError, LifecycleEventObse
 
         mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))
         mySnackBar.show()
-    }
-
-    private fun rememberUIState() {
-
-        val codesForRememberWithValue = listOf(
-            Pair(codes[0], _viewModel.code1),
-            Pair(codes[1], _viewModel.code2),
-            Pair(codes[2], _viewModel.code3),
-            Pair(codes[3], _viewModel.code4),
-            Pair(codes[4], _viewModel.code5),
-            Pair(codes[5], _viewModel.code6)
-        )
-
-//        codesForRememberWithValue.forEach { pair ->
-//
-//            if (pair.second.isNotEmpty()) {
-//
-//                pair.first.editText?.setText(pair.second)
-//            }
-//        }
-    }
-
-//    private fun getInputs() : Array<out EditText> {
-//        return arrayOf(
-//            _viewBinding.code1.textInputEditText,
-//            _viewBinding.code2.textInputEditText,
-//            _viewBinding.code3.textInputEditText,
-//            _viewBinding.code4.textInputEditText,
-//            _viewBinding.code5.textInputEditText,
-//            _viewBinding.code6.textInputEditText
-//        )
-//    }
-
-    override fun onStop() {
-        Log.i("Verification", "onStoooooop --------------------------------------")
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Log.i("Verification", "onDestroy ------------------------------------------")
-        super.onDestroy()
-    }
-
-    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-
-        when (event) {
-
-            Lifecycle.Event.ON_CREATE -> {
-
-            }
-
-            Lifecycle.Event.ON_START -> {
-
-            }
-
-            Lifecycle.Event.ON_RESUME -> {
-                setObservables()
-                drawingViews()
-                rememberUIState()
-            }
-
-            Lifecycle.Event.ON_PAUSE -> {
-
-            }
-
-            Lifecycle.Event.ON_STOP -> {
-
-            }
-
-            Lifecycle.Event.ON_DESTROY -> {
-
-            }
-
-            Lifecycle.Event.ON_ANY -> {
-
-            }
-        }
     }
 }

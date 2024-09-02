@@ -31,12 +31,11 @@
             app:navigationIcon="@drawable/ic_back"
             tools:ignore="RtlSymmetry" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/textInformation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:ellipsize="end"
             android:inputType="none"
             android:paddingEnd="120dp"
             android:text="@string/text_information_message"
@@ -54,30 +53,28 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="28dp"
-            android:baselineAligned="false"
             android:gravity="center"
             android:orientation="horizontal"
+            android:paddingVertical="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textInformation"
-            tools:viewBindingIgnore="true">
+            app:layout_constraintTop_toBottomOf="@id/textInformation">
 
-            <include
+            <com.devmobile.android.restaurant.view.customelements.TextInput
                 android:id="@+id/code1"
-                layout="@layout/layout_text_input"
                 android:layout_width="0dp"
-                android:layout_height="76dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
+            <com.devmobile.android.restaurant.view.customelements.TextInput
                 android:id="@+id/code2"
-                layout="@layout/layout_text_input"
                 android:layout_width="0dp"
-                android:layout_height="76dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
@@ -85,11 +82,10 @@
                 app:layout_constraintStart_toEndOf="@id/code1"
                 app:layout_constraintTop_toTopOf="@id/code1" />
 
-            <include
+            <com.devmobile.android.restaurant.view.customelements.TextInput
                 android:id="@+id/code3"
-                layout="@layout/layout_text_input"
                 android:layout_width="0dp"
-                android:layout_height="76dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
@@ -97,11 +93,10 @@
                 app:layout_constraintStart_toEndOf="@id/code2"
                 app:layout_constraintTop_toTopOf="@id/code2" />
 
-            <include
+            <com.devmobile.android.restaurant.view.customelements.TextInput
                 android:id="@+id/code4"
-                layout="@layout/layout_text_input"
                 android:layout_width="0dp"
-                android:layout_height="76dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
@@ -109,11 +104,10 @@
                 app:layout_constraintStart_toEndOf="@id/code3"
                 app:layout_constraintTop_toTopOf="@id/code3" />
 
-            <include
+            <com.devmobile.android.restaurant.view.customelements.TextInput
                 android:id="@+id/code5"
-                layout="@layout/layout_text_input"
                 android:layout_width="0dp"
-                android:layout_height="76dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
@@ -122,11 +116,10 @@
                 app:layout_constraintTop_toTopOf="@id/code4"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <include
+            <com.devmobile.android.restaurant.view.customelements.TextInput
                 android:id="@+id/code6"
-                layout="@layout/layout_text_input"
                 android:layout_width="0dp"
-                android:layout_height="76dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
@@ -135,13 +128,12 @@
                 app:layout_constraintTop_toTopOf="@id/code5" />
         </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/textResendCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:clickable="true"
-            android:inputType="none"
             android:onClick="@{() -> viewModel.resendCodeTrigger()}"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"

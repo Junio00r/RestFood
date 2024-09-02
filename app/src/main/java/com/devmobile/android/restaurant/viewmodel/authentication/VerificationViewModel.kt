@@ -21,51 +21,46 @@ class VerificationViewModel(
 ) : ViewModel() {
 
     // UIState
-    val code1: String
+    private val code1: String
         get() = handleUIState["CODE_1"] ?: ""
-    val code2: String
+    private val code2: String
         get() = handleUIState["CODE_2"] ?: ""
-    val code3: String
+    private val code3: String
         get() = handleUIState["CODE_3"] ?: ""
-    val code4: String
+    private val code4: String
         get() = handleUIState["CODE_4"] ?: ""
-    val code5: String
+    private val code5: String
         get() = handleUIState["CODE_5"] ?: ""
-    val code6: String
+    private val code6: String
         get() = handleUIState["CODE_6"] ?: ""
 
     fun saveCode1(newCode: String) {
         handleUIState["CODE_1"] = newCode
     }
-
     fun saveCode2(newCode: String) {
         handleUIState["CODE_2"] = newCode
     }
-
     fun saveCode3(newCode: String) {
         handleUIState["CODE_3"] = newCode
     }
-
     fun saveCode4(newCode: String) {
         handleUIState["CODE_4"] = newCode
     }
-
     fun saveCode5(newCode: String) {
         handleUIState["CODE_5"] = newCode
     }
-
     fun saveCode6(newCode: String) {
         handleUIState["CODE_6"] = newCode
     }
 
-    private val _isEnableInput = MutableLiveData<Boolean>()
-    val isEnableInput: LiveData<Boolean> = _isEnableInput
-
-    private val _canResendCode = MutableLiveData<Boolean>()
-    val canResendCode: LiveData<Boolean> = _canResendCode
+    private val _canStillEnterCodes = MutableLiveData<Boolean>()
+    val canStillEnterCodes: LiveData<Boolean> = _canStillEnterCodes
 
     private val _codeErrorPropagator = MutableLiveData<String?>()
     val codeErrorPropagator: LiveData<String?> = _codeErrorPropagator
+
+    private val _canResendCode = MutableLiveData<Boolean>()
+    val canResendCode: LiveData<Boolean> = _canResendCode
 
     private val _requestForResendCode = MutableSharedFlow<Unit>()
 
@@ -82,10 +77,9 @@ class VerificationViewModel(
 
                     requestNewCodeForValidation()
 
-                    _isEnableInput.value = true
-
                     delay(60000).let {
 
+                        _canStillEnterCodes.value = true
                         _canResendCode.value = true
                     }
                 }
@@ -103,23 +97,27 @@ class VerificationViewModel(
         }
     }
 
-    fun codesForVerify(codesEntered: Array<String>) {
+    fun <T: Collection<String>> requestCodesValidation(codesEntered: T) {
 
-        if (isCodePatternValid(codesEntered)) {
+        when (isCodePatternValid(codesEntered)) {
 
-            viewModelScope.launch {
+            true -> {
 
-                _isEnableInput.value = false
-                repository.verifyCodeEmail()
+                viewModelScope.launch {
+
+                    _canStillEnterCodes.value = false
+                    repository.validCodes()
+                }
             }
 
-        } else {
+            false -> {
 
-            _codeErrorPropagator.value = "Error code incorrect"
+                _codeErrorPropagator.value = "Error code incorrect"
+            }
         }
     }
 
-    private fun isCodePatternValid(codesEntered: Array<String>): Boolean {
+    private fun <T: Collection<String>> isCodePatternValid(codesEntered: T): Boolean {
 
         codesEntered.forEach { code ->
 

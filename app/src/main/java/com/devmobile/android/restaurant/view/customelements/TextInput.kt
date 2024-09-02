@@ -6,7 +6,12 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.SparseArray
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.children
+import androidx.core.view.updateLayoutParams
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.extensions.restoreChildViewStates
@@ -34,7 +39,7 @@ class TextInput @JvmOverloads constructor(
 
     init {
 
-        getTextInput().isErrorEnabled = true
+        getTextInput().gravity = Gravity.CENTER
         getTextInputEditText().textSize = 17F
         getTextInputEditText().maxLength(50)
     }
@@ -77,6 +82,10 @@ class TextInput @JvmOverloads constructor(
         }
 
         setMeasuredDimension(textInputWidth, textInputHeight)
+    }
+
+    override fun updateViewLayout(view: View?, params: ViewGroup.LayoutParams?) {
+        super.updateViewLayout(view, params)
     }
 
     override fun onSaveInstanceState(): Parcelable {

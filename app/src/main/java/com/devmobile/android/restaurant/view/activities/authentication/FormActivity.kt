@@ -34,8 +34,6 @@ class FormActivity : AppCompatActivity(), IShowError {
         )
     }
 
-    private val _textInputLayouts = HashMap<String, TextInputLayout>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

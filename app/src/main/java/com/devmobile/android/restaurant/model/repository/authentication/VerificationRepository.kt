@@ -76,7 +76,7 @@ class VerificationRepository(
         }
     }
 
-    suspend fun verifyCodeEmail() {
+    suspend fun validCodes() {
         delay(5000)
     }
 }
