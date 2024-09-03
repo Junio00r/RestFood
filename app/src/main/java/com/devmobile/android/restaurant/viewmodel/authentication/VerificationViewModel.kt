@@ -53,16 +53,19 @@ class VerificationViewModel(
         handleUIState["CODE_6"] = newCode
     }
 
-    private val _canStillEnterCodes = MutableLiveData<Boolean>()
-    val canStillEnterCodes: LiveData<Boolean> = _canStillEnterCodes
-
+    // observables
     private val _codeErrorPropagator = MutableLiveData<String?>()
     val codeErrorPropagator: LiveData<String?> = _codeErrorPropagator
+
+    private val _canStillEnterCodes = MutableLiveData<Boolean>()
+    val canStillEnterCodes: LiveData<Boolean> = _canStillEnterCodes
 
     private val _canResendCode = MutableLiveData<Boolean>()
     val canResendCode: LiveData<Boolean> = _canResendCode
 
+    // toggles
     private val _requestForResendCode = MutableSharedFlow<Unit>()
+    private val _sendCodesInserted    = MutableSharedFlow<Unit>()
 
     init {
 
@@ -71,23 +74,20 @@ class VerificationViewModel(
 
             _requestForResendCode.debounce(1000).collect {
 
-                if (_canResendCode.value == true || _canResendCode.value == null) {
+                handleResentVerificationCodes()
+            }
+        }
 
-                    _canResendCode.value = false
+        viewModelScope.launch {
 
-                    requestNewCodeForValidation()
+            _sendCodesInserted.debounce(1000).collect {
 
-                    delay(60000).let {
-
-                        _canStillEnterCodes.value = true
-                        _canResendCode.value = true
-                    }
-                }
+                handleCodesInserted(arrayListOf(code1, code2, code3, code4, code5, code6))
             }
         }
     }
 
-    // Functions
+    // triggers
     @CalledFromXML
     fun resendCodeTrigger() {
 
@@ -97,9 +97,18 @@ class VerificationViewModel(
         }
     }
 
-    fun <T: Collection<String>> requestCodesValidation(codesEntered: T) {
+    fun sendCodesInsertedTrigger() {
 
-        when (isCodePatternValid(codesEntered)) {
+        viewModelScope.launch {
+
+            _sendCodesInserted.emit(Unit)
+        }
+    }
+
+    // functions
+    private fun <T : Collection<String>> handleCodesInserted(codes: T) {
+
+        when (isCodePatternValid(codes)) {
 
             true -> {
 
@@ -112,12 +121,12 @@ class VerificationViewModel(
 
             false -> {
 
-                _codeErrorPropagator.value = "Error code incorrect"
+                _codeErrorPropagator.value = "Error: Code Incorrect"
             }
         }
     }
 
-    private fun <T: Collection<String>> isCodePatternValid(codesEntered: T): Boolean {
+    private fun <T : Collection<String>> isCodePatternValid(codesEntered: T): Boolean {
 
         codesEntered.forEach { code ->
 
@@ -132,7 +141,27 @@ class VerificationViewModel(
         return true
     }
 
-    private fun requestNewCodeForValidation() {
+    private fun handleResentVerificationCodes() {
+
+        if (_canResendCode.value == true || _canResendCode.value == null) {
+
+            _canStillEnterCodes.value = true
+            _canResendCode.value = false
+
+            requestNewCodesValidation()
+
+            // Simulation time for response
+            viewModelScope.launch {
+
+                delay(6000).let {
+
+                    _canResendCode.value = true
+                }
+            }
+        }
+    }
+
+    private fun requestNewCodesValidation() {
 
     }
 }

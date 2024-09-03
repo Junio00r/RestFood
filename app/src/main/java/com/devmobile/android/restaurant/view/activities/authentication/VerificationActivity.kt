@@ -83,18 +83,28 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
     private fun setObservables() {
 
-        _viewModel.canStillEnterCodes.observe(this@VerificationActivity) { mayEnableInput ->
+        _viewBinding.toolbarBack.setNavigationOnClickListener {
 
-            enableInputs(mayEnableInput)
+            finish()
         }
 
         _viewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
 
             if (error.isNullOrEmpty()) {
 
-                showErrorMessage(error!!)
+                showErrorMessage(error ?: "Invalid Code")
             }
         }
+
+        // about inputs
+        _viewModel.canStillEnterCodes.observe(this@VerificationActivity) { mayEnableInput ->
+
+            _codes.forEach {
+
+                it.isEnabled = mayEnableInput
+            }
+        }
+
 
         _viewModel.canResendCode.observe(this@VerificationActivity) { canResendCode ->
 
@@ -103,12 +113,8 @@ class VerificationActivity : AppCompatActivity(), IShowError {
             if (!canResendCode) {
 
                 clearInput(_codes.map { it.getTextInputEditText() })
+                restoreFocus()
             }
-        }
-
-        _viewBinding.toolbarBack.setNavigationOnClickListener {
-
-            finish()
         }
 
         _codes[0].getTextInputEditText().doAfterTextChanged {
@@ -116,31 +122,26 @@ class VerificationActivity : AppCompatActivity(), IShowError {
             _viewModel.saveCode1(it.toString())
             restoreFocus()
         }
-
         _codes[1].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode2(it.toString())
             restoreFocus()
         }
-
         _codes[2].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode3(it.toString())
             restoreFocus()
         }
-
         _codes[3].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode4(it.toString())
             restoreFocus()
         }
-
         _codes[4].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode5(it.toString())
             restoreFocus()
         }
-
         _codes[5].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode6(it.toString())
@@ -148,32 +149,12 @@ class VerificationActivity : AppCompatActivity(), IShowError {
         }
     }
 
-    private fun transferCodes() {
-
-        _viewModel.requestCodesValidation(
-
-            codesEntered = _codes.map { it.getTextInputEditText().text.toString() }
-        )
-    }
-
     private fun restoreFocus() {
 
-        val nextInputEmpty = _codes.firstOrNull {
+        _codes.firstOrNull {
 
             it.getTextInputEditText().text.isNullOrEmpty()
-        }?.requestFocus()
-
-        if (nextInputEmpty == null) {
-            transferCodes()
-        }
-    }
-
-    private fun enableInputs(isFocusable: Boolean) {
-
-        _codes.forEach {
-
-            it.isEnabled = isFocusable
-        }
+        }?.requestFocus() ?: _viewModel.sendCodesInsertedTrigger()
     }
 
     private fun <T> clearInput(inputs: Collection<T>) where T : EditText {
@@ -184,25 +165,33 @@ class VerificationActivity : AppCompatActivity(), IShowError {
         }
     }
 
-    private fun changedResendTextColor(wasResendCode: Boolean) {
+    private fun changedResendTextColor(wasCodeResent: Boolean) {
 
-        if (wasResendCode) {
+        when (wasCodeResent) {
 
-            _viewBinding.textResendCode.setTextColor(
-                ColorStateList.valueOf(
-                    getColor(
-                        R.color.black_two
+            true -> {
+
+                _viewBinding.textResendCode.setTextColor(
+
+                    ColorStateList.valueOf(
+                        getColor(
+                            R.color.black_two
+                        )
                     )
                 )
-            )
+            }
 
-        } else {
+            false -> {
 
-            _viewBinding.textResendCode.setTextColor(
-                getColor(
-                    R.color.gray_two
+                _viewBinding.textResendCode.setTextColor(
+
+                    ColorStateList.valueOf(
+                        getColor(
+                            R.color.gray_two
+                        )
+                    )
                 )
-            )
+            }
         }
     }
 
