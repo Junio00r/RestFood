@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant
 
-import com.devmobile.android.restaurant.viewmodel.InputPatterns
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

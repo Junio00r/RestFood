@@ -27,7 +27,9 @@ class VerificationActivity : AppCompatActivity(), IShowError {
     private val _viewModel: VerificationViewModel by viewModels {
 
         ViewModelFactory(
-            repository = _repository, ownerOfStateToSave = this, defaultValuesForNulls = null
+            repository = _repository,
+            ownerOfStateToSave = this,
+            defaultValuesForNulls = null,
         )
     }
 
@@ -99,10 +101,7 @@ class VerificationActivity : AppCompatActivity(), IShowError {
         // about inputs
         _viewModel.canStillEnterCodes.observe(this@VerificationActivity) { mayEnableInput ->
 
-            _codes.forEach {
-
-                it.isEnabled = mayEnableInput
-            }
+            _codes.forEach { it.isEnabled = mayEnableInput }
         }
 
 
@@ -157,7 +156,7 @@ class VerificationActivity : AppCompatActivity(), IShowError {
         }?.requestFocus() ?: _viewModel.sendCodesInsertedTrigger()
     }
 
-    private fun <T> clearInput(inputs: Collection<T>) where T : EditText {
+    private fun <T : EditText> clearInput(inputs: Collection<T>) {
 
         inputs.forEach {
 

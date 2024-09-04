@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.viewmodel
+package com.devmobile.android.restaurant
 
 import java.text.NumberFormat
 

@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
-import com.devmobile.android.restaurant.viewmodel.InputPatterns
+import com.devmobile.android.restaurant.InputPatterns
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
@@ -35,22 +35,18 @@ class FormViewModel(
         get() = handleUIState["PASSWORD"] ?: ""
 
     fun onNameChanged(newName: String) {
-        Log.d("ViewModel", "changed Name: \"$newName\" $handleUIState ")
         handleUIState["NAME"] = newName
     }
 
     fun onLastNameChanged(newLastName: String) {
-        Log.d("ViewModel", "changed LastName: \"$newLastName\" $handleUIState")
         handleUIState["LAST_NAME"] = newLastName
     }
 
     fun onEmailChanged(newEmail: String) {
-        Log.d("ViewModel", "changed Email: \"$newEmail\" $handleUIState")
         handleUIState["EMAIL"] = newEmail
     }
 
     fun onPasswordChanged(newPassword: String) {
-        Log.d("ViewModel", "changed Password: \"$newPassword\" $handleUIState")
         handleUIState["PASSWORD"] = newPassword
     }
 

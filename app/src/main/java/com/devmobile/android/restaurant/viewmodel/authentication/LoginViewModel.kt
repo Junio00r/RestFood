@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
-import com.devmobile.android.restaurant.viewmodel.InputPatterns
+import com.devmobile.android.restaurant.InputPatterns
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {

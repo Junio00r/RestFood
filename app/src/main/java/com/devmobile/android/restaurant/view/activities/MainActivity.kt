@@ -10,7 +10,7 @@ import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityMainBinding
 import com.devmobile.android.restaurant.model.enums.FoodSection
 import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
-import com.devmobile.android.restaurant.viewmodel.IOnSelectFood
+import com.devmobile.android.restaurant.IOnSelectFood
 import com.devmobile.android.restaurant.viewmodel.adapters.TabAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator

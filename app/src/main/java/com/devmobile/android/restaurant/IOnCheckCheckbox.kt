@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.viewmodel
+package com.devmobile.android.restaurant
 
 import com.devmobile.android.restaurant.view.viewholders.FoodCardViewHolder
 

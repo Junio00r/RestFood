@@ -7,8 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
-import com.devmobile.android.restaurant.viewmodel.InputPatterns
+import com.devmobile.android.restaurant.InputPatterns
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
@@ -16,8 +20,9 @@ import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 class VerificationViewModel(
-    private val repository: VerificationRepository,
-    private val handleUIState: SavedStateHandle
+    private val repository: VerificationRepository /* It's not recommended because repository have a Context dependency */,
+    private val handleUIState: SavedStateHandle,
+    private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
 ) : ViewModel() {
 
     // UIState
@@ -70,7 +75,7 @@ class VerificationViewModel(
     init {
 
         // coroutines scope on init block isn't recommended
-        viewModelScope.launch {
+        coroutineScope.launch {
 
             _requestForResendCode.debounce(1000).collect {
 
@@ -78,7 +83,7 @@ class VerificationViewModel(
             }
         }
 
-        viewModelScope.launch {
+        coroutineScope.launch {
 
             _sendCodesInserted.debounce(1000).collect {
 
@@ -91,7 +96,7 @@ class VerificationViewModel(
     @CalledFromXML
     fun resendCodeTrigger() {
 
-        viewModelScope.launch {
+        coroutineScope.launch {
 
             _requestForResendCode.emit(Unit)
         }
@@ -99,7 +104,7 @@ class VerificationViewModel(
 
     fun sendCodesInsertedTrigger() {
 
-        viewModelScope.launch {
+        coroutineScope.launch {
 
             _sendCodesInserted.emit(Unit)
         }
@@ -112,7 +117,7 @@ class VerificationViewModel(
 
             true -> {
 
-                viewModelScope.launch {
+                coroutineScope.launch {
 
                     _canStillEnterCodes.value = false
                     repository.validCodes()
@@ -163,5 +168,11 @@ class VerificationViewModel(
 
     private fun requestNewCodesValidation() {
 
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        coroutineScope.cancel("Finishing ViewModel")
     }
 }

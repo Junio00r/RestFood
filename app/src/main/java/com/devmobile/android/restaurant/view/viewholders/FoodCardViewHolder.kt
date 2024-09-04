@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.entities.Food
 import com.devmobile.android.restaurant.model.enums.TempoPreparo
-import com.devmobile.android.restaurant.viewmodel.ZoneNumberFormat
+import com.devmobile.android.restaurant.ZoneNumberFormat
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView

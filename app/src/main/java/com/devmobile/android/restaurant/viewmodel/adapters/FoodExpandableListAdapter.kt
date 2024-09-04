@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
-import com.devmobile.android.restaurant.viewmodel.ZoneNumberFormat
+import com.devmobile.android.restaurant.ZoneNumberFormat
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.enums.FoodSection
 import com.google.android.material.textview.MaterialTextView

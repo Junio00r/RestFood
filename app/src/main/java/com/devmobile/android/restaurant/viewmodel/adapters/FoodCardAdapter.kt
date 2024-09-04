@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.devmobile.android.restaurant.viewmodel.IOnCheckCheckbox
+import com.devmobile.android.restaurant.IOnCheckCheckbox
 import com.devmobile.android.restaurant.model.entities.Food
 import com.devmobile.android.restaurant.view.viewholders.FoodCardViewHolder
 import com.devmobile.android.restaurant.R
