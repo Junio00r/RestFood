@@ -7,11 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.coroutineScope
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.InputPatterns
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
@@ -22,6 +25,7 @@ import java.util.regex.Pattern
 class FormViewModel(
     private val registerRepository: FormRepository,
     private val handleUIState: SavedStateHandle,
+    private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
 ) : ViewModel() {
 
     // UIState
@@ -73,7 +77,7 @@ class FormViewModel(
 
         // Scopes on init block isn't recommended
         setUpObservables()
-        viewModelScope.launch {
+        coroutineScope.launch {
 
             // debounce Flow for register new user
             _registerDebounceFlow.debounce(500).collect {
@@ -85,7 +89,7 @@ class FormViewModel(
 
     fun registerTrigger() {
 
-        viewModelScope.launch {
+        coroutineScope.launch {
 
             _registerDebounceFlow.emit(Unit)
         }
@@ -94,7 +98,7 @@ class FormViewModel(
     private fun setUpObservables() {
 
 
-        viewModelScope.launch {
+        coroutineScope.launch {
 
             registerRepository.resultRequestData.collect { checkEmailValid ->
 
@@ -111,7 +115,7 @@ class FormViewModel(
         // It may synchronized
         if (isValidData(userName, userLastName, userEmail, userPassword)) {
 
-            viewModelScope.launch {
+            coroutineScope.launch {
 
                 try {
 
@@ -119,24 +123,20 @@ class FormViewModel(
 
                         true -> _resultRequestData.value = RequestResult.Success()
 
-                        false -> _resultRequestData.value =
-                            RequestResult.Error(Exception("Email is invalid or already taken"))
+                        false -> _resultRequestData.value = RequestResult.Error(Exception("Email is invalid or already taken"))
                     }
 
                 } catch (e: IOException) {
 
-                    _resultRequestData.value =
-                        RequestResult.Error(Exception("It was not possible create account"))
+                    _resultRequestData.value = RequestResult.Error(Exception("It was not possible create account"))
 
                 } catch (e: SQLiteDatabaseCorruptException) {
 
-                    _resultRequestData.value =
-                        RequestResult.Error(Exception("It was not possible create account"))
+                    _resultRequestData.value = RequestResult.Error(Exception("It was not possible create account"))
 
                 } catch (e: SQLiteException) {
 
-                    _resultRequestData.value =
-                        RequestResult.Error(Exception("It was not possible create account"))
+                    _resultRequestData.value = RequestResult.Error(Exception("It was not possible create account"))
 
                 }
             }

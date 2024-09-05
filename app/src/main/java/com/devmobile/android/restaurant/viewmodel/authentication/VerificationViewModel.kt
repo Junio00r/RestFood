@@ -79,7 +79,7 @@ class VerificationViewModel(
 
             _requestForResendCode.debounce(1000).collect {
 
-                handleResentVerificationCodes()
+                handleResentVerificationCode()
             }
         }
 
@@ -111,16 +111,16 @@ class VerificationViewModel(
     }
 
     // functions
-    private fun <T : Collection<String>> handleCodesInserted(codes: T) {
+    private fun <T : Collection<String>> handleCodesInserted(code: T) {
 
-        when (isCodePatternValid(codes)) {
+        when (isCodePatternValid(code)) {
 
             true -> {
 
                 coroutineScope.launch {
 
                     _canStillEnterCodes.value = false
-                    repository.validCodes()
+                    repository.validCode(code)
                 }
             }
 
@@ -131,9 +131,9 @@ class VerificationViewModel(
         }
     }
 
-    private fun <T : Collection<String>> isCodePatternValid(codesEntered: T): Boolean {
+    private fun <T : Collection<String>> isCodePatternValid(codeEntered: T): Boolean {
 
-        codesEntered.forEach { code ->
+        codeEntered.forEach { code ->
 
             val check = InputPatterns.isMatch(InputPatterns.NUMBER_PATTERN, code)
 
@@ -146,14 +146,14 @@ class VerificationViewModel(
         return true
     }
 
-    private fun handleResentVerificationCodes() {
+    private fun handleResentVerificationCode() {
 
         if (_canResendCode.value == true || _canResendCode.value == null) {
 
             _canStillEnterCodes.value = true
             _canResendCode.value = false
 
-            requestNewCodesValidation()
+            repository.sendVerificationCode()
 
             // Simulation time for response
             viewModelScope.launch {
@@ -164,10 +164,6 @@ class VerificationViewModel(
                 }
             }
         }
-    }
-
-    private fun requestNewCodesValidation() {
-
     }
 
     override fun onCleared() {
