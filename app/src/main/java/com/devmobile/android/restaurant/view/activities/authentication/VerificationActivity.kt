@@ -17,6 +17,7 @@ import com.devmobile.android.restaurant.model.repository.authentication.Verifica
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 class VerificationActivity : AppCompatActivity(), IShowError {
@@ -34,7 +35,7 @@ class VerificationActivity : AppCompatActivity(), IShowError {
     }
 
     // data
-    private val _codes = ArrayList<TextInput>()
+    private val _numbers = ArrayList<TextInput>()
 
     // Functions
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +45,15 @@ class VerificationActivity : AppCompatActivity(), IShowError {
         setContentView(_viewBinding.root)
 
         _viewBinding.viewModel = _viewModel
-        _viewBinding.activity = this
 
-        _codes.addAll(
+        _numbers.addAll(
             arrayOf(
-                _viewBinding.code1,
-                _viewBinding.code2,
-                _viewBinding.code3,
-                _viewBinding.code4,
-                _viewBinding.code5,
-                _viewBinding.code6
+                _viewBinding.number1,
+                _viewBinding.number2,
+                _viewBinding.number3,
+                _viewBinding.number4,
+                _viewBinding.number5,
+                _viewBinding.number6
             )
         )
 
@@ -63,21 +63,23 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
     private fun drawingViews() {
 
-        _codes.forEach { code ->
+        _numbers.forEach { number ->
 
             // InputType
-            code.getTextInputEditText().inputType = InputType.TYPE_CLASS_NUMBER
+            number.getTextInputEditText().inputType = InputType.TYPE_CLASS_NUMBER
 
             // Text Alignment
-            code.getTextInputEditText().gravity = Gravity.CENTER
+            number.getTextInputEditText().gravity = Gravity.CENTER
 
             // Max Chars in Text
-            code.getTextInputEditText().maxLength(1)
+            number.getTextInputEditText().maxLength(1)
 
-            code.updateLayoutParams { height = 300 }
-            code.getTextInput().updateLayoutParams { height = 300 }
+            number.updateLayoutParams { height = 300 }
+            number.getTextInput().updateLayoutParams { height = 300 }
 
-            code.isErrorEnabled = false
+            number.getTextInput().isErrorEnabled = true
+            number.getTextInput().errorIconDrawable = null
+            number.getTextInput().isHelperTextEnabled = false
         }
 
         restoreFocus()
@@ -92,16 +94,14 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
         _viewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
 
-            if (error.isNullOrEmpty()) {
-
-                showErrorMessage(error ?: "Invalid Code")
-            }
+            _numbers.forEach { it.getTextInput().error = "Invalid Code" }
+            showErrorMessage(error ?: "Invalid Code")
         }
 
         // about inputs
         _viewModel.canStillEnterCodes.observe(this@VerificationActivity) { mayEnableInput ->
 
-            _codes.forEach { it.isEnabled = mayEnableInput }
+            _numbers.forEach { it.isEnabled = mayEnableInput }
         }
 
 
@@ -111,37 +111,38 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
             if (!canResendCode) {
 
-                clearInput(_codes.map { it.getTextInputEditText() })
+                clearInput(_numbers.map { it.getTextInputEditText() })
+                _numbers.forEach { it.getTextInput().error = null }
                 restoreFocus()
             }
         }
 
-        _codes[0].getTextInputEditText().doAfterTextChanged {
+        _numbers[0].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode1(it.toString())
             restoreFocus()
         }
-        _codes[1].getTextInputEditText().doAfterTextChanged {
+        _numbers[1].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode2(it.toString())
             restoreFocus()
         }
-        _codes[2].getTextInputEditText().doAfterTextChanged {
+        _numbers[2].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode3(it.toString())
             restoreFocus()
         }
-        _codes[3].getTextInputEditText().doAfterTextChanged {
+        _numbers[3].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode4(it.toString())
             restoreFocus()
         }
-        _codes[4].getTextInputEditText().doAfterTextChanged {
+        _numbers[4].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode5(it.toString())
             restoreFocus()
         }
-        _codes[5].getTextInputEditText().doAfterTextChanged {
+        _numbers[5].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode6(it.toString())
             restoreFocus()
@@ -150,7 +151,7 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
     private fun restoreFocus() {
 
-        _codes.firstOrNull {
+        _numbers.firstOrNull {
 
             it.getTextInputEditText().text.isNullOrEmpty()
         }?.requestFocus() ?: _viewModel.sendCodesInsertedTrigger()
@@ -196,9 +197,10 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
     override fun showErrorMessage(errorMessage: String) {
 
-        val mySnackBar = Snackbar.make(_viewBinding.container, errorMessage, 2000)
+        val mySnackBar = Snackbar.make(_viewBinding.container, errorMessage, 1000)
 
-        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.orange)))
+        mySnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light)))
         mySnackBar.show()
     }
 }

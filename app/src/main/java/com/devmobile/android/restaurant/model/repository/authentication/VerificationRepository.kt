@@ -14,11 +14,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import kotlin.coroutines.CoroutineContext
 import kotlin.random.Random
 
 class VerificationRepository(
@@ -38,11 +36,11 @@ class VerificationRepository(
 
     init {
 
-        sendVerificationCode()
+        requestNewVerificationCode()
     }
 
     @SuppressLint("DefaultLocale")
-    fun sendVerificationCode() {
+    fun requestNewVerificationCode() {
 
         val codeGenerated = codeGenerator.nextInt(0, 1_000_000)
         currentCodeGenerated = String.format("%06d", codeGenerated)
@@ -54,13 +52,12 @@ class VerificationRepository(
                 // Uses email api to send verification code
             }
         }
-    }
 
-    suspend fun validCode(codeEntered: Collection<String>) {
-        delay(5000)
+        Log.i("REQUEST", "Request New Verification Code")
     }
 
     private suspend fun createAccount(user: User) {
+
         val userDao = RestaurantLocalDatabase.getInstance(context).getUserDao()
 
         return withContext(coroutineDispatcher) {
@@ -71,34 +68,25 @@ class VerificationRepository(
 
             } catch (e: IOException) {
 
-                Log.e(
-                    "VerificationRepository",
-                    "IO database exception to create account: ${e.message}"
-                )
                 throw e
 
             } catch (e: SQLiteDatabaseCorruptException) {
 
-                Log.e(
-                    "VerificationRepository", "Database corrupt: ${e.message}"
-                )
                 throw e
 
             } catch (e: SQLiteException) {
 
-                Log.e(
-                    "VerificationRepository", "SQL exception while creating account: ${e.message}"
-                )
                 throw e
 
             } catch (e: AccountException) {
 
-                Log.e(
-                    "VerificationRepository",
-                    "Unexpected exception while creating account: ${e.message}"
-                )
                 throw e
             }
         }
+    }
+
+    fun isCodeValid(codeEntered: String): Boolean {
+
+        return codeEntered == currentCodeGenerated
     }
 }

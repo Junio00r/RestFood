@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.CalledFromXML
-import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
 import com.devmobile.android.restaurant.InputPatterns
+import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -20,42 +20,42 @@ import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 class VerificationViewModel(
-    private val repository: VerificationRepository /* It's not recommended because repository have a Context dependency */,
+    private val repository: VerificationRepository, /* It's not recommended because repository have a Context dependency */
     private val handleUIState: SavedStateHandle,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
 ) : ViewModel() {
 
     // UIState
     private val code1: String
-        get() = handleUIState["CODE_1"] ?: ""
+        get() = handleUIState["NUMBER_1"] ?: ""
     private val code2: String
-        get() = handleUIState["CODE_2"] ?: ""
+        get() = handleUIState["NUMBER_2"] ?: ""
     private val code3: String
-        get() = handleUIState["CODE_3"] ?: ""
+        get() = handleUIState["NUMBER_3"] ?: ""
     private val code4: String
-        get() = handleUIState["CODE_4"] ?: ""
+        get() = handleUIState["NUMBER_4"] ?: ""
     private val code5: String
-        get() = handleUIState["CODE_5"] ?: ""
+        get() = handleUIState["NUMBER_5"] ?: ""
     private val code6: String
-        get() = handleUIState["CODE_6"] ?: ""
+        get() = handleUIState["NUMBER_6"] ?: ""
 
     fun saveCode1(newCode: String) {
-        handleUIState["CODE_1"] = newCode
+        handleUIState["NUMBER_1"] = newCode
     }
     fun saveCode2(newCode: String) {
-        handleUIState["CODE_2"] = newCode
+        handleUIState["NUMBER_2"] = newCode
     }
     fun saveCode3(newCode: String) {
-        handleUIState["CODE_3"] = newCode
+        handleUIState["NUMBER_3"] = newCode
     }
     fun saveCode4(newCode: String) {
-        handleUIState["CODE_4"] = newCode
+        handleUIState["NUMBER_4"] = newCode
     }
     fun saveCode5(newCode: String) {
-        handleUIState["CODE_5"] = newCode
+        handleUIState["NUMBER_5"] = newCode
     }
     fun saveCode6(newCode: String) {
-        handleUIState["CODE_6"] = newCode
+        handleUIState["NUMBER_6"] = newCode
     }
 
     // observables
@@ -70,7 +70,7 @@ class VerificationViewModel(
 
     // toggles
     private val _requestForResendCode = MutableSharedFlow<Unit>()
-    private val _sendCodesInserted    = MutableSharedFlow<Unit>()
+    private val _sendCodesInserted = MutableSharedFlow<Unit>()
 
     init {
 
@@ -79,7 +79,7 @@ class VerificationViewModel(
 
             _requestForResendCode.debounce(1000).collect {
 
-                handleResentVerificationCode()
+                handleResendVerificationCode()
             }
         }
 
@@ -87,7 +87,7 @@ class VerificationViewModel(
 
             _sendCodesInserted.debounce(1000).collect {
 
-                handleCodesInserted(arrayListOf(code1, code2, code3, code4, code5, code6))
+                handleCodeInserted(arrayListOf(code1, code2, code3, code4, code5, code6))
             }
         }
     }
@@ -111,29 +111,39 @@ class VerificationViewModel(
     }
 
     // functions
-    private fun <T : Collection<String>> handleCodesInserted(code: T) {
+    private fun <T : Collection<String>> handleCodeInserted(numbers: T) {
 
-        when (isCodePatternValid(code)) {
+        when (isNumberValid(numbers) and isCodeValid(numbers)) {
 
-            true -> {
+            true  -> _canStillEnterCodes.value = false
 
-                coroutineScope.launch {
+            false -> _codeErrorPropagator.value = "Error: Code Incorrect"
+        }
+    }
 
-                    _canStillEnterCodes.value = false
-                    repository.validCode(code)
+    private fun handleResendVerificationCode() {
+
+        if (_canResendCode.value == true || _canResendCode.value == null) {
+
+            _canStillEnterCodes.value = true
+            _canResendCode.value = false
+
+            repository.requestNewVerificationCode()
+
+            // Simulation time for request code
+            viewModelScope.launch {
+
+                delay(6000).let {
+
+                    _canResendCode.value = true
                 }
-            }
-
-            false -> {
-
-                _codeErrorPropagator.value = "Error: Code Incorrect"
             }
         }
     }
 
-    private fun <T : Collection<String>> isCodePatternValid(codeEntered: T): Boolean {
+    private fun <T : Collection<String>> isNumberValid(numbersEntered: T): Boolean {
 
-        codeEntered.forEach { code ->
+        numbersEntered.forEach { code ->
 
             val check = InputPatterns.isMatch(InputPatterns.NUMBER_PATTERN, code)
 
@@ -146,24 +156,9 @@ class VerificationViewModel(
         return true
     }
 
-    private fun handleResentVerificationCode() {
+    private fun <T : Collection<String>> isCodeValid(numbersEntered: T): Boolean {
 
-        if (_canResendCode.value == true || _canResendCode.value == null) {
-
-            _canStillEnterCodes.value = true
-            _canResendCode.value = false
-
-            repository.sendVerificationCode()
-
-            // Simulation time for response
-            viewModelScope.launch {
-
-                delay(6000).let {
-
-                    _canResendCode.value = true
-                }
-            }
-        }
+        return repository.isCodeValid(numbersEntered.joinToString(separator = ""))
     }
 
     override fun onCleared() {

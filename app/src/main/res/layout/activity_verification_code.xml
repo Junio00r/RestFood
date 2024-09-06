@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="activity"
-            type="com.devmobile.android.restaurant.view.activities.authentication.VerificationActivity" />
-
-        <variable
             name="viewModel"
             type="com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel" />
     </data>
@@ -48,7 +44,7 @@
             tools:ignore="RtlSymmetry" />
 
         <LinearLayout
-            android:id="@+id/containerCodes"
+            android:id="@+id/containerCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -61,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@id/textInformation">
 
             <com.devmobile.android.restaurant.view.customelements.TextInput
-                android:id="@+id/code1"
+                android:id="@+id/number1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -72,60 +68,60 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.devmobile.android.restaurant.view.customelements.TextInput
-                android:id="@+id/code2"
+                android:id="@+id/number2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
-                app:layout_constraintBottom_toBottomOf="@id/code1"
-                app:layout_constraintStart_toEndOf="@id/code1"
-                app:layout_constraintTop_toTopOf="@id/code1" />
+                app:layout_constraintBottom_toBottomOf="@id/number1"
+                app:layout_constraintStart_toEndOf="@id/number1"
+                app:layout_constraintTop_toTopOf="@id/number1" />
 
             <com.devmobile.android.restaurant.view.customelements.TextInput
-                android:id="@+id/code3"
+                android:id="@+id/number3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
-                app:layout_constraintBottom_toBottomOf="@id/code2"
-                app:layout_constraintStart_toEndOf="@id/code2"
-                app:layout_constraintTop_toTopOf="@id/code2" />
+                app:layout_constraintBottom_toBottomOf="@id/number2"
+                app:layout_constraintStart_toEndOf="@id/number2"
+                app:layout_constraintTop_toTopOf="@id/number2" />
 
             <com.devmobile.android.restaurant.view.customelements.TextInput
-                android:id="@+id/code4"
+                android:id="@+id/number4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
-                app:layout_constraintBottom_toBottomOf="@id/code3"
-                app:layout_constraintStart_toEndOf="@id/code3"
-                app:layout_constraintTop_toTopOf="@id/code3" />
+                app:layout_constraintBottom_toBottomOf="@id/number3"
+                app:layout_constraintStart_toEndOf="@id/number3"
+                app:layout_constraintTop_toTopOf="@id/number3" />
 
             <com.devmobile.android.restaurant.view.customelements.TextInput
-                android:id="@+id/code5"
+                android:id="@+id/number5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
-                app:layout_constraintBottom_toBottomOf="@id/code4"
-                app:layout_constraintStart_toEndOf="@id/code4"
-                app:layout_constraintTop_toTopOf="@id/code4"
+                app:layout_constraintBottom_toBottomOf="@id/number4"
+                app:layout_constraintStart_toEndOf="@id/number4"
+                app:layout_constraintTop_toTopOf="@id/number4"
                 app:layout_constraintVertical_bias="0.0" />
 
             <com.devmobile.android.restaurant.view.customelements.TextInput
-                android:id="@+id/code6"
+                android:id="@+id/number6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
                 android:textSize="40sp"
-                app:layout_constraintBottom_toBottomOf="@id/code5"
-                app:layout_constraintStart_toEndOf="@id/code5"
-                app:layout_constraintTop_toTopOf="@id/code5" />
+                app:layout_constraintBottom_toBottomOf="@id/number5"
+                app:layout_constraintStart_toEndOf="@id/number5"
+                app:layout_constraintTop_toTopOf="@id/number5" />
         </LinearLayout>
 
         <TextView
@@ -141,8 +137,8 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:fontFamily="@font/sul_sans_regular"
-            app:layout_constraintStart_toStartOf="@id/containerCodes"
-            app:layout_constraintTop_toBottomOf="@id/containerCodes" />
+            app:layout_constraintStart_toStartOf="@id/containerCode"
+            app:layout_constraintTop_toBottomOf="@id/containerCode" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
