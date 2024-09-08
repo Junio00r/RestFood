@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
@@ -42,18 +42,23 @@ class VerificationViewModel(
     fun saveCode1(newCode: String) {
         handleUIState["NUMBER_1"] = newCode
     }
+
     fun saveCode2(newCode: String) {
         handleUIState["NUMBER_2"] = newCode
     }
+
     fun saveCode3(newCode: String) {
         handleUIState["NUMBER_3"] = newCode
     }
+
     fun saveCode4(newCode: String) {
         handleUIState["NUMBER_4"] = newCode
     }
+
     fun saveCode5(newCode: String) {
         handleUIState["NUMBER_5"] = newCode
     }
+
     fun saveCode6(newCode: String) {
         handleUIState["NUMBER_6"] = newCode
     }
@@ -65,8 +70,7 @@ class VerificationViewModel(
     private val _canStillEnterCodes = MutableLiveData<Boolean>()
     val canStillEnterCodes: LiveData<Boolean> = _canStillEnterCodes
 
-    private val _canResendCode = MutableLiveData<Boolean>()
-    val canResendCode: LiveData<Boolean> = _canResendCode
+    val canResendCode: LiveData<Boolean> = repository.canResendCode.asLiveData()
 
     // toggles
     private val _requestForResendCode = MutableSharedFlow<Unit>()
@@ -113,35 +117,36 @@ class VerificationViewModel(
     // functions
     private fun <T : Collection<String>> handleCodeInserted(numbers: T) {
 
-        when (isNumberValid(numbers) and isCodeValid(numbers)) {
+        when (isNumbersValid(numbers)) {
 
-            true  -> _canStillEnterCodes.value = false
+            true -> {
 
-            false -> _codeErrorPropagator.value = "Error: Code Incorrect"
+                _canStillEnterCodes.value = false
+                repository.checkCode(numbers.joinToString(separator = ""))
+            }
+
+            false -> {
+
+                _codeErrorPropagator.value = "Error: Code Incorrect"
+            }
         }
     }
 
     private fun handleResendVerificationCode() {
 
-        if (_canResendCode.value == true || _canResendCode.value == null) {
+        if (canResendCode.value == true) {
 
             _canStillEnterCodes.value = true
-            _canResendCode.value = false
 
-            repository.requestNewVerificationCode()
+            coroutineScope.launch {
 
-            // Simulation time for request code
-            viewModelScope.launch {
+                repository.requestNewVerificationCode()
 
-                delay(6000).let {
-
-                    _canResendCode.value = true
-                }
             }
         }
     }
 
-    private fun <T : Collection<String>> isNumberValid(numbersEntered: T): Boolean {
+    private fun <T : Collection<String>> isNumbersValid(numbersEntered: T): Boolean {
 
         numbersEntered.forEach { code ->
 
@@ -154,11 +159,6 @@ class VerificationViewModel(
         }
 
         return true
-    }
-
-    private fun <T : Collection<String>> isCodeValid(numbersEntered: T): Boolean {
-
-        return repository.isCodeValid(numbersEntered.joinToString(separator = ""))
     }
 
     override fun onCleared() {

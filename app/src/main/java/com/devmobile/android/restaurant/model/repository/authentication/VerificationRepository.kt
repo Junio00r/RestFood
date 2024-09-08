@@ -7,13 +7,18 @@ import android.database.sqlite.SQLiteException
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import com.devmobile.android.restaurant.AccountException
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -21,35 +26,36 @@ import kotlin.random.Random
 
 class VerificationRepository(
     private val context: Context,
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default,
-    private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + coroutineDispatcher),
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + defaultDispatcher),
 ) {
-    private val database = RestaurantLocalDatabase.getInstance(context)
-    private var codeGenerator: Random = Random.Default
+    private val codeGenerator: Random = Random.Default
     private var currentCodeGenerated: String = ""
 
-    private val _isCodesValid = MutableLiveData<Boolean>()
-    val isCodeValid: LiveData<Boolean> = _isCodesValid
-
-    private val _canResendCode = MutableLiveData<Boolean>()
-    val canResendCode: LiveData<Boolean> = _canResendCode
+    private val _canResendCode: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val canResendCode = _canResendCode.asStateFlow()
 
     init {
 
-        requestNewVerificationCode()
+        coroutineScope.launch {
+
+            requestNewVerificationCode()
+        }
     }
 
     @SuppressLint("DefaultLocale")
-    fun requestNewVerificationCode() {
+    suspend fun requestNewVerificationCode() {
 
         val codeGenerated = codeGenerator.nextInt(0, 1_000_000)
         currentCodeGenerated = String.format("%06d", codeGenerated)
 
-        coroutineScope.launch {
+        withContext(Dispatchers.IO) {
 
-            withContext(Dispatchers.IO) {
+            // Uses email api to send verification code
 
-                // Uses email api to send verification code
+            // Simulation time for request code
+            delay(6000).let {
+
             }
         }
 
@@ -60,7 +66,7 @@ class VerificationRepository(
 
         val userDao = RestaurantLocalDatabase.getInstance(context).getUserDao()
 
-        return withContext(coroutineDispatcher) {
+        return withContext(defaultDispatcher) {
 
             try {
 
@@ -85,7 +91,7 @@ class VerificationRepository(
         }
     }
 
-    fun isCodeValid(codeEntered: String): Boolean {
+    fun checkCode(codeEntered: String): Boolean {
 
         return codeEntered == currentCodeGenerated
     }
