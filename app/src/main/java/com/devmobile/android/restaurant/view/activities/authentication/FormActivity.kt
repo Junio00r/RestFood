@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
+import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -57,20 +58,16 @@ class FormActivity : AppCompatActivity(), IShowError {
             _formBinding.inputUserPassword.getTextInput().hint = "Password *"
 
             // Setup InputType
-            _formBinding.inputUserName.getTextInputEditText().inputType =
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            _formBinding.inputUserLastName.getTextInputEditText().inputType =
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            _formBinding.inputUserEmail.getTextInputEditText().inputType =
-                InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            _formBinding.inputUserPassword.getTextInputEditText().inputType =
-                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            _formBinding.inputUserName.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            _formBinding.inputUserLastName.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            _formBinding.inputUserEmail.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            _formBinding.inputUserEmail.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
+            _formBinding.inputUserPassword.getTextInput().endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
             _formBinding.inputUserEmail.getTextInputEditText().maxLength(256)
 
             // Enable Counter
             _formBinding.inputUserEmail.getTextInput().isCounterEnabled = true
-
         }
     }
 
