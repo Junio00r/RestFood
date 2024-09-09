@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteException
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import com.devmobile.android.restaurant.AccountException
-import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -32,9 +30,6 @@ class VerificationRepository(
     private val codeGenerator: Random = Random.Default
     private var currentCodeGenerated: String = ""
 
-    private val _canResendCode: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val canResendCode = _canResendCode.asStateFlow()
-
     init {
 
         coroutineScope.launch {
@@ -53,9 +48,9 @@ class VerificationRepository(
 
             // Uses email api to send verification code
 
-            // Simulation time for request code
             delay(6000).let {
 
+                // Simulation time for request code
             }
         }
 

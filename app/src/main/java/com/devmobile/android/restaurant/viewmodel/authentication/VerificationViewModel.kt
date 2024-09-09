@@ -15,6 +15,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
@@ -70,7 +71,8 @@ class VerificationViewModel(
     private val _canStillEnterCodes = MutableLiveData<Boolean>()
     val canStillEnterCodes: LiveData<Boolean> = _canStillEnterCodes
 
-    val canResendCode: LiveData<Boolean> = repository.canResendCode.asLiveData()
+    private val _canResendCode: MutableLiveData<Boolean> = MutableLiveData(true)
+    val canResendCode: LiveData<Boolean> = _canResendCode
 
     // toggles
     private val _requestForResendCode = MutableSharedFlow<Unit>()
@@ -81,7 +83,7 @@ class VerificationViewModel(
         // coroutines scope on init block isn't recommended
         coroutineScope.launch {
 
-            _requestForResendCode.debounce(1000).collect {
+            _requestForResendCode.debounce(800).collect {
 
                 handleResendVerificationCode()
             }
@@ -89,7 +91,7 @@ class VerificationViewModel(
 
         coroutineScope.launch {
 
-            _sendCodesInserted.debounce(1000).collect {
+            _sendCodesInserted.debounce(800).collect {
 
                 handleCodeInserted(arrayListOf(code1, code2, code3, code4, code5, code6))
             }
@@ -137,11 +139,12 @@ class VerificationViewModel(
         if (canResendCode.value == true) {
 
             _canStillEnterCodes.value = true
+            _canResendCode.value = false
 
             coroutineScope.launch {
 
                 repository.requestNewVerificationCode()
-
+                _canResendCode.value = true
             }
         }
     }
