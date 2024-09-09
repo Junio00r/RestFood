@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
@@ -19,13 +20,12 @@ import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class FormActivity : AppCompatActivity(), IShowError {
 
     private lateinit var _formBinding: ActivityFormDataBinding
-
     private val formRepository = FormRepository(this@FormActivity)
-
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
         ViewModelFactory(
@@ -96,9 +96,13 @@ class FormActivity : AppCompatActivity(), IShowError {
                 inputUserPassword.getTextInput().error = error
             }
 
-            _formViewModel.resultRequestData.observe(this@FormActivity) { resultOfRequest ->
+            // Flow because LiveData send latest value after change configuration, but i not want it happens
+            lifecycleScope.launch {
 
-                handleLoadState(resultOfRequest)
+                _formViewModel.resultRequestData.collect { resultOfRequest ->
+
+                    handleLoadState(resultOfRequest)
+                }
             }
 
             // Listeners after text changed
@@ -162,7 +166,7 @@ class FormActivity : AppCompatActivity(), IShowError {
 
         val mySnackBar = Snackbar.make(_formBinding.registerContainer, errorMessage, 2000)
 
-        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.green_light_one)))
+        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.white)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()

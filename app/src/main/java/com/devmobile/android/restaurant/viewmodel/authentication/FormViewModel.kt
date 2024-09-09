@@ -1,24 +1,21 @@
 package com.devmobile.android.restaurant.viewmodel.authentication
 
-import android.database.sqlite.SQLiteDatabaseCorruptException
-import android.database.sqlite.SQLiteException
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.coroutineScope
+import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
-import com.devmobile.android.restaurant.InputPatterns
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.util.regex.Pattern
 
 @OptIn(FlowPreview::class)
@@ -67,8 +64,8 @@ class FormViewModel(
     private val _passwordErrorPropagator = MutableLiveData<String?>()
     val passwordErrorPropagator: LiveData<String?> = _passwordErrorPropagator
 
-    private val _resultRequestData = MutableLiveData<RequestResult?>(null)
-    val resultRequestData: LiveData<RequestResult?> = _resultRequestData
+    private val _resultRequestData = MutableStateFlow<RequestResult?>(null)
+    val resultRequestData = _resultRequestData.asStateFlow()
 
     // For Debounce Pattern
     private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
@@ -76,7 +73,6 @@ class FormViewModel(
     init {
 
         // Scopes on init block isn't recommended
-        setUpObservables()
         coroutineScope.launch {
 
             // debounce Flow for register new user
@@ -95,19 +91,6 @@ class FormViewModel(
         }
     }
 
-    private fun setUpObservables() {
-
-
-        coroutineScope.launch {
-
-            registerRepository.resultRequestData.collect { checkEmailValid ->
-
-                _resultRequestData.value = checkEmailValid
-            }
-
-        }
-    }
-
     private fun requestUserData(
         userName: String?, userLastName: String? = "", userEmail: String?, userPassword: String?
     ) {
@@ -119,25 +102,11 @@ class FormViewModel(
 
                 try {
 
-                    when (registerRepository.hasEmailAlreadyRegistered(userEmail!!)) {
+                    registerRepository.hasEmailAlreadyRegistered(userEmail!!)
 
-                        true -> _resultRequestData.value = RequestResult.Success()
+                } catch (e: Exception) {
 
-                        false -> _resultRequestData.value = RequestResult.Error(Exception("Email is invalid or already taken"))
-                    }
-
-                } catch (e: IOException) {
-
-                    _resultRequestData.value = RequestResult.Error(Exception("It was not possible create account"))
-
-                } catch (e: SQLiteDatabaseCorruptException) {
-
-                    _resultRequestData.value = RequestResult.Error(Exception("It was not possible create account"))
-
-                } catch (e: SQLiteException) {
-
-                    _resultRequestData.value = RequestResult.Error(Exception("It was not possible create account"))
-
+                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
                 }
             }
         }
