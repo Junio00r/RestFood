@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
+import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -82,7 +83,6 @@ class VerificationActivity : AppCompatActivity(), IShowError {
             number.getTextInput().isHelperTextEnabled = false
         }
 
-        restoreFocus()
     }
 
     private fun setObservables() {
@@ -113,48 +113,53 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
                 clearInput(_numbers.map { it.getTextInputEditText() })
                 _numbers.forEach { it.getTextInput().error = null }
-                restoreFocus()
+                restoreFocusOrSendCode()
             }
         }
 
         _numbers[0].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode1(it.toString())
-            restoreFocus()
+            restoreFocusOrSendCode()
         }
         _numbers[1].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode2(it.toString())
-            restoreFocus()
+            restoreFocusOrSendCode()
         }
         _numbers[2].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode3(it.toString())
-            restoreFocus()
+            restoreFocusOrSendCode()
         }
         _numbers[3].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode4(it.toString())
-            restoreFocus()
+            restoreFocusOrSendCode()
         }
         _numbers[4].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode5(it.toString())
-            restoreFocus()
+            restoreFocusOrSendCode()
         }
         _numbers[5].getTextInputEditText().doAfterTextChanged {
 
             _viewModel.saveCode6(it.toString())
-            restoreFocus()
+            restoreFocusOrSendCode()
         }
     }
 
-    private fun restoreFocus() {
+    override fun onResume() {
 
-        _numbers.firstOrNull {
+        restoreFocusOrSendCode()
+        super.onResume()
+    }
 
-            it.getTextInputEditText().text.isNullOrEmpty()
-        }?.requestFocus() ?: _viewModel.sendCodesInsertedTrigger()
+    private fun restoreFocusOrSendCode() {
+
+        _numbers.map { it.getTextInput() }
+            .firstOrNull { it.editText?.text.isNullOrEmpty() }
+            ?.requestFocus() ?: _viewModel.sendCodesInsertedTrigger()
     }
 
     private fun <T : EditText> clearInput(inputs: Collection<T>) {

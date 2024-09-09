@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.core.view.children
 import androidx.core.view.updateLayoutParams
 import com.devmobile.android.restaurant.R
@@ -24,7 +25,7 @@ import com.google.android.material.textfield.TextInputLayout
 class TextInput @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-) : TextInputLayout(context, attrs) {
+) : FrameLayout(context, attrs) {
 
     private val _layoutInflated =
         LayoutInflater.from(context).inflate(R.layout.layout_text_input, this)

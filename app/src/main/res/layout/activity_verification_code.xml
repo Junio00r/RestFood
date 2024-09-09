@@ -21,6 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/black_two"
             android:paddingStart="8dp"
+            android:saveEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
