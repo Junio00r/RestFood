@@ -60,6 +60,8 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
         setObservables()
         drawingViews()
+        // restore focus
+        restoreFocusOrSendCode()
     }
 
     private fun drawingViews() {
@@ -119,40 +121,48 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
         _numbers[0].getTextInputEditText().doAfterTextChanged {
 
-            _viewModel.saveCode1(it.toString())
+            _viewModel.saveNumber1(it.toString())
             restoreFocusOrSendCode()
         }
         _numbers[1].getTextInputEditText().doAfterTextChanged {
 
-            _viewModel.saveCode2(it.toString())
+            _viewModel.saveNumber2(it.toString())
             restoreFocusOrSendCode()
         }
         _numbers[2].getTextInputEditText().doAfterTextChanged {
 
-            _viewModel.saveCode3(it.toString())
+            _viewModel.saveNumber3(it.toString())
             restoreFocusOrSendCode()
         }
         _numbers[3].getTextInputEditText().doAfterTextChanged {
 
-            _viewModel.saveCode4(it.toString())
+            _viewModel.saveNumber4(it.toString())
             restoreFocusOrSendCode()
         }
         _numbers[4].getTextInputEditText().doAfterTextChanged {
 
-            _viewModel.saveCode5(it.toString())
+            _viewModel.saveNumber5(it.toString())
             restoreFocusOrSendCode()
         }
         _numbers[5].getTextInputEditText().doAfterTextChanged {
 
-            _viewModel.saveCode6(it.toString())
+            _viewModel.saveNumber6(it.toString())
             restoreFocusOrSendCode()
         }
     }
 
-    override fun onResume() {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
 
-        restoreFocusOrSendCode()
-        super.onResume()
+        with(_viewBinding) {
+
+            number1.getTextInputEditText().append(_viewModel.number1)
+            number2.getTextInputEditText().append(_viewModel.number2)
+            number3.getTextInputEditText().append(_viewModel.number3)
+            number4.getTextInputEditText().append(_viewModel.number4)
+            number5.getTextInputEditText().append(_viewModel.number5)
+            number6.getTextInputEditText().append(_viewModel.number6)
+        }
     }
 
     private fun restoreFocusOrSendCode() {

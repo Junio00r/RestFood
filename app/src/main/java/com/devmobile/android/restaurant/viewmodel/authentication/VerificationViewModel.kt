@@ -24,40 +24,40 @@ class VerificationViewModel(
 ) : ViewModel() {
 
     // UIState
-    private val code1: String
+    val number1: String
         get() = handleUIState["NUMBER_1"] ?: ""
-    private val code2: String
+    val number2: String
         get() = handleUIState["NUMBER_2"] ?: ""
-    private val code3: String
+    val number3: String
         get() = handleUIState["NUMBER_3"] ?: ""
-    private val code4: String
+    val number4: String
         get() = handleUIState["NUMBER_4"] ?: ""
-    private val code5: String
+    val number5: String
         get() = handleUIState["NUMBER_5"] ?: ""
-    private val code6: String
+    val number6: String
         get() = handleUIState["NUMBER_6"] ?: ""
 
-    fun saveCode1(newCode: String) {
+    fun saveNumber1(newCode: String) {
         handleUIState["NUMBER_1"] = newCode
     }
 
-    fun saveCode2(newCode: String) {
+    fun saveNumber2(newCode: String) {
         handleUIState["NUMBER_2"] = newCode
     }
 
-    fun saveCode3(newCode: String) {
+    fun saveNumber3(newCode: String) {
         handleUIState["NUMBER_3"] = newCode
     }
 
-    fun saveCode4(newCode: String) {
+    fun saveNumber4(newCode: String) {
         handleUIState["NUMBER_4"] = newCode
     }
 
-    fun saveCode5(newCode: String) {
+    fun saveNumber5(newCode: String) {
         handleUIState["NUMBER_5"] = newCode
     }
 
-    fun saveCode6(newCode: String) {
+    fun saveNumber6(newCode: String) {
         handleUIState["NUMBER_6"] = newCode
     }
 
@@ -90,7 +90,7 @@ class VerificationViewModel(
 
             _sendCodesInserted.debounce(800).collect {
 
-                handleCodeInserted(arrayListOf(code1, code2, code3, code4, code5, code6))
+                handleCodeInserted(arrayListOf(number1, number2, number3, number4, number5, number6))
             }
         }
     }
