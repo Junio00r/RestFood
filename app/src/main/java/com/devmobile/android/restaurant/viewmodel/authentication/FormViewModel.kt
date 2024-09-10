@@ -26,13 +26,13 @@ class FormViewModel(
 ) : ViewModel() {
 
     // UIState
-    private val userName: String
+    val userName: String
         get() = handleUIState["NAME"] ?: ""
-    private val userLastName: String
+    val userLastName: String
         get() = handleUIState["LAST_NAME"] ?: ""
-    private val userEmail: String
+    val userEmail: String
         get() = handleUIState["EMAIL"] ?: ""
-    private val userPassword: String
+    val userPassword: String
         get() = handleUIState["PASSWORD"] ?: ""
 
     fun onNameChanged(newName: String) {
@@ -67,7 +67,7 @@ class FormViewModel(
     private val _resultRequestData = MutableStateFlow<RequestResult?>(null)
     val resultRequestData = _resultRequestData.asStateFlow()
 
-    // For Debounce Pattern
+    // To Debounce Pattern
     private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     init {
@@ -103,6 +103,7 @@ class FormViewModel(
                 try {
 
                     registerRepository.hasEmailAlreadyRegistered(userEmail!!)
+                    _resultRequestData.emit(RequestResult.Success())
 
                 } catch (e: Exception) {
 

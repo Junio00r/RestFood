@@ -26,6 +26,7 @@ class FormActivity : AppCompatActivity(), IShowError {
 
     private lateinit var _formBinding: ActivityFormDataBinding
     private val formRepository = FormRepository(this@FormActivity)
+
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
         ViewModelFactory(
@@ -58,12 +59,17 @@ class FormActivity : AppCompatActivity(), IShowError {
             _formBinding.inputUserPassword.getTextInput().hint = "Password *"
 
             // Setup InputType
-            _formBinding.inputUserName.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            _formBinding.inputUserLastName.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            _formBinding.inputUserEmail.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            _formBinding.inputUserEmail.getTextInputEditText().inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            _formBinding.inputUserName.getTextInputEditText().inputType =
+                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            _formBinding.inputUserLastName.getTextInputEditText().inputType =
+                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            _formBinding.inputUserEmail.getTextInputEditText().inputType =
+                InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            _formBinding.inputUserEmail.getTextInputEditText().inputType =
+                InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
-            _formBinding.inputUserPassword.getTextInput().endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+            _formBinding.inputUserPassword.getTextInput().endIconMode =
+                TextInputLayout.END_ICON_PASSWORD_TOGGLE
             _formBinding.inputUserEmail.getTextInputEditText().maxLength(256)
 
             // Enable Counter
@@ -147,6 +153,18 @@ class FormActivity : AppCompatActivity(), IShowError {
 
                 // Nothing
             }
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        with(_formBinding) {
+
+            inputUserName.getTextInputEditText().append(_formViewModel.userName)
+            inputUserLastName.getTextInputEditText().append(_formViewModel.userLastName)
+            inputUserEmail.getTextInputEditText().append(_formViewModel.userEmail)
+            inputUserPassword.getTextInputEditText().append(_formViewModel.userPassword)
         }
     }
 
