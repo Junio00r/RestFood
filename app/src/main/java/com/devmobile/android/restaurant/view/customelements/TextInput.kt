@@ -32,8 +32,6 @@ class TextInput @JvmOverloads constructor(
 
     companion object {
 
-        private const val SUPER_STATE_KEY = "SUPER_STATE_KEY"
-        private const val SPARSE_STATE_KEY = "SPARSE_STATE_KEY"
         private const val DEFAULT_WIDTH = 256
         private const val DEFAULT_HEIGHT = 296
     }
@@ -85,32 +83,11 @@ class TextInput @JvmOverloads constructor(
         setMeasuredDimension(textInputWidth, textInputHeight)
     }
 
-    override fun updateViewLayout(view: View?, params: ViewGroup.LayoutParams?) {
-        super.updateViewLayout(view, params)
-    }
-
-    override fun onSaveInstanceState(): Parcelable {
-        return Bundle().apply {
-            putParcelable(SUPER_STATE_KEY, super.onSaveInstanceState())
-            putSparseParcelableArray(SPARSE_STATE_KEY, saveChildViewStates())
-        }
-    }
-
-    override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>?) {
-        dispatchFreezeSelfOnly(container)
+    override fun dispatchSaveInstanceState(container: SparseArray<Parcelable>) {
+        // Nothing
     }
 
     override fun dispatchRestoreInstanceState(container: SparseArray<Parcelable>) {
-        dispatchThawSelfOnly(container)
-    }
-
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        var newState = state
-        if (newState is Bundle) {
-            val childrenState = newState.getSparseParcelableArray<Parcelable>(SPARSE_STATE_KEY)
-            childrenState?.let { restoreChildViewStates(it) }
-            newState = newState.getParcelable(SUPER_STATE_KEY)
-        }
-        super.onRestoreInstanceState(newState)
+        // Nothing
     }
 }
