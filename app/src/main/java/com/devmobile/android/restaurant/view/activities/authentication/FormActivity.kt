@@ -4,12 +4,10 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
-import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.devmobile.android.restaurant.CalledFromXML
@@ -22,7 +20,6 @@ import com.devmobile.android.restaurant.model.repository.authentication.FormRepo
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.BaseTransientBottomBar.AnimationMode
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -107,8 +104,8 @@ class FormActivity : AppCompatActivity(), IShowError {
                 inputUserPassword.getTextInput().error = error
             }
 
-            // Flow because LiveData send latest value after change configuration, but i not want it happens
             lifecycleScope.launch {
+                // API repeatOnLifecycle() to stop collect when activity is STOPPED
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                     _formViewModel.resultRequestData.collect { resultOfRequest ->
@@ -144,7 +141,6 @@ class FormActivity : AppCompatActivity(), IShowError {
     private fun handleLoadState(requestOfResult: RequestResult?) {
 
         when (requestOfResult) {
-
 
             is RequestResult.Success -> {
 
@@ -193,6 +189,7 @@ class FormActivity : AppCompatActivity(), IShowError {
 
         mySnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
         mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light)))
+        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.white)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()

@@ -13,7 +13,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
@@ -64,7 +63,10 @@ class FormViewModel(
     private val _passwordErrorPropagator = MutableLiveData<String?>()
     val passwordErrorPropagator: LiveData<String?> = _passwordErrorPropagator
 
-    val resultRequestData: SharedFlow<RequestResult> = registerRepository.resultRequestData
+    // SharedFlow because LiveData or StateFlow sends latest value when new collectors
+    // are subscribers, i.e., in cases of changes configurations this isn't good.
+    private val _resultRequestData: MutableSharedFlow<RequestResult> = MutableSharedFlow()
+    val resultRequestData: SharedFlow<RequestResult> = _resultRequestData
 
     // To Debounce Pattern
     private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
@@ -99,7 +101,15 @@ class FormViewModel(
 
             coroutineScope.launch {
 
-                registerRepository.hasEmailAlreadyRegistered(userEmail!!)
+                try {
+
+                    registerRepository.hasEmailAlreadyRegistered(userEmail!!)
+                    _resultRequestData.emit(RequestResult.Success())
+
+                } catch (e: Exception) {
+
+                    _resultRequestData.emit(RequestResult.Error(java.lang.Exception("It was not possible create account")))
+                }
             }
         }
     }

@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
-import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -216,6 +215,7 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
         mySnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
         mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light)))
+        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.white)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()
