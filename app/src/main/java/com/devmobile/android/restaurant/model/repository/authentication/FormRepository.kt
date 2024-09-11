@@ -8,21 +8,20 @@ import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.lang.Exception
 
 class FormRepository(
     private val applicationContext: Context,
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    private val _resultRequestData = MutableStateFlow<RequestResult?>(null)
-    val resultRequestData: StateFlow<RequestResult?> = _resultRequestData.asStateFlow()
+    private val _resultRequestData = MutableSharedFlow<RequestResult?>(0)
+    val resultRequestData: SharedFlow<RequestResult?> = _resultRequestData.asSharedFlow()
 
-    suspend fun hasEmailAlreadyRegistered(email: String) : Boolean {
+    suspend fun hasEmailAlreadyRegistered(email: String): Boolean {
         val userDao = RestaurantLocalDatabase.getInstance(applicationContext).getUserDao()
         var canEmailRegister: Boolean
 
@@ -34,9 +33,13 @@ class FormRepository(
 
                 when (canEmailRegister) {
 
-                    true -> { _resultRequestData.value = RequestResult.Success() }
+                    true -> {
+                        _resultRequestData.emit(RequestResult.Success())
+                    }
 
-                    false -> { _resultRequestData.value = RequestResult.Error(Exception("Email is invalid or already taken")) }
+                    false -> {
+                        _resultRequestData.emit(RequestResult.Error(Exception("Email is invalid or already taken")))
+                    }
                 }
 
             } catch (e: IOException) {

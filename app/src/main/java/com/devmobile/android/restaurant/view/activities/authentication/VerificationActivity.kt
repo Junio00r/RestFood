@@ -212,10 +212,12 @@ class VerificationActivity : AppCompatActivity(), IShowError {
 
     override fun showErrorMessage(errorMessage: String) {
 
-        val mySnackBar = Snackbar.make(_viewBinding.container, errorMessage, 1000)
+        val mySnackBar = Snackbar.make(_viewBinding.container, errorMessage, 2000)
 
         mySnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
         mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light)))
-        mySnackBar.show()
+        mySnackBar.setAction("OK") {
+            mySnackBar.dismiss()
+        }.show()
     }
 }

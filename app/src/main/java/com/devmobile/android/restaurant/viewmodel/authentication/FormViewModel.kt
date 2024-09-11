@@ -12,8 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
@@ -64,8 +64,8 @@ class FormViewModel(
     private val _passwordErrorPropagator = MutableLiveData<String?>()
     val passwordErrorPropagator: LiveData<String?> = _passwordErrorPropagator
 
-    private val _resultRequestData = MutableStateFlow<RequestResult?>(null)
-    val resultRequestData = _resultRequestData.asStateFlow()
+    private val _resultRequestData: MutableSharedFlow<RequestResult?> = MutableSharedFlow(0)
+    val resultRequestData: SharedFlow<RequestResult?> = registerRepository.resultRequestData
 
     // To Debounce Pattern
     private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
@@ -100,15 +100,7 @@ class FormViewModel(
 
             coroutineScope.launch {
 
-                try {
-
-                    registerRepository.hasEmailAlreadyRegistered(userEmail!!)
-                    _resultRequestData.emit(RequestResult.Success())
-
-                } catch (e: Exception) {
-
-                    _resultRequestData.emit(RequestResult.Error(Exception("It was not possible create account")))
-                }
+                registerRepository.hasEmailAlreadyRegistered(userEmail!!)
             }
         }
     }

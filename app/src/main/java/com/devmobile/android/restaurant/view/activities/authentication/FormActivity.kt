@@ -8,7 +8,10 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
@@ -18,6 +21,8 @@ import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.BaseTransientBottomBar.AnimationMode
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -104,10 +109,12 @@ class FormActivity : AppCompatActivity(), IShowError {
 
             // Flow because LiveData send latest value after change configuration, but i not want it happens
             lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                _formViewModel.resultRequestData.collect { resultOfRequest ->
+                    _formViewModel.resultRequestData.collect { resultOfRequest ->
 
-                    handleLoadState(resultOfRequest)
+                        handleLoadState(resultOfRequest)
+                    }
                 }
             }
 
@@ -184,7 +191,8 @@ class FormActivity : AppCompatActivity(), IShowError {
 
         val mySnackBar = Snackbar.make(_formBinding.registerContainer, errorMessage, 2000)
 
-        mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.white)))
+        mySnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
         }.show()
