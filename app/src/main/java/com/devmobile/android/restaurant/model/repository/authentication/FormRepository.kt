@@ -18,8 +18,8 @@ class FormRepository(
     private val applicationContext: Context,
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    private val _resultRequestData = MutableSharedFlow<RequestResult?>(0)
-    val resultRequestData: SharedFlow<RequestResult?> = _resultRequestData.asSharedFlow()
+    private val _resultRequestData = MutableSharedFlow<RequestResult>(0)
+    val resultRequestData: SharedFlow<RequestResult> = _resultRequestData.asSharedFlow()
 
     suspend fun hasEmailAlreadyRegistered(email: String): Boolean {
         val userDao = RestaurantLocalDatabase.getInstance(applicationContext).getUserDao()

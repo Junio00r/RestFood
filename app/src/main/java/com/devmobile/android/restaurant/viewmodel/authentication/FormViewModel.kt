@@ -64,8 +64,7 @@ class FormViewModel(
     private val _passwordErrorPropagator = MutableLiveData<String?>()
     val passwordErrorPropagator: LiveData<String?> = _passwordErrorPropagator
 
-    private val _resultRequestData: MutableSharedFlow<RequestResult?> = MutableSharedFlow(0)
-    val resultRequestData: SharedFlow<RequestResult?> = registerRepository.resultRequestData
+    val resultRequestData: SharedFlow<RequestResult> = registerRepository.resultRequestData
 
     // To Debounce Pattern
     private val _registerDebounceFlow: MutableSharedFlow<Unit> = MutableSharedFlow()
