@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.RequestResult
+import com.devmobile.android.restaurant.model.ServerResponseCode
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -93,14 +94,7 @@ class TokenVerificationViewModel(
             _sendCodesInserted.debounce(800).collect {
 
                 handleCodeInserted(
-                    arrayListOf(
-                        number1,
-                        number2,
-                        number3,
-                        number4,
-                        number5,
-                        number6
-                    )
+                    arrayListOf(number1, number2, number3, number4, number5, number6)
                 )
             }
         }
