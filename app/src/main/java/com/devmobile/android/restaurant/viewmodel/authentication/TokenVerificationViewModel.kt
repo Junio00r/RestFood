@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.InputPatterns
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
@@ -62,14 +64,14 @@ class TokenVerificationViewModel(
     }
 
     // observables
-    private val _codeErrorPropagator = MutableLiveData<String?>()
-    val codeErrorPropagator: LiveData<String?> = _codeErrorPropagator
-
     private val _canStillEnterCodes = MutableLiveData<Boolean>()
     val canStillEnterCodes: LiveData<Boolean> = _canStillEnterCodes
 
     private val _canResendCode: MutableLiveData<Boolean> = MutableLiveData(true)
     val canResendCode: LiveData<Boolean> = _canResendCode
+
+    private val _resultRequestCreateAcc: MutableSharedFlow<RequestResult> = MutableSharedFlow()
+    val resultRequestCreateAcc: SharedFlow<RequestResult> = _resultRequestCreateAcc
 
     // toggles
     private val _requestForResendCode = MutableSharedFlow<Unit>()
@@ -125,21 +127,21 @@ class TokenVerificationViewModel(
     // functions
     private fun <T : Collection<String>> handleCodeInserted(numbers: T) {
 
-        when (isNumbersValid(numbers) and repository.checkCode(numbers.joinToString(separator = ""))) {
+        coroutineScope.launch {
+            when (isNumbersValid(numbers) and repository.checkCode(numbers.joinToString(separator = ""))) {
 
-            true -> {
+                true -> {
 
-                _canStillEnterCodes.value = false
-
-                coroutineScope.launch {
+                    _canStillEnterCodes.value = false
 
                     repository.createAccount()
+                    _resultRequestCreateAcc.emit(RequestResult.Success())
                 }
-            }
 
-            false -> {
+                false -> {
 
-                _codeErrorPropagator.value = "Error: Code Incorrect"
+                    _resultRequestCreateAcc.emit(RequestResult.Error(Exception("Error: Code Incorrect or isn't possible create account")))
+                }
             }
         }
     }

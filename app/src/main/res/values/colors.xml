@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
-    <color name="red_light">#E00000</color>
+    <color name="red_light_one">#9FE73C12</color>
+    <color name="red_light_two">#E00000</color>
     <color name="red_dark">#952104</color>
-    <color name="orange">#C8A800</color>
+    <color name="yellow_book">#1BEBDF9D</color>
+    <color name="yellow">#C8A800</color>
     <color name="green_dark_one">#005623</color>
     <color name="green_dark_two">#007630</color>
     <color name="green_light_two">#00953E</color>

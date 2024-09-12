@@ -17,6 +17,7 @@ import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
 import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
+import com.devmobile.android.restaurant.view.customelements.LoadingTransition
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -28,7 +29,6 @@ class FormActivity : AppCompatActivity(), IShowError {
 
     private lateinit var _formBinding: ActivityFormDataBinding
     private val formRepository = FormRepository(this@FormActivity)
-
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
         ViewModelFactory(
@@ -142,6 +142,7 @@ class FormActivity : AppCompatActivity(), IShowError {
 
         when (requestOfResult) {
 
+
             is RequestResult.Success -> {
 
                 startActivity(Intent(this@FormActivity, TokenVerificationActivity::class.java))
@@ -185,10 +186,10 @@ class FormActivity : AppCompatActivity(), IShowError {
 
     override fun showErrorMessage(errorMessage: String) {
 
-        val mySnackBar = Snackbar.make(_formBinding.registerContainer, errorMessage, 2000)
+        val mySnackBar = Snackbar.make(_formBinding.registerContainer, errorMessage, 3500)
 
         mySnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light)))
+        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light_one)))
         mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.white)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()

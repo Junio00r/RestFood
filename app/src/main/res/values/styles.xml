@@ -52,8 +52,8 @@
         <item name="android:background">@drawable/bg_radius_tab_layout</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="tabIndicatorFullWidth">false</item>
-        <item name="tabIndicatorColor">@color/orange</item>
-        <item name="tabSelectedTextColor">@color/orange</item>
+        <item name="tabIndicatorColor">@color/yellow</item>
+        <item name="tabSelectedTextColor">@color/yellow</item>
         <item name="tabMode">fixed</item>
         <item name="tabTextColor">@color/black</item>
         <item name="tabIndicatorHeight">2dp</item>

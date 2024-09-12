@@ -82,7 +82,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_weight="0"
-            app:backgroundTint="@color/orange"
+            app:backgroundTint="@color/yellow"
             app:cornerRadius="8dp"
             app:icon="@drawable/ic_decrement"
             app:iconTint="@color/black" />
@@ -106,7 +106,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_weight="0"
-            app:backgroundTint="@color/orange"
+            app:backgroundTint="@color/yellow"
             app:cornerRadius="8dp"
             app:icon="@drawable/ic_increment"
             app:iconTint="@color/black" />

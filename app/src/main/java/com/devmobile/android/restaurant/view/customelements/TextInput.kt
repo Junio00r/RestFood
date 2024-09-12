@@ -2,21 +2,14 @@ package com.devmobile.android.restaurant.view.customelements
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.SparseArray
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.view.children
-import androidx.core.view.updateLayoutParams
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.extensions.maxLength
-import com.devmobile.android.restaurant.extensions.restoreChildViewStates
-import com.devmobile.android.restaurant.extensions.saveChildViewStates
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 

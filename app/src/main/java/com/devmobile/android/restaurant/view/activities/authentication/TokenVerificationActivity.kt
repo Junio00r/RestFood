@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.view.activities.authentication
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
@@ -9,16 +10,22 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
 import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
+import com.devmobile.android.restaurant.view.activities.MainActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
@@ -93,18 +100,11 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
             finish()
         }
 
-        _viewModel.codeErrorPropagator.observe(this@TokenVerificationActivity) { error ->
-
-            _numbers.forEach { it.getTextInput().error = "Invalid Code" }
-            showErrorMessage(error ?: "Invalid Code")
-        }
-
         // about inputs
         _viewModel.canStillEnterCodes.observe(this@TokenVerificationActivity) { mayEnableInput ->
 
             _numbers.forEach { it.isEnabled = mayEnableInput }
         }
-
 
         _viewModel.canResendCode.observe(this@TokenVerificationActivity) { canResendCode ->
 
@@ -115,6 +115,15 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
                 clearInput(_numbers.map { it.getTextInputEditText() })
                 _numbers.forEach { it.getTextInput().error = null }
                 restoreFocusOrSendCode()
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                _viewModel.resultRequestCreateAcc.collect { requestResult ->
+
+                    handleLoadState(requestResult)
+                }
             }
         }
 
@@ -147,20 +156,6 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
             _viewModel.saveNumber6(it.toString())
             restoreFocusOrSendCode()
-        }
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        with(_viewBinding) {
-
-            number1.getTextInputEditText().append(_viewModel.number1)
-            number2.getTextInputEditText().append(_viewModel.number2)
-            number3.getTextInputEditText().append(_viewModel.number3)
-            number4.getTextInputEditText().append(_viewModel.number4)
-            number5.getTextInputEditText().append(_viewModel.number5)
-            number6.getTextInputEditText().append(_viewModel.number6)
         }
     }
 
@@ -209,12 +204,50 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
         }
     }
 
+    private fun handleLoadState(requestOfResult: RequestResult?) {
+
+        when (requestOfResult) {
+
+            is RequestResult.Success -> {
+
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+
+            is RequestResult.Error -> {
+
+                _numbers.forEach { it.getTextInput().error = "Invalid Code" }
+                showErrorMessage(
+                    requestOfResult.exception.message ?: "Isn't possible create account"
+                )
+            }
+
+            else -> {
+
+                // Nothing
+            }
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        with(_viewBinding) {
+
+            number1.getTextInputEditText().append(_viewModel.number1)
+            number2.getTextInputEditText().append(_viewModel.number2)
+            number3.getTextInputEditText().append(_viewModel.number3)
+            number4.getTextInputEditText().append(_viewModel.number4)
+            number5.getTextInputEditText().append(_viewModel.number5)
+            number6.getTextInputEditText().append(_viewModel.number6)
+        }
+    }
+
     override fun showErrorMessage(errorMessage: String) {
 
-        val mySnackBar = Snackbar.make(_viewBinding.container, errorMessage, 2000)
+        val mySnackBar = Snackbar.make(_viewBinding.container, errorMessage, 3500)
 
         mySnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light)))
+        mySnackBar.setBackgroundTintList(ColorStateList.valueOf(this.getColor(R.color.red_light_one)))
         mySnackBar.setActionTextColor(ColorStateList.valueOf(this.getColor(R.color.white)))
         mySnackBar.setAction("OK") {
             mySnackBar.dismiss()
