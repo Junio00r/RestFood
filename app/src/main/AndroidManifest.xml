@@ -36,7 +36,7 @@
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".view.activities.authentication.VerificationActivity"
+            android:name=".view.activities.authentication.TokenVerificationActivity"
             android:exported="false"
             android:launchMode="singleInstancePerTask"
             android:screenOrientation="portrait"

@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.RequestResult
+import com.devmobile.android.restaurant.model.entities.User
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -103,7 +104,15 @@ class FormViewModel(
 
                 try {
 
-                    registerRepository.hasEmailAlreadyRegistered(userEmail!!)
+                    registerRepository.handleWithData(
+                        User(
+                            id = null,
+                            name = userName!!,
+                            lastname = userLastName,
+                            email = userEmail!!,
+                            password = userPassword!!
+                        )
+                    )
                     _resultRequestData.emit(RequestResult.Success())
 
                 } catch (e: Exception) {

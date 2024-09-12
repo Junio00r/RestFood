@@ -13,19 +13,19 @@ import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
 import com.devmobile.android.restaurant.extensions.maxLength
-import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
+import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
-import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
+import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
-class VerificationActivity : AppCompatActivity(), IShowError {
+class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
     // references
     private lateinit var _viewBinding: ActivityVerificationCodeBinding
-    private val _repository = VerificationRepository(this)
-    private val _viewModel: VerificationViewModel by viewModels {
+    private val _repository = TokenVerificationRepository(this)
+    private val _viewModel: TokenVerificationViewModel by viewModels {
 
         ViewModelFactory(
             repository = _repository,
@@ -93,20 +93,20 @@ class VerificationActivity : AppCompatActivity(), IShowError {
             finish()
         }
 
-        _viewModel.codeErrorPropagator.observe(this@VerificationActivity) { error ->
+        _viewModel.codeErrorPropagator.observe(this@TokenVerificationActivity) { error ->
 
             _numbers.forEach { it.getTextInput().error = "Invalid Code" }
             showErrorMessage(error ?: "Invalid Code")
         }
 
         // about inputs
-        _viewModel.canStillEnterCodes.observe(this@VerificationActivity) { mayEnableInput ->
+        _viewModel.canStillEnterCodes.observe(this@TokenVerificationActivity) { mayEnableInput ->
 
             _numbers.forEach { it.isEnabled = mayEnableInput }
         }
 
 
-        _viewModel.canResendCode.observe(this@VerificationActivity) { canResendCode ->
+        _viewModel.canResendCode.observe(this@TokenVerificationActivity) { canResendCode ->
 
             changedResendTextColor(canResendCode)
 

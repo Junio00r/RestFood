@@ -2,12 +2,8 @@ package com.devmobile.android.restaurant.model.repository.authentication
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.database.sqlite.SQLiteDatabaseCorruptException
-import android.database.sqlite.SQLiteException
 import android.util.Log
-import com.devmobile.android.restaurant.AccountException
-import com.devmobile.android.restaurant.model.entities.User
-import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.repository.UserRegister
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,10 +11,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
 import kotlin.random.Random
 
-class VerificationRepository(
+class TokenVerificationRepository(
     private val context: Context,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + defaultDispatcher),
@@ -43,7 +38,6 @@ class VerificationRepository(
         withContext(Dispatchers.IO) {
 
             // Uses email api to send verification code
-
             delay(6000).let {
 
                 // Simulation time for request code
@@ -53,33 +47,13 @@ class VerificationRepository(
         Log.i("REQUEST", "Request New Verification Code")
     }
 
-    private suspend fun createAccount(user: User) {
+    suspend fun createAccount() {
 
-        val userDao = RestaurantLocalDatabase.getInstance(context).getUserDao()
+        coroutineScope.launch {
 
-        return withContext(defaultDispatcher) {
-
-            try {
-
-                userDao.insertUser(user)
-
-            } catch (e: IOException) {
-
-                throw e
-
-            } catch (e: SQLiteDatabaseCorruptException) {
-
-                throw e
-
-            } catch (e: SQLiteException) {
-
-                throw e
-
-            } catch (e: AccountException) {
-
-                throw e
-            }
-        }
+            UserRegister.registerUser(context)
+            Log.i("Creation", "User Account Created")
+        }.join()
     }
 
     fun checkCode(codeEntered: String): Boolean {

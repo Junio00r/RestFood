@@ -144,7 +144,7 @@ class FormActivity : AppCompatActivity(), IShowError {
 
             is RequestResult.Success -> {
 
-                startActivity(Intent(this@FormActivity, VerificationActivity::class.java))
+                startActivity(Intent(this@FormActivity, TokenVerificationActivity::class.java))
             }
 
             is RequestResult.Error -> {

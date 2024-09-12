@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.InputPatterns
-import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
+import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
-class VerificationViewModel(
-    private val repository: VerificationRepository, /* It's not recommended because repository have a Context dependency */
+class TokenVerificationViewModel(
+    private val repository: TokenVerificationRepository, /* It's not recommended because repository have a Context dependency */
     private val handleUIState: SavedStateHandle,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
 ) : ViewModel() {
@@ -90,7 +90,16 @@ class VerificationViewModel(
 
             _sendCodesInserted.debounce(800).collect {
 
-                handleCodeInserted(arrayListOf(number1, number2, number3, number4, number5, number6))
+                handleCodeInserted(
+                    arrayListOf(
+                        number1,
+                        number2,
+                        number3,
+                        number4,
+                        number5,
+                        number6
+                    )
+                )
             }
         }
     }
@@ -116,12 +125,16 @@ class VerificationViewModel(
     // functions
     private fun <T : Collection<String>> handleCodeInserted(numbers: T) {
 
-        when (isNumbersValid(numbers)) {
+        when (isNumbersValid(numbers) and repository.checkCode(numbers.joinToString(separator = ""))) {
 
             true -> {
 
                 _canStillEnterCodes.value = false
-                repository.checkCode(numbers.joinToString(separator = ""))
+
+                coroutineScope.launch {
+
+                    repository.createAccount()
+                }
             }
 
             false -> {

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 // Ainda irei implementar algum tipo de builder pattern
 @Entity(tableName = "users")
 data class User(
-    @PrimaryKey(autoGenerate = true) val id: Long?,
+    @PrimaryKey(autoGenerate = true) val id: Long? = null,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "lastname") var lastname: String?,
     @ColumnInfo(name = "email") var email: String,

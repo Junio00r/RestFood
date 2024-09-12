@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
-import com.devmobile.android.restaurant.model.repository.authentication.VerificationRepository
+import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
-import com.devmobile.android.restaurant.viewmodel.authentication.VerificationViewModel
+import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
 
 class ViewModelFactory(
     private val repository: Any,
@@ -50,11 +50,11 @@ class ViewModelFactory(
                 }
             }
 
-            modelClass.isAssignableFrom(VerificationViewModel::class.java) -> {
-                if (repository as? VerificationRepository != null) {
+            modelClass.isAssignableFrom(TokenVerificationViewModel::class.java) -> {
+                if (repository as? TokenVerificationRepository != null) {
 
                     @Suppress("UNCHECKED_CAST")
-                    VerificationViewModel(repository, handle) as T
+                    TokenVerificationViewModel(repository, handle) as T
 
                 } else {
 
