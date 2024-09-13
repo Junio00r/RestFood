@@ -64,7 +64,7 @@ interface IUserDao {
     fun findUserByEmail(userEmail: String): User?
 
     @Query("SELECT COUNT(*) FROM users WHERE email = :userEmail")
-    fun amountThisEmailRegistered(userEmail: String): Int
+    fun amountRegisteredEmail(userEmail: String): Int
 
     /**
      * Retrieves the total number of users in the database.

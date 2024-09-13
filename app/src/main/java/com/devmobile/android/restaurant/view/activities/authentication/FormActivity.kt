@@ -17,7 +17,6 @@ import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
 import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
-import com.devmobile.android.restaurant.view.customelements.LoadingTransition
 import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -29,6 +28,7 @@ class FormActivity : AppCompatActivity(), IShowError {
 
     private lateinit var _formBinding: ActivityFormDataBinding
     private val formRepository = FormRepository(this@FormActivity)
+
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
         ViewModelFactory(
@@ -145,7 +145,15 @@ class FormActivity : AppCompatActivity(), IShowError {
 
             is RequestResult.Success -> {
 
-                startActivity(Intent(this@FormActivity, TokenVerificationActivity::class.java))
+                val intent = Intent(this@FormActivity, TokenVerificationActivity::class.java)
+                    .apply {
+                        putExtra("EXTRA_NAME", _formBinding.inputUserName.getTextInputEditText().text)
+                        putExtra("EXTRA_LAST_NAME", _formBinding.inputUserLastName.getTextInputEditText().text)
+                        putExtra("EXTRA_EMAIL", _formBinding.inputUserEmail.getTextInputEditText().text)
+                        putExtra("EXTRA_PASSWORD", _formBinding.inputUserPassword.getTextInputEditText().text)
+                    }
+
+                startActivity(intent)
             }
 
             is RequestResult.Error -> {
