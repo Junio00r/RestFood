@@ -18,7 +18,6 @@ import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
 import com.devmobile.android.restaurant.extensions.maxLength
-import com.devmobile.android.restaurant.model.EmailHandler
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.view.activities.MainActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput
