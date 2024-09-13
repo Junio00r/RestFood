@@ -1,13 +1,15 @@
 package com.devmobile.android.restaurant.viewmodel.authentication
 
+import android.os.Bundle
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.RequestResult
-import com.devmobile.android.restaurant.model.ServerResponseCode
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +26,34 @@ class TokenVerificationViewModel(
     private val repository: TokenVerificationRepository, /* It's not recommended because repository have a Context dependency */
     private val handleUIState: SavedStateHandle,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+    private val userData: Collection<String>,
 ) : ViewModel() {
+
+    companion object {
+
+        fun provideFactory(
+            repository: TokenVerificationRepository,
+            owner: SavedStateRegistryOwner,
+            userData: Collection<String>,
+            defaultArgs: Bundle? = null,
+        ): AbstractSavedStateViewModelFactory =
+            object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
+
+                    return TokenVerificationViewModel(
+                        repository = repository,
+                        handleUIState = handle,
+                        userData = userData
+                    ) as T
+                }
+            }
+    }
 
     // UIState
     val number1: String

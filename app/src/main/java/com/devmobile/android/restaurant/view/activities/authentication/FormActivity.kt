@@ -17,7 +17,6 @@ import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
 import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
-import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -31,10 +30,9 @@ class FormActivity : AppCompatActivity(), IShowError {
 
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
-        ViewModelFactory(
+        FormViewModel.provideFactory(
             repository = formRepository,
-            ownerOfStateToSave = this@FormActivity,
-            defaultValuesForNulls = null
+            owner = this@FormActivity,
         )
     }
 

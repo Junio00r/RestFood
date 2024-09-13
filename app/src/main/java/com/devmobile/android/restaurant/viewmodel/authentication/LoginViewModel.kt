@@ -1,15 +1,45 @@
 package com.devmobile.android.restaurant.viewmodel.authentication
 
+import android.os.Bundle
 import android.util.Patterns
 import android.widget.TextView
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
 import com.devmobile.android.restaurant.InputPatterns
+import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+
+    companion object {
+
+        fun provideFactory(
+            repository: LoginRepository,
+            owner: SavedStateRegistryOwner,
+            coroutineScope: CoroutineScope? = null,
+            defaultArgs: Bundle? = null,
+        ): AbstractSavedStateViewModelFactory =
+            object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
+
+                    return LoginViewModel(
+                        loginRepository = repository
+                    ) as T
+                }
+            }
+    }
 
     fun login(email: TextView, password: TextView): Boolean {
         val mEmail    = email.text.trim().toString()

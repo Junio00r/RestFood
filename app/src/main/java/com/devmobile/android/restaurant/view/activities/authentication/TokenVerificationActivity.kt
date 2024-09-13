@@ -21,7 +21,6 @@ import com.devmobile.android.restaurant.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.view.activities.MainActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput
-import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -31,18 +30,12 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
     // references
     private lateinit var _viewBinding: ActivityVerificationCodeBinding
+    private lateinit var _viewModel: TokenVerificationViewModel
     private val _repository = TokenVerificationRepository(this)
-    private val _viewModel: TokenVerificationViewModel by viewModels {
-
-        ViewModelFactory(
-            repository = _repository,
-            ownerOfStateToSave = this,
-            defaultValuesForNulls = null,
-        )
-    }
 
     // data
     private val _numbers = ArrayList<TextInput>()
+    private lateinit var dataUser: Collection<String>
 
     // Functions
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +44,21 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
         _viewBinding = ActivityVerificationCodeBinding.inflate(layoutInflater)
         setContentView(_viewBinding.root)
 
+        dataUser = arrayListOf(
+            intent.extras!!.getString("EXTRA_NAME").toString(),
+            intent.extras!!.getString("EXTRA_LSAT_NAME").toString(),
+            intent.extras!!.getString("EXTRA_EMAIL").toString(),
+            intent.extras!!.getString("EXTRA_PASSWORD").toString()
+        )
+
+        val viewModelInstance: TokenVerificationViewModel by viewModels {
+            TokenVerificationViewModel.provideFactory(
+                repository = _repository,
+                owner = this@TokenVerificationActivity,
+                userData = dataUser
+            )
+        }
+        _viewModel = viewModelInstance
         _viewBinding.viewModel = _viewModel
 
         _numbers.addAll(

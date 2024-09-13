@@ -5,14 +5,13 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
-import com.devmobile.android.restaurant.model.repository.localdata.IUserDao
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
+import com.devmobile.android.restaurant.model.repository.localdata.IUserDao
 import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
-import com.devmobile.android.restaurant.viewmodel.ViewModelFactory
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
-class   LoginActivity : FragmentActivity() {
+class LoginActivity : FragmentActivity() {
     private lateinit var binding: FragmentLoginBinding
 
     private lateinit var buttonSignUp: MaterialButton
@@ -27,7 +26,10 @@ class   LoginActivity : FragmentActivity() {
 
     // ViewModels
     private val loginViewModel: LoginViewModel by viewModels {
-        ViewModelFactory(repository = LoginRepository(this), this)
+        LoginViewModel.provideFactory(
+            repository = LoginRepository(this) /* Still will modify */,
+            owner = this@LoginActivity
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

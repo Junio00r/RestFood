@@ -1,12 +1,16 @@
 package com.devmobile.android.restaurant.viewmodel.authentication
 
+import android.os.Bundle
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.InputPatterns
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
+import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -23,6 +27,30 @@ class FormViewModel(
     private val handleUIState: SavedStateHandle,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
 ) : ViewModel() {
+
+    companion object {
+
+        fun provideFactory(
+            repository: FormRepository,
+            owner: SavedStateRegistryOwner,
+            defaultArgs: Bundle? = null,
+        ): AbstractSavedStateViewModelFactory =
+            object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(
+                    key: String,
+                    modelClass: Class<T>,
+                    handle: SavedStateHandle
+                ): T {
+
+                    return FormViewModel(
+                        registerRepository = repository,
+                        handleUIState = handle,
+                    ) as T
+                }
+            }
+    }
 
     // UIState
     val userName: String
