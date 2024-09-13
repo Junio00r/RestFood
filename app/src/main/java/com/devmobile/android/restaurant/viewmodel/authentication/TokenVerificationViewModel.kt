@@ -109,6 +109,11 @@ class TokenVerificationViewModel(
 
     init {
 
+        coroutineScope.launch {
+
+            repository.requestNewVerificationCode(email = userData.elementAt(2))
+        }
+
         // coroutines scope on init block isn't recommended
         coroutineScope.launch {
 
@@ -178,7 +183,7 @@ class TokenVerificationViewModel(
 
             coroutineScope.launch {
 
-                repository.requestNewVerificationCode()
+                repository.requestNewVerificationCode(email = userData.elementAt(2))
                 _canResendCode.value = true
             }
         }
