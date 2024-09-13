@@ -37,29 +37,19 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     private val _numbers = ArrayList<TextInput>()
     private lateinit var dataUser: Collection<String>
 
-    // Functions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         _viewBinding = ActivityVerificationCodeBinding.inflate(layoutInflater)
         setContentView(_viewBinding.root)
 
+        // init data
         dataUser = arrayListOf(
             intent.extras!!.getString("EXTRA_NAME").toString(),
             intent.extras!!.getString("EXTRA_LSAT_NAME").toString(),
             intent.extras!!.getString("EXTRA_EMAIL").toString(),
             intent.extras!!.getString("EXTRA_PASSWORD").toString()
         )
-
-        val viewModelInstance: TokenVerificationViewModel by viewModels {
-            TokenVerificationViewModel.provideFactory(
-                repository = _repository,
-                owner = this@TokenVerificationActivity,
-                userData = dataUser
-            )
-        }
-        _viewModel = viewModelInstance
-        _viewBinding.viewModel = _viewModel
 
         _numbers.addAll(
             arrayOf(
@@ -71,6 +61,18 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
                 _viewBinding.number6
             )
         )
+
+        // about viewmodel
+        val viewModelInstance: TokenVerificationViewModel by viewModels {
+            TokenVerificationViewModel.provideFactory(
+                repository = _repository,
+                owner = this@TokenVerificationActivity,
+                userData = dataUser
+            )
+        }
+        _viewModel = viewModelInstance
+        _viewBinding.viewModel = _viewModel
+
 
         setObservables()
         drawingViews()
