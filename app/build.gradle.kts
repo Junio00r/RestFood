@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
 
     id("com.android.application")
@@ -22,6 +24,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val properties: Properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField("String", "GMAIL_APY_KEY", "\"${properties.getProperty("GMAIL_APY_KEY")}\"")
     }
 
     buildTypes {
@@ -37,7 +44,6 @@ android {
             applicationIdSuffix = ".debug"
             isDebuggable = true
         }
-
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -54,6 +60,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
 }
 

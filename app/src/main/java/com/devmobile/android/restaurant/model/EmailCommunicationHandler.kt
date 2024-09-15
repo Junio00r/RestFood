@@ -1,15 +1,12 @@
 package com.devmobile.android.restaurant.model
 
 import android.annotation.SuppressLint
+import com.devmobile.android.restaurant.model.repository.remote.IEmailAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
-class EmailHandler {
-
-    companion object {
-        const val EMAIL_API_KEY = "Nothing"
-    }
+class EmailHandler : IEmailAPI {
 
     private val codeGenerator: Random = Random.Default
     private var currentCodeGenerated: String? = null
@@ -21,15 +18,15 @@ class EmailHandler {
 
         withContext(Dispatchers.IO) {
 
-            sendCode(currentCodeGenerated!!)
+            sendEmail(currentCodeGenerated!!)
         }
     }
 
-    fun getCodeSent() : String? {
+    fun getCodeSent(): String? {
         return currentCodeGenerated
     }
 
-    private suspend fun sendCode(code: String) {
+    override suspend fun sendEmail(email: String) {
 
     }
 }
