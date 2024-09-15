@@ -5,8 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.devmobile.android.restaurant.model.entities.User
-import com.devmobile.android.restaurant.model.repository.localdata.IUserDao
-import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.repository.local.IUserDao
+import com.devmobile.android.restaurant.model.repository.local.RestaurantLocalDatabase
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -67,14 +67,14 @@ class DatabaseValidation {
 
         emailsUnregistered.forEach { email ->
 
-            result = userDao.amountThisEmailRegistered(email) == 0
+            result = userDao.amountRegisteredEmail(email) == 0
 
             assertTrue("Email Already Registered: $email", result)
         }
 
         emailsRegistered.forEach { email ->
 
-            result = userDao.amountThisEmailRegistered(email) > 0
+            result = userDao.amountRegisteredEmail(email) > 0
 
             assertTrue("Email Unregistered: $email", result)
         }
