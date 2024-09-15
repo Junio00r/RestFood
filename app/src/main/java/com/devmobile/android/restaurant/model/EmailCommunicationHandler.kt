@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
-class EmailHandler : IEmailAPI {
+class EmailCommunicationHandler : IEmailAPI {
 
     private val codeGenerator: Random = Random.Default
     private var currentCodeGenerated: String? = null
@@ -18,7 +18,7 @@ class EmailHandler : IEmailAPI {
 
         withContext(Dispatchers.IO) {
 
-            sendEmail(currentCodeGenerated!!)
+            sendEmail(currentCodeGenerated!!, "Testing")
         }
     }
 
@@ -26,7 +26,7 @@ class EmailHandler : IEmailAPI {
         return currentCodeGenerated
     }
 
-    override suspend fun sendEmail(email: String) {
+    override suspend fun sendEmail(email: String, body: String) {
 
     }
 }

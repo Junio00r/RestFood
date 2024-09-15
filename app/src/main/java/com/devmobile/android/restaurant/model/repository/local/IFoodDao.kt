@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.localdata
+package com.devmobile.android.restaurant.model.repository.local
 
 import androidx.room.Dao
 import androidx.room.Delete

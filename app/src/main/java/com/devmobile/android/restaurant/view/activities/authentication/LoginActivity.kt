@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
-import com.devmobile.android.restaurant.model.repository.localdata.IUserDao
+import com.devmobile.android.restaurant.model.repository.local.IUserDao
 import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText

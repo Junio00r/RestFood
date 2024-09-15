@@ -1,12 +1,14 @@
 package com.devmobile.android.restaurant.model.repository.remote
 
+import com.devmobile.android.restaurant.BuildConfig
+
 /**
  * Establish a contract with email-api
  */
-interface EmailAPI {
+interface IEmailAPI {
 
-    val EMAIL_APY_KEY_SECRET: String
-        get() = ""
+    val emailApiKey: String
+        get() = BuildConfig.GMAIL_APY_KEY
 
-    suspend fun sendEmail(email: String)
+    suspend fun sendEmail(email: String, body: String)
 }

@@ -2,7 +2,7 @@ package com.devmobile.android.restaurant.model.repository.authentication
 
 import android.content.Context
 import com.devmobile.android.restaurant.RequestResult
-import com.devmobile.android.restaurant.model.repository.localdata.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.repository.local.RestaurantLocalDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
