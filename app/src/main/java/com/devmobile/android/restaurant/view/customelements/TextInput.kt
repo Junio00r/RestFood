@@ -9,7 +9,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.extensions.maxLength
+import com.devmobile.android.restaurant.usecases.extensions.maxLength
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 

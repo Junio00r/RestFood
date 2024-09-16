@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.devmobile.android.restaurant.model.entities.User
-import com.devmobile.android.restaurant.model.repository.local.IUserDao
-import com.devmobile.android.restaurant.model.repository.local.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.datasource.local.entities.User
+import com.devmobile.android.restaurant.model.datasource.local.IUserDao
+import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before

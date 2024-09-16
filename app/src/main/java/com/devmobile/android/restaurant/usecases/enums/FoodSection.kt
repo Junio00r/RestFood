@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.enums
+package com.devmobile.android.restaurant.usecases.enums
 
 /**
  * Enum class with all foods sections

@@ -15,7 +15,7 @@ import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
-import com.devmobile.android.restaurant.extensions.maxLength
+import com.devmobile.android.restaurant.usecases.extensions.maxLength
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar

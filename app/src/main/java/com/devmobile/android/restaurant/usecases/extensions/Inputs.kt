@@ -1,11 +1,7 @@
-package com.devmobile.android.restaurant.extensions
+package com.devmobile.android.restaurant.usecases.extensions
 
-import android.os.Parcelable
 import android.text.InputFilter
-import android.util.SparseArray
-import android.view.ViewGroup
 import android.widget.TextView
-import kotlin.math.max
 
 /**
  * Set the max of characters on this TextView

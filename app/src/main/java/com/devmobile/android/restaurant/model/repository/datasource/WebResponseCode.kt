@@ -1,9 +1,9 @@
-package com.devmobile.android.restaurant.model
+package com.devmobile.android.restaurant.model.datasource
 
 /**
  * REST server response codes
  */
-enum class ServerResponseCode {
+enum class WebResponseCode {
 
     OK {
 
@@ -20,7 +20,7 @@ enum class ServerResponseCode {
         override fun getMessage() = "Time for request delayed"
         override fun getCode() = 408
     },
-    INTERNAL_SERVER_ERROR {
+    INTERNAL_Web_ERROR {
 
         override fun getMessage() = "Server isn't works"
         override fun getCode() = 500

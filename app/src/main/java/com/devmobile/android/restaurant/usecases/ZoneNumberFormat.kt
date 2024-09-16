@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.usecases
 
 import java.text.NumberFormat
 

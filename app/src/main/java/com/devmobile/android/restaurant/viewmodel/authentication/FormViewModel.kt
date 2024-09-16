@@ -7,10 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
-import com.devmobile.android.restaurant.InputPatterns
+import com.devmobile.android.restaurant.usecases.InputPatterns
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
-import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview

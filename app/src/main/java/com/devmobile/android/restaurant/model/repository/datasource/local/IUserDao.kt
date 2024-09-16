@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.local
+package com.devmobile.android.restaurant.model.datasource.local
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.devmobile.android.restaurant.model.entities.User
+import com.devmobile.android.restaurant.model.datasource.local.entities.User
 
 /**
  * Data Access Object (DAO) for the User entity.

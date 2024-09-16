@@ -1,10 +1,10 @@
-package com.devmobile.android.restaurant.model.repository.local
+package com.devmobile.android.restaurant.model.datasource.local
 
 import android.content.Context
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.entities.Food
-import com.devmobile.android.restaurant.model.enums.FoodSection
-import com.devmobile.android.restaurant.model.enums.TempoPreparo
+import com.devmobile.android.restaurant.model.datasource.local.entities.Food
+import com.devmobile.android.restaurant.usecases.enums.FoodSection
+import com.devmobile.android.restaurant.usecases.enums.TempoPreparo
 
 // Temporary Class
 class InsertDataOnDatabase {

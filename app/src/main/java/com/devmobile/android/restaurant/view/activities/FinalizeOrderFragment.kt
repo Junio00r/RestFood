@@ -6,10 +6,10 @@ import android.view.View
 import android.widget.ExpandableListView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.ZoneNumberFormat
+import com.devmobile.android.restaurant.usecases.ZoneNumberFormat
 import com.devmobile.android.restaurant.viewmodel.adapters.FoodExpandableListAdapter
 import com.devmobile.android.restaurant.databinding.FragmentFinalizeOrderBinding
-import com.devmobile.android.restaurant.model.enums.FoodSection
+import com.devmobile.android.restaurant.usecases.enums.FoodSection
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import kotlin.collections.ArrayList

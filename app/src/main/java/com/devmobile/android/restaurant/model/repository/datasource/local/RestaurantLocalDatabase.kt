@@ -1,11 +1,11 @@
-package com.devmobile.android.restaurant.model.repository.local
+package com.devmobile.android.restaurant.model.datasource.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.devmobile.android.restaurant.model.entities.Food
-import com.devmobile.android.restaurant.model.entities.User
+import com.devmobile.android.restaurant.model.datasource.local.entities.Food
+import com.devmobile.android.restaurant.model.datasource.local.entities.User
 
 @Database(version = 29, entities = [Food::class, User::class], exportSchema = false)
 abstract class RestaurantLocalDatabase : RoomDatabase() {

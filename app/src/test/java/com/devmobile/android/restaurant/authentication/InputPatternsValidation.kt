@@ -1,6 +1,6 @@
 package com.devmobile.android.restaurant.authentication
 
-import com.devmobile.android.restaurant.InputPatterns
+import com.devmobile.android.restaurant.usecases.InputPatterns
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
