@@ -87,7 +87,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3")
 
-    // Room
+    // # Room #
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-runtime:2.6.1")
     // optional - Kotlin Extensions and Coroutines support for Room
@@ -100,6 +100,12 @@ dependencies {
     implementation("androidx.room:room-guava:2.6.1")
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:2.6.1")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    // Retrofit with Scalar Converter
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
+
 
     // Dependencies to implements MVVM architecture
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
