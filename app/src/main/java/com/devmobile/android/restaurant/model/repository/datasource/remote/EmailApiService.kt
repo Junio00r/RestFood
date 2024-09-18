@@ -1,41 +1,19 @@
-package com.devmobile.android.restaurant.model.datasource.remote
+package com.devmobile.android.restaurant.model.repository.datasource.remote
 
-import android.annotation.SuppressLint
 import retrofit2.Retrofit
-import retrofit2.create
-import kotlin.random.Random
+import retrofit2.converter.gson.GsonConverterFactory
 
 
-class EmailService : IEmailAPIService {
+class EmailApiService {
 
-    val retrofit = Retrofit.Builder()
-        .baseUrl(GMAIL_BASE_URL)
+    private val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl("https://gmail.googleapis.com")
         .build()
 
-    val emailService = retrofit.create(IEmailAPIService::class.java)
-
-    @SuppressLint("DefaultLocale")
-    override suspend fun sendEmail(email: String, /* file with code */ body: String) {
-
-
+    val emailService: IEmailAPIService by lazy {
+        retrofit.create(IEmailAPIService::class.java)
     }
 
-    object CodeGenerator {
-
-        private var generator: Random = Random.Default
-        private var currentCodeGenerated: String? = null
-
-        @SuppressLint("DefaultLocale")
-        fun generateCode(): String {
-
-            currentCodeGenerated = String.format("%06d", generator.nextInt(0, 1_000_000))
-
-            return currentCodeGenerated as String
-        }
-
-        fun currentCodeGenerated(): String? {
-
-            return currentCodeGenerated
-        }
-    }
+    val testing = "TYeetnte"
 }

@@ -2,7 +2,7 @@ package com.devmobile.android.restaurant.model.repository.authentication
 
 import android.content.Context
 import android.util.Log
-import com.devmobile.android.restaurant.model.datasource.remote.EmailCommunicationHandler
+import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,16 +14,16 @@ class TokenVerificationRepository(
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + defaultDispatcher),
 ) {
-    private val emailCommunicationHandler = EmailCommunicationHandler()
+    private val emailCommunicationHandler = EmailApiService()
 
     fun requestNewVerificationCode(email: String) {
 
         // Uses email api to send verification code
         coroutineScope.launch {
 
-            emailCommunicationHandler.sendEmail(email = email, body = "")
+            val result =
+                emailCommunicationHandler.emailService.sendEmail(email = email, last = "Testing...")
         }
-        Log.i("REQUEST", "Request New Verification Code")
     }
 
     suspend fun createAccount() {
@@ -32,10 +32,5 @@ class TokenVerificationRepository(
 
             Log.i("Creation", "User Account Created")
         }.join()
-    }
-
-    fun checkCode(codeEntered: String): Boolean {
-
-        return codeEntered == (emailCommunicationHandler.getCodeSent() ?: "")
     }
 }

@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.viewmodel.authentication
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.LiveData
@@ -8,9 +9,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.CalledFromXML
-import com.devmobile.android.restaurant.usecases.InputPatterns
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
+import com.devmobile.android.restaurant.usecases.InputPatterns
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 @OptIn(FlowPreview::class)
 class TokenVerificationViewModel(
@@ -156,7 +158,7 @@ class TokenVerificationViewModel(
     private fun <T : Collection<String>> handleCodeInserted(numbers: T) {
 
         coroutineScope.launch {
-            when (isNumbersValid(numbers) and repository.checkCode(numbers.joinToString(separator = ""))) {
+            when (isNumbersValid(numbers) and checkCode(numbers.joinToString(separator = ""))) {
 
                 true -> {
 
@@ -204,9 +206,37 @@ class TokenVerificationViewModel(
         return true
     }
 
+    private fun checkCode(codeEntered: String): Boolean {
+
+        return codeEntered == CodeGenerator.currentCodeGenerated()
+    }
+
     override fun onCleared() {
         super.onCleared()
 
         coroutineScope.cancel("Finishing ViewModel")
+    }
+}
+
+internal object CodeGenerator {
+
+    private var generator: Random = Random.Default
+    private var currentCodeGenerated: String? = null
+
+    @SuppressLint("DefaultLocale")
+    fun generateCode(): String {
+
+        currentCodeGenerated = String.format("%06d", generator.nextInt(0, 1_000_000))
+
+        return currentCodeGenerated as String
+    }
+
+    fun currentCodeGenerated(): String {
+
+        currentCodeGenerated.let {
+            currentCodeGenerated
+        }
+
+        return generateCode()
     }
 }

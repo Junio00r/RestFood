@@ -1,12 +1,10 @@
-package com.devmobile.android.restaurant.model.datasource.remote
+package com.devmobile.android.restaurant.model.repository.datasource.remote
 
 import com.devmobile.android.restaurant.BuildConfig
+import okhttp3.RequestBody
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.Part
 import retrofit2.http.Path
 
 /**
@@ -19,7 +17,10 @@ interface IEmailAPIService {
     val GMAIL_BASE_URL: String
         get() = "https://gmail.googleapis.com"
 
-    @Multipart
+    @Multipart // Used for send a file .html
     @POST("/gmail/v1/users/{email}/messages/send")
-    suspend fun sendEmail(@Path("email") email: String, @Part("description") last: String) : String
+    suspend fun sendEmail(
+        @Path("email") email: String,
+        @Body messageFile: RequestBody
+    ): String
 }
