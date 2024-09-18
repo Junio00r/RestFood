@@ -10,4 +10,5 @@
 /app/build
 .externalNativeBuild
 .cxx
+./app/src/resources
 local.properties

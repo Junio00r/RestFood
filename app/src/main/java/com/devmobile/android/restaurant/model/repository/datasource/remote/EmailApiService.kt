@@ -1,16 +1,21 @@
 package com.devmobile.android.restaurant.model.datasource.remote
 
 import android.annotation.SuppressLint
+import retrofit2.Retrofit
+import retrofit2.create
 import kotlin.random.Random
 
-class EmailCommunicationHandler : IEmailAPIService {
 
-    fun getCodeSent(): String? {
-        return CodeGenerator.currentCodeGenerated()
-    }
+class EmailService : IEmailAPIService {
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl(GMAIL_BASE_URL)
+        .build()
+
+    val emailService = retrofit.create(IEmailAPIService::class.java)
 
     @SuppressLint("DefaultLocale")
-    override fun sendEmail(email: String, /* file with code */ body: String) {
+    override suspend fun sendEmail(email: String, /* file with code */ body: String) {
 
 
     }

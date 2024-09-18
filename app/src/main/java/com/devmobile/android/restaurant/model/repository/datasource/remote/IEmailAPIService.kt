@@ -1,16 +1,25 @@
 package com.devmobile.android.restaurant.model.datasource.remote
 
 import com.devmobile.android.restaurant.BuildConfig
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
 
 /**
- * Establish a contract with email-api
+ * Establish a contract with gmail-api
  */
 interface IEmailAPIService {
 
-    val API_KEY: String
+    val GMAIL_API_KEY: String
         get() = BuildConfig.GMAIL_APY_KEY
-    val BASE_URL: String
-        get() = ""
+    val GMAIL_BASE_URL: String
+        get() = "https://gmail.googleapis.com"
 
-    fun sendEmail(email: String, body: String)
+    @Multipart
+    @POST("/gmail/v1/users/{email}/messages/send")
+    suspend fun sendEmail(@Path("email") email: String, @Part("description") last: String) : String
 }
