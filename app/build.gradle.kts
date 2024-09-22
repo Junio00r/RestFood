@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-        namespace = "com.devmobile.android.restaurant"
+    namespace = "com.devmobile.android.restaurant"
     compileSdk = 34
 
     defaultConfig {
@@ -28,7 +28,11 @@ android {
         val properties: Properties = Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
 
-        buildConfigField("String", "GMAIL_APY_KEY", "\"${properties.getProperty("GMAIL_APY_KEY")}\"")
+        buildConfigField(
+            "String",
+            "EMAIL_APY_KEY",
+            "\"${properties.getProperty("EMAIL_APY_KEY")}\""
+        )
     }
 
     buildTypes {
@@ -103,16 +107,13 @@ dependencies {
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    // Retrofit with Scalar Converter
-    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // Dependencies to implements MVVM architecture
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("androidx.savedstate:savedstate-ktx:1.2.1")
-
 
 
     /* ------------------------------------------------------------------------------- *
