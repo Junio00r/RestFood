@@ -24,6 +24,15 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val properties: Properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField(
+            "String",
+            "EMAIL_API_KEY",
+            "\"${properties.getProperty("EMAIL_API_KEY")}\""
+        )
     }
 
     buildTypes {
