@@ -1,22 +1,19 @@
 package com.devmobile.android.restaurant.model.repository.datasource.remote
 
-import com.devmobile.android.restaurant.BuildConfig
-import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Multipart
+import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 /**
  * Establish a contract with gmail-api
  */
 interface IEmailAPIService {
 
-    @Multipart // Used for send a file .html
-    @POST("")
-    suspend fun sendEmail(
-        @Path("email") email: String,
-        @Body messageFile: RequestBody
-    ): Response<EmailResponse>
+    @GET(".")
+    suspend fun checkService(): Response<ResponseBody>
+
+    @POST("v3/smtp/email/")
+    suspend fun sendEmail(@Body emailRequest: EmailRequest): Response<EmailResponse>
 }

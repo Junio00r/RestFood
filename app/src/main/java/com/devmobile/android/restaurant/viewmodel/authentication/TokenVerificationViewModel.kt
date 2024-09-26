@@ -11,6 +11,9 @@ import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
+import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailRequest
+import com.devmobile.android.restaurant.model.repository.datasource.remote.Sender
+import com.devmobile.android.restaurant.model.repository.datasource.remote.To
 import com.devmobile.android.restaurant.usecases.InputPatterns
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +54,7 @@ class TokenVerificationViewModel(
                     return TokenVerificationViewModel(
                         repository = repository,
                         handleUIState = handle,
-                        userData = userData
+                        userData = userData,
                     ) as T
                 }
             }
@@ -113,7 +116,14 @@ class TokenVerificationViewModel(
 
         coroutineScope.launch {
 
-            repository.requestNewVerificationCode(email = userData.elementAt(2))
+            repository.requestNewVerificationCode(
+                EmailRequest(
+                    sender = Sender("RestFood", "devcodeandcoffee@gmail.com"),
+                    to = listOf(To(email = userData.elementAt(2))),
+                    htmlContent = "TODO",
+                    subject = "${CodeGenerator.currentCodeGenerated()} é o seu código de acesso",
+                )
+            )
         }
 
         // coroutines scope on init block isn't recommended
@@ -185,7 +195,14 @@ class TokenVerificationViewModel(
 
             coroutineScope.launch {
 
-                repository.requestNewVerificationCode(email = userData.elementAt(2))
+                repository.requestNewVerificationCode(
+                    EmailRequest(
+                        sender = Sender("RestFood", "devcodeandcoffee@gmail.com"),
+                        to = listOf(To(email = userData.elementAt(2))),
+                        htmlContent = "TODO",
+                        subject = "${CodeGenerator.currentCodeGenerated()} é o seu código de acesso",
+                    )
+                )
                 _canResendCode.value = true
             }
         }
@@ -209,6 +226,11 @@ class TokenVerificationViewModel(
     private fun checkCode(codeEntered: String): Boolean {
 
         return codeEntered == CodeGenerator.currentCodeGenerated()
+    }
+
+    private fun prepareVerificationTemplate(): String {
+
+        TODO()
     }
 
     override fun onCleared() {

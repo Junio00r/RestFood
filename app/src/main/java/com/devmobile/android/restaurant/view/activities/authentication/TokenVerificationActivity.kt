@@ -69,9 +69,10 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
             TokenVerificationViewModel.provideFactory(
                 repository = _repository,
                 owner = this@TokenVerificationActivity,
-                userData = dataUser
+                userData = dataUser,
             )
         }
+
         _viewModel = viewModelInstance
         _viewBinding.viewModel = _viewModel
 

@@ -8,23 +8,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 class EmailApiService {
 
     private val okHttp = OkHttpClient.Builder()
-        .addInterceptor(EmailInterceptor(apiKey = BuildConfig.GMAIL_APY_KEY))
+        .addInterceptor(EmailInterceptor(BuildConfig.EMAIL_API_KEY))
         .build()
-
     private val retrofit = Retrofit.Builder()
         // set a converter for parser a java/kotlin object in a gson and vice versa. Requests and responses
         .addConverterFactory(GsonConverterFactory.create())
         // URL for request
-        .baseUrl("https://api.sendpulse.com")
+        .baseUrl("https://api.brevo.com/")
         .client(okHttp)
         .build()
+
 
     val emailService: IEmailAPIService by lazy {
 
         retrofit.create(IEmailAPIService::class.java)
     }
+
 }
-
-data class EmailRequest()
-
-data class EmailResponse()
