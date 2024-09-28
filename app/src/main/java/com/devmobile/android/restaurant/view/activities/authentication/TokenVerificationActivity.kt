@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.Gravity
 import android.widget.EditText
 import androidx.activity.viewModels
@@ -19,13 +20,14 @@ import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
-import com.devmobile.android.restaurant.usecases.extensions.maxLength
+import com.devmobile.android.restaurant.usecase.maxLength
 import com.devmobile.android.restaurant.view.activities.MainActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
@@ -38,6 +40,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     // data
     private val _numbers = ArrayList<TextInput>()
     private lateinit var dataUser: Collection<String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,12 +67,24 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
             )
         )
 
+        lateinit var templateEmail: String
+
+        try {
+
+            templateEmail = this@TokenVerificationActivity.assets.open("verification_email_template.html").bufferedReader().readText()
+
+        } catch (e: IOException) {
+            Log.e("File", "No template file founded")
+        }
+
+
         // about viewmodel
         val viewModelInstance: TokenVerificationViewModel by viewModels {
             TokenVerificationViewModel.provideFactory(
                 repository = _repository,
                 owner = this@TokenVerificationActivity,
                 userData = dataUser,
+                templateWithoutCodeDefined = templateEmail
             )
         }
 
@@ -224,6 +239,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
             is RequestResult.Success -> {
 
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             }
 
             is RequestResult.Error -> {

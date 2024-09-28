@@ -14,11 +14,12 @@ import com.devmobile.android.restaurant.model.repository.authentication.TokenVer
 import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailRequest
 import com.devmobile.android.restaurant.model.repository.datasource.remote.Sender
 import com.devmobile.android.restaurant.model.repository.datasource.remote.To
-import com.devmobile.android.restaurant.usecases.InputPatterns
+import com.devmobile.android.restaurant.usecase.InputPatterns
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -30,8 +31,9 @@ import kotlin.random.Random
 class TokenVerificationViewModel(
     private val repository: TokenVerificationRepository, /* It's not recommended because repository have a Context dependency */
     private val handleUIState: SavedStateHandle,
-    private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+    private val coroutineScope: CoroutineScope = CoroutineScope(Job() + Dispatchers.Main),
     private val userData: Collection<String>,
+    private val templateWithoutCodeDefined: String
 ) : ViewModel() {
 
     companion object {
@@ -40,21 +42,21 @@ class TokenVerificationViewModel(
             repository: TokenVerificationRepository,
             owner: SavedStateRegistryOwner,
             userData: Collection<String>,
+            templateWithoutCodeDefined: String,
             defaultArgs: Bundle? = null,
         ): AbstractSavedStateViewModelFactory =
             object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel> create(
-                    key: String,
-                    modelClass: Class<T>,
-                    handle: SavedStateHandle
+                    key: String, modelClass: Class<T>, handle: SavedStateHandle
                 ): T {
 
                     return TokenVerificationViewModel(
                         repository = repository,
                         handleUIState = handle,
                         userData = userData,
+                        templateWithoutCodeDefined = templateWithoutCodeDefined,
                     ) as T
                 }
             }
@@ -120,7 +122,7 @@ class TokenVerificationViewModel(
                 EmailRequest(
                     sender = Sender("RestFood", "devcodeandcoffee@gmail.com"),
                     to = listOf(To(email = userData.elementAt(2))),
-                    htmlContent = "TODO",
+                    htmlContent = prepareVerificationTemplate(),
                     subject = "${CodeGenerator.currentCodeGenerated()} é o seu código de acesso",
                 )
             )
@@ -199,7 +201,7 @@ class TokenVerificationViewModel(
                     EmailRequest(
                         sender = Sender("RestFood", "devcodeandcoffee@gmail.com"),
                         to = listOf(To(email = userData.elementAt(2))),
-                        htmlContent = "TODO",
+                        htmlContent = prepareVerificationTemplate(),
                         subject = "${CodeGenerator.currentCodeGenerated()} é o seu código de acesso",
                     )
                 )
@@ -228,9 +230,12 @@ class TokenVerificationViewModel(
         return codeEntered == CodeGenerator.currentCodeGenerated()
     }
 
-    private fun prepareVerificationTemplate(): String {
+    private suspend fun prepareVerificationTemplate(): String {
 
-        TODO()
+        return coroutineScope.async(Dispatchers.Default) {
+
+            templateWithoutCodeDefined.replace("VALIDATION_CODE", CodeGenerator.generateCode())
+        }.await()
     }
 
     override fun onCleared() {
@@ -255,10 +260,6 @@ internal object CodeGenerator {
 
     fun currentCodeGenerated(): String {
 
-        currentCodeGenerated.let {
-            currentCodeGenerated
-        }
-
-        return generateCode()
+        return currentCodeGenerated ?: generateCode()
     }
 }
