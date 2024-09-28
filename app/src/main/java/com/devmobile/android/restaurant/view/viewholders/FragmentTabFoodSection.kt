@@ -16,7 +16,7 @@ import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.viewmodel.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewFoodsBinding
-import com.devmobile.android.restaurant.usecases.enums.FoodSection
+import com.devmobile.android.restaurant.usecase.enums.FoodSection
 
 class FragmentTabFoodSection(
 

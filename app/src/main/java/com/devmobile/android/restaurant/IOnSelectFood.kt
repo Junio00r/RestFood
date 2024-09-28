@@ -1,6 +1,6 @@
 package com.devmobile.android.restaurant
 
-import com.devmobile.android.restaurant.usecases.enums.FoodSection
+import com.devmobile.android.restaurant.usecase.enums.FoodSection
 
 interface IOnSelectFood {
 

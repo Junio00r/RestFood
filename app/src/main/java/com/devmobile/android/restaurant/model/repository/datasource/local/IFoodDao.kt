@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
-import com.devmobile.android.restaurant.usecases.enums.FoodSection
+import com.devmobile.android.restaurant.usecase.enums.FoodSection
 
 @Dao
 interface IFoodDao {

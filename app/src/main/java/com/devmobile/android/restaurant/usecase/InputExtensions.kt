@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.usecases.extensions
+package com.devmobile.android.restaurant.usecase
 
 import android.text.InputFilter
 import android.widget.TextView

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityMainBinding
-import com.devmobile.android.restaurant.usecases.enums.FoodSection
+import com.devmobile.android.restaurant.usecase.enums.FoodSection
 import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
 import com.devmobile.android.restaurant.IOnSelectFood
 import com.devmobile.android.restaurant.viewmodel.adapters.TabAdapter

@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.usecases
+package com.devmobile.android.restaurant.usecase
 
 import java.util.regex.Pattern
 

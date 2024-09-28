@@ -4,8 +4,8 @@ import android.content.Context
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
-import com.devmobile.android.restaurant.usecases.enums.FoodSection
-import com.devmobile.android.restaurant.usecases.enums.TempoPreparo
+import com.devmobile.android.restaurant.usecase.enums.FoodSection
+import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
 
 // Temporary Class
 class DatabaseSimulator {

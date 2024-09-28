@@ -3,8 +3,8 @@ package com.devmobile.android.restaurant.model.datasource.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.devmobile.android.restaurant.usecases.enums.FoodSection
-import com.devmobile.android.restaurant.usecases.enums.TempoPreparo
+import com.devmobile.android.restaurant.usecase.enums.FoodSection
+import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
 
 // Versão para testes offlines
 @Entity(tableName = "foods")
