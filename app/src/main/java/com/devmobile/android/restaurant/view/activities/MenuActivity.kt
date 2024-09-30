@@ -6,20 +6,20 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.databinding.ActivityMainBinding
-import com.devmobile.android.restaurant.usecase.enums.FoodSection
-import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
 import com.devmobile.android.restaurant.IOnSelectFood
+import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
+import com.devmobile.android.restaurant.usecase.enums.FoodSection
 import com.devmobile.android.restaurant.view.activities.authentication.LoginActivity
+import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
 import com.devmobile.android.restaurant.viewmodel.adapters.TabAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
+class MenuActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMenuBinding
 
     private lateinit var tabsNameId: Array<Int>
 
@@ -36,7 +36,7 @@ class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
 
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         tabFragmentsInstances = addFragmentsTabSection()
