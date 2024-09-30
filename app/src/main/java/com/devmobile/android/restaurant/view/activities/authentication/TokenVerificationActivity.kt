@@ -34,10 +34,19 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     // references
     private lateinit var _viewBinding: ActivityVerificationCodeBinding
     private lateinit var _viewModel: TokenVerificationViewModel
-    private val _repository =
-        TokenVerificationRepository(context = this, emailCommunicationHandler = EmailApiService())
+    private val _repository = TokenVerificationRepository(context = this, emailCommunicationHandler = EmailApiService())
 
     // data
+    private val template: String by lazy {
+        try {
+
+            this@TokenVerificationActivity.assets.open("verification_email_template.html").bufferedReader().readText()
+
+        } catch (e: IOException) {
+            Log.e("File", "No template file founded")
+            "No template file founded"
+        }
+    }
     private val _numbers = ArrayList<TextInput>()
     private lateinit var dataUser: Collection<String>
 
@@ -67,15 +76,15 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
             )
         )
 
-        lateinit var templateEmail: String
-
-        try {
-
-            templateEmail = this@TokenVerificationActivity.assets.open("verification_email_template.html").bufferedReader().readText()
-
-        } catch (e: IOException) {
-            Log.e("File", "No template file founded")
-        }
+//        lateinit var templateEmail: String
+//
+//        try {
+//
+//            templateEmail = this@TokenVerificationActivity.assets.open("verification_email_template.html").bufferedReader().readText()
+//
+//        } catch (e: IOException) {
+//            Log.e("File", "No template file founded")
+//        }
 
 
         // about viewmodel
@@ -84,7 +93,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
                 repository = _repository,
                 owner = this@TokenVerificationActivity,
                 userData = dataUser,
-                templateWithoutCodeDefined = templateEmail
+                templateWithoutCodeDefined = template
             )
         }
 
@@ -100,6 +109,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
     private fun drawingViews() {
 
+        _viewBinding.textInformation.append(" ${dataUser.elementAt(2)}")
         _numbers.forEach { number ->
 
             // InputType

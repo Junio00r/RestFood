@@ -40,5 +40,5 @@
 
     <!-- Code Verification Activity  -->
     <string name="text_reeviar_codigo">Reenviar Código</string>
-    <string name="text_information_message">Verifique o codigo enviado para o e-mail</string>
+    <string name="text_information_message">Verifique o codigo enviado para o e-mail:</string>
 </resources>
