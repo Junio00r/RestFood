@@ -153,7 +153,6 @@ class MenuActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
 
     override fun onNavigateUp(): Boolean {
         startActivity(Intent(this, LoginActivity::class.java))
-        finish()
 
         return true
     }
