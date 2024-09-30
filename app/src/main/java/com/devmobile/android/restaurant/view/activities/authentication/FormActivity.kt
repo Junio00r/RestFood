@@ -140,18 +140,30 @@ class FormActivity : AppCompatActivity(), IShowError {
 
         when (requestOfResult) {
 
-
             is RequestResult.Success -> {
 
                 val intent = Intent(this@FormActivity, TokenVerificationActivity::class.java)
                     .apply {
-                        putExtra("EXTRA_NAME", _formBinding.inputUserName.getTextInputEditText().text.toString())
-                        putExtra("EXTRA_LAST_NAME", _formBinding.inputUserLastName.getTextInputEditText().text.toString())
-                        putExtra("EXTRA_EMAIL", _formBinding.inputUserEmail.getTextInputEditText().text.toString())
-                        putExtra("EXTRA_PASSWORD", _formBinding.inputUserPassword.getTextInputEditText().text.toString())
+                        putExtra(
+                            "EXTRA_NAME",
+                            _formBinding.inputUserName.getTextInputEditText().text.toString()
+                        )
+                        putExtra(
+                            "EXTRA_LAST_NAME",
+                            _formBinding.inputUserLastName.getTextInputEditText().text.toString()
+                        )
+                        putExtra(
+                            "EXTRA_EMAIL",
+                            _formBinding.inputUserEmail.getTextInputEditText().text.toString()
+                        )
+                        putExtra(
+                            "EXTRA_PASSWORD",
+                            _formBinding.inputUserPassword.getTextInputEditText().text.toString()
+                        )
                     }
 
                 startActivity(intent)
+                finish()
             }
 
             is RequestResult.Error -> {
