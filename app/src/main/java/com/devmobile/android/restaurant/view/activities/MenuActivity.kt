@@ -11,6 +11,7 @@ import com.devmobile.android.restaurant.databinding.ActivityMainBinding
 import com.devmobile.android.restaurant.usecase.enums.FoodSection
 import com.devmobile.android.restaurant.view.viewholders.FragmentTabFoodSection
 import com.devmobile.android.restaurant.IOnSelectFood
+import com.devmobile.android.restaurant.view.activities.authentication.LoginActivity
 import com.devmobile.android.restaurant.viewmodel.adapters.TabAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
@@ -148,6 +149,13 @@ class MainActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
 
             intent.putExtra("quantityAdded_$index", quantityAdded)
         }
+    }
+
+    override fun onNavigateUp(): Boolean {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+
+        return true
     }
 
     // Métodos de implementacoes de interfaces criadas
