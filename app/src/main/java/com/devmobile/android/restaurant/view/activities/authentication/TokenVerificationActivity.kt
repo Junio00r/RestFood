@@ -21,7 +21,7 @@ import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBind
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
 import com.devmobile.android.restaurant.usecase.maxLength
-import com.devmobile.android.restaurant.view.activities.MainActivity
+import com.devmobile.android.restaurant.view.activities.MenuActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -238,7 +238,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
             is RequestResult.Success -> {
 
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, MenuActivity::class.java))
                 finish()
             }
 
