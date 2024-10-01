@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.view.activities.authentication
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -34,7 +35,8 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     // references
     private lateinit var _viewBinding: ActivityVerificationCodeBinding
     private lateinit var _viewModel: TokenVerificationViewModel
-    private val _repository = TokenVerificationRepository(context = this, emailCommunicationHandler = EmailApiService())
+    private val _repository =
+        TokenVerificationRepository(context = this, emailCommunicationHandler = EmailApiService())
 
     // data
     private val template: String by lazy {
@@ -49,7 +51,6 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     }
     private val _numbers = ArrayList<TextInput>()
     private lateinit var dataUser: Collection<String>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,17 +76,6 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
                 _viewBinding.number6
             )
         )
-
-//        lateinit var templateEmail: String
-//
-//        try {
-//
-//            templateEmail = this@TokenVerificationActivity.assets.open("verification_email_template.html").bufferedReader().readText()
-//
-//        } catch (e: IOException) {
-//            Log.e("File", "No template file founded")
-//        }
-
 
         // about viewmodel
         val viewModelInstance: TokenVerificationViewModel by viewModels {
@@ -248,6 +238,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
             is RequestResult.Success -> {
 
+                setResult(Activity.RESULT_OK)
                 startActivity(Intent(this, MenuActivity::class.java))
                 finish()
             }

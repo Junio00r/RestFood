@@ -1,9 +1,12 @@
 package com.devmobile.android.restaurant.view.activities.authentication
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.InputType
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -27,6 +30,13 @@ class FormActivity : AppCompatActivity(), IShowError {
 
     private lateinit var _formBinding: ActivityFormDataBinding
     private val formRepository = FormRepository(this@FormActivity)
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data
+            finish()
+        }
+    }
 
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
@@ -140,10 +150,12 @@ class FormActivity : AppCompatActivity(), IShowError {
 
         when (requestOfResult) {
 
+
             is RequestResult.Success -> {
 
-                val intent = Intent(this@FormActivity, TokenVerificationActivity::class.java)
-                    .apply {
+                val intent =
+                    Intent(this@FormActivity, TokenVerificationActivity::class.java).apply {
+
                         putExtra(
                             "EXTRA_NAME",
                             _formBinding.inputUserName.getTextInputEditText().text.toString()
@@ -162,8 +174,7 @@ class FormActivity : AppCompatActivity(), IShowError {
                         )
                     }
 
-                startActivity(intent)
-                finish()
+                startForResult.launch(intent)
             }
 
             is RequestResult.Error -> {
