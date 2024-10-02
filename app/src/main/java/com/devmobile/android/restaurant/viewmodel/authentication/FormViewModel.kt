@@ -178,13 +178,13 @@ class FormViewModel(
 
         val isValid = InputPatterns.isMatch(inputPattern, data)
 
-        if (isValid.first) {
+        if (isValid.isMatch) {
 
             errorPropagator.value = null
             return true
         }
 
-        errorPropagator.value = isValid.second
+        errorPropagator.value = isValid.errorMessage
         return false
     }
 
@@ -194,13 +194,13 @@ class FormViewModel(
 
         val isValid = InputPatterns.isMatch(inputPattern, data)
 
-        if (data.isNullOrEmpty() or isValid.first) {
+        if (data.isNullOrEmpty() or isValid.isMatch) {
 
             errorPropagator.value = null
             return true
         }
 
-        errorPropagator.value = isValid.second
+        errorPropagator.value = isValid.errorMessage
         return false
     }
 }

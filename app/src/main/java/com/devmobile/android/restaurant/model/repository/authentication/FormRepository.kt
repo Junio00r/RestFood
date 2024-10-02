@@ -14,9 +14,9 @@ class FormRepository(
     private val applicationContext: Context,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
+    private val userDao = RestaurantLocalDatabase.getInstance(applicationContext).getUserDao()
 
     suspend fun hasEmailAlreadyRegistered(email: String) {
-        val userDao = RestaurantLocalDatabase.getInstance(applicationContext).getUserDao()
         var canEmailRegister: Boolean
 
         withContext(ioDispatcher) {

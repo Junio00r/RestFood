@@ -22,7 +22,7 @@ class ExampleUnitTest {
             InputPatterns.isMatch(
                 InputPatterns.EMAIL_PATTERN,
                 "oruioeurioute@gmail.com"
-            ).first
+            ).isMatch
         )
     }
 }

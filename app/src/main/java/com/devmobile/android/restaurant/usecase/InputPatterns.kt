@@ -5,7 +5,7 @@ import java.util.regex.Pattern
 object InputPatterns {
 
     // Error Messages
-    private const val TEXT_ERROR_MESSAGE = "Texto não pode conter letras (!, @ # $ ¨ %) especias, numeros e nem espaços"
+    private const val TEXT_ERROR_MESSAGE = "Texto não pode conter letras especias (!, @, #, $, ¨, % ...), numeros e nem espaços"
     private const val TEXT_NAME_ERROR_MESSAGE = "Invalid Name. The name must contain only letters"
     private const val PASSWORD_ERROR_MESSAGE = "Password have must in minimum 8 characters, three numbers and at least one special character (\$,*, -)."
     private const val EMAIL_ERROR_MESSAGE = "Email is invalid or already taken"
@@ -14,7 +14,7 @@ object InputPatterns {
     // Patterns
     @JvmStatic
     val TEXT_PATTERN: Pattern = Pattern.compile(
-        "^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžæÀÁÂÄÃÅĄĆČĐđĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+\$"
+        "^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçšžæÀÁÂÄÃÅĄĆČĐđĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆŠŽ∂ð ,.'-]+\$"
     )
 
     @JvmStatic
@@ -38,48 +38,50 @@ object InputPatterns {
         "^\\d+\$"
     )
 
-
     // Function
     @JvmStatic
-    fun isMatch(patternToCheck: Pattern, data: String?): Pair<Boolean, String?> {
+    fun isMatch(patternToCheck: Pattern, data: String?): MessagePasser {
 
         if (data != null) {
             return when (patternToCheck) {
 
                 TEXT_PATTERN -> {
-                    return Pair(
+                    return MessagePasser(
                         TEXT_PATTERN.matcher(data.trim()).matches(),
                         TEXT_NAME_ERROR_MESSAGE
                     )
                 }
 
                 EMAIL_PATTERN -> {
-                    return Pair(
+                    return MessagePasser(
                         EMAIL_PATTERN.matcher(data.trim()).matches(),
                         EMAIL_ERROR_MESSAGE
                     )
                 }
 
                 PASSWORD_PATTERN -> {
-                    return Pair(
+                    return MessagePasser(
                         PASSWORD_PATTERN.matcher(data.trim()).matches(),
                         PASSWORD_ERROR_MESSAGE
                     )
                 }
 
                 NUMBER_PATTERN -> {
-                    return Pair(
+                    return MessagePasser(
                         NUMBER_PATTERN.matcher(data.trim()).matches(),
                         NUMBER_ERROR_MESSAGE
                     )
                 }
 
                 else -> {
-                    Pair(false, TEXT_ERROR_MESSAGE)
+                    MessagePasser(false, TEXT_ERROR_MESSAGE)
                 }
             }
         }
 
-        return Pair(false, TEXT_ERROR_MESSAGE)
+        return MessagePasser(false, TEXT_ERROR_MESSAGE)
     }
+
+    data class MessagePasser(val isMatch: Boolean, val errorMessage: String)
 }
+
