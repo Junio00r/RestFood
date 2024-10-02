@@ -7,7 +7,7 @@ import org.junit.Test
 
 class InputPatternsValidation {
 
-    val validNames = arrayOf(
+    private val validNames = arrayOf(
         "Ana-Maria",
         "Carlos' UNION ALL SELECT NULL, username, password FROM users --",
         "João-Pedro",
@@ -50,7 +50,7 @@ class InputPatternsValidation {
         "Ioana",
     )
 
-    val invalidNames = arrayOf(
+    private val invalidNames = arrayOf(
         "José; DROP TABLE users; --",
         "Luís' OR '1'='1",
         "André<svg/onload=alert(1)>",
@@ -113,7 +113,7 @@ class InputPatternsValidation {
         "Evelyn<iframe src=\"javascript('XSS')\"></iframe>"
     )
 
-    val invalidEmails = arrayOf(
+    private val invalidEmails = arrayOf(
         "tetopetgmail.com",
         "toeiu'@gmail.com",
         "@gmail.com",
@@ -123,7 +123,7 @@ class InputPatternsValidation {
         ",",
         "."
     )
-    val validEmails = arrayOf(
+    private val validEmails = arrayOf(
         "tetopet@gmail.com",
         "toeiu@gmail.com",
         "tioeutioe@gmail.com",
@@ -133,7 +133,7 @@ class InputPatternsValidation {
         "uetoiutoietu@gmail.com.br.br.br.br",
     )
 
-    val invalidPasswords = arrayOf(
+    private val invalidPasswords = arrayOf(
         "\"Naruto\"",
         "short1",
         "nouppercase1!",
@@ -156,7 +156,7 @@ class InputPatternsValidation {
         "pass!word",
         "a1!"
     )
-    val validPasswords = arrayOf(
+    private val validPasswords = arrayOf(
         "password1",
         "abc12345",
         "a1b2c3d4",
@@ -186,7 +186,7 @@ class InputPatternsValidation {
 
             assertFalse(
                 "Name Valid: $name",
-                InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, name).first
+                InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, name).isMatch
             )
         }
 
@@ -194,7 +194,7 @@ class InputPatternsValidation {
 
             assertTrue(
                 "Name Invalid: $name",
-                InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, name).first
+                InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, name).isMatch
             )
         }
     }
@@ -206,7 +206,7 @@ class InputPatternsValidation {
 
             assertFalse(
                 "Email valid: $email",
-                InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, email).first
+                InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, email).isMatch
             )
         }
 
@@ -214,7 +214,7 @@ class InputPatternsValidation {
 
             assertTrue(
                 "Email invalid: $email",
-                InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, email).first
+                InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, email).isMatch
             )
         }
     }
@@ -226,7 +226,7 @@ class InputPatternsValidation {
 
             assertFalse(
                 "Email valid: $password",
-                InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, password).first
+                InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, password).isMatch
             )
         }
 
@@ -234,7 +234,7 @@ class InputPatternsValidation {
 
             assertTrue(
                 "Email invalid: $password",
-                InputPatterns.isMatch(InputPatterns.PASSWORD_PATTERN, password).first
+                InputPatterns.isMatch(InputPatterns.PASSWORD_PATTERN, password).isMatch
             )
         }
     }
