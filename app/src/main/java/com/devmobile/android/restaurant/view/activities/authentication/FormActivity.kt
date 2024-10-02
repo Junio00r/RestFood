@@ -55,7 +55,7 @@ class FormActivity : AppCompatActivity(), IShowError {
         _formBinding.registerView = this@FormActivity
 
         setUpInputEditText()
-        subscribeObservables()
+        subscribeObservers()
     }
 
     private fun setUpInputEditText() {
@@ -87,7 +87,7 @@ class FormActivity : AppCompatActivity(), IShowError {
         }
     }
 
-    private fun subscribeObservables() {
+    private fun subscribeObservers() {
 
         with(_formBinding) {
 
