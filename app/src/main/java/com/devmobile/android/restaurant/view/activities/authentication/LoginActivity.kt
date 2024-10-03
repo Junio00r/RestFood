@@ -3,78 +3,99 @@ package com.devmobile.android.restaurant.view.activities.authentication
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.devmobile.android.restaurant.CalledFromXML
+import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
-import com.devmobile.android.restaurant.model.datasource.local.IUserDao
+import com.devmobile.android.restaurant.view.activities.MenuActivity
 import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 
-class LoginActivity : FragmentActivity() {
-    private lateinit var binding: FragmentLoginBinding
+class LoginActivity : AppCompatActivity() {
 
-    private lateinit var buttonSignUp: MaterialButton
-    private lateinit var buttonSignIn: MaterialButton
-
-    private var userEmail: TextInputEditText? = null
-    private var userPassword: TextInputEditText? = null
-
-    private lateinit var userDao: IUserDao
-
-    private lateinit var intent: Intent
-
-    // ViewModels
-    private val loginViewModel: LoginViewModel by viewModels {
+    private lateinit var _binding: FragmentLoginBinding
+    private val _viewModel: LoginViewModel by viewModels {
         LoginViewModel.provideFactory(
-            repository = LoginRepository(this) /* Still will modify */,
-            owner = this@LoginActivity
+            repository = LoginRepository(this),
+            owner = this@LoginActivity,
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = FragmentLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        _binding = FragmentLoginBinding.inflate(this.layoutInflater)
+        setContentView(_binding.root)
 
-        initializeViews()
-        setListeners()
+        _binding.loginViewModel = _viewModel
+        _binding.loginActivity = this
 
+        subscribeObserver()
     }
 
-    private fun initializeViews() {
+    private fun subscribeObserver() {
 
-        userEmail = binding.editUserName
-        userPassword = binding.editTableNumber
-        buttonSignUp = binding.buttonRegister
-        buttonSignIn = binding.buttonLogin
-    }
-
-    private fun setListeners() {
-
-        buttonSignUp.setOnClickListener {
-
-            startRegisterActivity(Intent(this, FormActivity::class.java))
+        _binding.textInputEmail.doAfterTextChanged {
+            _viewModel.onEmailChanged(it.toString())
         }
 
-        buttonSignIn.setOnClickListener {
+        _binding.textInputPassword.doAfterTextChanged {
+            _viewModel.onPasswordChanged(it.toString())
+        }
 
-            startMenuActivity(Intent(this, LoginActivity::class.java))
+        _viewModel.errorDataPropagator.observe(this@LoginActivity) { errorCause ->
+
+            _binding.textInputEmail.error = errorCause
+
+            _binding.textInputPassword.error = errorCause
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                _viewModel.requestLoginResult.collect { value ->
+
+                    handleResulState(value)
+                }
+            }
         }
     }
 
-    private fun startRegisterActivity(intent: Intent) {
+    private fun handleResulState(result: RequestResult) {
 
-        startActivity(intent)
+        when (result) {
+
+            is RequestResult.Success -> {
+                startActivity(Intent(this@LoginActivity, MenuActivity::class.java))
+            }
+
+            is RequestResult.Error -> {
+                // Nothing
+            }
+        }
     }
 
-    private fun startMenuActivity(intent: Intent) {
+    @CalledFromXML
+    fun startRegister() {
 
-        loginViewModel.login(userEmail!!, userPassword!!)
+        startActivity(Intent(this, FormActivity::class.java))
+    }
 
-        startActivity(intent)
-        finish()
+    @CalledFromXML
+    fun requestLogin() {
+
+        _viewModel.loginTrigger()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        _binding.textInputEmail.append(_viewModel.userEmail)
+        _binding.textInputPassword.append(_viewModel.userPassword)
     }
 }
 

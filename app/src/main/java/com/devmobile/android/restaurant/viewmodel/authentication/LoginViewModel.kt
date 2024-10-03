@@ -1,85 +1,131 @@
 package com.devmobile.android.restaurant.viewmodel.authentication
 
 import android.os.Bundle
-import android.util.Patterns
-import android.widget.TextView
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
 import com.devmobile.android.restaurant.usecase.InputPatterns
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(
+    private val loginRepository: LoginRepository,
+    private val handleUiState: SavedStateHandle,
+    private val coroutineScope: CoroutineScope = CoroutineScope(Job() + Dispatchers.Main)
+) : ViewModel() {
 
     companion object {
 
         fun provideFactory(
             repository: LoginRepository,
             owner: SavedStateRegistryOwner,
-            coroutineScope: CoroutineScope? = null,
             defaultArgs: Bundle? = null,
         ): AbstractSavedStateViewModelFactory =
             object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
                 @Suppress("UNCHECKED_CAST")
                 override fun <T : ViewModel> create(
-                    key: String,
-                    modelClass: Class<T>,
-                    handle: SavedStateHandle
+                    key: String, modelClass: Class<T>, handle: SavedStateHandle
                 ): T {
 
                     return LoginViewModel(
-                        loginRepository = repository
+                        loginRepository = repository, handleUiState = handle
                     ) as T
                 }
             }
     }
 
-    fun login(email: TextView, password: TextView): Boolean {
-        val mEmail    = email.text.trim().toString()
-        val mPassword = password.text.trim().toString()
+    val userEmail: String
+        get() = handleUiState["EMAIL"] ?: ""
 
-        if (isValidEmail(mEmail) && isValidPassword(mPassword)) {
+    val userPassword: String
+        get() = handleUiState["PASSWORD"] ?: ""
 
-            viewModelScope.launch {
+    fun onEmailChanged(newEmail: String) {
+        handleUiState["EMAIL"] = newEmail
+    }
 
-                val loginResult = loginRepository.login(mEmail, mPassword)
+    fun onPasswordChanged(newPassword: String) {
+        handleUiState["PASSWORD"] = newPassword
+    }
 
-                when (loginResult) {
+    private val _errorDataPropagator: MutableLiveData<String?> = MutableLiveData()
+    val errorDataPropagator: LiveData<String?> = _errorDataPropagator
 
-                    is RequestResult.Success -> {
+    private val _requestLoginResult: MutableSharedFlow<RequestResult> = MutableSharedFlow()
+    val requestLoginResult: SharedFlow<RequestResult> = _requestLoginResult.asSharedFlow()
 
-                        println("Login Realizado Com Sucesso")
-                    }
+    // For debounce pattern
+    private val _loginRequestControl: MutableSharedFlow<Unit> = MutableSharedFlow(replay = 1)
 
-                    is RequestResult.Error -> {
+    init {
 
-                        println(loginResult.exception.message)
-                    }
+        coroutineScope.launch {
+
+            _loginRequestControl.collect {
+                login()
+                delay(1000)
+            }
+        }
+    }
+
+    fun loginTrigger() {
+
+        coroutineScope.launch {
+
+            _loginRequestControl.tryEmit(Unit)
+        }
+    }
+
+    private fun login() {
+
+        if (isDataValid(userEmail, userPassword)) {
+
+            coroutineScope.launch {
+
+                try {
+
+                    loginRepository.makeRequestLogin(userEmail, userPassword)
+                    _requestLoginResult.emit(RequestResult.Success())
+
+                } catch (e: Exception) {
+
+                    _errorDataPropagator.value =
+                        "It's not possible make login. Please, check your email and password!"
+                    _requestLoginResult.emit(RequestResult.Error(Exception(e.message)))
                 }
             }
 
-            return true
-        }
+        } else {
 
-        return false
+            _errorDataPropagator.value = "Email or password are invalids"
+        }
     }
 
 
-    private fun isValidEmail(email: String?): Boolean {
+    private fun isDataValid(email: String?, password: String?): Boolean {
 
-        return email?.trim() == email?.let { Patterns.EMAIL_ADDRESS.matcher(it).toString() }
+        val isEmailValid = InputPatterns.isMatch(InputPatterns.EMAIL_PATTERN, email)
+        val isPasswordValid = InputPatterns.isMatch(InputPatterns.PASSWORD_PATTERN, password)
+
+        return isEmailValid.isMatch and isPasswordValid.isMatch
     }
 
-    private fun isValidPassword(password: String?): Boolean {
+    override fun onCleared() {
+        coroutineScope.cancel()
 
-        return password?.trim() == password?.let {
-            InputPatterns.PASSWORD_PATTERN.matcher(it).toString()
-        }
+        super.onCleared()
     }
 }

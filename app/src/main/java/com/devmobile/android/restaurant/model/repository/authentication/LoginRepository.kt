@@ -1,42 +1,39 @@
 package com.devmobile.android.restaurant.model.repository.authentication
 
 import android.content.Context
-import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class LoginRepository(context: Context) {
+class LoginRepository(
+    private val context: Context,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
     private val userDAO = RestaurantLocalDatabase.getInstance(context).getUserDao()
 
-    suspend fun login(email: String, password: String): RequestResult {
+    suspend fun makeRequestLogin(email: String, password: String) {
 
-        return withContext(Dispatchers.IO) {
+        if (!checkExistenceOnDatabase(email, password)) {
 
-            if (isValidCredentials(email, password)) {
-
-                return@withContext RequestResult.Success("userDAO.findUserByEmail(email)!!")
-
-                // Logging...
-
-            } else {
-                return@withContext RequestResult.Error(IllegalArgumentException("Error: Email or password invalid"))
-            }
+            throw IllegalArgumentException("Email or password invalid")
         }
     }
 
     /**
      * That method verify if **email exists**, case does it, **check
-     * to if password** is of correspondent email.
+     * if password** is of correspondent email.
      *
      * @param email The email to check.
      * @param password The password to check against the email's password.
      * @return **true** if credentials already exists on database, otherwise **false**
      */
-    private fun isValidCredentials(email: String, password: String): Boolean {
+    private suspend fun checkExistenceOnDatabase(email: String, password: String): Boolean {
 
-        // Senhas devem ser comparada usando um hash seguro
         // Possible SQL Injection and XSS Vulnerabilities
-        return userDAO.findUserByEmail(email)?.password == password
+        return withContext(ioDispatcher) {
+
+            userDAO.findUserByEmail(email)?.password == password
+        }
     }
 }
