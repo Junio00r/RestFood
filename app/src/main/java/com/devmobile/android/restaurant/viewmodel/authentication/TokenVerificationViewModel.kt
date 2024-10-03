@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.RequestResult
+import com.devmobile.android.restaurant.model.datasource.local.entities.User
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailRequest
 import com.devmobile.android.restaurant.model.repository.datasource.remote.Sender
@@ -141,9 +142,14 @@ class TokenVerificationViewModel(
 
             _sendCodesInserted.debounce(800).collect {
 
-                handleCodeInserted(
-                    arrayListOf(number1, number2, number3, number4, number5, number6)
-                )
+                try {
+
+                    handleCodeInserted(
+                        arrayListOf(number1, number2, number3, number4, number5, number6)
+                    )
+                } catch (e: Exception) {
+                    _resultRequestCreateAcc.emit(RequestResult.Error(Exception("Code Incorrect or isn't possible create account")))
+                }
             }
         }
     }
@@ -170,20 +176,20 @@ class TokenVerificationViewModel(
     private fun <T : Collection<String>> handleCodeInserted(numbers: T) {
 
         coroutineScope.launch {
-            when (isNumbersValid(numbers) and checkCode(numbers.joinToString(separator = ""))) {
 
-                true -> {
+            if (isNumbersValid(numbers) and checkCode(numbers.joinToString(separator = ""))) {
 
-                    _canStillEnterCodes.value = false
+                _canStillEnterCodes.value = false
 
-                    repository.createAccount()
-                    _resultRequestCreateAcc.emit(RequestResult.Success())
-                }
-
-                false -> {
-
-                    _resultRequestCreateAcc.emit(RequestResult.Error(Exception("Error: Code Incorrect or isn't possible create account")))
-                }
+                repository.createAccount(
+                    user = User(
+                        name = userData.elementAt(0),
+                        lastname = userData.elementAt(1),
+                        email = userData.elementAt(2),
+                        password = userData.elementAt(3)
+                    )
+                )
+                _resultRequestCreateAcc.emit(RequestResult.Success())
             }
         }
     }
