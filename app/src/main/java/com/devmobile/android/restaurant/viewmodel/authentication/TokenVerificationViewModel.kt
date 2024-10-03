@@ -216,7 +216,7 @@ class TokenVerificationViewModel(
 
             val check = InputPatterns.isMatch(InputPatterns.NUMBER_PATTERN, code)
 
-            if (!check.first) {
+            if (!check.isMatch) {
 
                 return false
             }

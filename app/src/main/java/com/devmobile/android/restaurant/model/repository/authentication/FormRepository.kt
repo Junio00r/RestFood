@@ -16,7 +16,7 @@ class FormRepository(
 ) {
     private val userDao = RestaurantLocalDatabase.getInstance(applicationContext).getUserDao()
 
-    suspend fun hasEmailAlreadyRegistered(email: String) {
+    suspend fun hasEmailAlreadyRegistered(email: String): Boolean {
         var canEmailRegister: Boolean
 
         withContext(ioDispatcher) {
@@ -46,5 +46,7 @@ class FormRepository(
                 throw e
             }
         }
+
+        return true
     }
 }
