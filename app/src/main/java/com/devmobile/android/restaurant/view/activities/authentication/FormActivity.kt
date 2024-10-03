@@ -163,7 +163,7 @@ class FormActivity : AppCompatActivity(), IShowError {
                             _formBinding.inputUserName.getTextInputEditText().text.toString()
                         )
                         putExtra(
-                            "EXTRA_LAST_NAME",
+                            "EXTRA_LASTNAME",
                             _formBinding.inputUserLastName.getTextInputEditText().text.toString()
                         )
                         putExtra(

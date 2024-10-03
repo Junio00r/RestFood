@@ -42,17 +42,6 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     )
 
     // data
-    private val template: String by lazy {
-        try {
-
-            this@TokenVerificationActivity.assets.open("verification_email_template.html")
-                .bufferedReader().readText()
-
-        } catch (e: IOException) {
-            Log.e("File", "No template file founded")
-            "No template file founded"
-        }
-    }
     private val _numbers = ArrayList<TextInput>()
     private lateinit var dataUser: Collection<String>
 
@@ -65,7 +54,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
         // init data
         dataUser = arrayListOf(
             intent.extras!!.getString("EXTRA_NAME").toString(),
-            intent.extras!!.getString("EXTRA_LSAT_NAME").toString(),
+            intent.extras!!.getString("EXTRA_LASTNAME").toString(),
             intent.extras!!.getString("EXTRA_EMAIL").toString(),
             intent.extras!!.getString("EXTRA_PASSWORD").toString()
         )
@@ -87,7 +76,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
                 repository = _repository,
                 owner = this@TokenVerificationActivity,
                 userData = dataUser,
-                templateWithoutCodeDefined = template
+                templateWithoutCodeDefined = getTemplate()
             )
         }
 
@@ -259,6 +248,18 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
                 // Nothing
             }
+        }
+    }
+
+    private fun getTemplate(): String {
+        return try {
+
+            this@TokenVerificationActivity.assets.open("verification_email_template.html")
+                .bufferedReader().readText()
+
+        } catch (e: IOException) {
+            Log.e("File", "No template file founded")
+            "No template file founded"
         }
     }
 
