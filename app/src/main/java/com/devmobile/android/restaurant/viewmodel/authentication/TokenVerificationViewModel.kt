@@ -139,7 +139,6 @@ class TokenVerificationViewModel(
         }
 
         coroutineScope.launch {
-
             _sendCodesInserted.debounce(800).collect {
 
                 try {
@@ -147,7 +146,10 @@ class TokenVerificationViewModel(
                     handleCodeInserted(
                         arrayListOf(number1, number2, number3, number4, number5, number6)
                     )
+                    _resultRequestCreateAcc.emit(RequestResult.Success())
+
                 } catch (e: Exception) {
+
                     _resultRequestCreateAcc.emit(RequestResult.Error(Exception("Code Incorrect or isn't possible create account")))
                 }
             }
@@ -173,24 +175,23 @@ class TokenVerificationViewModel(
     }
 
     // functions
-    private fun <T : Collection<String>> handleCodeInserted(numbers: T) {
+    private suspend fun <T : Collection<String>> handleCodeInserted(numbers: T) {
 
-        coroutineScope.launch {
+        if (isNumbersValid(numbers) and checkCode(numbers.joinToString(separator = ""))) {
 
-            if (isNumbersValid(numbers) and checkCode(numbers.joinToString(separator = ""))) {
+            _canStillEnterCodes.value = false
 
-                _canStillEnterCodes.value = false
-
-                repository.createAccount(
-                    user = User(
-                        name = userData.elementAt(0),
-                        lastname = userData.elementAt(1),
-                        email = userData.elementAt(2),
-                        password = userData.elementAt(3)
-                    )
+            repository.createAccount(
+                user = User(
+                    name = userData.elementAt(0),
+                    lastname = userData.elementAt(1),
+                    email = userData.elementAt(2),
+                    password = userData.elementAt(3)
                 )
-                _resultRequestCreateAcc.emit(RequestResult.Success())
-            }
+            )
+        } else {
+
+            throw Exception()
         }
     }
 
