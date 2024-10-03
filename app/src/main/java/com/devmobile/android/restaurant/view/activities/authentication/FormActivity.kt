@@ -191,18 +191,6 @@ class FormActivity : AppCompatActivity(), IShowError {
         }
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        with(_formBinding) {
-
-            inputUserName.getTextInputEditText().append(_formViewModel.userName)
-            inputUserLastName.getTextInputEditText().append(_formViewModel.userLastName)
-            inputUserEmail.getTextInputEditText().append(_formViewModel.userEmail)
-            inputUserPassword.getTextInputEditText().append(_formViewModel.userPassword)
-        }
-    }
-
     @CalledFromXML
     fun nextRegister() {
 
@@ -213,6 +201,18 @@ class FormActivity : AppCompatActivity(), IShowError {
     fun cancelRegister() {
 
         finish()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        with(_formBinding) {
+
+            inputUserName.getTextInputEditText().append(_formViewModel.userName)
+            inputUserLastName.getTextInputEditText().append(_formViewModel.userLastName)
+            inputUserEmail.getTextInputEditText().append(_formViewModel.userEmail)
+            inputUserPassword.getTextInputEditText().append(_formViewModel.userPassword)
+        }
     }
 
     override fun showErrorMessage(errorMessage: String) {
