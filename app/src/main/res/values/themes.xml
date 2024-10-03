@@ -8,6 +8,7 @@
         <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:saveEnabled">false</item>
 
         <item name="materialSearchBarStyle">@style/SearchBar.App</item>
 
