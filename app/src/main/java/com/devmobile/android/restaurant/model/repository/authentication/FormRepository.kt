@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant.model.repository.authentication
 
-import android.content.Context
 import android.database.sqlite.SQLiteDatabaseCorruptException
 import android.database.sqlite.SQLiteException
 import android.util.Log
@@ -11,10 +10,9 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class FormRepository(
-    private val applicationContext: Context,
+    private val localDatabase: RestaurantLocalDatabase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
-    private val userDao = RestaurantLocalDatabase.getInstance(applicationContext).getUserDao()
 
     suspend fun hasEmailAlreadyRegistered(email: String): Boolean {
         var canEmailRegister: Boolean
@@ -23,7 +21,7 @@ class FormRepository(
 
             try {
 
-                canEmailRegister = userDao.amountRegisteredEmail(email) == 0
+                canEmailRegister = localDatabase.getUserDao().amountRegisteredEmail(email) == 0
 
                 if (!canEmailRegister) {
 

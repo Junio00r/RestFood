@@ -19,6 +19,7 @@ import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
+import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
 import com.devmobile.android.restaurant.usecase.maxLength
@@ -35,14 +36,17 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     // references
     private lateinit var _viewBinding: ActivityVerificationCodeBinding
     private lateinit var _viewModel: TokenVerificationViewModel
-    private val _repository =
-        TokenVerificationRepository(context = this, emailCommunicationHandler = EmailApiService())
+    private val _repository = TokenVerificationRepository(
+        localDatabase = RestaurantLocalDatabase.getInstance(this@TokenVerificationActivity),
+        emailCommunicationHandler = EmailApiService()
+    )
 
     // data
     private val template: String by lazy {
         try {
 
-            this@TokenVerificationActivity.assets.open("verification_email_template.html").bufferedReader().readText()
+            this@TokenVerificationActivity.assets.open("verification_email_template.html")
+                .bufferedReader().readText()
 
         } catch (e: IOException) {
             Log.e("File", "No template file founded")

@@ -1,13 +1,14 @@
 package com.devmobile.android.restaurant.model.repository.authentication
 
 import android.content.Context
+import androidx.compose.ui.text.intl.Locale
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class LoginRepository(
-    private val context: Context,
+    private val localDatabase: RestaurantLocalDatabase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     private val userDAO = RestaurantLocalDatabase.getInstance(context).getUserDao()

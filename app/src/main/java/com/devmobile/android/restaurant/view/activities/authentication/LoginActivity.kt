@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.devmobile.android.restaurant.CalledFromXML
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
+import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
 import com.devmobile.android.restaurant.view.activities.MenuActivity
 import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
@@ -21,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var _binding: FragmentLoginBinding
     private val _viewModel: LoginViewModel by viewModels {
         LoginViewModel.provideFactory(
-            repository = LoginRepository(this),
+            repository = LoginRepository(localDatabase = RestaurantLocalDatabase.getInstance(this@LoginActivity)),
             owner = this@LoginActivity,
         )
     }

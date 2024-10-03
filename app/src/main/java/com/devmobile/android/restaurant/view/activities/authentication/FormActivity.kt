@@ -18,6 +18,7 @@ import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
+import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
 import com.devmobile.android.restaurant.usecase.maxLength
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
@@ -29,14 +30,15 @@ import kotlinx.coroutines.launch
 class FormActivity : AppCompatActivity(), IShowError {
 
     private lateinit var _formBinding: ActivityFormDataBinding
-    private val formRepository = FormRepository(this@FormActivity)
-    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+    private val formRepository = FormRepository(localDatabase = RestaurantLocalDatabase.getInstance(this@FormActivity))
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data
-            finish()
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data
+                finish()
+            }
         }
-    }
 
     // I prefer to use the SavedStateHandle to practices
     private val _formViewModel: FormViewModel by viewModels {
