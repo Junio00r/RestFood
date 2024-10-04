@@ -48,9 +48,13 @@
             tools:ignore="DiscouragedApi" />
 
         <activity
+            android:name=".view.activities.HomeActivity"
+            android:exported="false"
+            android:theme="@style/RestaurantThemeLight" />
+
+        <activity
             android:name=".view.activities.MenuActivity"
-            android:exported="true"
-            android:label="Restaurant"
+            android:exported="false"
             android:theme="@style/RestaurantThemeLight" />
 
         <activity
