@@ -5,15 +5,17 @@
     <!-- The text with resource will be set dynamically in code -->
     <string name="dynamic_content">Dynamic Content</string>
 
-    <!--  Login Screen  -->
-    <string name="button_login">LOGIN</string>
-    <string name="button_register">REGISTER</string>
-    <string name="text_message_put_name">E-mail</string>
-    <string name="text_message_put_table_number">Password</string>
+    <!-- Authentication session (register, login)   -->
 
-    <!--  Register Screen  -->
-    <string name="button_cancel_register" tools:ignore="ButtonCase">CANCEL</string>
-    <string name="button_confirm_register">NEXT</string>
+        <!--  Login Screen  -->
+        <string name="button_login">LOGIN</string>
+        <string name="button_register">REGISTER</string>
+        <string name="text_message_put_name">E-mail</string>
+        <string name="text_message_put_table_number">Password</string>
+
+        <!--  Register Screen  -->
+        <string name="button_cancel_register" tools:ignore="ButtonCase">CANCEL</string>
+        <string name="button_confirm_register">NEXT</string>
 
     <!--  Tab Sections  -->
     <string name="tab_item_entradas">Entradas</string>
@@ -41,4 +43,19 @@
     <!-- Code Verification Activity  -->
     <string name="text_reeviar_codigo">Reenviar Código</string>
     <string name="text_information_message">Verifique o codigo enviado para o e-mail:</string>
+
+    <!--
+    * ******************************************************************************* *
+    *
+    *        Entrance Session (choice restaurant, qr reader, map, account ...)        *
+    *
+    * ******************************************************************************* *
+    -->
+
+    <!-- Others   -->
+    <string name="choice_restaurant">Restaurants</string>
+    <string name="qr_code">Reader Menu</string>
+    <string name="map_restaurant">Search in Map</string>
+    <string name="account">Account</string>
+
 </resources>
