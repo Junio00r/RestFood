@@ -23,6 +23,7 @@ import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDa
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
 import com.devmobile.android.restaurant.usecase.maxLength
+import com.devmobile.android.restaurant.view.activities.HomeActivity
 import com.devmobile.android.restaurant.view.activities.MenuActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
@@ -232,7 +233,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
             is RequestResult.Success -> {
 
                 setResult(Activity.RESULT_OK)
-                startActivity(Intent(this, MenuActivity::class.java))
+                startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             }
 
