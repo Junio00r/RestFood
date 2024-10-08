@@ -13,8 +13,7 @@ import com.devmobile.android.restaurant.RequestResult
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
-import com.devmobile.android.restaurant.view.activities.HomeActivity
-import com.devmobile.android.restaurant.view.activities.MenuActivity
+import com.devmobile.android.restaurant.view.activities.BottomNavigationActivity
 import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
 import kotlinx.coroutines.launch
 
@@ -72,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
         when (result) {
 
             is RequestResult.Success -> {
-                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                startActivity(Intent(this@LoginActivity, BottomNavigationActivity::class.java))
             }
 
             is RequestResult.Error -> {

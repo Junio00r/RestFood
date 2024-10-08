@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class BottomNavigationActivity : AppCompatActivity() {
 
     //    private val repository =
 //    private val _viewModel  =
@@ -18,9 +18,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(_binding.root)
+        subscribeObservers()
     }
 
-    private fun drawingView() {
+    private fun drawViews() {
 
     }
 
@@ -29,17 +30,17 @@ class HomeActivity : AppCompatActivity() {
         _binding.bottomNavigationView.setOnItemReselectedListener { item ->
 
             when(item.itemId) {
-                R.id.menu_item_1 -> {
-                    Log.i("HOME_SCREEN", "Menu item 1\n\n\n")
+                R.id.menu_screen_1 -> {
+                    Log.i("HOME_SCREEN", "Menu item 1\n")
                 }
-                R.id.menu_item_2 -> {
-                    Log.i("HOME_SCREEN", "Menu item 2\n\n\n")
+                R.id.menu_screen_2 -> {
+                    Log.i("HOME_SCREEN", "Menu item 2\n")
                 }
-                R.id.menu_item_3 -> {
-                    Log.i("HOME_SCREEN", "Menu item 3\n\n\n")
+                R.id.menu_screen_3 -> {
+                    Log.i("HOME_SCREEN", "Menu item 3\n")
                 }
-                R.id.menu_item_4 -> {
-                    Log.i("HOME_SCREEN", "Menu item 4\n\n\n")
+                R.id.menu_screen_4 -> {
+                    Log.i("HOME_SCREEN", "Menu item 4\n")
                 }
             }
         }
