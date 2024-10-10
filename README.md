@@ -11,11 +11,11 @@
   
   - [Funcionalidades](#funcionalidades)
 
-  - [Ferramentas utilizadas](#ferramentas-utilizadas)
+  - [Ferramentas utilizadas](#tecnologias-utilizadas)
   
   - [Imagens da Aplicação](#imagens-da-aplicação)
   
-  - [Acesso ao projeto](#acesso-ao-projeto)
+  - [Baixar e Executar](#baixar-e-executar)
   
 
 ## Descrição
@@ -54,11 +54,14 @@
 
 ## Tecnologias Utilizadas
 
-<a href="https://www.java.com" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> 
 
 ## Imagens da Aplicação
 
 
 ## Baixar e Executar
+
+*git clone -->*
+
+<pre><code class="hljs language-shell">git clone https://github.com/Junio00r/restaurantApp</code></pre>
 
 
