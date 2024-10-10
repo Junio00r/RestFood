@@ -116,6 +116,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("androidx.savedstate:savedstate-ktx:1.2.1")
 
+    // Java language implementation
+    implementation("androidx.fragment:fragment:1.8.4")
+    // Kotlin
+    implementation("androidx.fragment:fragment-ktx:1.8.4")
 
     /* ------------------------------------------------------------------------------- *
      *                         // Implementation Tests //                              *
