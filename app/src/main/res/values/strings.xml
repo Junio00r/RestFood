@@ -54,8 +54,8 @@
 
     <!-- Others   -->
     <string name="choice_restaurant">Restaurants</string>
-    <string name="qr_code">Reader Menu</string>
-    <string name="map_restaurant">Search in Map</string>
+    <string name="qr_code">Reader</string>
+    <string name="map_restaurant">Map</string>
     <string name="account">Account</string>
 
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="RestaurantThemeLight" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.App" parent="Theme.Material3.Light.NoActionBar">
 
         <!--  Set text appearance all texts of App  -->
         <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
@@ -10,8 +10,7 @@
         <item name="android:inputType">textNoSuggestions</item>
         <item name="android:saveEnabled">false</item>
 
-        <item name="materialSearchBarStyle">@style/SearchBar.App</item>
-
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
     <!--  Text Appearance for access all app  -->
@@ -22,9 +21,13 @@
         <item name="hintTextAppearance">@font/sul_sans_regular</item>
     </style>
 
-    <!--  Text Appearance on access all app  -->
-    <style name="SearchBar.App" parent="Widget.Material3.SearchBar">
+    <!--  BottomNavigationView  -->
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
 
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="android:backgroundTint">@color/gray_three</item>
     </style>
 
 </resources>
