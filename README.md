@@ -64,4 +64,15 @@
 
 <pre><code class="hljs language-shell">git clone https://github.com/Junio00r/restaurantApp</code></pre>
 
+*github CLI -->*
+
+<pre><code class="hljs language-shell">gh repo clone Junio00r/restaurantApp</code></pre>
+
+*wget -->*
+
+<pre><code class="hljs language-shell">wget -O restfood.zip https://github.com/Junio00r/restaurantApp/archive/refs/heads/master.zip</code></pre>
+
+*curl -->*
+
+<pre><code class="hljs language-shell">curl -L -o restfood.zip https://github.com/Junio00r/restaurantApp/archive/refs/heads/master.zip</code></pre>
 
