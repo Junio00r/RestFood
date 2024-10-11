@@ -55,11 +55,34 @@
 ## Tecnologias Utilizadas
 
 
+- ``Kotlin``
+- ``Android Studio``
+- ``Git``
+- ``Flow``
+- ``LiveData``
+- ``ViewModel``
+- ``MVVM``
+- ``Coroutine``
+- ``Retrofit``
+- ``OkHttp``
 
 
 ## Imagens da Aplicação
 
+<p align="center">
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/authentication/login.png" style="width: 20%; height: 20%;"/>
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/authentication/form_data.png" style="width: 20%; height: 20%;"/>
 
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/authentication/email_validation.png" style="width: 20%; height: 20%;"/>
+
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/authentication/home.png" style="width: 20%; height: 20%;"/>
+
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/food_selection/food_selection.png" style="width: 20%; height: 20%;"/>
+
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/food_selection/drink_selection.png" style="width: 20%; height: 20%;"/>
+
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/food_selection/quantity_selection.png" style="width: 20%; height: 20%;"/>
+</p>
 
 
 ## Baixar
