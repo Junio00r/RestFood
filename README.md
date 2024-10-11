@@ -15,7 +15,7 @@
   
   - [Imagens da Aplicação](#imagens-da-aplicação)
   
-  - [Baixar e Executar](#baixar-e-executar)
+  - [Baixar e Executar](#baixar)
   
 
 ## Descrição
@@ -58,7 +58,7 @@
 ## Imagens da Aplicação
 
 
-## Baixar e Executar
+## Baixar
 
 *git clone -->*
 
