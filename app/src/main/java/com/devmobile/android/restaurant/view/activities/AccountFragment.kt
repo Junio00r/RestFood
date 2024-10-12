@@ -1,26 +1,33 @@
 package com.devmobile.android.restaurant.view.activities
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.devmobile.android.restaurant.R
+import androidx.fragment.app.activityViewModels
+import com.devmobile.android.restaurant.databinding.FragmentAccountsBinding
+import com.devmobile.android.restaurant.viewmodel.BottomNavigationViewModel
 
-class AccountFragment private constructor() : Fragment(R.layout.fragment_accounts) {
+class AccountFragment(private val fragmentIndex: Int) : Fragment() {
 
     companion object {
         const val FRAGMENT_TAG = "Account"
-        private var _instance: AccountFragment? = null
+    }
 
-        @Synchronized
-        fun getInstance(): AccountFragment {
+    private val _binding: FragmentAccountsBinding by lazy {
+        FragmentAccountsBinding.inflate(this@AccountFragment.layoutInflater)
+    }
+    private val _parentViewModel: BottomNavigationViewModel by activityViewModels()
 
-            return _instance ?: createInstance()
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        @Synchronized
-        private fun createInstance(): AccountFragment {
+        _parentViewModel.updateIndex(fragmentIndex)
 
-            return AccountFragment().also {
-                _instance = it
-            }
-        }
+        return _binding.root
     }
 }

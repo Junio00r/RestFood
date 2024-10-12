@@ -24,10 +24,10 @@ class BottomNavigationActivity : AppCompatActivity() {
     private val _navigationMenuStack: LinkedList<Int> = LinkedList(emptyList())
 
     // data
-    private val homeFragment = HomeFragment()
-    private val qrCodeFragment = QrCodeFragment()
-    private val mapFragment = MapFragment()
-    private val accountFragment = AccountFragment()
+    private val homeFragment = HomeFragment(0)
+    private val qrCodeFragment = QrCodeFragment(1)
+    private val mapFragment = MapFragment(2)
+    private val accountFragment = AccountFragment(3)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,10 +83,11 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         }
 
-        _viewModel.indexFragment.distinctUntilChanged().observe(this@BottomNavigationActivity) { index ->
+        _viewModel.indexFragment.distinctUntilChanged()
+            .observe(this@BottomNavigationActivity) { index ->
 
                 _binding.bottomNavigationView.menu[index].isChecked = true
-        }
+            }
 
         supportFragmentManager.addOnBackStackChangedListener {
 

@@ -1,26 +1,33 @@
 package com.devmobile.android.restaurant.view.activities
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.devmobile.android.restaurant.R
+import androidx.fragment.app.activityViewModels
+import com.devmobile.android.restaurant.databinding.FragmentMapRestaurantsBinding
+import com.devmobile.android.restaurant.viewmodel.BottomNavigationViewModel
 
-class MapFragment private constructor(): Fragment(R.layout.fragment_map_restaurants) {
+class MapFragment(private val fragmentIndex: Int) : Fragment() {
 
     companion object {
         const val FRAGMENT_TAG = "Map"
-        private var _instance: MapFragment? = null
+    }
 
-        @Synchronized
-        fun getInstance(): MapFragment {
+    private val _binding: FragmentMapRestaurantsBinding by lazy {
+        FragmentMapRestaurantsBinding.inflate(this@MapFragment.layoutInflater)
+    }
+    private val parentViewModel: BottomNavigationViewModel by activityViewModels()
 
-            return _instance ?: createInstance()
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        @Synchronized
-        private fun createInstance(): MapFragment {
+        parentViewModel.updateIndex(fragmentIndex)
 
-            return MapFragment().also {
-                _instance = it
-            }
-        }
+        return _binding.root
     }
 }
