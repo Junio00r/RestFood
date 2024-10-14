@@ -9,12 +9,13 @@ import androidx.fragment.app.activityViewModels
 import com.devmobile.android.restaurant.databinding.FragmentQrCodeBinding
 import com.devmobile.android.restaurant.viewmodel.BottomNavigationViewModel
 
-class QrCodeFragment(private val fragmentIndex: Int) : Fragment() {
+class QrCodeFragment : Fragment() {
 
     companion object {
-        const val FRAGMENT_TAG = "Qr_code"
+        const val FRAGMENT_TAG = "QR_CODE"
     }
 
+    private var fragmentId: Int? = null
     private val _binding: FragmentQrCodeBinding by lazy {
         FragmentQrCodeBinding.inflate(this@QrCodeFragment.layoutInflater)
     }
@@ -26,7 +27,10 @@ class QrCodeFragment(private val fragmentIndex: Int) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        parentViewModel.updateIndex(fragmentIndex)
+        arguments?.let {
+            fragmentId = it.getInt("FRAGMENT_INDEX")
+        }
+        fragmentId?.let { parentViewModel.updateIndex(it) }
 
         return _binding.root
     }

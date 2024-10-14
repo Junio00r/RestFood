@@ -9,12 +9,13 @@ import androidx.fragment.app.activityViewModels
 import com.devmobile.android.restaurant.databinding.FragmentMapRestaurantsBinding
 import com.devmobile.android.restaurant.viewmodel.BottomNavigationViewModel
 
-class MapFragment(private val fragmentIndex: Int) : Fragment() {
+class MapFragment : Fragment() {
 
     companion object {
-        const val FRAGMENT_TAG = "Map"
+        const val FRAGMENT_TAG = "MAP"
     }
 
+    private var fragmentId: Int? = null
     private val _binding: FragmentMapRestaurantsBinding by lazy {
         FragmentMapRestaurantsBinding.inflate(this@MapFragment.layoutInflater)
     }
@@ -26,7 +27,10 @@ class MapFragment(private val fragmentIndex: Int) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        parentViewModel.updateIndex(fragmentIndex)
+        arguments?.let {
+            fragmentId = it.getInt("FRAGMENT_INDEX")
+        }
+        fragmentId?.let { parentViewModel.updateIndex(it) }
 
         return _binding.root
     }

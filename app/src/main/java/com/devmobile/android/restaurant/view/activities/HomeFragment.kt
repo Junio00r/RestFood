@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.devmobile.android.restaurant.databinding.FragmentRestaurantHomeBinding
-import com.devmobile.android.restaurant.model.repository.HomeRepository
 import com.devmobile.android.restaurant.viewmodel.BottomNavigationViewModel
-import com.devmobile.android.restaurant.viewmodel.HomeViewModel
 
-class HomeFragment(private val fragmentIndex: Int) : Fragment() {
+
+class HomeFragment : Fragment() {
 
     companion object {
-        const val FRAGMENT_TAG = "Home"
+        const val FRAGMENT_TAG = "HOME"
     }
+
+    private var fragmentId: Int? = null
 
     private val _binding: FragmentRestaurantHomeBinding by lazy {
         FragmentRestaurantHomeBinding.inflate(this@HomeFragment.layoutInflater)
@@ -25,12 +25,13 @@ class HomeFragment(private val fragmentIndex: Int) : Fragment() {
     private val parentViewModel: BottomNavigationViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
-        parentViewModel.updateIndex(fragmentIndex)
+        arguments?.let {
+            fragmentId = it.getInt("FRAGMENT_INDEX")
+        }
+        fragmentId?.let { parentViewModel.updateIndex(it) }
 
         return _binding.root
     }
