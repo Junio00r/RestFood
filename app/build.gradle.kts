@@ -75,21 +75,15 @@ dependencies {
      * ------------------------------------------------------------------------------- */
 
     // Compose
-    implementation("androidx.compose.ui:ui:1.7.1")
-    implementation("androidx.compose.ui:ui-graphics:1.7.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.7.1")
-    implementation("androidx.activity:activity-compose:1.9.2")
-    implementation("androidx.activity:activity-ktx:1.9.2")
-    implementation("androidx.compose.material3:material3:1.3.0")
-    implementation(platform("androidx.compose:compose-bom:2024.09.01"))
-    debugImplementation("androidx.compose.ui:ui-tooling:1.7.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.1")
+        // Nothing yet
 
+    implementation("androidx.activity:activity-ktx:1.9.2")
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.material:material:1.12.0")
+
     implementation("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3")
 
     // # Room #
@@ -130,10 +124,8 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.6.1")
     androidTestImplementation("androidx.test:runner:1.6.2")
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.09.01"))
 
     // Junit
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.1")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.2.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
 
