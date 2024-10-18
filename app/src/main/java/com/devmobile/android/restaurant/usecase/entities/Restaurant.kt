@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "restaurants")
 data class Restaurant(
-    @PrimaryKey(autoGenerate = true) val id: Long? = null,
-    @ColumnInfo(name = "name") var name: String,
+    @PrimaryKey(autoGenerate = false) val id: Long,
+    @ColumnInfo(name = "name") var rname: String,
     @ColumnInfo(name = "street") var street: String,
     @ColumnInfo(name = "city") var city: String,
-    @ColumnInfo(name = "postalCode") var postalCode: String,
+    @ColumnInfo(name = "postal_code") var postalCode: String,
 )
