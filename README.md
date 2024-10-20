@@ -4,10 +4,13 @@
 <img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 </p>
 
+A
 
 ### T√≥picos
 
   - [Descri√ß√£o do Projeto](#descri√ß√£o)
+  
+  - [Linha de Desenvolvimento](#linha-de-desenvolvimento)
   
   - [Funcionalidades](#funcionalidades)
 
@@ -25,6 +28,13 @@
   Tamb√©m com uso para usu√°rios comuns serem capazes de encontrar um restaurante na palma da m√£o.
   </p>
 
+## Linha de Desenvolvimento
+    
+    Essa a linha de desenvolvimento que criei para a cria√√£o da aplca√√o no qual terei que passar por cada etapa para torn√-la algo no m√nimo eficaz.
+
+    <p align="center">
+        <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/development_line.png" style="width: 20%; height: 20%;"/>
+    </p>
 
 ## Funcionalidades 
 
