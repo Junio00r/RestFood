@@ -23,7 +23,7 @@ import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDa
 import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
 import com.devmobile.android.restaurant.usecase.maxLength
-import com.devmobile.android.restaurant.view.activities.BottomNavigationActivity
+import com.devmobile.android.restaurant.view.activities.bottomnavigation.BottomNavigationActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput
 import com.devmobile.android.restaurant.viewmodel.authentication.TokenVerificationViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -254,9 +254,9 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
     private fun getTemplate(): String {
         return try {
 
-            this@TokenVerificationActivity.assets.open("verification_email_template.html")
-                .bufferedReader().readText()
-
+            this@TokenVerificationActivity.assets.use {
+                it.open("verification_email_template.html").bufferedReader().readText()
+            }
         } catch (e: IOException) {
             Log.e("File", "No template file founded")
             "No template file founded"
