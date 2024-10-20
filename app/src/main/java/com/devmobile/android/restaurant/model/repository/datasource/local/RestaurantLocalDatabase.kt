@@ -6,12 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.model.datasource.local.entities.User
+import com.devmobile.android.restaurant.model.repository.datasource.local.IFetches
 import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
+import com.devmobile.android.restaurant.usecase.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 
 @Database(
-    version = 30,
-    entities = [Food::class, User::class, Restaurant::class],
+    version = 33,
+    entities = [Food::class, User::class, Restaurant::class, Fetch::class],
     exportSchema = false
 )
 abstract class RestaurantLocalDatabase : RoomDatabase() {
@@ -21,6 +23,8 @@ abstract class RestaurantLocalDatabase : RoomDatabase() {
     abstract fun getUserDao(): IUserDao
 
     abstract fun getRestaurantDao(): IRestaurantDao
+
+    abstract fun getCache(): IFetches
 
     companion object {
 
