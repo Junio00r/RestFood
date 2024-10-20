@@ -4,6 +4,7 @@ import android.content.Context
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
+import com.devmobile.android.restaurant.usecase.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 import com.devmobile.android.restaurant.usecase.enums.FoodSection
 import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
@@ -15,7 +16,21 @@ class DatabaseSimulator {
 
         suspend fun addRestaurants(context: Context) {
             val restaurants = ArrayList<Restaurant>()
+            val fetches = ArrayList<Fetch>()
             val restaurantDao = RestaurantLocalDatabase.getInstance(context).getRestaurantDao()
+            val fetchDao = RestaurantLocalDatabase.getInstance(context).getCache()
+
+            if (fetchDao.getCachedFetches().isEmpty()) {
+                fetches.addAll(
+                    listOf(
+                        Fetch(fetchName = "Restaurant 1"),
+                        Fetch(fetchName = "Restaurant 2"),
+                        Fetch(fetchName = "Restaurant 3"),
+                        Fetch(fetchName = "Restaurant 4")
+                    )
+                )
+                fetchDao.insertAll(fetches)
+            }
 
             if (restaurantDao.getAll().isEmpty()) {
 
