@@ -1,7 +1,7 @@
 <h1 align="center">RestFood</h1>
 
 <p align="center">
-<img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
+  <img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 </p>
 
 A
@@ -24,17 +24,17 @@ A
 ## Descrição
 
   <p align="justify">
-  Aplicação para gerenciamento em restaurantes como no atendimento, pedidos e etc. 
-  Também com uso para usuários comuns serem capazes de encontrar um restaurante na palma da mão.
+    Aplicação para gerenciamento em restaurantes como no atendimento, pedidos e etc. 
+    Também com uso para usuários comuns serem capazes de encontrar um restaurante na palma da mão.
   </p>
 
 ## Linha de Desenvolvimento
     
-    Essa a linha de desenvolvimento que criei para a cria�ão da aplca��o no qual terei que passar por cada etapa para torn�-la algo no m�nimo eficaz.
-
-    <p align="center">
-        <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/development_line.png" style="width: 20%; height: 20%;"/>
-    </p>
+  Essa a linha de desenvolvimento que criei para a criação da aplicação no qual terei que passar por cada etapa para torná-la algo no mínimo eficaz.
+  
+  <p align="center">
+    <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/development_line.png" style="width: 20%; height: 20%;"/>
+  </p>
 
 ## Funcionalidades 
 
@@ -44,7 +44,7 @@ A
   ✔️: `Feat 2:` Envio de código de verificação do Email.</br>
   ✔️: `Feat 3:` Busca de Restaurantes.</br>
   ✔️: `Feat 4:` Realizar pedidos.</br>
-  ✔️: `Feat 5:` Busca de Restaurantes.</br>
+  ✖️: `Feat 5:` Busca de Restaurantes.</br>
   ✖️: `Feat 6:` Leitor QrCode de menu.</br>
   ✖️: `Feat 7:` Busca de restaurantes pelo mapa.</br>
   ✖️: `Feat 8:` Configurações e gerenciamento de contas.</br>
@@ -80,10 +80,11 @@ A
 ## Imagens da Aplicação
 
 <p align="center">
-  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/authentication/login.png" style="width: 20%; height: 20%;"/>
+  
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/authentication/login.png" style="width: 20%; height:20%;"/>
   <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/authentication/form_data.png" style="width: 20%; height: 20%;"/>
 
-  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/authentication/email_validation.png" style="width: 20%; height: 20%;"/>
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/authentication/email_validation.png" style="width: 20%; height:20%;"/>
 
   <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/authentication/home.png" style="width: 20%; height: 20%;"/>
 
@@ -91,7 +92,8 @@ A
 
   <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/food_selection/drink_selection.png" style="width: 20%; height: 20%;"/>
 
-  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/food_selection/quantity_selection.png" style="width: 20%; height: 20%;"/>
+  <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/master/app/app_images/food_selection/quantity_selection.png" style="width: 20%; height:20%;"/>
+  
 </p>
 
 
