@@ -1,14 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Testing..."
-        android:textSize="32sp" />
+    <data>
 
-</LinearLayout>
+        <variable
+            name="homeFragment"
+            type="com.devmobile.android.restaurant.view.activities.bottomnavigation.HomeFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4CFFFFFA">
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/searchBar_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="110dp"
+            android:hint="@string/home_search_hint"
+            android:outlineSpotShadowColor="@color/black"
+            app:elevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.search.SearchView
+            android:id="@+id/searchView_home"
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:hint="@string/home_search_hint"
+            app:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/searchBar_home"
+            app:layout_constraintStart_toStartOf="@+id/searchBar_home"
+            app:layout_constraintTop_toTopOf="@+id/searchBar_home">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleView_restaurants_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/yellow_very_low"
+                android:paddingVertical="8dp" />
+
+        </com.google.android.material.search.SearchView>
+
+        <ListView
+            android:id="@+id/listView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginVertical="100dp"
+            android:maxLength="5"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/searchBar_home"
+            app:layout_constraintStart_toStartOf="@id/searchBar_home"
+            app:layout_constraintTop_toBottomOf="@id/searchBar_home" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
