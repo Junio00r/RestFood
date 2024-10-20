@@ -22,15 +22,6 @@
         <item name="android:background">@null</item>
     </style>
 
-    <!--  SearchBar  -->
-    <style name="SearchBar.Style.Local" parent="Widget.Material3.SearchBar">
-        <item name="backgroundTint">@color/white</item>
-        <item name="android:hint">@string/search_bar_hint</item>
-        <item name="defaultMarginsEnabled">false</item>
-        <item name="android:fontFamily">@font/sul_sans_regular</item>
-        '       <!--    put hint color one    -->
-    </style>
-
     <!--  SearchView  -->
     <style name="SearchView.Style.Local" parent="Widget.AppCompat.SearchView">
         <item name="android:textSize">14sp</item>

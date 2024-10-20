@@ -52,8 +52,11 @@
     * ******************************************************************************* *
     -->
 
+    <!--  home restaurant  -->
+    <string name="home_search_hint">Search Restaurant</string>
+
     <!-- Others   -->
-    <string name="choice_restaurant">Restaurants</string>
+    <string name="home_restaurant">Restaurants</string>
     <string name="qr_code">Reader</string>
     <string name="map_restaurant">Map</string>
     <string name="account">Account</string>

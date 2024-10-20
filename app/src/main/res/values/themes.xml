@@ -10,6 +10,8 @@
         <item name="android:inputType">textNoSuggestions</item>
         <item name="android:saveEnabled">false</item>
 
+        <!--  Widgets styles  -->
+        <item name="materialSearchBarStyle">@style/SearchBar.App.Style</item>
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
@@ -28,6 +30,14 @@
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
         <item name="android:backgroundTint">@color/gray_three</item>
+    </style>
+
+    <!--  Searchbar  -->
+    <style name="SearchBar.App.Style" parent="Widget.Material3.SearchBar">
+        <item name="backgroundTint">@color/white</item>
+        <item name="hintTextAppearance">@color/red_dark</item>
+        <item name="hintTextColor">@color/red_dark</item>
+        <item name="android:textColorHint">@color/red_dark</item>
     </style>
 
 </resources>
