@@ -4,8 +4,6 @@
   <img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 </p>
 
-A
-
 ### Tópicos
 
   - [Descrição do Projeto](#descrição)
@@ -33,7 +31,7 @@ A
   Essa a linha de desenvolvimento que criei para a criação da aplicação no qual terei que passar por cada etapa para torná-la algo no mínimo eficaz.
   
   <p align="center">
-    <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/development_line.png" style="width: 20%; height: 20%;"/>
+    <img src="https://media.githubusercontent.com/media/Junio00r/RestFood/refs/heads/master/app/app_images/development_line.png" style="width: 70%; height: 70%;"/>
   </p>
 
 ## Funcionalidades 
