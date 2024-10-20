@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 // Versão para testes offlines
 @Entity(tableName = "orders")
-class Order(
+data class Order(
     @PrimaryKey(autoGenerate = false) val orderId: Long,
     @ColumnInfo(name = "restaurantId") val restaurantId: Long,
     @ColumnInfo(name = "date") val orderDate: String,
