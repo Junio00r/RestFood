@@ -39,6 +39,12 @@ class HomeViewModel(
             }
     }
 
+    private val _errorPropagator = MutableSharedFlow<Exception>()
+    val errorPropagator = _errorPropagator.asSharedFlow()
+
+    private val _cachedFetch = MutableSharedFlow<List<String>>()
+    val cachedFetches = _cachedFetch.asSharedFlow()
+
     private val _restaurantsFetched = MutableSharedFlow<List<RestaurantTuple>>()
     val restaurantsFetched = _restaurantsFetched.asSharedFlow()
 
@@ -46,9 +52,17 @@ class HomeViewModel(
 
         viewModelScope.launch {
 
-            if (isValidQuery(query)) {
+            if (query.isEmpty()) {
+
+                _cachedFetch.emit(homeRepository.fetchCacheFetched())
+
+            } else if (isValidQuery(query)) {
 
                 _restaurantsFetched.emit(homeRepository.fetchRestaurants(query))
+
+            } else {
+
+                _errorPropagator.emit(Exception("Invalid Search"))
             }
         }
     }

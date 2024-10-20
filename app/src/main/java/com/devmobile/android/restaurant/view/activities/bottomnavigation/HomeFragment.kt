@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devmobile.android.restaurant.IShowError
 import com.devmobile.android.restaurant.databinding.FragmentRestaurantHomeBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.bottomnavigation.HomeRepository
@@ -24,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), IShowError {
 
     companion object {
         const val FRAGMENT_TAG = "HOME"
@@ -53,16 +54,7 @@ class HomeFragment : Fragment() {
         fragmentIndex?.let { parentViewModel.updateIndex(it) }
         _binding.homeFragment = this
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                _viewModel.restaurantsFetched.collect { restaurants ->
-
-                    populateRecycler(restaurants.map { restaurant ->
-                        RestaurantSearchItem(name = restaurant.name, image = null)
-                    })
-                }
-            }
-        }
+        setUpObservables()
 
         return _binding.root
     }
@@ -70,11 +62,9 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         createFakeRemoteDatabase()
         _binding.searchViewHome.setupWithSearchBar(_binding.searchBarHome)
         _binding.recycleViewRestaurantsList.layoutManager = LinearLayoutManager(requireContext())
-        setUpObservables()
     }
 
     private fun setUpObservables() {
@@ -85,20 +75,55 @@ class HomeFragment : Fragment() {
             return@setOnEditorActionListener false
         }
 
-        _binding.searchViewHome.editText.doOnTextChanged { text, start, before, count ->
+        _binding.searchViewHome.editText.doOnTextChanged { text, _, _, _ ->
             _viewModel.searchQueryMatches(text.toString())
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                _viewModel.restaurantsFetched.collect { restaurants ->
+
+                    populateRecycler(restaurants.map { restaurant ->
+                        RestaurantSearchItem(name = restaurant.name, image = null)
+                    }, false)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                _viewModel.cachedFetches.collect { cachedFetches ->
+
+                    populateRecycler(cachedFetches.map { fetch ->
+                        RestaurantSearchItem(name = fetch)
+                    }, true)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                _viewModel.errorPropagator.collect { error ->
+                    showErrorMessage(error.message ?: "Try Again")
+                }
+            }
         }
     }
 
-    private fun populateRecycler(dataSet: List<RestaurantSearchItem>) {
+    private fun populateRecycler(dataSet: List<RestaurantSearchItem>, isDataCached: Boolean) {
 
-        _binding.recycleViewRestaurantsList.adapter = RestaurantAdapter(dataSet)
+        _binding.recycleViewRestaurantsList.adapter = RestaurantAdapter(dataSet, isDataCached)
     }
 
     private fun createFakeRemoteDatabase() {
+
         lifecycleScope.launch(Dispatchers.IO) {
 
             DatabaseSimulator.addRestaurants(requireContext())
         }
+    }
+
+    override fun showErrorMessage(errorMessage: String) {
+        _binding.searchViewHome.editText.error = errorMessage
     }
 }
