@@ -5,7 +5,7 @@
         android:id="@+id/menu_screen_1"
         android:enabled="true"
         android:icon="@drawable/image_home"
-        android:title="@string/choice_restaurant" />
+        android:title="@string/home_restaurant" />
 
     <item
         android:id="@+id/menu_screen_2"
