@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.devmobile.android.restaurant.usecase.Fetch
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface IFetchDao {
@@ -19,12 +18,12 @@ interface IFetchDao {
     @Query("DELETE FROM fetches")
     suspend fun clearCache()
 
-    @Query("DELETE FROM fetches WHERE fetch = :name")
+    @Query("DELETE FROM fetches WHERE fetchName = :name")
     suspend fun removeFetchByName(name: String)
 
-    @Query("SELECT fetch FROM fetches")
-    fun getCachedFetches(): Flow<List<String>>
+    @Query("SELECT fetchName FROM fetches")
+    suspend fun getCachedFetches(): List<String>
 
-    @Query("SELECT COUNT(fetch) FROM fetches")
+    @Query("SELECT COUNT(fetchName) FROM fetches")
     suspend fun getCacheSize(): Int
 }
