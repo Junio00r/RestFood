@@ -66,6 +66,15 @@ class HomeViewModel(
         viewModelScope.launch {
 
             homeRepository.removeFromCache(query)
+            _cachedFetch.emit(homeRepository.fetchCacheFetched())
+        }
+    }
+
+    fun saveInCache(query: String) {
+
+        viewModelScope.launch {
+
+            homeRepository.saveFetchInCache(query)
         }
     }
 

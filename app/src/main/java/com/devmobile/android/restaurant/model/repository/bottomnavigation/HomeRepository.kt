@@ -3,6 +3,7 @@ package com.devmobile.android.restaurant.model.repository.bottomnavigation
 import com.devmobile.android.restaurant.model.repository.datasource.local.IFetchDao
 import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
 import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao.RestaurantTuple
+import com.devmobile.android.restaurant.usecase.Fetch
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -34,6 +35,14 @@ class HomeRepository(
         withContext(ioDispatcher) {
 
             fetchDao.removeFetchByName(query)
+        }
+    }
+
+    suspend fun saveFetchInCache(query: String) {
+
+        withContext(ioDispatcher) {
+
+            fetchDao.insert(Fetch(fetchName = query))
         }
     }
 }
