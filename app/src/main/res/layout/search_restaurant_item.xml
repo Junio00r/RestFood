@@ -4,23 +4,27 @@
     android:layout_height="48dp"
     android:background="?attr/selectableItemBackground"
     android:backgroundTint="@color/transparent"
-    android:clickable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp">
+
+    <ImageView
+        android:id="@+id/start_widget"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/text_restaurant_name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center_vertical"
-        android:paddingHorizontal="16dp" />
+        android:paddingHorizontal="8dp" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_restaurant_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="16dp" />
+    <ImageView
+        android:id="@+id/end_widget"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center" />
 
 </LinearLayout>
