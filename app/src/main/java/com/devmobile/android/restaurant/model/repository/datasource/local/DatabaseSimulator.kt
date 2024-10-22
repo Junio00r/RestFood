@@ -18,7 +18,7 @@ class DatabaseSimulator {
             val restaurants = ArrayList<Restaurant>()
             val fetches = ArrayList<Fetch>()
             val restaurantDao = RestaurantLocalDatabase.getInstance(context).getRestaurantDao()
-            val fetchDao = RestaurantLocalDatabase.getInstance(context).getCache()
+            val fetchDao = RestaurantLocalDatabase.getInstance(context).getFetch()
 
             if (fetchDao.getCachedFetches().isEmpty()) {
                 fetches.addAll(
