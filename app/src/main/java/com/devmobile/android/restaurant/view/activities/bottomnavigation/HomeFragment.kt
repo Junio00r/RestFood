@@ -13,12 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmobile.android.restaurant.IShowError
+import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentRestaurantHomeBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.bottomnavigation.HomeRepository
 import com.devmobile.android.restaurant.model.repository.datasource.local.DatabaseSimulator
 import com.devmobile.android.restaurant.view.RestaurantAdapter
-import com.devmobile.android.restaurant.view.RestaurantSearchItem
+import com.devmobile.android.restaurant.view.RestaurantItemList
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BottomNavigationViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.HomeViewModel
 import kotlinx.coroutines.Dispatchers
@@ -32,10 +33,13 @@ class HomeFragment : Fragment(), IShowError {
     }
 
     private val _binding: FragmentRestaurantHomeBinding by lazy {
-        FragmentRestaurantHomeBinding.inflate(this@HomeFragment.layoutInflater)
+        FragmentRestaurantHomeBinding.inflate(this.layoutInflater)
     }
     private val _repository: HomeRepository by lazy {
-        HomeRepository(RestaurantLocalDatabase.getInstance(requireContext()))
+        HomeRepository(
+            fetchDao = RestaurantLocalDatabase.getInstance(requireContext()).getFetch(),
+            restaurantDao = RestaurantLocalDatabase.getInstance(requireContext()).getRestaurantDao()
+        )
     }
     private val _viewModel: HomeViewModel by viewModels {
         HomeViewModel.provideFactory(_repository, this, null)
@@ -71,32 +75,41 @@ class HomeFragment : Fragment(), IShowError {
 
         // When search button is click
         _binding.searchViewHome.editText.setOnEditorActionListener { v, actionId, event ->
+
             _binding.searchViewHome.hide()
             return@setOnEditorActionListener false
         }
 
         _binding.searchViewHome.editText.doOnTextChanged { text, _, _, _ ->
+
             _viewModel.searchQueryMatches(text.toString())
         }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                _viewModel.restaurantsFetched.collect { restaurants ->
 
+                _viewModel.restaurantsFetched.collect { restaurants ->
                     populateRecycler(restaurants.map { restaurant ->
-                        RestaurantSearchItem(name = restaurant.name, image = null)
-                    }, false)
+
+                        RestaurantItemList(restaurantName = restaurant.name)
+                    })
                 }
             }
         }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                _viewModel.cachedFetches.collect { cachedFetches ->
 
+                _viewModel.cachedFetches.collect { cachedFetches ->
                     populateRecycler(cachedFetches.map { fetch ->
-                        RestaurantSearchItem(name = fetch)
-                    }, true)
+
+                        RestaurantItemList(
+                            startIcon = R.drawable.ic_historic,
+                            restaurantName = fetch,
+                            endDrawable = R.drawable.ic_close_24,
+                            endAction = RestaurantItemList.CLEAR_FROM_HISTORIC
+                        )
+                    })
                 }
             }
         }
@@ -110,9 +123,28 @@ class HomeFragment : Fragment(), IShowError {
         }
     }
 
-    private fun populateRecycler(dataSet: List<RestaurantSearchItem>, isDataCached: Boolean) {
+    private fun populateRecycler(dataSet: List<RestaurantItemList>) {
 
-        _binding.recycleViewRestaurantsList.adapter = RestaurantAdapter(dataSet, isDataCached)
+        _binding.recycleViewRestaurantsList.adapter =
+            RestaurantAdapter(dataSet = dataSet, onItemClick = { clickAction, restaurantName ->
+
+                when (clickAction) {
+
+                    RestaurantItemList.CLEAR_FROM_HISTORIC -> {
+
+                        _viewModel.removeCache(restaurantName)
+                    }
+
+                    RestaurantItemList.CLICK -> {
+
+                        _viewModel.saveInCache(restaurantName)
+                    }
+
+                    else -> {
+                        // Nothing
+                    }
+                }
+            })
     }
 
     private fun createFakeRemoteDatabase() {
