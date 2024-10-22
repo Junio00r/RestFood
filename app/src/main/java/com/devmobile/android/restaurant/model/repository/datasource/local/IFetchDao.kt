@@ -1,14 +1,11 @@
 package com.devmobile.android.restaurant.model.repository.datasource.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.devmobile.android.restaurant.usecase.Fetch
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface IFetchDao {
@@ -29,5 +26,5 @@ interface IFetchDao {
     fun getCachedFetches(): Flow<List<String>>
 
     @Query("SELECT COUNT(fetch) FROM fetches")
-    fun getCacheSize(): Int
+    suspend fun getCacheSize(): Int
 }
