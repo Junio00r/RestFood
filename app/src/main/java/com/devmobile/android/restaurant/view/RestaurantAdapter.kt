@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.devmobile.android.restaurant.R
 
 class RestaurantItemList(
-    val startIcon: Int? = null,
-    val startAction: Int? = null,
+    val startDrawable: Int? = null,
     val restaurantName: String,
     val endDrawable: Int? = null,
     val endAction: Int? = null,
@@ -43,7 +42,7 @@ class RestaurantAdapter(
 
             startResource.setOnClickListener {
 
-                onItemClick(restaurantItem.startAction ?: RestaurantItemList.CLICK, restaurantItem.restaurantName)
+                onItemClick(RestaurantItemList.CLICK, restaurantItem.restaurantName)
             }
 
             endResource.setOnClickListener {
@@ -67,7 +66,7 @@ class RestaurantAdapter(
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
 
-        dataSet[position].startIcon?.let { holder.startResource.setBackgroundResource(it) }
+        dataSet[position].startDrawable?.let { holder.startResource.setBackgroundResource(it) }
         holder.textView.text = dataSet[position].restaurantName
         dataSet[position].endDrawable?.let { holder.endResource.setBackgroundResource(it) }
 

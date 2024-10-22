@@ -104,7 +104,7 @@ class HomeFragment : Fragment(), IShowError {
                     populateRecycler(cachedFetches.map { fetch ->
 
                         RestaurantItemList(
-                            startIcon = R.drawable.ic_historic,
+                            startDrawable = R.drawable.ic_historic,
                             restaurantName = fetch,
                             endDrawable = R.drawable.ic_close_24,
                             endAction = RestaurantItemList.CLEAR_FROM_HISTORIC
