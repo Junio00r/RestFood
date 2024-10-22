@@ -8,6 +8,8 @@ import com.devmobile.android.restaurant.usecase.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 import com.devmobile.android.restaurant.usecase.enums.FoodSection
 import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.toList
 
 // Temporary Class
 class DatabaseSimulator {
@@ -20,7 +22,7 @@ class DatabaseSimulator {
             val restaurantDao = RestaurantLocalDatabase.getInstance(context).getRestaurantDao()
             val fetchDao = RestaurantLocalDatabase.getInstance(context).getFetch()
 
-            if (fetchDao.getCachedFetches().isEmpty()) {
+            if (fetchDao.getCacheSize() == 0) {
                 fetches.addAll(
                     listOf(
                         Fetch(fetchName = "Restaurant 1"),
