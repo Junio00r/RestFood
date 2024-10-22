@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.model.datasource.local.entities.User
-import com.devmobile.android.restaurant.model.repository.datasource.local.IFetches
+import com.devmobile.android.restaurant.model.repository.datasource.local.IFetchDao
 import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
 import com.devmobile.android.restaurant.usecase.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
@@ -24,7 +24,7 @@ abstract class RestaurantLocalDatabase : RoomDatabase() {
 
     abstract fun getRestaurantDao(): IRestaurantDao
 
-    abstract fun getCache(): IFetches
+    abstract fun getFetch(): IFetchDao
 
     companion object {
 
