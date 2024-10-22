@@ -14,27 +14,21 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    savedStateHandle: SavedStateHandle,
-    private val homeRepository: HomeRepository
+    savedStateHandle: SavedStateHandle, private val homeRepository: HomeRepository
 ) : ViewModel() {
 
     companion object {
 
         fun provideFactory(
-            repository: HomeRepository,
-            owner: SavedStateRegistryOwner,
-            defaultArgs: Bundle?
+            repository: HomeRepository, owner: SavedStateRegistryOwner, defaultArgs: Bundle?
         ): AbstractSavedStateViewModelFactory =
             object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
                 override fun <T : ViewModel> create(
-                    key: String,
-                    modelClass: Class<T>,
-                    handle: SavedStateHandle
+                    key: String, modelClass: Class<T>, handle: SavedStateHandle
                 ): T {
 
-                    @Suppress("UNCHECKED_CAST")
-                    return HomeViewModel(handle, repository) as T
+                    @Suppress("UNCHECKED_CAST") return HomeViewModel(handle, repository) as T
                 }
             }
     }
@@ -64,6 +58,14 @@ class HomeViewModel(
 
                 _errorPropagator.emit(Exception("Invalid Search"))
             }
+        }
+    }
+
+    fun removeCache(query: String) {
+
+        viewModelScope.launch {
+
+            homeRepository.removeFromCache(query)
         }
     }
 
