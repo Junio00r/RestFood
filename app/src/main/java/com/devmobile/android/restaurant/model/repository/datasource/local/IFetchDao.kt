@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.devmobile.android.restaurant.usecase.Fetch
 
 @Dao
-interface IFetches {
+interface IFetchDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(fetches: List<Fetch>)
