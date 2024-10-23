@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.view.activities.bottomnavigation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +19,11 @@ import com.devmobile.android.restaurant.databinding.FragmentRestaurantHomeBindin
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.bottomnavigation.HomeRepository
 import com.devmobile.android.restaurant.model.repository.datasource.local.DatabaseSimulator
+import com.devmobile.android.restaurant.view.HistoricAdapter
+import com.devmobile.android.restaurant.view.HistoricItem
 import com.devmobile.android.restaurant.view.RestaurantAdapter
 import com.devmobile.android.restaurant.view.RestaurantItemList
+import com.devmobile.android.restaurant.view.activities.bottomnavigation.home.MenuActivity
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BottomNavigationViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.HomeViewModel
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +48,9 @@ class HomeFragment : Fragment(), IShowError {
     private val _viewModel: HomeViewModel by viewModels {
         HomeViewModel.provideFactory(_repository, this, null)
     }
+    private val _intentNext: Intent by lazy {
+        Intent(requireContext(), MenuActivity::class.java)
+    }
 
     private var fragmentIndex: Int? = null
     private val parentViewModel: BottomNavigationViewModel by activityViewModels()
@@ -56,8 +63,6 @@ class HomeFragment : Fragment(), IShowError {
             fragmentIndex = it.getInt("FRAGMENT_INDEX")
         }
         fragmentIndex?.let { parentViewModel.updateIndex(it) }
-        _binding.homeFragment = this
-
         setUpObservables()
 
         return _binding.root
@@ -68,46 +73,52 @@ class HomeFragment : Fragment(), IShowError {
 
         createFakeRemoteDatabase()
         _binding.searchViewHome.setupWithSearchBar(_binding.searchBarHome)
+        _binding.recyclerHistoric.layoutManager = LinearLayoutManager(requireContext())
         _binding.recycleViewRestaurantsList.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun setUpObservables() {
 
-        // When search button is click
-        _binding.searchViewHome.editText.setOnEditorActionListener { v, actionId, event ->
+        // When search button is clicked
+        _binding.searchViewHome.editText.setOnEditorActionListener { _, _, _ ->
 
             _binding.searchViewHome.hide()
             return@setOnEditorActionListener false
         }
-
         _binding.searchViewHome.editText.doOnTextChanged { text, _, _, _ ->
 
             _viewModel.searchQueryMatches(text.toString())
         }
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        _viewModel.restaurants.observe(viewLifecycleOwner) { restaurants ->
 
-                _viewModel.restaurantsFetched.collect { restaurants ->
-                    populateRecycler(restaurants.map { restaurant ->
+            when (restaurants.isCacheable) {
 
-                        RestaurantItemList(restaurantName = restaurant.name)
+                true -> {
+
+                    populateFastHistoric(restaurants.restaurants.map {
+                        HistoricItem(
+                            R.drawable.image_sobremesa_brownie,
+                            it
+                        )
                     })
-                }
-            }
-        }
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                _viewModel.cachedFetches.collect { cachedFetches ->
-                    populateRecycler(cachedFetches.map { fetch ->
-
+                    populateSearch(restaurants.restaurants.map {
                         RestaurantItemList(
                             startDrawable = R.drawable.ic_historic,
-                            restaurantName = fetch,
+                            restaurantName = it,
                             endDrawable = R.drawable.ic_close_24,
                             endAction = RestaurantItemList.CLEAR_FROM_HISTORIC
+                        )
+                    })
+                }
+
+                false -> {
+
+                    populateSearch(restaurants.restaurants.map {
+                        RestaurantItemList(
+                            restaurantName = it,
+                            endDrawable = R.drawable.image_principal_feijoada
                         )
                     })
                 }
@@ -123,7 +134,16 @@ class HomeFragment : Fragment(), IShowError {
         }
     }
 
-    private fun populateRecycler(dataSet: List<RestaurantItemList>) {
+    private fun populateFastHistoric(dataSet: List<HistoricItem>) {
+
+
+        _binding.recyclerHistoric.adapter = HistoricAdapter(dataSet = dataSet) { restaurantName ->
+
+            startActivity(_intentNext.putExtra("RESTAURANT_NAME", restaurantName))
+        }
+    }
+
+    private fun populateSearch(dataSet: List<RestaurantItemList>) {
 
         _binding.recycleViewRestaurantsList.adapter =
             RestaurantAdapter(dataSet = dataSet, onItemClick = { clickAction, restaurantName ->
@@ -137,11 +157,14 @@ class HomeFragment : Fragment(), IShowError {
 
                     RestaurantItemList.CLICK -> {
 
-                        _viewModel.saveInCache(restaurantName)
+                        _viewModel.onSelect(restaurantName)
+                        startActivity(_intentNext.putExtra("RESTAURANT_NAME", restaurantName))
                     }
 
                     else -> {
-                        // Nothing
+
+                        _viewModel.onSelect(restaurantName)
+                        startActivity(_intentNext.putExtra("RESTAURANT_NAME", restaurantName))
                     }
                 }
             })
@@ -156,6 +179,13 @@ class HomeFragment : Fragment(), IShowError {
     }
 
     override fun showErrorMessage(errorMessage: String) {
+
         _binding.searchViewHome.editText.error = errorMessage
+    }
+
+    override fun onStop() {
+
+        _binding.searchViewHome.hide()
+        super.onStop()
     }
 }

@@ -3,7 +3,6 @@ package com.devmobile.android.restaurant.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -20,7 +19,7 @@ data class HistoricItem(
 
 class HistoricAdapter(
     private val dataSet: List<HistoricItem>,
-    private val onClick: () -> Unit
+    private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<HistoricAdapter.RestaurantHistoricViewHolder>() {
 
     class RestaurantHistoricViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -28,9 +27,9 @@ class HistoricAdapter(
         val image: ShapeableImageView = itemView.findViewById(R.id.image_restaurant)
         val name: TextView = itemView.findViewById(R.id.restaurant_name)
 
-        fun bindObservable(onClick: () -> Unit) {
+        fun bindObservable(onClick: (String) -> Unit) {
             itemView.setOnClickListener {
-                onClick()
+                onClick(name.text.toString())
             }
         }
     }
