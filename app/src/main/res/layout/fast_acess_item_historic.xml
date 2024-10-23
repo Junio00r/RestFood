@@ -2,26 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/yellow_book"
+    android:layout_height="80dp"
     android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
     android:paddingVertical="8dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_restaurant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="64dp"
-        android:minHeight="64dp" />
+        android:layout_width="86dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/text_restaurant_name"
+        android:id="@+id/restaurant_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:paddingHorizontal="16dp" />
+        android:paddingHorizontal="16dp"
+        android:textAlignment="textStart" />
 
 </LinearLayout>
