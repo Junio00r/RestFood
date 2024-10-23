@@ -2,7 +2,6 @@ package com.devmobile.android.restaurant.model.repository.bottomnavigation
 
 import com.devmobile.android.restaurant.model.repository.datasource.local.IFetchDao
 import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
-import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao.RestaurantTuple
 import com.devmobile.android.restaurant.usecase.Fetch
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +13,7 @@ class HomeRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun fetchRestaurants(query: String): List<RestaurantTuple> {
+    suspend fun fetchRestaurants(query: String): List<String> {
 
         return withContext(ioDispatcher) {
 

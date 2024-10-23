@@ -1,6 +1,5 @@
 package com.devmobile.android.restaurant.model.repository.datasource.local
 
-import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -20,8 +19,5 @@ interface IRestaurantDao {
     suspend fun getAll(): List<Restaurant?>
 
     @Query("SELECT name FROM restaurants WHERE name LIKE '%' || :searchName || '%' LIMIT :limit")
-    suspend fun getNameMatches(searchName: String, limit: Int = 20): List<RestaurantTuple>
-
-
-    data class RestaurantTuple(@ColumnInfo(name = "name") val name: String)
+    suspend fun getNameMatches(searchName: String, limit: Int = 20): List<String>
 }
