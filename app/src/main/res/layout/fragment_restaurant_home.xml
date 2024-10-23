@@ -46,8 +46,8 @@
 
         </com.google.android.material.search.SearchView>
 
-        <ListView
-            android:id="@+id/listView2"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_historic"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginVertical="100dp"
