@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.devmobile.android.restaurant.IOnSelectFood
 import com.devmobile.android.restaurant.R
@@ -17,7 +18,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class MenuActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
+class MenuActivity : AppCompatActivity(), IOnSelectFood, View.OnClickListener {
 
     private lateinit var binding: ActivityMenuBinding
 
@@ -32,8 +33,6 @@ class MenuActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
     private var dataToRealizarPagamento = ArrayList<Array<*>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
 
         binding = ActivityMenuBinding.inflate(layoutInflater)
@@ -42,6 +41,7 @@ class MenuActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
         tabFragmentsInstances = addFragmentsTabSection()
         tabsNameId = addTabsName()
 
+        setTabLayouts()
     }
 
     // Métodos de inicialização...
@@ -152,8 +152,7 @@ class MenuActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
     }
 
     override fun onNavigateUp(): Boolean {
-        startActivity(Intent(this, LoginActivity::class.java))
-
+        startActivity(Intent(this@MenuActivity, LoginActivity::class.java))
         return true
     }
 
@@ -181,10 +180,8 @@ class MenuActivity : FragmentActivity(), IOnSelectFood, View.OnClickListener {
     override fun onStart() {
         super.onStart()
 
-//        setTabLayouts()
         setExtendedFloatingButtons()
     }
-
 }
 
 
