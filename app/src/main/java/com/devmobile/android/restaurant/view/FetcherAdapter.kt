@@ -32,7 +32,7 @@ class RestaurantAdapter(
     class RestaurantViewHolder(itemView: View) : ViewHolder(itemView) {
 
         val startResource: ImageView = itemView.findViewById(R.id.start_widget)
-        val textView: TextView = itemView.findViewById(R.id.text_restaurant_name)
+        val textView: TextView = itemView.findViewById(R.id.restaurant_name)
         val endResource: ImageView = itemView.findViewById(R.id.end_widget)
 
         fun bindObservable(
