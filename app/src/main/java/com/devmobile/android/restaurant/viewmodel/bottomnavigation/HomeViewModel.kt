@@ -2,12 +2,14 @@ package com.devmobile.android.restaurant.viewmodel.bottomnavigation
 
 import android.os.Bundle
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.model.repository.bottomnavigation.HomeRepository
-import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao.RestaurantTuple
 import com.devmobile.android.restaurant.usecase.InputPatterns
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -36,11 +38,8 @@ class HomeViewModel(
     private val _errorPropagator = MutableSharedFlow<Exception>()
     val errorPropagator = _errorPropagator.asSharedFlow()
 
-    private val _cachedFetch = MutableSharedFlow<List<String>>()
-    val cachedFetches = _cachedFetch.asSharedFlow()
-
-    private val _restaurantsFetched = MutableSharedFlow<List<RestaurantTuple>>()
-    val restaurantsFetched = _restaurantsFetched.asSharedFlow()
+    private val _restaurants = MutableLiveData<Restaurants>()
+    val restaurants: LiveData<Restaurants> = _restaurants.distinctUntilChanged()
 
     fun searchQueryMatches(query: String) {
 
@@ -48,11 +47,11 @@ class HomeViewModel(
 
             if (query.isEmpty()) {
 
-                _cachedFetch.emit(homeRepository.fetchCacheFetched())
+                _restaurants.value = Restaurants(true, homeRepository.fetchCacheFetched())
 
             } else if (isValidQuery(query)) {
 
-                _restaurantsFetched.emit(homeRepository.fetchRestaurants(query))
+                _restaurants.value = Restaurants(false, homeRepository.fetchRestaurants(query))
 
             } else {
 
@@ -66,11 +65,11 @@ class HomeViewModel(
         viewModelScope.launch {
 
             homeRepository.removeFromCache(query)
-            _cachedFetch.emit(homeRepository.fetchCacheFetched())
+            _restaurants.value = Restaurants(true, homeRepository.fetchCacheFetched())
         }
     }
 
-    fun saveInCache(query: String) {
+    fun onSelect(query: String) {
 
         viewModelScope.launch {
 
@@ -82,4 +81,6 @@ class HomeViewModel(
 
         return InputPatterns.isMatch(InputPatterns.TEXT_PATTERN, query).isMatch
     }
+
+    data class Restaurants(val isCacheable: Boolean, val restaurants: List<String>)
 }
