@@ -409,6 +409,16 @@ class DatabaseSimulator {
                 foods.addAll(
                     listOf(
                         Food(
+                            id = 0,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = FoodSection.ENTRADA,
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL,
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ),
+                        Food(
                             id = 1,
                             restaurantId = 0L,
                             name = "Hamburger",

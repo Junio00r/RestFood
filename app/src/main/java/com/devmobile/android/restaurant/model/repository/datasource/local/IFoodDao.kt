@@ -69,9 +69,9 @@ interface IFoodDao {
     @Query(
         "SELECT restaurants.id, * FROM restaurants " +
                 "LEFT JOIN foods " +
-                "WHERE id == :restaurantId AND :section = foods.section"
+                "WHERE restaurants.id == :restaurantId AND :section = foods.section"
     )
-    suspend fun getFoodsForSection(restaurantId: Long, section: String): List<Food>
+    suspend fun getFoodsForSection(restaurantId: Long, section: String): List<Food?>
 
     /**
      * Deletes all foods stored in the database.
