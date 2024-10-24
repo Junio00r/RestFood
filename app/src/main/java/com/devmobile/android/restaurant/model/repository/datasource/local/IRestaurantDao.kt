@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 
 @Dao
@@ -20,4 +21,11 @@ interface IRestaurantDao {
 
     @Query("SELECT name FROM restaurants WHERE name LIKE '%' || :searchName || '%' LIMIT :limit")
     suspend fun getNameMatches(searchName: String, limit: Int = 20): List<String>
+
+    @Query(
+        "SELECT restaurants.id, foods.* FROM foods " +
+                "LEFT JOIN restaurants " +
+                "WHERE :restaurantId = restaurants.id AND :restaurantId = foods.restaurantId"
+    )
+    suspend fun getAllFoods(restaurantId: Long): List<Food?>
 }

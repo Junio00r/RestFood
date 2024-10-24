@@ -48,7 +48,7 @@ interface IFoodDao {
      * @param foodId the ID of the food to retrieve
      * @return the Food item with the specified ID, or null if not found
      */
-    @Query("SELECT * FROM foods WHERE mId = :foodId")
+    @Query("SELECT * FROM foods WHERE id = :foodId")
     fun getFoodById(foodId: Long): Food?
 
     /**
@@ -56,21 +56,26 @@ interface IFoodDao {
      *
      * @return the total number of foods in the database
      */
-    @Query("SELECT COUNT(mId) FROM foods")
+    @Query("SELECT COUNT(id) FROM foods")
     fun getQuantityOfFoods(): Int
 
-    /**
-     * Retrieves all foods stored in the database.
-     *
-     * @return a list containing all Food items stored in the database
-     */
-    @Query("SELECT * FROM foods")
-    fun getAllFoods(): List<Food?>
+    @Query(
+        "SELECT restaurants.id, foods.* FROM foods " +
+                "LEFT JOIN restaurants " +
+                "WHERE :restaurantId = restaurants.id AND :restaurantId = foods.restaurantId"
+    )
+    suspend fun getAllFoods(restaurantId: Long): List<Food?>
+
+    @Query(
+        "SELECT restaurants.id, * FROM restaurants " +
+                "LEFT JOIN foods " +
+                "WHERE id == :restaurantId AND :section = foods.section"
+    )
+    suspend fun getFoodsForSection(restaurantId: Long, section: String): List<Food>
 
     /**
      * Deletes all foods stored in the database.
      */
     @Query("DELETE FROM foods")
     fun deleteAllTable()
-
 }
