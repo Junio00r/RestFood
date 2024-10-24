@@ -9,22 +9,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.IOnCheckCheckbox
-import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.IOnSelectFood
-import com.devmobile.android.restaurant.view.customelements.ModalBottomSheet
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.viewmodel.adapters.FoodCardAdapter
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewFoodsBinding
+import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.usecase.enums.FoodSection
+import com.devmobile.android.restaurant.view.adapters.FoodCardAdapter
+import com.devmobile.android.restaurant.view.customelements.ModalBottomSheet
 
 class FragmentTabFoodSection(
-
-    private val context: Context, private val fragmentLayoutId: Int, fragmentSection: FoodSection
-
+    private val context: Context,
+    fragmentSection: FoodSection,
 ) : Fragment(), IOnCheckCheckbox, IOnSelectFood {
 
-    private lateinit var binding: LayoutRecyclerviewFoodsBinding
+    private val _binding: LayoutRecyclerviewFoodsBinding by lazy {
+        LayoutRecyclerviewFoodsBinding.inflate(layoutInflater)
+    }
     private lateinit var recyclerViewFoods: RecyclerView
     private var foodCardAdapter: FoodCardAdapter? = null
     private lateinit var foodDAO: RestaurantLocalDatabase
@@ -42,12 +43,11 @@ class FragmentTabFoodSection(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding = LayoutRecyclerviewFoodsBinding.bind(view)
         foodDAO = RestaurantLocalDatabase.getInstance(requireContext())
         dataFoodsOfTabSections =
             mFragmentSection.let { foodDAO.getFoodDao().getFoodsBySection(it) } as ArrayList<Food>
 
-        recyclerViewFoods = binding.recyclerFood
+        recyclerViewFoods = _binding.recyclerFood
         foodCardAdapter = FoodCardAdapter(dataFoodsOfTabSections, requireContext())
         foodCardAdapter?.addCheckboxClickListener(this)
         recyclerViewFoods.adapter = foodCardAdapter
@@ -105,24 +105,4 @@ class FragmentTabFoodSection(
         onFoodAddedCallback?.onRemoveFood(foodId)
     }
 
-    // Para estudos
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }
