@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
-import com.devmobile.android.restaurant.usecase.enums.FoodSection
 import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
 
 // Versão para testes offlines
@@ -26,7 +25,7 @@ data class Food(
     val restaurantId: Long,
     val name: String,
     var price: Float,
-    val section: FoodSection,
+    val section: String,
     @ColumnInfo(name = "image_id") val imageId: Int,
     @ColumnInfo(name = "time_for_prepare") val timeForPrepare: TempoPreparo,
     val description: String?
