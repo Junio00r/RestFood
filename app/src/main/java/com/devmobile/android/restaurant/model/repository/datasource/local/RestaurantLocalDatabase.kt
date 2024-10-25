@@ -4,18 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.model.datasource.local.entities.User
 import com.devmobile.android.restaurant.model.repository.datasource.local.IFetchDao
 import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
+import com.devmobile.android.restaurant.usecase.Converters
 import com.devmobile.android.restaurant.usecase.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 
 @Database(
-    version = 33,
+    version = 35,
     entities = [Food::class, User::class, Restaurant::class, Fetch::class],
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class RestaurantLocalDatabase : RoomDatabase() {
 
     abstract fun getFoodDao(): IFoodDao
