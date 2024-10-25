@@ -13,14 +13,20 @@ interface IRestaurantDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(restaurant: List<Restaurant>)
 
-    @Query("SELECT * from restaurants WHERE id = :id")
-    suspend fun getById(id: Long): Restaurant?
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(restaurant: Restaurant)
 
     @Query("SELECT * from restaurants")
     suspend fun getAll(): List<Restaurant?>
 
+    @Query("SELECT * from restaurants WHERE id = :restaurantId")
+    suspend fun getById(restaurantId: Long): Restaurant?
+
     @Query("SELECT name FROM restaurants WHERE name LIKE '%' || :searchName || '%' LIMIT :limit")
     suspend fun getNameMatches(searchName: String, limit: Int = 20): List<String>
+
+    @Query("SELECT sections from restaurants WHERE id = :restaurantId")
+    suspend fun getSections(restaurantId: Long): String
 
     @Query(
         "SELECT restaurants.id, foods.* FROM foods " +
