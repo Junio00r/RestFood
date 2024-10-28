@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class Restaurant(
     @PrimaryKey(autoGenerate = false) val id: Long,
     var name: String,
-    var sections: List<String>,
+    val sections: List<String>,
     var street: String,
     var city: String,
     var postalCode: String,

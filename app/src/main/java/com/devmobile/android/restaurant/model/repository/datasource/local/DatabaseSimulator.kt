@@ -40,7 +40,7 @@ class DatabaseSimulator {
                             name = "Casa do Camarao",
                             street = "Rua do camarao, 003",
                             city = "Rio Grande do Sul",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas","Sobremesas", "Petiscos", "Molhos", "Rápidos", "Soupas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas","Sobremesas", "Petiscos", "Molhos", "Rápidos", "Soupas"),
                             postalCode = "89433-439"
                         ),
                         Restaurant(
@@ -48,7 +48,7 @@ class DatabaseSimulator {
                             name = "Bella Italia",
                             street = "Avenida das Flores, 123",
                             city = "São Paulo",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -56,7 +56,7 @@ class DatabaseSimulator {
                             name = "Sushi House",
                             street = "Rua dos Sushis, 456",
                             city = "Rio de Janeiro",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "02345-678"
                         ),
                         Restaurant(
@@ -64,7 +64,7 @@ class DatabaseSimulator {
                             name = "Pizzeria Napoli",
                             street = "Rua da Pizza, 789",
                             city = "Belo Horizonte",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "03456-789"
                         ),
                         Restaurant(
@@ -72,7 +72,7 @@ class DatabaseSimulator {
                             name = "Churrascaria Gaúcha",
                             street = "Rua do Churrasco, 101",
                             city = "Porto Alegre",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "04567-890"
                         ),
                         Restaurant(
@@ -80,7 +80,7 @@ class DatabaseSimulator {
                             name = "Café do Mercado",
                             street = "Rua das Frutas, 202",
                             city = "Curitiba",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "05678-901"
                         ),
                         Restaurant(
@@ -88,7 +88,7 @@ class DatabaseSimulator {
                             name = "Restaurante Mar & Terra",
                             street = "Avenida do Litoral, 303",
                             city = "Salvador",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "06789-012"
                         ),
                         Restaurant(
@@ -96,7 +96,7 @@ class DatabaseSimulator {
                             name = "Bistrô Parisiense",
                             street = "Rua de Paris, 404",
                             city = "Florianópolis",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "07890-123"
                         ),
                         Restaurant(
@@ -104,7 +104,7 @@ class DatabaseSimulator {
                             name = "Cantina do Italiano",
                             street = "Rua Roma, 505",
                             city = "Recife",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas", "Petiscos", "Molhos", "Rápidos", "Soupas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas", "Petiscos", "Molhos", "Rápidos", "Soupas"),
                             postalCode = "08901-234"
                         ),
                         Restaurant(
@@ -112,7 +112,7 @@ class DatabaseSimulator {
                             name = "Taco Loco",
                             street = "Avenida dos Tacos, 606",
                             city = "Brasília",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "09012-345"
                         ),
                         Restaurant(
@@ -120,7 +120,7 @@ class DatabaseSimulator {
                             name = "Pub da Esquina",
                             street = "Rua das Cervejas, 707",
                             city = "Goiânia",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "10123-456"
                         ),
                         Restaurant(
@@ -128,7 +128,7 @@ class DatabaseSimulator {
                             name = "Cozinha Mineira",
                             street = "Rua das Minas, 808",
                             city = "Uberlândia",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "11234-567"
                         ),
                         Restaurant(
@@ -136,7 +136,7 @@ class DatabaseSimulator {
                             name = "Grill do Chef",
                             street = "Rua do Grelhado, 909",
                             city = "Natal",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -144,7 +144,7 @@ class DatabaseSimulator {
                             name = "Vegan Garden",
                             street = "Rua Verde, 111",
                             city = "São Luís",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -152,7 +152,7 @@ class DatabaseSimulator {
                             name = "Delícias do Nordeste",
                             street = "Avenida do Nordeste, 222",
                             city = "João Pessoa",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -160,7 +160,7 @@ class DatabaseSimulator {
                             name = "Sorveteria Gelato",
                             street = "Rua dos Gelados, 333",
                             city = "Maceió",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -168,7 +168,7 @@ class DatabaseSimulator {
                             name = "Burguer & Beer",
                             street = "Rua do Hambúrguer, 444",
                             city = "Vitória",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -176,7 +176,7 @@ class DatabaseSimulator {
                             name = "Pão de Queijo & Cia",
                             street = "Avenida do Pão, 555",
                             city = "Campo Grande",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -184,7 +184,7 @@ class DatabaseSimulator {
                             name = "Café Colonial",
                             street = "Rua dos Cafés, 666",
                             city = "Caxias do Sul",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -192,7 +192,7 @@ class DatabaseSimulator {
                             name = "Chá da Tarde",
                             street = "Rua das Infusões, 777",
                             city = "Teresina",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -200,7 +200,7 @@ class DatabaseSimulator {
                             name = "Taberna Medieval",
                             street = "Rua dos Cavaleiros, 888",
                             city = "Aracaju",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "90123-456"
                         ),
                         Restaurant(
@@ -208,7 +208,7 @@ class DatabaseSimulator {
                             name = "Restaurante Fusion",
                             street = "Avenida das Misturas, 999",
                             city = "Londrina",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -216,7 +216,7 @@ class DatabaseSimulator {
                             name = "Cozinha Africana",
                             street = "Rua do Continente, 1010",
                             city = "Sorocaba",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -224,7 +224,7 @@ class DatabaseSimulator {
                             name = "Mamma Mia!",
                             street = "Rua da Nonna, 1111",
                             city = "São José dos Campos",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -232,7 +232,7 @@ class DatabaseSimulator {
                             name = "Bistrô do Mar",
                             street = "Avenida do Mar, 1212",
                             city = "Santos",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -240,7 +240,7 @@ class DatabaseSimulator {
                             name = "Delícias da Roça",
                             street = "Rua da Fazenda, 1313",
                             city = "Ribeirão Preto",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -248,7 +248,7 @@ class DatabaseSimulator {
                             name = "Pizza & Pasta",
                             street = "Rua do Molho, 1414",
                             city = "Niterói",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -256,7 +256,7 @@ class DatabaseSimulator {
                             name = "Grill & Chill",
                             street = "Avenida da Relaxação, 1515",
                             city = "Brasília",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -264,7 +264,7 @@ class DatabaseSimulator {
                             name = "Piknik Café",
                             street = "Rua da Diversão, 1616",
                             city = "Piracicaba",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -272,7 +272,7 @@ class DatabaseSimulator {
                             name = "Bistrô Verde",
                             street = "Rua da Sustentabilidade, 1717",
                             city = "Juiz de Fora",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -280,7 +280,7 @@ class DatabaseSimulator {
                             name = "Feijoada do Chef",
                             street = "Rua da Feijoada, 1818",
                             city = "Belém",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "90123-456"
                         ),
                         Restaurant(
@@ -288,7 +288,7 @@ class DatabaseSimulator {
                             name = "Culinária Mediterrânea",
                             street = "Avenida do Mediterrâneo, 1919",
                             city = "Blumenau",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -296,7 +296,7 @@ class DatabaseSimulator {
                             name = "Restaurante 5 Estrelas",
                             street = "Rua do Luxo, 2020",
                             city = "São Carlos",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -304,7 +304,7 @@ class DatabaseSimulator {
                             name = "Pizzaria do Bairro",
                             street = "Rua do Bairro, 2121",
                             city = "São Vicente",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -312,7 +312,7 @@ class DatabaseSimulator {
                             name = "Churrasquinho de Rua",
                             street = "Rua da Avenida, 2222",
                             city = "São Bernardo do Campo",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -320,7 +320,7 @@ class DatabaseSimulator {
                             name = "Café da Manhã",
                             street = "Avenida do Café, 2323",
                             city = "São José",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -328,7 +328,7 @@ class DatabaseSimulator {
                             name = "Burguer Fino",
                             street = "Rua do Gourmet, 2424",
                             city = "Osasco",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -336,7 +336,7 @@ class DatabaseSimulator {
                             name = "Espaço Vegano",
                             street = "Rua Verde, 2525",
                             city = "Macaé",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -344,7 +344,7 @@ class DatabaseSimulator {
                             name = "Café da Tarde",
                             street = "Avenida do Chá, 2626",
                             city = "Araraquara",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -352,7 +352,7 @@ class DatabaseSimulator {
                             name = "Comida de Boteco",
                             street = "Rua do Boteco, 2727",
                             city = "São Caetano do Sul",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -360,7 +360,7 @@ class DatabaseSimulator {
                             name = "Bistrô Chic",
                             street = "Rua da Elegância, 2828",
                             city = "Niterói",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "90123-456"
                         ),
                         Restaurant(
@@ -368,7 +368,7 @@ class DatabaseSimulator {
                             name = "Pasta & Risotto",
                             street = "Rua da Itália, 2929",
                             city = "São Mateus",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -376,7 +376,7 @@ class DatabaseSimulator {
                             name = "Bar e Grill",
                             street = "Rua do Bar, 3030",
                             city = "São João de Meriti",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -384,7 +384,7 @@ class DatabaseSimulator {
                             name = "Restaurante Familiar",
                             street = "Rua do Lar, 3131",
                             city = "Santo André",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -392,7 +392,7 @@ class DatabaseSimulator {
                             name = "Culinária Brasileira",
                             street = "Rua do Brasil, 3232",
                             city = "Camaçari",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -400,7 +400,7 @@ class DatabaseSimulator {
                             name = "Restaurante da Vovó",
                             street = "Rua da Memória, 3333",
                             city = "Nova Iguaçu",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -408,7 +408,7 @@ class DatabaseSimulator {
                             name = "Pé na Areia",
                             street = "Avenida da Praia, 3434",
                             city = "Ilhéus",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -416,7 +416,7 @@ class DatabaseSimulator {
                             name = "Café com Leite",
                             street = "Rua do Café, 3535",
                             city = "Divinópolis",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -424,7 +424,7 @@ class DatabaseSimulator {
                             name = "Pasta e Pesto",
                             street = "Rua do Pesto, 3636",
                             city = "São Gabriel",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -432,7 +432,7 @@ class DatabaseSimulator {
                             name = "Taco e Tequila",
                             street = "Rua do Tequila, 3737",
                             city = "Petrolina",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -440,7 +440,7 @@ class DatabaseSimulator {
                             name = "Restaurante do Lago",
                             street = "Rua do Lago, 3838",
                             city = "Chapecó",
-                            sections = listOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
                             postalCode = "90123-456"
                         )
                     )
