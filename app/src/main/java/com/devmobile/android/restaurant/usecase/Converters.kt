@@ -6,7 +6,7 @@ import com.google.gson.Gson
 object Converters {
 
     @TypeConverter
-    fun fromListToString(list: ArrayList<String>): String {
+    fun fromListToString(list: List<String>): String {
 
         return Gson().toJson(list)
     }
