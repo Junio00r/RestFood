@@ -29,9 +29,8 @@ interface IRestaurantDao {
     suspend fun getSections(restaurantId: Long): String
 
     @Query(
-        "SELECT restaurants.id, foods.* FROM foods " +
-                "LEFT JOIN restaurants " +
-                "WHERE :restaurantId = restaurants.id AND :restaurantId = foods.restaurantId"
+        "SELECT * FROM foods " +
+                "WHERE :restaurantId = foods.restaurantId"
     )
     suspend fun getAllFoods(restaurantId: Long): List<Food?>
 }

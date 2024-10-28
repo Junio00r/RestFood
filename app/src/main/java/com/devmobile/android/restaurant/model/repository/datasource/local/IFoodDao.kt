@@ -30,9 +30,8 @@ interface IFoodDao {
     suspend fun updateFood(foods: List<Food>)
 
     @Query(
-        "SELECT restaurants.id, foods.* FROM foods " +
-                "LEFT JOIN restaurants " +
-                "WHERE foods.restaurantId  = :restaurantId AND :restaurantId = restaurants.id"
+        "SELECT  * FROM foods " +
+                "WHERE foods.restaurantId  = :restaurantId"
     )
     suspend fun getAllFoods(restaurantId: Long): List<Food?>
 
@@ -43,8 +42,7 @@ interface IFoodDao {
      * @return a list of Food items with the specified section, or null if not found
      */
     @Query(
-        "SELECT restaurants.id, foods.* FROM foods " +
-                "LEFT JOIN restaurants " +
+        "SELECT * FROM foods " +
                 "WHERE foods.restaurantId = :restaurantId AND foods.section = :foodSection"
     )
     suspend fun getFoodsBySection(restaurantId: Long, foodSection: String): List<Food?>
