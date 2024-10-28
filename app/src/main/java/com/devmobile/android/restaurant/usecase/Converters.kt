@@ -6,14 +6,14 @@ import com.google.gson.Gson
 object Converters {
 
     @TypeConverter
-    fun fromListToString(list: List<String>): String {
+    fun fromListToString(list: ArrayList<String>): String {
 
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun fromStringToList(value: String): List<String> {
+    fun fromStringToList(value: String): ArrayList<String> {
 
-        return Gson().fromJson<List<String>>(value, List::class.java)
+        return Gson().fromJson<ArrayList<String>>(value, ArrayList::class.java)
     }
 }
