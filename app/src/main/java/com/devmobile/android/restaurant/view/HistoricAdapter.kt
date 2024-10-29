@@ -1,18 +1,16 @@
 package com.devmobile.android.restaurant.view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.databinding.FastAcessItemHistoricBinding
 import com.google.android.material.imageview.ShapeableImageView
 
 
 // This classes will be along with chain classes as FetcherAdapter
 // This just for practices
-
 data class HistoricItem(
     val imageId: Int, val name: String
 )
@@ -22,10 +20,11 @@ class HistoricAdapter(
     private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<HistoricAdapter.RestaurantHistoricViewHolder>() {
 
-    class RestaurantHistoricViewHolder(itemView: View) : ViewHolder(itemView) {
+    class RestaurantHistoricViewHolder(binding: FastAcessItemHistoricBinding) :
+        ViewHolder(binding.root) {
 
-        val image: ShapeableImageView = itemView.findViewById(R.id.image_restaurant)
-        val name: TextView = itemView.findViewById(R.id.restaurant_name)
+        val image: ShapeableImageView = binding.imageRestaurant
+        val name: TextView = binding.restaurantName
 
         fun bindObservable(onClick: (String) -> Unit) {
             itemView.setOnClickListener {
@@ -38,11 +37,9 @@ class HistoricAdapter(
         parent: ViewGroup, viewType: Int
     ): RestaurantHistoricViewHolder {
 
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fast_acess_item_historic, parent, false)
-        val result = RestaurantHistoricViewHolder(itemView)
+        val itemBinding = FastAcessItemHistoricBinding.inflate(LayoutInflater.from(parent.context))
 
-        return result
+        return RestaurantHistoricViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: RestaurantHistoricViewHolder, position: Int) {

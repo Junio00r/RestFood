@@ -1,13 +1,12 @@
 package com.devmobile.android.restaurant.view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.devmobile.android.restaurant.R
+import com.devmobile.android.restaurant.databinding.SearchRestaurantItemBinding
 
 class RestaurantItemList(
     val startDrawable: Int? = null,
@@ -29,13 +28,13 @@ class RestaurantAdapter(
 
 ) : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
 
-    class RestaurantViewHolder(itemView: View) : ViewHolder(itemView) {
+    class RestaurantViewHolder(binding: SearchRestaurantItemBinding) : ViewHolder(binding.root) {
 
-        val startResource: ImageView = itemView.findViewById(R.id.start_widget)
-        val textView: TextView = itemView.findViewById(R.id.restaurant_name)
-        val endResource: ImageView = itemView.findViewById(R.id.end_widget)
+        val startResource: ImageView = binding.startWidget
+        val textView: TextView = binding.restaurantName
+        val endResource: ImageView = binding.endWidget
 
-        fun bindObservable(
+        fun setObservable(
             onItemClick: (Int, String) -> Unit,
             restaurantItem: RestaurantItemList
         ) {
@@ -47,7 +46,10 @@ class RestaurantAdapter(
 
             endResource.setOnClickListener {
 
-                onItemClick(restaurantItem.endAction ?: RestaurantItemList.CLICK, restaurantItem.restaurantName)
+                onItemClick(
+                    restaurantItem.endAction ?: RestaurantItemList.CLICK,
+                    restaurantItem.restaurantName
+                )
             }
 
             textView.setOnClickListener {
@@ -59,9 +61,9 @@ class RestaurantAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
 
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.search_restaurant_item, parent, false)
+        val itemBinding = SearchRestaurantItemBinding.inflate(LayoutInflater.from(parent.context))
 
-        return RestaurantViewHolder(itemView)
+        return RestaurantViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
@@ -70,7 +72,7 @@ class RestaurantAdapter(
         holder.textView.text = dataSet[position].restaurantName
         dataSet[position].endDrawable?.let { holder.endResource.setBackgroundResource(it) }
 
-        holder.bindObservable(onItemClick = onItemClick, restaurantItem = dataSet[position])
+        holder.setObservable(onItemClick = onItemClick, restaurantItem = dataSet[position])
     }
 
     override fun getItemCount(): Int {
