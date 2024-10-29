@@ -27,6 +27,6 @@ data class Food(
     var price: Float,
     val section: String,
     @ColumnInfo(name = "image_id") val imageId: Int,
-    @ColumnInfo(name = "time_for_prepare") val timeForPrepare: TempoPreparo,
+    @ColumnInfo(name = "time_for_prepare") val timeForPrepare: String,
     val description: String?
 )

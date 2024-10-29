@@ -40,7 +40,16 @@ class DatabaseSimulator {
                             name = "Casa do Camarao",
                             street = "Rua do camarao, 003",
                             city = "Rio Grande do Sul",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas","Sobremesas", "Petiscos", "Molhos", "Rápidos", "Soupas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas",
+                                "Petiscos",
+                                "Molhos",
+                                "Rápidos",
+                                "Soupas"
+                            ),
                             postalCode = "89433-439"
                         ),
                         Restaurant(
@@ -48,7 +57,12 @@ class DatabaseSimulator {
                             name = "Bella Italia",
                             street = "Avenida das Flores, 123",
                             city = "São Paulo",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -56,7 +70,12 @@ class DatabaseSimulator {
                             name = "Sushi House",
                             street = "Rua dos Sushis, 456",
                             city = "Rio de Janeiro",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "02345-678"
                         ),
                         Restaurant(
@@ -64,7 +83,12 @@ class DatabaseSimulator {
                             name = "Pizzeria Napoli",
                             street = "Rua da Pizza, 789",
                             city = "Belo Horizonte",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "03456-789"
                         ),
                         Restaurant(
@@ -72,7 +96,12 @@ class DatabaseSimulator {
                             name = "Churrascaria Gaúcha",
                             street = "Rua do Churrasco, 101",
                             city = "Porto Alegre",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "04567-890"
                         ),
                         Restaurant(
@@ -80,7 +109,12 @@ class DatabaseSimulator {
                             name = "Café do Mercado",
                             street = "Rua das Frutas, 202",
                             city = "Curitiba",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "05678-901"
                         ),
                         Restaurant(
@@ -88,7 +122,12 @@ class DatabaseSimulator {
                             name = "Restaurante Mar & Terra",
                             street = "Avenida do Litoral, 303",
                             city = "Salvador",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "06789-012"
                         ),
                         Restaurant(
@@ -96,7 +135,12 @@ class DatabaseSimulator {
                             name = "Bistrô Parisiense",
                             street = "Rua de Paris, 404",
                             city = "Florianópolis",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "07890-123"
                         ),
                         Restaurant(
@@ -104,7 +148,16 @@ class DatabaseSimulator {
                             name = "Cantina do Italiano",
                             street = "Rua Roma, 505",
                             city = "Recife",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas", "Petiscos", "Molhos", "Rápidos", "Soupas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas",
+                                "Petiscos",
+                                "Molhos",
+                                "Rápidos",
+                                "Soupas"
+                            ),
                             postalCode = "08901-234"
                         ),
                         Restaurant(
@@ -112,7 +165,12 @@ class DatabaseSimulator {
                             name = "Taco Loco",
                             street = "Avenida dos Tacos, 606",
                             city = "Brasília",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "09012-345"
                         ),
                         Restaurant(
@@ -120,7 +178,12 @@ class DatabaseSimulator {
                             name = "Pub da Esquina",
                             street = "Rua das Cervejas, 707",
                             city = "Goiânia",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "10123-456"
                         ),
                         Restaurant(
@@ -128,7 +191,12 @@ class DatabaseSimulator {
                             name = "Cozinha Mineira",
                             street = "Rua das Minas, 808",
                             city = "Uberlândia",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "11234-567"
                         ),
                         Restaurant(
@@ -136,7 +204,12 @@ class DatabaseSimulator {
                             name = "Grill do Chef",
                             street = "Rua do Grelhado, 909",
                             city = "Natal",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -144,7 +217,12 @@ class DatabaseSimulator {
                             name = "Vegan Garden",
                             street = "Rua Verde, 111",
                             city = "São Luís",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -152,7 +230,12 @@ class DatabaseSimulator {
                             name = "Delícias do Nordeste",
                             street = "Avenida do Nordeste, 222",
                             city = "João Pessoa",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -160,7 +243,12 @@ class DatabaseSimulator {
                             name = "Sorveteria Gelato",
                             street = "Rua dos Gelados, 333",
                             city = "Maceió",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -168,7 +256,12 @@ class DatabaseSimulator {
                             name = "Burguer & Beer",
                             street = "Rua do Hambúrguer, 444",
                             city = "Vitória",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -176,7 +269,12 @@ class DatabaseSimulator {
                             name = "Pão de Queijo & Cia",
                             street = "Avenida do Pão, 555",
                             city = "Campo Grande",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -184,7 +282,12 @@ class DatabaseSimulator {
                             name = "Café Colonial",
                             street = "Rua dos Cafés, 666",
                             city = "Caxias do Sul",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -192,7 +295,12 @@ class DatabaseSimulator {
                             name = "Chá da Tarde",
                             street = "Rua das Infusões, 777",
                             city = "Teresina",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -200,7 +308,12 @@ class DatabaseSimulator {
                             name = "Taberna Medieval",
                             street = "Rua dos Cavaleiros, 888",
                             city = "Aracaju",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "90123-456"
                         ),
                         Restaurant(
@@ -208,7 +321,12 @@ class DatabaseSimulator {
                             name = "Restaurante Fusion",
                             street = "Avenida das Misturas, 999",
                             city = "Londrina",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -216,7 +334,12 @@ class DatabaseSimulator {
                             name = "Cozinha Africana",
                             street = "Rua do Continente, 1010",
                             city = "Sorocaba",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -224,7 +347,12 @@ class DatabaseSimulator {
                             name = "Mamma Mia!",
                             street = "Rua da Nonna, 1111",
                             city = "São José dos Campos",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -232,7 +360,12 @@ class DatabaseSimulator {
                             name = "Bistrô do Mar",
                             street = "Avenida do Mar, 1212",
                             city = "Santos",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -240,7 +373,12 @@ class DatabaseSimulator {
                             name = "Delícias da Roça",
                             street = "Rua da Fazenda, 1313",
                             city = "Ribeirão Preto",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -248,7 +386,12 @@ class DatabaseSimulator {
                             name = "Pizza & Pasta",
                             street = "Rua do Molho, 1414",
                             city = "Niterói",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -256,7 +399,12 @@ class DatabaseSimulator {
                             name = "Grill & Chill",
                             street = "Avenida da Relaxação, 1515",
                             city = "Brasília",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -264,7 +412,12 @@ class DatabaseSimulator {
                             name = "Piknik Café",
                             street = "Rua da Diversão, 1616",
                             city = "Piracicaba",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -272,7 +425,12 @@ class DatabaseSimulator {
                             name = "Bistrô Verde",
                             street = "Rua da Sustentabilidade, 1717",
                             city = "Juiz de Fora",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -280,7 +438,12 @@ class DatabaseSimulator {
                             name = "Feijoada do Chef",
                             street = "Rua da Feijoada, 1818",
                             city = "Belém",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "90123-456"
                         ),
                         Restaurant(
@@ -288,7 +451,12 @@ class DatabaseSimulator {
                             name = "Culinária Mediterrânea",
                             street = "Avenida do Mediterrâneo, 1919",
                             city = "Blumenau",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -296,7 +464,12 @@ class DatabaseSimulator {
                             name = "Restaurante 5 Estrelas",
                             street = "Rua do Luxo, 2020",
                             city = "São Carlos",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -304,7 +477,12 @@ class DatabaseSimulator {
                             name = "Pizzaria do Bairro",
                             street = "Rua do Bairro, 2121",
                             city = "São Vicente",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -312,7 +490,12 @@ class DatabaseSimulator {
                             name = "Churrasquinho de Rua",
                             street = "Rua da Avenida, 2222",
                             city = "São Bernardo do Campo",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -320,7 +503,12 @@ class DatabaseSimulator {
                             name = "Café da Manhã",
                             street = "Avenida do Café, 2323",
                             city = "São José",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -328,7 +516,12 @@ class DatabaseSimulator {
                             name = "Burguer Fino",
                             street = "Rua do Gourmet, 2424",
                             city = "Osasco",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -336,7 +529,12 @@ class DatabaseSimulator {
                             name = "Espaço Vegano",
                             street = "Rua Verde, 2525",
                             city = "Macaé",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -344,7 +542,12 @@ class DatabaseSimulator {
                             name = "Café da Tarde",
                             street = "Avenida do Chá, 2626",
                             city = "Araraquara",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -352,7 +555,12 @@ class DatabaseSimulator {
                             name = "Comida de Boteco",
                             street = "Rua do Boteco, 2727",
                             city = "São Caetano do Sul",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -360,7 +568,12 @@ class DatabaseSimulator {
                             name = "Bistrô Chic",
                             street = "Rua da Elegância, 2828",
                             city = "Niterói",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "90123-456"
                         ),
                         Restaurant(
@@ -368,7 +581,12 @@ class DatabaseSimulator {
                             name = "Pasta & Risotto",
                             street = "Rua da Itália, 2929",
                             city = "São Mateus",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "01234-567"
                         ),
                         Restaurant(
@@ -376,7 +594,12 @@ class DatabaseSimulator {
                             name = "Bar e Grill",
                             street = "Rua do Bar, 3030",
                             city = "São João de Meriti",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "12345-678"
                         ),
                         Restaurant(
@@ -384,7 +607,12 @@ class DatabaseSimulator {
                             name = "Restaurante Familiar",
                             street = "Rua do Lar, 3131",
                             city = "Santo André",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "23456-789"
                         ),
                         Restaurant(
@@ -392,7 +620,12 @@ class DatabaseSimulator {
                             name = "Culinária Brasileira",
                             street = "Rua do Brasil, 3232",
                             city = "Camaçari",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "34567-890"
                         ),
                         Restaurant(
@@ -400,7 +633,12 @@ class DatabaseSimulator {
                             name = "Restaurante da Vovó",
                             street = "Rua da Memória, 3333",
                             city = "Nova Iguaçu",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "45678-901"
                         ),
                         Restaurant(
@@ -408,7 +646,12 @@ class DatabaseSimulator {
                             name = "Pé na Areia",
                             street = "Avenida da Praia, 3434",
                             city = "Ilhéus",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "56789-012"
                         ),
                         Restaurant(
@@ -416,7 +659,12 @@ class DatabaseSimulator {
                             name = "Café com Leite",
                             street = "Rua do Café, 3535",
                             city = "Divinópolis",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "67890-123"
                         ),
                         Restaurant(
@@ -424,7 +672,12 @@ class DatabaseSimulator {
                             name = "Pasta e Pesto",
                             street = "Rua do Pesto, 3636",
                             city = "São Gabriel",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "78901-234"
                         ),
                         Restaurant(
@@ -432,7 +685,12 @@ class DatabaseSimulator {
                             name = "Taco e Tequila",
                             street = "Rua do Tequila, 3737",
                             city = "Petrolina",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "89012-345"
                         ),
                         Restaurant(
@@ -440,7 +698,12 @@ class DatabaseSimulator {
                             name = "Restaurante do Lago",
                             street = "Rua do Lago, 3838",
                             city = "Chapecó",
-                            sections = arrayListOf("Mais Pedidos", "Entrada", "Bebidas", "Sobremesas"),
+                            sections = arrayListOf(
+                                "Mais Pedidos",
+                                "Entrada",
+                                "Bebidas",
+                                "Sobremesas"
+                            ),
                             postalCode = "90123-456"
                         )
                     )
@@ -465,7 +728,7 @@ class DatabaseSimulator {
                             price = 25F,
                             section = "Entrada",
                             imageId = R.drawable.image_entrada_hamburguer,
-                            timeForPrepare = TempoPreparo.NORMAL,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
                         ),
                         Food(
@@ -475,7 +738,7 @@ class DatabaseSimulator {
                             price = 25F,
                             section = "Entrada",
                             imageId = R.drawable.image_entrada_hamburguer,
-                            timeForPrepare = TempoPreparo.NORMAL,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
                         ), Food(
                             id = 2,
@@ -484,7 +747,7 @@ class DatabaseSimulator {
                             price = 40F,
                             section = "Entrada",
                             imageId = R.drawable.image_entrada_camarao,
-                            timeForPrepare = TempoPreparo.NORMAL,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
                         ), Food(
                             id = 3,
@@ -493,7 +756,7 @@ class DatabaseSimulator {
                             price = 30F,
                             section = "Entrada",
                             imageId = R.drawable.image_entrada_queijo,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
                         ), Food(
                             id = 4,
@@ -502,7 +765,7 @@ class DatabaseSimulator {
                             price = 20F,
                             section = "Entrada",
                             imageId = R.drawable.image_entrada_sopa,
-                            timeForPrepare = TempoPreparo.NORMAL,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
                         ), Food(
                             id = 5,
@@ -511,7 +774,7 @@ class DatabaseSimulator {
                             price = 60F,
                             section = "Mais Pedidos",
                             imageId = R.drawable.image_principal_feijoada,
-                            timeForPrepare = TempoPreparo.LENTO,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
                         ), Food(
                             id = 6,
@@ -520,7 +783,7 @@ class DatabaseSimulator {
                             price = 40F,
                             section = "Mais Pedidos",
                             imageId = R.drawable.image_principal_macarronada,
-                            timeForPrepare = TempoPreparo.NORMAL,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
                         ), Food(
                             id = 7,
@@ -529,7 +792,7 @@ class DatabaseSimulator {
                             price = 55F,
                             section = "Mais Pedidos",
                             imageId = R.drawable.image_principal_lasanha,
-                            timeForPrepare = TempoPreparo.LENTO,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
                         ), Food(
                             id = 8,
@@ -538,7 +801,7 @@ class DatabaseSimulator {
                             price = 34F,
                             section = "Mais Pedidos",
                             imageId = R.drawable.image_principal_baiao_dois,
-                            timeForPrepare = TempoPreparo.NORMAL,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
                         ), Food(
                             id = 9,
@@ -547,7 +810,7 @@ class DatabaseSimulator {
                             price = 28F,
                             section = "Mais Pedidos",
                             imageId = R.drawable.image_principal_peixe,
-                            timeForPrepare = TempoPreparo.NORMAL,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
                         ), Food(
                             id = 10,
@@ -556,7 +819,7 @@ class DatabaseSimulator {
                             price = 91F,
                             section = "Mais Pedidos",
                             imageId = R.drawable.image_principal_peru,
-                            timeForPrepare = TempoPreparo.LENTO,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
                         ), Food(
                             id = 11,
@@ -565,7 +828,7 @@ class DatabaseSimulator {
                             price = 80F,
                             section = "Bebidas",
                             imageId = R.drawable.image_bebida_cerveja,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ), Food(
                             id = 12,
@@ -574,7 +837,7 @@ class DatabaseSimulator {
                             price = 35F,
                             section = "Bebidas",
                             imageId = R.drawable.image_bebida_milkshake,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Um milkshake cremoso e indulgente, feito com sorvete de baunilha e leite, e finalizado com uma generosa camada de chantilly e calda de chocolate."
                         ), Food(
                             id = 13,
@@ -583,7 +846,7 @@ class DatabaseSimulator {
                             price = 25F,
                             section = "Bebidas",
                             imageId = R.drawable.image_bebida_cafe,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Café aromático e encorpado, preparado com grãos recém-torrados e moídos na hora, proporcionando um sabor rico e intenso que desperta os sentidos a cada gole."
                         ), Food(
                             id = 14,
@@ -592,7 +855,7 @@ class DatabaseSimulator {
                             price = 27F,
                             section = "Bebidas",
                             imageId = R.drawable.image_bebida_suco_manga,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Suco naturalmente doce e refrescante, feito com mangas maduras e suculentas, perfeito para saciar a sede e fornecer uma dose extra de vitaminas e antioxidantes."
                         ), Food(
                             id = 15,
@@ -601,7 +864,7 @@ class DatabaseSimulator {
                             price = 60F,
                             section = "Bebidas",
                             imageId = R.drawable.image_bebida_vinho,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Vinho encorpado e elegante, com notas frutadas e taninos macios, ideal para acompanhar uma refeição sofisticada ou apreciar em uma noite especial."
                         ), Food(
                             id = 16,
@@ -610,7 +873,7 @@ class DatabaseSimulator {
                             price = 29F,
                             section = "Sobremesas",
                             imageId = R.drawable.image_sobremesa_acai,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Uma tigela de açaí cremoso e nutritivo, coberto com frutas frescas, granola crocante e um fio de mel, proporcionando uma explosão de sabor e energia revitalizante."
                         ), Food(
                             id = 17,
@@ -619,7 +882,7 @@ class DatabaseSimulator {
                             price = 20F,
                             section = "Sobremesas",
                             imageId = R.drawable.image_sobremesa_bolo_cenoura,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Bolo fofinho e úmido, repleto de cenoura ralada e nozes picadas, coberto com uma generosa camada de glacê de cream cheese, que derrete na boca em cada mordida."
                         ), Food(
                             id = 18,
@@ -628,7 +891,7 @@ class DatabaseSimulator {
                             price = 10F,
                             section = "Sobremesas",
                             imageId = R.drawable.image_sobremesa_brigadeiro,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Pequenas bolinhas de brigadeiro de chocolate, feitas com cacau em pó e leite condensado, cobertas com granulado colorido, uma sobremesa clássica que é simplesmente irresistível."
                         ), Food(
                             id = 19,
@@ -637,7 +900,7 @@ class DatabaseSimulator {
                             price = 23F,
                             section = "Sobremesas",
                             imageId = R.drawable.image_sobremesa_brownie,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "O brownie mais denso e indulgente, repleto de pedaços de chocolate meio amargo e nozes crocantes, perfeito para os amantes de chocolate que desejam uma dose extra de indulgência."
                         ), Food(
                             id = 20,
@@ -646,7 +909,7 @@ class DatabaseSimulator {
                             price = 20F,
                             section = "Sobremesas",
                             imageId = R.drawable.image_sobremesa_coalhada,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Coalhada cremosa e refrescante, feita com iogurte natural e temperada com ervas frescas e azeite de oliva, uma opção leve e saudável para acompanhar pães ou vegetais frescos."
                         ), Food(
                             id = 21,
@@ -655,8 +918,1208 @@ class DatabaseSimulator {
                             price = 17F,
                             section = "Sobremesas",
                             imageId = R.drawable.image_sobremesa_torta,
-                            timeForPrepare = TempoPreparo.RAPIDO,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Uma torta de leite macia e reconfortante, com uma base de massa amanteigada e um recheio cremoso de leite condensado, uma sobremesa clássica que evoca memórias de infância e conforto."
+                        ),
+                        Food(
+                            id = 122,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 123,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 124,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 125,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 126,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 127,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 128,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 129,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 130,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 131,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 132,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 133,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 134,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 135,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 136,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 137,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 138,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 139,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 140,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 141,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 142,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Mais Pedidos",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 143,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 144,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 145,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 146,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 147,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 148,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 149,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 150,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 151,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 152,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 153,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 154,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 312,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 3434,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 177,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 5353,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 3425,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 6545,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 414,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 1335,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 546565,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 143434232,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 415498,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Entrada",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 5152189,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 9483,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 3092,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 37263,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 43647863,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 784343,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 48934783,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 4783473,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 309298,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 43439042,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 3232784,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 4634563,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 239905323,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 3290284,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 423032333,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 22222,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 111111,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 333333,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 444444,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 55555,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 14343534535,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 1656565656,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 4343434323,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 23991538505323,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 32656790284,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 423036562333,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 2222122,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 111098111,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 33763333,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 444440904,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 55090555,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 143435989834535,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 165656589656,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 463458863,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 23990775323,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 329026684,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 42305532333,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 2224422,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 111333111,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 33332233,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 44411444,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 5551155,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 1434113534535,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 165651165656,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Bebidas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 463411563,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 23992205323,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 311290284,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 42113032333,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 2112222,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 1112211111,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 33113333,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 44444499,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 5555599,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 1434353453325,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 111656565656,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 4111634563,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 21139905323,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 311290284,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 42113032333,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 1112222,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 1313111111,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 3113233333,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 44884444,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 5588555,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 1438843534535,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 165688565656,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 463456773,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 23990665323,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 325590284,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 42344032333,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 2223322,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 11122111,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 333333333,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 44441144,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 5555511,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 1434353114535,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 165656565611,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
+                        ),
+                        Food(
+                            id = 463456113,
+                            restaurantId = 0L,
+                            name = "Hamburger",
+                            price = 25F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_hamburguer,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
+                        ), Food(
+                            id = 23990511323,
+                            restaurantId = 0L,
+                            name = "Camarão",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_camarao,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
+                        ), Food(
+                            id = 329110284,
+                            restaurantId = 0L,
+                            name = "Queijo",
+                            price = 30F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_queijo,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
+                        ), Food(
+                            id = 42311032333,
+                            restaurantId = 0L,
+                            name = "Sopa",
+                            price = 20F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_entrada_sopa,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
+                        ), Food(
+                            id = 2211222,
+                            restaurantId = 0L,
+                            name = "Feijoada",
+                            price = 60F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_feijoada,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
+                        ), Food(
+                            id = 12192781111,
+                            restaurantId = 0L,
+                            name = "Macarronada",
+                            price = 40F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_macarronada,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
+                        ), Food(
+                            id = 333313452333,
+                            restaurantId = 0L,
+                            name = "Lasanha",
+                            price = 55F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_lasanha,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
+                        ), Food(
+                            id = 441424444,
+                            restaurantId = 0L,
+                            name = "Baião de Dois",
+                            price = 34F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_baiao_dois,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
+                        ), Food(
+                            id = 5555145,
+                            restaurantId = 0L,
+                            name = "Peixe",
+                            price = 28F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peixe,
+                            timeForPrepare = TempoPreparo.NORMAL.toString(),
+                            description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
+                        ), Food(
+                            id = 14341243534535,
+                            restaurantId = 0L,
+                            name = "Peru",
+                            price = 91F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_principal_peru,
+                            timeForPrepare = TempoPreparo.LENTO.toString(),
+                            description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
+                        ), Food(
+                            id = 1653246565656,
+                            restaurantId = 0L,
+                            name = "Cerveja",
+                            price = 80F,
+                            section = "Sobremesas",
+                            imageId = R.drawable.image_bebida_cerveja,
+                            timeForPrepare = TempoPreparo.RAPIDO.toString(),
+                            description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         )
                     )
                 )
