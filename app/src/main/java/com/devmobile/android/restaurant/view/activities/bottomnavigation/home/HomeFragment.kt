@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.view.activities.bottomnavigation
+package com.devmobile.android.restaurant.view.activities.bottomnavigation.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,7 +23,6 @@ import com.devmobile.android.restaurant.view.HistoricAdapter
 import com.devmobile.android.restaurant.view.HistoricItem
 import com.devmobile.android.restaurant.view.RestaurantAdapter
 import com.devmobile.android.restaurant.view.RestaurantItemList
-import com.devmobile.android.restaurant.view.activities.bottomnavigation.home.FoodChoiceActivity
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BottomNavigationViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.HomeViewModel
 import kotlinx.coroutines.Dispatchers
