@@ -1,108 +1,85 @@
-package com.devmobile.android.restaurant.view.viewholders
+package com.devmobile.android.restaurant.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.devmobile.android.restaurant.IOnCheckCheckbox
-import com.devmobile.android.restaurant.IOnSelectFood
-import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewFoodsBinding
-import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
-import com.devmobile.android.restaurant.usecase.enums.FoodSection
-import com.devmobile.android.restaurant.view.adapters.FoodCardAdapter
-import com.devmobile.android.restaurant.view.customelements.ModalBottomSheet
+import com.devmobile.android.restaurant.view.adapters.FoodAdapter
+import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel
+import kotlinx.coroutines.launch
 
-class FragmentTabFoodSection(
-    private val context: Context,
-    fragmentSection: FoodSection,
-) : Fragment(), IOnCheckCheckbox, IOnSelectFood {
+class TabSectionFragment(
+    private val restaurantId: Long,
+    private val sectionName: String,
+) : Fragment() {
 
     private val _binding: LayoutRecyclerviewFoodsBinding by lazy {
         LayoutRecyclerviewFoodsBinding.inflate(layoutInflater)
     }
-    private lateinit var recyclerViewFoods: RecyclerView
-    private var foodCardAdapter: FoodCardAdapter? = null
-    private lateinit var foodDAO: RestaurantLocalDatabase
-    private lateinit var dataFoodsOfTabSections: ArrayList<Food>
-    private var mFragmentSection = fragmentSection
-    private var onFoodAddedCallback: IOnSelectFood? = null
+    private val parentViewModel: FoodChoiceViewModel by activityViewModels()
+    private var _foods: ArrayList<Food> = arrayListOf()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        // Criando aqui ao inves de colocar direto pelo contrutor
-        return inflater.inflate(R.layout.layout_recyclerview_foods, container)
+
+        init()
+
+        return _binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    private fun init() {
 
-        foodDAO = RestaurantLocalDatabase.getInstance(requireContext())
-        dataFoodsOfTabSections =
-            mFragmentSection.let { foodDAO.getFoodDao().getFoodsBySection(it) } as ArrayList<Food>
+        _binding.recyclerFood.layoutManager = LinearLayoutManager(requireContext())
 
-        recyclerViewFoods = _binding.recyclerFood
-        foodCardAdapter = FoodCardAdapter(dataFoodsOfTabSections, requireContext())
-        foodCardAdapter?.addCheckboxClickListener(this)
-        recyclerViewFoods.adapter = foodCardAdapter
-        recyclerViewFoods.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        lifecycleScope.launch {
 
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    fun cancelFoodSelected() {
-
-        foodCardAdapter?.cancelOrder()
-    }
-
-    fun getQuantityOfFoodsSelected(): Int {
-
-        return foodCardAdapter?.getFoodCardViewHoldersSelected()?.size ?: 0
-    }
-
-    fun addFoodAddedCallback(onAddedCallbackOfMenuActivity: IOnSelectFood) {
-
-        if (onFoodAddedCallback == null) onFoodAddedCallback = onAddedCallbackOfMenuActivity
-    }
-
-    override fun isCheckboxChecked(
-        v: FoodCardViewHolder, isCheckboxChecked: Boolean
-    ) {
-
-        if (isCheckboxChecked) {
-
-            val bottomSheet = ModalBottomSheet()
-            bottomSheet.show(this.childFragmentManager, ModalBottomSheet.TAG)
-            bottomSheet.addFoodCardViewHolder(v)
-            bottomSheet.addOnFoodAddedCallback(this)
-
-        } else {
-
-            onFoodAddedCallback?.onRemoveFood(v.foodId!!)
+            requestFoods()
+            setUpFoodList()
         }
     }
 
-    override fun onAddedFood(
-        foodId: Long,
-        foodName: String?,
-        foodPrice: Float?,
-        sectionOnSelectedFoodOrdinal: FoodSection?,
-        quantityAdded: Int?
-    ) {
+    private suspend fun requestFoods() {
 
-        onFoodAddedCallback?.onAddedFood(
-            foodId, foodName, foodPrice, this.mFragmentSection, quantityAdded
+        _foods = parentViewModel.requestFoods(restaurantId, sectionName) as ArrayList
+    }
+
+    private fun setUpFoodList() {
+
+        _binding.recyclerFood.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.VERTICAL
+            )
         )
-    }
 
-    override fun onRemoveFood(foodId: Long, sectionOnSelectedFood: FoodSection?) {
-        onFoodAddedCallback?.onRemoveFood(foodId)
-    }
+        if (_foods.isNotEmpty()) {
 
+            _binding.recyclerFood.adapter = FoodAdapter(_foods) { mustAddFood ->
+
+                when (mustAddFood) {
+
+                    true -> {
+
+
+                    }
+
+                    false -> {
+
+                        //Remove foods
+                    }
+                }
+            }
+        }
+    }
 }
