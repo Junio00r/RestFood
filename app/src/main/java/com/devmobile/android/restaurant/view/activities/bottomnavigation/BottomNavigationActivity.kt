@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.distinctUntilChanged
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.ActivityBottomNavigationBinding
+import com.devmobile.android.restaurant.view.activities.bottomnavigation.home.HomeFragment
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BottomNavigationViewModel
 import java.util.LinkedList
 

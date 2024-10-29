@@ -23,7 +23,7 @@ import com.devmobile.android.restaurant.view.HistoricAdapter
 import com.devmobile.android.restaurant.view.HistoricItem
 import com.devmobile.android.restaurant.view.RestaurantAdapter
 import com.devmobile.android.restaurant.view.RestaurantItemList
-import com.devmobile.android.restaurant.view.activities.bottomnavigation.home.MenuActivity
+import com.devmobile.android.restaurant.view.activities.bottomnavigation.home.FoodChoiceActivity
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BottomNavigationViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.HomeViewModel
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +49,7 @@ class HomeFragment : Fragment(), IShowError {
         HomeViewModel.provideFactory(_repository, this, null)
     }
     private val _intentNext: Intent by lazy {
-        Intent(requireContext(), MenuActivity::class.java)
+        Intent(requireContext(), FoodChoiceActivity::class.java)
     }
 
     private var fragmentIndex: Int? = null
