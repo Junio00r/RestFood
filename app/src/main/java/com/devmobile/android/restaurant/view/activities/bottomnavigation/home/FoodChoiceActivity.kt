@@ -5,34 +5,34 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.devmobile.android.restaurant.databinding.ActivityMenuBinding
+import com.devmobile.android.restaurant.databinding.ActivityFoodChoiceBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.repository.MenuRepository
+import com.devmobile.android.restaurant.model.repository.FoodChoiceRepository
 import com.devmobile.android.restaurant.model.repository.datasource.local.DatabaseSimulator
 import com.devmobile.android.restaurant.view.TabSectionFragment
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
-import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuViewModel
+import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class MenuActivity : AppCompatActivity() {
+class FoodChoiceActivity : AppCompatActivity() {
 
-    private val _binding: ActivityMenuBinding by lazy {
-        ActivityMenuBinding.inflate(layoutInflater)
+    private val _binding: ActivityFoodChoiceBinding by lazy {
+        ActivityFoodChoiceBinding.inflate(layoutInflater)
     }
     private val _restaurantId: Long by lazy {
         intent.getLongExtra("RESTAURANT_ID", 0)
     }
-    private val _repository: MenuRepository by lazy {
-        MenuRepository(
+    private val _repository: FoodChoiceRepository by lazy {
+        FoodChoiceRepository(
             restaurantDao = RestaurantLocalDatabase.getInstance(this).getRestaurantDao(),
             foodDao = RestaurantLocalDatabase.getInstance(this).getFoodDao()
         )
     }
-    private val _viewModel: MenuViewModel by viewModels {
-        MenuViewModel.provideFactory(_repository, owner = this@MenuActivity)
+    private val _viewModel: FoodChoiceViewModel by viewModels {
+        FoodChoiceViewModel.provideFactory(_repository, owner = this@FoodChoiceActivity)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +53,7 @@ class MenuActivity : AppCompatActivity() {
             val tabsName = _viewModel.requestSections(_restaurantId)
             val tabs = createTabs(tabsName)
 
-            tabs.let { _binding.viewPager2.adapter = TabAdapter(this@MenuActivity, it) }
+            tabs.let { _binding.viewPager2.adapter = TabAdapter(this@FoodChoiceActivity, it) }
 
             TabLayoutMediator(_binding.tabLayout, _binding.viewPager2) { tab, position ->
 
@@ -75,8 +75,8 @@ class MenuActivity : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.Default) {
 
-            DatabaseSimulator.addRestaurants(this@MenuActivity)
-            DatabaseSimulator.addFoodDataToDatabase(this@MenuActivity)
+            DatabaseSimulator.addRestaurants(this@FoodChoiceActivity)
+            DatabaseSimulator.addFoodDataToDatabase(this@FoodChoiceActivity)
         }
     }
 }
