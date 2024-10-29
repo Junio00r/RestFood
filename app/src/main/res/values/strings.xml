@@ -7,15 +7,15 @@
 
     <!-- Authentication session (register, login)   -->
 
-        <!--  Login Screen  -->
-        <string name="button_login">LOGIN</string>
-        <string name="button_register">REGISTER</string>
-        <string name="text_message_put_name">E-mail</string>
-        <string name="text_message_put_table_number">Password</string>
+    <!--  Login Screen  -->
+    <string name="button_login">LOGIN</string>
+    <string name="button_register">REGISTER</string>
+    <string name="text_message_put_name">E-mail</string>
+    <string name="text_message_put_table_number">Password</string>
 
-        <!--  Register Screen  -->
-        <string name="button_cancel_register" tools:ignore="ButtonCase">CANCEL</string>
-        <string name="button_confirm_register">NEXT</string>
+    <!--  Register Screen  -->
+    <string name="button_cancel_register" tools:ignore="ButtonCase">CANCEL</string>
+    <string name="button_confirm_register">NEXT</string>
 
     <!--  Tab Sections  -->
     <string name="tab_item_entradas">Entradas</string>
@@ -54,6 +54,7 @@
 
     <!--  home restaurant  -->
     <string name="home_search_hint">Search Restaurant</string>
+    <string name="menu_add_food">ADD</string>
 
     <!-- Others   -->
     <string name="home_restaurant">Restaurants</string>
