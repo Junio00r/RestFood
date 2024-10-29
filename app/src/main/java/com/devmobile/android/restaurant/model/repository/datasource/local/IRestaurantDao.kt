@@ -32,5 +32,5 @@ interface IRestaurantDao {
         "SELECT * FROM foods " +
                 "WHERE :restaurantId = foods.restaurantId"
     )
-    suspend fun getAllFoods(restaurantId: Long): List<Food?>
+    suspend fun getAllFoods(restaurantId: Long): List<Food>?
 }
