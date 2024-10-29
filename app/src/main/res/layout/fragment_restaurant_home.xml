@@ -6,7 +6,7 @@
 
         <variable
             name="homeFragment"
-            type="com.devmobile.android.restaurant.view.activities.bottomnavigation.HomeFragment" />
+            type="com.devmobile.android.restaurant.view.activities.bottomnavigation.home.HomeFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
