@@ -45,7 +45,7 @@ interface IFoodDao {
         "SELECT * FROM foods " +
                 "WHERE foods.restaurantId = :restaurantId AND foods.section = :foodSection"
     )
-    suspend fun getFoodsBySection(restaurantId: Long, foodSection: String): List<Food?>
+    suspend fun getFoodsBySection(restaurantId: Long, foodSection: String): List<Food>
 
     /**
      * Retrieves a Food item with the specified ID.
