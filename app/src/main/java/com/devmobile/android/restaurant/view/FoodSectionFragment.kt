@@ -44,14 +44,14 @@ class TabSectionFragment(
 
         lifecycleScope.launch {
 
-            requestFoods()
+            fetchFoods()
             setUpFoodList()
         }
     }
 
-    private suspend fun requestFoods() {
+    private suspend fun fetchFoods() {
 
-        _foods = parentViewModel.requestFoods(restaurantId, sectionName) as ArrayList
+        _foods = parentViewModel.fetchFoods(restaurantId, sectionName) as ArrayList
     }
 
     private fun setUpFoodList() {

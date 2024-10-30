@@ -50,7 +50,7 @@ class FoodChoiceActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
 
-            val tabsName = _viewModel.requestSections(_restaurantId)
+            val tabsName = _viewModel.fetchSections(_restaurantId)
             val tabs = createTabs(tabsName)
 
             tabs.let { _binding.viewPager2.adapter = TabAdapter(this@FoodChoiceActivity, it) }
