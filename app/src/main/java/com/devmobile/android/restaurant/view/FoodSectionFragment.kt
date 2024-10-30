@@ -69,7 +69,9 @@ class FoodSectionFragment(
 
                 if (mustAdd) {
 
+                    parentViewModel.onAddFood(restaurantId, foodId)
                 } else {
+                    parentViewModel.onRemoveFood(foodId)
                 }
             }
         }

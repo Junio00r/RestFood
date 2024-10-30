@@ -42,8 +42,23 @@ class FoodChoiceActivity : AppCompatActivity() {
 
         setContentView(_binding.root)
 
+        setObservables()
         setUpSearch()
         setUpTab()
+    }
+
+    private fun setObservables() {
+
+        lifecycleScope.launch {
+
+            _viewModel.foodAdd.observe(this@FoodChoiceActivity) { food ->
+
+            }
+
+            _viewModel.foodRemove.observe(this@FoodChoiceActivity) { foodId ->
+
+            }
+        }
     }
 
     private fun setUpTab() {

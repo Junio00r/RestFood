@@ -2,6 +2,8 @@ package com.devmobile.android.restaurant.viewmodel.bottomnavigation
 
 import android.os.Bundle
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +11,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.model.repository.FoodChoiceRepository
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class FoodChoiceViewModel(
     private val foodChoiceRepository: FoodChoiceRepository,
@@ -33,6 +36,28 @@ class FoodChoiceViewModel(
                 }
 
             }
+    }
+
+    private val _foodRemove = MutableLiveData<Long>()
+    val foodRemove: LiveData<Long> = _foodRemove
+
+    private val _foodAdd = MutableLiveData<Food>()
+    val foodAdd: LiveData<Food> = _foodAdd
+
+    fun onAddFood(restaurantId: Long, foodId: Long) {
+
+        viewModelScope.launch {
+
+            _foodAdd.value = foodChoiceRepository.requestFood(restaurantId, foodId)
+        }
+    }
+
+    fun onRemoveFood(foodId: Long) {
+
+        viewModelScope.launch {
+
+            _foodRemove.value = foodId
+        }
     }
 
     suspend fun fetchSections(restaurantId: Long): List<String> {
