@@ -65,19 +65,11 @@ class FoodSectionFragment(
 
         if (_foods.isNotEmpty()) {
 
-            _binding.recyclerFood.adapter = FoodAdapter(_foods) { mustAddFood ->
+            _binding.recyclerFood.adapter = FoodAdapter(_foods) { mustAdd, foodId ->
 
-                when (mustAddFood) {
+                if (mustAdd) {
 
-                    true -> {
-
-
-                    }
-
-                    false -> {
-
-                        //Remove foods
-                    }
+                } else {
                 }
             }
         }
