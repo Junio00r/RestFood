@@ -32,9 +32,7 @@ class FoodSectionFragment(
         savedInstanceState: Bundle?
     ): View {
 
-
         init()
-
         return _binding.root
     }
 
