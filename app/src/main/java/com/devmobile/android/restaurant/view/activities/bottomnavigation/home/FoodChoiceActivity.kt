@@ -39,7 +39,6 @@ class FoodChoiceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         createFakeRemoteDatabase()
-
         setContentView(_binding.root)
 
         setObservables()
