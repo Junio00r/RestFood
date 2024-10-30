@@ -9,7 +9,7 @@ import com.devmobile.android.restaurant.databinding.ActivityFoodChoiceBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.FoodChoiceRepository
 import com.devmobile.android.restaurant.model.repository.datasource.local.DatabaseSimulator
-import com.devmobile.android.restaurant.view.TabSectionFragment
+import com.devmobile.android.restaurant.view.FoodSectionFragment
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -64,10 +64,11 @@ class FoodChoiceActivity : AppCompatActivity() {
 
     private fun createTabs(tabsName: List<String>): List<Fragment> {
 
-        return tabsName.map { TabSectionFragment(_restaurantId, it) }
+        return tabsName.map { FoodSectionFragment(_restaurantId, it) }
     }
 
     private fun setUpSearch() {
+
         _binding.searchViewFoods.setupWithSearchBar(_binding.searchBarFoods)
     }
 
