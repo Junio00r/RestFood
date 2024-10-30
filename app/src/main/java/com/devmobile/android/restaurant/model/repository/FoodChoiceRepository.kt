@@ -33,4 +33,12 @@ class FoodChoiceRepository(
             }
         }
     }
+
+    suspend fun requestFood(restaurantId: Long, foodId: Long): Food {
+
+        return withContext(ioDispatcher) {
+
+            foodDao.getFoodById(restaurantId, foodId)
+        }
+    }
 }
