@@ -33,7 +33,7 @@ interface IFoodDao {
         "SELECT  * FROM foods " +
                 "WHERE foods.restaurantId  = :restaurantId"
     )
-    suspend fun getAllFoods(restaurantId: Long): List<Food?>
+    suspend fun getAllFoods(restaurantId: Long): List<Food>
 
     /**
      * Retrieves a list of Food items with the same section as specified by [foodSection].
@@ -54,7 +54,7 @@ interface IFoodDao {
      * @return the Food item with the specified ID, or null if not found
      */
     @Query("SELECT * FROM foods WHERE foods.restaurantId = :restaurantId AND id = :foodId")
-    suspend fun getFoodById(restaurantId: Long, foodId: Long): Food?
+    suspend fun getFoodById(restaurantId: Long, foodId: Long): Food
 
     /**
      * Retrieves the total number of foods in the database.

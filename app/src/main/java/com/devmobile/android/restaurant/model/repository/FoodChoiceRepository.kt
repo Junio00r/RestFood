@@ -21,7 +21,7 @@ class FoodChoiceRepository(
         }
     }
 
-    suspend fun requestFoods(restaurantId: Long, section: String?): List<Food>? {
+    suspend fun requestFoods(restaurantId: Long, section: String?): List<Food> {
 
         return withContext(ioDispatcher) {
 
