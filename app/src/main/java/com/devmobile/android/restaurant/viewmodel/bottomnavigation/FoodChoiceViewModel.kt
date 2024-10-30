@@ -47,7 +47,7 @@ class FoodChoiceViewModel(
 
         return viewModelScope.async {
 
-            foodChoiceRepository.requestFoods(restaurantId, section) ?: emptyList()
+            foodChoiceRepository.requestFoods(restaurantId, section)
         }.await()
     }
 }
