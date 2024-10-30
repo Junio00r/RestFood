@@ -12,7 +12,7 @@ import kotlin.properties.Delegates
 
 class FoodAdapter(
     private val foods: ArrayList<Food>,
-    private val onAddFood: (Boolean) -> (Unit),
+    private val onAddFood: (Boolean, Long) -> (Unit),
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(binding: LayoutFoodBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -22,14 +22,14 @@ class FoodAdapter(
         val foodPrice: TextView = binding.textFoodPrice
         val addButton: Button = binding.buttonAddFood
         var foodId by Delegates.notNull<Long>()
-        private var isFoodAdd = false
+        private var mustFoodAdd = false
 
-        fun setListener(onClick: (Boolean) -> Unit) {
+        fun setListener(onClick: (Boolean, Long) -> Unit) {
 
             addButton.setOnClickListener {
 
-                isFoodAdd = !isFoodAdd
-                onClick(isFoodAdd)
+                mustFoodAdd = !mustFoodAdd
+                onClick(mustFoodAdd, foodId)
             }
         }
     }
