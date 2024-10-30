@@ -15,7 +15,7 @@ import com.devmobile.android.restaurant.view.adapters.FoodAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel
 import kotlinx.coroutines.launch
 
-class TabSectionFragment(
+class FoodSectionFragment(
     private val restaurantId: Long,
     private val sectionName: String,
 ) : Fragment() {
