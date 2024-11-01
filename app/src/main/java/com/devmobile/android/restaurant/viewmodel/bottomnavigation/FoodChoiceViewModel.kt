@@ -38,6 +38,13 @@ class FoodChoiceViewModel(
             }
     }
 
+    val tabPosition: Int
+        get() = saveHandle["TAB_POSITION"] ?: 0
+
+    fun updateSection(newSection: Int?) {
+        saveHandle["TAB_POSITION"] = newSection
+    }
+
     private val _foodRemove = MutableLiveData<Long>()
     val foodRemove: LiveData<Long> = _foodRemove
 

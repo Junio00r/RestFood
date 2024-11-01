@@ -43,9 +43,9 @@ class FoodChoiceActivity : AppCompatActivity() {
         createFakeRemoteDatabase()
         setContentView(_binding.root)
 
-        setObservables()
         setUpSearch()
         setUpTab()
+        setObservables()
     }
 
     private fun setObservables() {
@@ -60,6 +60,17 @@ class FoodChoiceActivity : AppCompatActivity() {
 
             }
         }
+
+        _binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+
+                tab?.let { _viewModel.updateSection(it.position) }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+        })
     }
 
     private fun setUpTab() {
