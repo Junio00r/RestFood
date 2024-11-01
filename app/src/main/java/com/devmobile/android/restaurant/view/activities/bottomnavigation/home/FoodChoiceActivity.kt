@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.devmobile.android.restaurant.databinding.ActivityFoodChoiceBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.FoodChoiceRepository
-import com.devmobile.android.restaurant.model.repository.datasource.local.DatabaseSimulator
+import com.devmobile.android.restaurant.model.repository.datasource.remote.DatabaseSimulator
 import com.devmobile.android.restaurant.view.FoodSectionFragment
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel

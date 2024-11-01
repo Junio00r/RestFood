@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.datasource.local
+package com.devmobile.android.restaurant.model.repository.datasource.remote
 
 import android.content.Context
 import com.devmobile.android.restaurant.R

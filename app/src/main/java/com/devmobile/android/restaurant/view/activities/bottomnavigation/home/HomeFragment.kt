@@ -18,7 +18,7 @@ import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentRestaurantHomeBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.bottomnavigation.HomeRepository
-import com.devmobile.android.restaurant.model.repository.datasource.local.DatabaseSimulator
+import com.devmobile.android.restaurant.model.repository.datasource.remote.DatabaseSimulator
 import com.devmobile.android.restaurant.view.HistoricAdapter
 import com.devmobile.android.restaurant.view.HistoricItem
 import com.devmobile.android.restaurant.view.RestaurantAdapter
