@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmobile.android.restaurant.databinding.ActivityFoodChoiceBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.FoodChoiceRepository
@@ -12,6 +13,7 @@ import com.devmobile.android.restaurant.model.repository.datasource.remote.Datab
 import com.devmobile.android.restaurant.view.FoodSectionFragment
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -77,21 +79,30 @@ class FoodChoiceActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
 
-            val tabsName = _viewModel.fetchSections(_restaurantId)
-            val tabs = createTabs(tabsName)
+            val tabsSections = _viewModel.fetchSections(_restaurantId)
+            val tabs = createTabs(tabsSections)
 
-            tabs.let { _binding.viewPager2.adapter = TabAdapter(this@FoodChoiceActivity, it) }
+            _binding.viewPager2.offscreenPageLimit = 3
+            _binding.viewPager2.adapter = TabAdapter(this@FoodChoiceActivity, tabs)
+            _binding.viewPager2.setCurrentItem(_viewModel.tabPosition, false)
 
             TabLayoutMediator(_binding.tabLayout, _binding.viewPager2) { tab, position ->
 
-                tab.text = tabsName[position]
+                tab.text = tabsSections[position]
             }.attach()
         }
     }
 
-    private fun createTabs(tabsName: List<String>): List<Fragment> {
+    private fun createTabs(tabsSections: List<String>): List<Fragment> {
 
-        return tabsName.map { FoodSectionFragment(_restaurantId, it) }
+        return tabsSections.mapIndexed { _, sectionName ->
+
+            FoodSectionFragment().apply {
+                arguments = Bundle().apply {
+                    putStringArray("ARGUMENTS", arrayOf(_restaurantId.toString(), sectionName))
+                }
+            }
+        }
     }
 
     private fun setUpSearch() {
