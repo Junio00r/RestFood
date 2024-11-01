@@ -15,10 +15,7 @@ import com.devmobile.android.restaurant.view.adapters.FoodAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel
 import kotlinx.coroutines.launch
 
-class FoodSectionFragment(
-    private val restaurantId: Long,
-    private val sectionName: String,
-) : Fragment() {
+class FoodSectionFragment : Fragment() {
 
     private val _binding: LayoutRecyclerviewFoodsBinding by lazy {
         LayoutRecyclerviewFoodsBinding.inflate(layoutInflater)
