@@ -22,9 +22,6 @@ class FoodChoiceActivity : AppCompatActivity() {
     private val _binding: ActivityFoodChoiceBinding by lazy {
         ActivityFoodChoiceBinding.inflate(layoutInflater)
     }
-    private val _restaurantId: Long by lazy {
-        intent.getLongExtra("RESTAURANT_ID", 0)
-    }
     private val _repository: FoodChoiceRepository by lazy {
         FoodChoiceRepository(
             restaurantDao = RestaurantLocalDatabase.getInstance(this).getRestaurantDao(),
@@ -33,6 +30,11 @@ class FoodChoiceActivity : AppCompatActivity() {
     }
     private val _viewModel: FoodChoiceViewModel by viewModels {
         FoodChoiceViewModel.provideFactory(_repository, owner = this@FoodChoiceActivity)
+    }
+
+    // data
+    private val _restaurantId: Long by lazy {
+        intent.getLongExtra("RESTAURANT_ID", 0)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -23,6 +23,13 @@ class FoodSectionFragment : Fragment() {
     private val parentViewModel: FoodChoiceViewModel by activityViewModels()
     private var _foods: ArrayList<Food> = arrayListOf()
 
+    private val restaurantId: Long by lazy {
+        requireArguments().getStringArray("ARGUMENTS")!![0].toLong()
+    }
+    private val sectionName: String by lazy {
+        requireArguments().getStringArray("ARGUMENTS")!![1]
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
