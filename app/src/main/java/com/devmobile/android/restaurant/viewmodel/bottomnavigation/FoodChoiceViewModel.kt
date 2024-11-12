@@ -79,7 +79,7 @@ class FoodChoiceViewModel(
 
         return viewModelScope.async {
 
-            foodChoiceRepository.requestFoods(restaurantId, section)
+            foodChoiceRepository.requestFoodsBySections(restaurantId, section)
         }.await()
     }
 }
