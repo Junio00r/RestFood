@@ -3,11 +3,14 @@ package com.devmobile.android.restaurant.view.activities.bottomnavigation.home
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmobile.android.restaurant.databinding.ActivityFoodChoiceBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
+import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import com.devmobile.android.restaurant.model.repository.FoodChoiceRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.DatabaseSimulator
 import com.devmobile.android.restaurant.view.FoodSectionFragment
@@ -68,6 +71,7 @@ class FoodChoiceActivity : AppCompatActivity() {
             lifecycleScope.launch {
 
                 val newFoods = _viewModel.fetchFoodsByPattern(_restaurantId, text.toString())
+                populateSearchFoods(newFoods)
             }
         }
 
@@ -81,6 +85,19 @@ class FoodChoiceActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
             override fun onTabReselected(tab: TabLayout.Tab?) = Unit
         })
+    }
+
+    private fun populateSearchFoods(foods: List<Food>) {
+
+        _binding.recyclerSearchFood.adapter = FoodAdapter(foods) { mustAdd, foodId ->
+
+            if (mustAdd) {
+                supportFragmentManager.beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_MATCH_ACTIVITY_OPEN)
+                    .add(FoodDetailsOrderFragment(), null)
+                    .setReorderingAllowed(false).commitNow()
+            }
+        }
     }
 
     private fun setUpTab() {
@@ -116,6 +133,7 @@ class FoodChoiceActivity : AppCompatActivity() {
     private fun setUpSearch() {
 
         _binding.searchViewFoods.setupWithSearchBar(_binding.searchBarFoods)
+        _binding.recyclerSearchFood.layoutManager = LinearLayoutManager(this)
         _binding.recyclerSearchFood.adapter = FoodAdapter(emptyList())
     }
 
