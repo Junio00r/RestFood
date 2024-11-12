@@ -1,11 +1,11 @@
 package com.devmobile.android.restaurant.view.activities.bottomnavigation.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmobile.android.restaurant.databinding.ActivityFoodChoiceBinding
@@ -60,6 +60,8 @@ class FoodChoiceActivity : AppCompatActivity() {
         lifecycleScope.launch {
 
             _viewModel.foodAdd.observe(this@FoodChoiceActivity) { food ->
+
+                startActivity(Intent(this@FoodChoiceActivity, FoodDetailsOrderActivity::class.java))
             }
 
             _viewModel.foodRemove.observe(this@FoodChoiceActivity) { foodId ->
@@ -92,10 +94,7 @@ class FoodChoiceActivity : AppCompatActivity() {
         _binding.recyclerSearchFood.adapter = FoodAdapter(foods) { mustAdd, foodId ->
 
             if (mustAdd) {
-                supportFragmentManager.beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_MATCH_ACTIVITY_OPEN)
-                    .add(FoodDetailsOrderFragment(), null)
-                    .setReorderingAllowed(false).commitNow()
+                startActivity(Intent(this@FoodChoiceActivity, FoodDetailsOrderActivity::class.java))
             }
         }
     }
