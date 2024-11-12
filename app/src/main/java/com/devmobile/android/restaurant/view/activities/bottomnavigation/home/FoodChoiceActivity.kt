@@ -11,6 +11,7 @@ import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDa
 import com.devmobile.android.restaurant.model.repository.FoodChoiceRepository
 import com.devmobile.android.restaurant.model.repository.datasource.remote.DatabaseSimulator
 import com.devmobile.android.restaurant.view.FoodSectionFragment
+import com.devmobile.android.restaurant.view.adapters.FoodAdapter
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.FoodChoiceViewModel
 import com.google.android.material.tabs.TabLayout
@@ -38,6 +39,7 @@ class FoodChoiceActivity : AppCompatActivity() {
     private val _restaurantId: Long by lazy {
         intent.getLongExtra("RESTAURANT_ID", 0)
     }
+    private var foodAdapter: FoodAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +110,7 @@ class FoodChoiceActivity : AppCompatActivity() {
     private fun setUpSearch() {
 
         _binding.searchViewFoods.setupWithSearchBar(_binding.searchBarFoods)
+        _binding.recyclerSearchFood.adapter = FoodAdapter(emptyList())
     }
 
     private fun createFakeRemoteDatabase() {

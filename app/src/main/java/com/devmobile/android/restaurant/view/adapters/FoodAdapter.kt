@@ -11,8 +11,8 @@ import com.devmobile.android.restaurant.model.datasource.local.entities.Food
 import kotlin.properties.Delegates
 
 class FoodAdapter(
-    private val foods: ArrayList<Food>,
-    private val onAddFood: (Boolean, Long) -> (Unit),
+    private val foods: List<Food>,
+    private val onAddFood: ((Boolean, Long) -> (Unit))? = null,
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     class FoodViewHolder(binding: LayoutFoodBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -48,7 +48,10 @@ class FoodAdapter(
         holder.foodName.text = foods[position].name
         holder.foodPrice.text = foods[position].price.toString()
         holder.foodId = foods[position].id
-        holder.setListener(onAddFood)
+
+        if (onAddFood != null) {
+            holder.setListener(onAddFood)
+        }
     }
 
     override fun getItemCount(): Int {
