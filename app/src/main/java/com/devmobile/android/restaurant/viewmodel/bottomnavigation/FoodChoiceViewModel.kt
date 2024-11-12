@@ -75,7 +75,7 @@ class FoodChoiceViewModel(
         }.await()
     }
 
-    suspend fun fetchFoods(restaurantId: Long, section: String?): List<Food> {
+    suspend fun fetchFoods(restaurantId: Long, section: String? = null): List<Food> {
 
         return viewModelScope.async {
 
