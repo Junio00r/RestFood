@@ -21,7 +21,9 @@ class FoodChoiceViewModel(
     companion object {
 
         fun provideFactory(
-            repository: FoodChoiceRepository, owner: SavedStateRegistryOwner, defaultArgs: Bundle? = null
+            repository: FoodChoiceRepository,
+            owner: SavedStateRegistryOwner,
+            defaultArgs: Bundle? = null
         ): AbstractSavedStateViewModelFactory =
             object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
