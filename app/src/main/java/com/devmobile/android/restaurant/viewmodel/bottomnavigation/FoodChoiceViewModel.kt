@@ -67,6 +67,13 @@ class FoodChoiceViewModel(
         }
     }
 
+    suspend fun fetchFoodsByPattern(restaurantId: Long, pattern: String): List<Food> {
+
+        return viewModelScope.async {
+            foodChoiceRepository.requestFoodsByPattern(pattern)
+        }.await()
+    }
+
     suspend fun fetchSections(restaurantId: Long): List<String> {
 
         return viewModelScope.async {

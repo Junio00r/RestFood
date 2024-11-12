@@ -57,11 +57,17 @@ class FoodChoiceActivity : AppCompatActivity() {
         lifecycleScope.launch {
 
             _viewModel.foodAdd.observe(this@FoodChoiceActivity) { food ->
-
             }
 
             _viewModel.foodRemove.observe(this@FoodChoiceActivity) { foodId ->
+            }
+        }
 
+        _binding.searchViewFoods.editText.doOnTextChanged { text, _, _, _ ->
+
+            lifecycleScope.launch {
+
+                val newFoods = _viewModel.fetchFoodsByPattern(_restaurantId, text.toString())
             }
         }
 
