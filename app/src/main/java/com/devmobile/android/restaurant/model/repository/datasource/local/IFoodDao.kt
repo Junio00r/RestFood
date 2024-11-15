@@ -55,8 +55,8 @@ interface IFoodDao {
      * @param foodId the ID of the food to retrieve
      * @return the Food item with the specified ID, or null if not found
      */
-    @Query("SELECT * FROM foods WHERE foods.restaurantId = :restaurantId AND id = :foodId")
-    suspend fun getFoodById(restaurantId: Long, foodId: Long): Food
+    @Query("SELECT * FROM foods WHERE foods.restaurantId = :restaurantId AND foods.id IN (:foodId)")
+    suspend fun getFoodsById(restaurantId: Long, foodId: List<Long>): List<Food>
 
     /**
      * Retrieves the total number of foods in the database.

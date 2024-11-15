@@ -58,11 +58,11 @@ class FoodChoiceRepository private constructor(
         }
     }
 
-    suspend fun requestFood(restaurantId: Long, foodId: Long): Food {
+    suspend fun requestFood(restaurantId: Long, foodIds: List<Long>): List<Food> {
 
         return withContext(ioDispatcher) {
 
-            foodDao.getFoodById(restaurantId, foodId)
+            foodDao.getFoodsById(restaurantId, foodIds)
         }
     }
 }

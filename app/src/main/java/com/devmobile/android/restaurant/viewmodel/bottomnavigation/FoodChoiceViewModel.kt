@@ -53,11 +53,19 @@ class FoodChoiceViewModel(
     private val _foodAdd = MutableLiveData<Food>()
     val foodAdd: LiveData<Food> = _foodAdd
 
+    private val _requiredSides = MutableLiveData<List<Food>>()
+    val requiredSides: LiveData<List<Food>> = _requiredSides
+
     fun onAddFood(restaurantId: Long, foodId: Long) {
 
         viewModelScope.launch {
 
-            _foodAdd.value = foodChoiceRepository.requestFood(restaurantId, foodId)
+            val foodSelected = foodChoiceRepository.requestFood(restaurantId, listOf(foodId)).first()
+            _foodAdd.value = foodSelected
+
+            val requiredSides = foodSelected.requiredSides?.let { foodChoiceRepository.requestFood(restaurantId, it) }
+            requiredSides?.let { listOfFoods -> _requiredSides.value = listOfFoods }
+
         }
     }
 
