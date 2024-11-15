@@ -16,4 +16,16 @@ object Converters {
 
         return Gson().fromJson<ArrayList<String>>(value, ArrayList::class.java)
     }
+
+    @TypeConverter
+    fun fromLongList(list: List<Long>?): String {
+
+        return Gson().toJson(list)
+    }
+
+    @TypeConverter
+    fun toLongList(value: String?): List<Long>? {
+
+        return Gson().fromJson<List<Long>>(value, List::class.java) ?: null
+    }
 }
