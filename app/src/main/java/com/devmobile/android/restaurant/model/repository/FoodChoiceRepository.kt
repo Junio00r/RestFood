@@ -8,11 +8,26 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FoodChoiceRepository(
+class FoodChoiceRepository private constructor(
     private val restaurantDao: IRestaurantDao,
     private val foodDao: IFoodDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
+
+    companion object {
+        private var instance: FoodChoiceRepository? = null
+
+        fun getInstance(
+            restaurantDao: IRestaurantDao,
+            foodDao: IFoodDao,
+            ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+        ): FoodChoiceRepository {
+
+            return instance ?: synchronized(this) {
+                instance ?: FoodChoiceRepository(restaurantDao, foodDao, ioDispatcher).also { instance = it }
+            }
+        }
+    }
 
     suspend fun requestSections(restaurantId: Long): ArrayList<String> {
 
