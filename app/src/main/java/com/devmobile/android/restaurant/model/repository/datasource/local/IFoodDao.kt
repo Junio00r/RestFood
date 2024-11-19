@@ -35,8 +35,8 @@ interface IFoodDao {
     )
     suspend fun getAllFoods(restaurantId: Long): List<Food>
 
-    @Query("SELECT * FROM foods WHERE name LIKE '%' || :foodName || '%' ORDER BY name ASC")
-    suspend fun getNameMatches(foodName: String): List<Food>
+    @Query("SELECT * FROM foods WHERE name LIKE '%' || :foodName || '%' AND foods.restaurantId = :restaurantId ORDER BY name ASC")
+    suspend fun getNameMatches(restaurantId: Long, foodName: String): List<Food>
 
     /**
      * Retrieves a list of Food items with the same section as specified by [foodSection].

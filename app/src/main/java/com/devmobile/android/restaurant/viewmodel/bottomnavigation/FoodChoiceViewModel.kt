@@ -80,7 +80,7 @@ class FoodChoiceViewModel(
     suspend fun fetchFoodsByPattern(restaurantId: Long, pattern: String): List<Food> {
 
         return viewModelScope.async {
-            foodChoiceRepository.requestFoodsByPattern(pattern)
+            foodChoiceRepository.requestFoodsByPattern(restaurantId, pattern)
         }.await()
     }
 

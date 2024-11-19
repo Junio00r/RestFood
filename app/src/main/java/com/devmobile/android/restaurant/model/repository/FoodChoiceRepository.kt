@@ -36,14 +36,13 @@ class FoodChoiceRepository private constructor(
         }
     }
 
-    suspend fun requestFoodsByPattern(pattern: String): List<Food> {
+    suspend fun requestFoodsByPattern(restaurantId: Long, pattern: String): List<Food> {
 
         return withContext(ioDispatcher) {
 
-            return@withContext foodDao.getNameMatches(pattern)
+            return@withContext foodDao.getNameMatches(restaurantId, pattern)
         }
     }
-
 
     suspend fun requestFoodsBySections(restaurantId: Long, section: String?): List<Food> {
 
