@@ -9,7 +9,7 @@ import com.devmobile.android.restaurant.usecase.entities.Restaurant
 
 // Versão para testes offlines
 @Entity(
-    tableName = "foods",
+    tableName = "items",
     foreignKeys = [
         ForeignKey(
             entity = Restaurant::class,
@@ -23,7 +23,7 @@ import com.devmobile.android.restaurant.usecase.entities.Restaurant
         Index(value = ["restaurantId"])
     ]
 )
-data class Food(
+data class Item(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val restaurantId: Long,
     val name: String,

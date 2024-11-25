@@ -48,7 +48,7 @@ class HomeFragment : Fragment(), IShowError {
         HomeViewModel.provideFactory(_repository, this, null)
     }
     private val _intentNext: Intent by lazy {
-        Intent(requireContext(), FoodChoiceActivity::class.java)
+        Intent(requireContext(), ItemChoiceActivity::class.java)
     }
 
     private var fragmentIndex: Int? = null

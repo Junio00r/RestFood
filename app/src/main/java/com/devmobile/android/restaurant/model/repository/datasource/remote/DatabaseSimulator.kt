@@ -3,7 +3,7 @@ package com.devmobile.android.restaurant.model.repository.datasource.remote
 import android.content.Context
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.datasource.local.entities.Food
+import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.usecase.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
@@ -713,15 +713,15 @@ class DatabaseSimulator {
             }
         }
 
-        suspend fun addFoodDataToDatabase(context: Context) {
-            val foods = ArrayList<Food>()
-            val foodDao = RestaurantLocalDatabase.getInstance(context).getFoodDao()
+        suspend fun addItemDataToDatabase(context: Context) {
+            val items = ArrayList<Item>()
+            val itemDao = RestaurantLocalDatabase.getInstance(context).getItemDao()
 
-            if (foodDao.getQuantityOfFoods() == 0) {
+            if (itemDao.getQuantityOfItems() == 0) {
 
-                foods.addAll(
+                items.addAll(
                     listOf(
-                        Food(
+                        Item(
                             id = 0,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -732,7 +732,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
                         ),
-                        Food(
+                        Item(
                             id = 1,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -742,7 +742,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 2,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -752,7 +752,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 3,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -762,7 +762,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 4,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -772,7 +772,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 5,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -782,7 +782,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 6,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -791,8 +791,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 7,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -802,7 +802,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 8,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -812,7 +812,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 9,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -822,7 +822,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 10,
                             restaurantId = 0L,
                             name = "Peru",
@@ -832,7 +832,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 11,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -842,7 +842,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_bebida_cerveja,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
-                        ), Food(
+                        ), Item(
                             id = 12,
                             restaurantId = 0L,
                             name = "Milkshake",
@@ -852,7 +852,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_bebida_milkshake,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Um milkshake cremoso e indulgente, feito com sorvete de baunilha e leite, e finalizado com uma generosa camada de chantilly e calda de chocolate."
-                        ), Food(
+                        ), Item(
                             id = 13,
                             restaurantId = 0L,
                             name = "Café",
@@ -862,7 +862,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_bebida_cafe,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Café aromático e encorpado, preparado com grãos recém-torrados e moídos na hora, proporcionando um sabor rico e intenso que desperta os sentidos a cada gole."
-                        ), Food(
+                        ), Item(
                             id = 14,
                             restaurantId = 0L,
                             name = "Suco de Manga",
@@ -872,7 +872,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_bebida_suco_manga,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Suco naturalmente doce e refrescante, feito com mangas maduras e suculentas, perfeito para saciar a sede e fornecer uma dose extra de vitaminas e antioxidantes."
-                        ), Food(
+                        ), Item(
                             id = 15,
                             restaurantId = 0L,
                             name = "Vinho",
@@ -882,7 +882,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_bebida_vinho,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Vinho encorpado e elegante, com notas frutadas e taninos macios, ideal para acompanhar uma refeição sofisticada ou apreciar em uma noite especial."
-                        ), Food(
+                        ), Item(
                             id = 16,
                             restaurantId = 1L,
                             name = "Açaí",
@@ -892,7 +892,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_sobremesa_acai,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Uma tigela de açaí cremoso e nutritivo, coberto com frutas frescas, granola crocante e um fio de mel, proporcionando uma explosão de sabor e energia revitalizante."
-                        ), Food(
+                        ), Item(
                             id = 17,
                             restaurantId = 1L,
                             name = "Bolo de Cenoura",
@@ -902,7 +902,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_sobremesa_bolo_cenoura,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Bolo fofinho e úmido, repleto de cenoura ralada e nozes picadas, coberto com uma generosa camada de glacê de cream cheese, que derrete na boca em cada mordida."
-                        ), Food(
+                        ), Item(
                             id = 18,
                             restaurantId = 1L,
                             name = "Brigadeiro",
@@ -912,7 +912,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_sobremesa_brigadeiro,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Pequenas bolinhas de brigadeiro de chocolate, feitas com cacau em pó e leite condensado, cobertas com granulado colorido, uma sobremesa clássica que é simplesmente irresistível."
-                        ), Food(
+                        ), Item(
                             id = 19,
                             restaurantId = 1L,
                             name = "Brownie",
@@ -922,7 +922,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_sobremesa_brownie,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "O brownie mais denso e indulgente, repleto de pedaços de chocolate meio amargo e nozes crocantes, perfeito para os amantes de chocolate que desejam uma dose extra de indulgência."
-                        ), Food(
+                        ), Item(
                             id = 20,
                             restaurantId = 2L,
                             name = "Coalhada",
@@ -932,7 +932,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_sobremesa_coalhada,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Coalhada cremosa e refrescante, feita com iogurte natural e temperada com ervas frescas e azeite de oliva, uma opção leve e saudável para acompanhar pães ou vegetais frescos."
-                        ), Food(
+                        ), Item(
                             id = 21,
                             restaurantId = 2L,
                             name = "Torta de Leite",
@@ -943,7 +943,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Uma torta de leite macia e reconfortante, com uma base de massa amanteigada e um recheio cremoso de leite condensado, uma sobremesa clássica que evoca memórias de infância e conforto."
                         ),
-                        Food(
+                        Item(
                             id = 122,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -953,7 +953,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 123,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -963,7 +963,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 124,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -973,7 +973,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 125,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -983,7 +983,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 126,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -993,7 +993,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 127,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1002,8 +1002,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 128,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1013,7 +1013,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 129,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1023,7 +1023,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 130,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1033,7 +1033,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 131,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1043,7 +1043,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 132,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1054,7 +1054,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 133,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1064,7 +1064,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 134,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1074,7 +1074,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 135,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1084,7 +1084,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 136,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1094,7 +1094,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 137,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1104,7 +1104,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 138,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1113,8 +1113,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 139,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1124,7 +1124,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 140,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1134,7 +1134,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 141,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1144,7 +1144,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 142,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1154,7 +1154,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 143,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1165,7 +1165,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 144,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1175,7 +1175,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 145,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1185,7 +1185,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 146,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1195,7 +1195,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 147,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1205,7 +1205,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 148,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1215,7 +1215,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 149,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1224,8 +1224,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 150,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1235,7 +1235,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 151,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1245,7 +1245,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 152,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1255,7 +1255,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 153,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1265,7 +1265,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 154,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1276,7 +1276,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 312,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1286,7 +1286,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 3434,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1296,7 +1296,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 177,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1306,7 +1306,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 5353,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1316,7 +1316,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 3425,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1326,7 +1326,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 6545,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1335,8 +1335,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 414,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1346,7 +1346,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 1335,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1356,7 +1356,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 546565,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1366,7 +1366,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 143434232,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1376,7 +1376,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 415498,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1387,7 +1387,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 5152189,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1397,7 +1397,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 9483,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1407,7 +1407,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 3092,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1417,7 +1417,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 37263,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1427,7 +1427,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 43647863,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1437,7 +1437,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 784343,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1446,8 +1446,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 48934783,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1457,7 +1457,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 4783473,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1467,7 +1467,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 309298,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1477,7 +1477,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 43439042,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1487,7 +1487,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 3232784,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1498,7 +1498,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 4634563,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1508,7 +1508,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 239905323,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1518,7 +1518,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 3290284,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1528,7 +1528,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 423032333,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1538,7 +1538,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 22222,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1548,7 +1548,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 111111,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1557,8 +1557,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 333333,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1568,7 +1568,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 444444,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1578,7 +1578,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 55555,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1588,7 +1588,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 14343534535,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1598,7 +1598,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 1656565656,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1609,7 +1609,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 4343434323,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1619,7 +1619,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 23991538505323,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1629,7 +1629,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 32656790284,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1639,7 +1639,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 423036562333,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1649,7 +1649,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 2222122,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1659,7 +1659,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 111098111,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1668,8 +1668,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 33763333,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1679,7 +1679,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 444440904,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1689,7 +1689,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 55090555,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1699,7 +1699,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 143435989834535,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1709,7 +1709,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 165656589656,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1720,7 +1720,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 463458863,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1730,7 +1730,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 23990775323,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1740,7 +1740,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 329026684,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1750,7 +1750,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 42305532333,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1760,7 +1760,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 2224422,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1770,7 +1770,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 111333111,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1779,8 +1779,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 33332233,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1790,7 +1790,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 44411444,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1800,7 +1800,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 5551155,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1810,7 +1810,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 1434113534535,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1820,7 +1820,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 165651165656,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1831,7 +1831,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 463411563,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1841,7 +1841,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 23992205323,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1851,7 +1851,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 311290284,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1861,7 +1861,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 42113032333,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1871,7 +1871,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 2112222,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1881,7 +1881,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 1112211111,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -1890,8 +1890,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 33113333,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -1901,7 +1901,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 44444499,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -1911,7 +1911,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 5555599,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -1921,7 +1921,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 1434353453325,
                             restaurantId = 0L,
                             name = "Peru",
@@ -1931,7 +1931,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 111656565656,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -1942,7 +1942,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 4111634563,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -1952,7 +1952,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 21139905323,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -1962,7 +1962,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 311290284,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -1972,7 +1972,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 42113032333,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -1982,7 +1982,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 1112222,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -1992,7 +1992,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 1313111111,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -2001,8 +2001,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 3113233333,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -2012,7 +2012,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 44884444,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -2022,7 +2022,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 5588555,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -2032,7 +2032,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 1438843534535,
                             restaurantId = 0L,
                             name = "Peru",
@@ -2042,7 +2042,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 165688565656,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -2053,7 +2053,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 463456773,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -2063,7 +2063,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 23990665323,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -2073,7 +2073,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 325590284,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -2083,7 +2083,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 42344032333,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -2093,7 +2093,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 2223322,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -2103,7 +2103,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 11122111,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -2112,8 +2112,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 333333333,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -2123,7 +2123,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 44441144,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -2133,7 +2133,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 5555511,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -2143,7 +2143,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 1434353114535,
                             restaurantId = 0L,
                             name = "Peru",
@@ -2153,7 +2153,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 165656565611,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -2164,7 +2164,7 @@ class DatabaseSimulator {
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Cerveja gelada e refrescante, com notas sutis de lúpulo e malte, perfeita para acompanhar uma refeição ou desfrutar em um dia quente de verão."
                         ),
-                        Food(
+                        Item(
                             id = 463456113,
                             restaurantId = 0L,
                             name = "Hamburger",
@@ -2174,7 +2174,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_hamburguer,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um suculento hambúrguer grelhado, coberto com queijo derretido, alface crocante, tomate maduro e cebola fresca, tudo envolto em um pão macio de gergelim. Um clássico irresistível para os amantes de hambúrguer."
-                        ), Food(
+                        ), Item(
                             id = 23990511323,
                             restaurantId = 0L,
                             name = "Camarão",
@@ -2184,7 +2184,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_camarao,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Deliciosos camarões frescos, salteados em um molho de manteiga com alho picante e ervas aromáticas, servidos sobre uma cama de arroz branco perfumado. Uma explosão de sabor do mar em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 329110284,
                             restaurantId = 0L,
                             name = "Queijo",
@@ -2194,7 +2194,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_queijo,
                             timeForPrepare = TempoPreparo.RAPIDO.toString(),
                             description = "Queijo artesanal de textura cremosa e sabor rico, perfeito para acompanhar uma tábua de frios, uma salada ou mesmo um simples sanduíche. Uma escolha versátil e deliciosa para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 42311032333,
                             restaurantId = 0L,
                             name = "Sopa",
@@ -2204,7 +2204,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_entrada_sopa,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Uma sopa reconfortante, preparada com pedaços suculentos de carne, legumes frescos e um caldo rico e aromático. Ideal para aquecer nos dias frios ou para confortar em qualquer momento."
-                        ), Food(
+                        ), Item(
                             id = 2211222,
                             restaurantId = 0L,
                             name = "Feijoada",
@@ -2214,7 +2214,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_feijoada,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Prato brasileiro clássico, repleto de sabores robustos e autênticos. Feijão preto cozido lentamente com uma variedade de carnes defumadas, servido com arroz branco, couve refogada, farofa e laranja. Uma verdadeira festa gastronômica."
-                        ), Food(
+                        ), Item(
                             id = 12192781111,
                             restaurantId = 0L,
                             name = "Macarronada",
@@ -2223,8 +2223,8 @@ class DatabaseSimulator {
                             requiredSides = null,
                             imageId = R.drawable.image_principal_macarronada,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
-                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort food que satisfaz todos os paladares."
-                        ), Food(
+                            description = "Uma massa al dente coberta com um generoso molho de tomate caseiro, salsichas suculentas e queijo derretido, gratinado até ficar dourado e borbulhante. Uma comfort item que satisfaz todos os paladares."
+                        ), Item(
                             id = 333313452333,
                             restaurantId = 0L,
                             name = "Lasanha",
@@ -2234,7 +2234,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_lasanha,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Camadas intercaladas de massa de lasanha, molho bolonhesa rico e queijo derretido, assadas até ficarem douradas e borbulhantes. Um clássico italiano que é sempre uma escolha reconfortante e deliciosa."
-                        ), Food(
+                        ), Item(
                             id = 441424444,
                             restaurantId = 0L,
                             name = "Baião de Dois",
@@ -2244,7 +2244,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_baiao_dois,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "Um prato típico do Nordeste brasileiro, composto por arroz cozido com feijão verde, linguiça calabresa, bacon, queijo coalho e temperos saborosos. Uma explosão de sabores regionais em cada garfada."
-                        ), Food(
+                        ), Item(
                             id = 5555145,
                             restaurantId = 0L,
                             name = "Peixe",
@@ -2254,7 +2254,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peixe,
                             timeForPrepare = TempoPreparo.NORMAL.toString(),
                             description = "eixe fresco grelhado, marinado em suco de limão e ervas aromáticas, servido com uma salada leve e refrescante de vegetais da estação. Uma opção leve e saudável, perfeita para os amantes de frutos do mar."
-                        ), Food(
+                        ), Item(
                             id = 14341243534535,
                             restaurantId = 0L,
                             name = "Peru",
@@ -2264,7 +2264,7 @@ class DatabaseSimulator {
                             imageId = R.drawable.image_principal_peru,
                             timeForPrepare = TempoPreparo.LENTO.toString(),
                             description = "Um peru suculento, assado lentamente com uma mistura de ervas frescas e temperos aromáticos, servido com purê de batatas cremoso e molho de cranberry caseiro. Uma refeição tradicional que traz o espírito festivo para qualquer ocasião."
-                        ), Food(
+                        ), Item(
                             id = 1653246565656,
                             restaurantId = 0L,
                             name = "Cerveja",
@@ -2278,7 +2278,7 @@ class DatabaseSimulator {
                     )
                 )
 
-                foodDao.insertAll(foods)
+                itemDao.insertAll(items)
             }
         }
     }

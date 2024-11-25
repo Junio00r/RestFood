@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.search.SearchBar
-            android:id="@+id/searchBarFoods"
+            android:id="@+id/searchBarItems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_bar_hint"
@@ -28,7 +28,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
-        android:id="@+id/searchViewFoods"
+        android:id="@+id/searchViewItems"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:hint="@string/search_bar_hint"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerSearchFood"
+            android:id="@+id/recyclerSearchItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"

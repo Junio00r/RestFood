@@ -15,7 +15,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageFood"
+        android:id="@+id/imageItem"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_alignParentStart="true"
@@ -28,26 +28,26 @@
         app:shapeAppearanceOverlay="@style/Shapeable.ImageRounded.Style.Local" />
 
     <TextView
-        android:id="@+id/textFoodName"
+        android:id="@+id/textItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/sul_sans_regular"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/imageFood"
-        app:layout_constraintTop_toTopOf="@id/imageFood" />
+        app:layout_constraintStart_toEndOf="@id/imageItem"
+        app:layout_constraintTop_toTopOf="@id/imageItem" />
 
     <TextView
-        android:id="@+id/textFoodPrice"
+        android:id="@+id/textItemPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:maxLines="1"
         android:textColor="@color/gray_one"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/imageFood"
-        app:layout_constraintStart_toStartOf="@id/textFoodName" />
+        app:layout_constraintBottom_toBottomOf="@id/imageItem"
+        app:layout_constraintStart_toStartOf="@id/textItemName" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSelectItem"

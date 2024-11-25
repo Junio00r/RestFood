@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.devmobile.android.restaurant.model.datasource.local.entities.Food
+import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 
 @Dao
@@ -29,8 +29,8 @@ interface IRestaurantDao {
     suspend fun getSections(restaurantId: Long): String
 
     @Query(
-        "SELECT * FROM foods " +
-                "WHERE :restaurantId = foods.restaurantId"
+        "SELECT * FROM items " +
+                "WHERE :restaurantId = items.restaurantId"
     )
-    suspend fun getAllFoods(restaurantId: Long): List<Food>
+    suspend fun getAllItems(restaurantId: Long): List<Item>
 }

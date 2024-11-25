@@ -9,60 +9,60 @@ import androidx.room.Update
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 
 @Dao
-interface IFoodDao {
+interface IItemDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(foods: List<Item>)
+    suspend fun insertAll(items: List<Item>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(food: Item)
+    suspend fun insert(item: Item)
 
     /**
      *  @return a value of lines quantity deleted
      */
     @Delete
-    suspend fun deleteFoods(foods: List<Item>)
+    suspend fun deleteItems(items: List<Item>)
 
     /**
      *  @return a value of lines quantity updated
      */
     @Update
-    suspend fun updateFood(foods: List<Item>)
+    suspend fun updateItem(items: List<Item>)
 
     @Query(
-        "SELECT  * FROM foods " +
-                "WHERE foods.restaurantId  = :restaurantId"
+        "SELECT  * FROM items " +
+                "WHERE items.restaurantId  = :restaurantId"
     )
-    suspend fun getAllFoods(restaurantId: Long): List<Item>
+    suspend fun getAllItems(restaurantId: Long): List<Item>
 
-    @Query("SELECT * FROM foods WHERE name LIKE '%' || :foodName || '%' AND foods.restaurantId = :restaurantId ORDER BY name ASC")
-    suspend fun getNameMatches(restaurantId: Long, foodName: String): List<Item>
+    @Query("SELECT * FROM items WHERE name LIKE '%' || :itemName || '%' AND items.restaurantId = :restaurantId ORDER BY name ASC")
+    suspend fun getNameMatches(restaurantId: Long, itemName: String): List<Item>
 
     /**
-     * Retrieves a list of Food items with the same section as specified by [foodSection].
+     * Retrieves a list of Item items with the same section as specified by [itemSection].
      *
-     * @param foodSection the section to search for in the database
-     * @return a list of Food items with the specified section, or null if not found
+     * @param itemSection the section to search for in the database
+     * @return a list of Item items with the specified section, or null if not found
      */
     @Query(
-        "SELECT * FROM foods WHERE foods.restaurantId = :restaurantId AND foods.section = :foodSection"
+        "SELECT * FROM items WHERE items.restaurantId = :restaurantId AND items.section = :itemSection"
     )
-    suspend fun getFoodsBySection(restaurantId: Long, foodSection: String): List<Item>
+    suspend fun getItemsBySection(restaurantId: Long, itemSection: String): List<Item>
 
     /**
-     * Retrieves a Food item with the specified ID.
+     * Retrieves a Item item with the specified ID.
      *
-     * @param foodId the ID of the food to retrieve
-     * @return the Food item with the specified ID, or null if not found
+     * @param itemId the ID of the item to retrieve
+     * @return the Item item with the specified ID, or null if not found
      */
-    @Query("SELECT * FROM foods WHERE foods.restaurantId = :restaurantId AND foods.id IN (:foodId)")
-    suspend fun getFoodsById(restaurantId: Long, foodId: List<Long>): List<Item>
+    @Query("SELECT * FROM items WHERE items.restaurantId = :restaurantId AND items.id IN (:itemId)")
+    suspend fun getItemsById(restaurantId: Long, itemId: List<Long>): List<Item>
 
     /**
-     * Retrieves the total number of foods in the database.
+     * Retrieves the total number of items in the database.
      *
-     * @return the total number of foods in the database
+     * @return the total number of items in the database
      */
-    @Query("SELECT COUNT(id) FROM foods")
-    suspend fun getQuantityOfFoods(): Int
+    @Query("SELECT COUNT(id) FROM items")
+    suspend fun getQuantityOfItems(): Int
 }
