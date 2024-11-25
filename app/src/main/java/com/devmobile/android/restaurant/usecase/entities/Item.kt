@@ -3,9 +3,9 @@ package com.devmobile.android.restaurant.model.datasource.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
-import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
 
 // Versão para testes offlines
 @Entity(
@@ -18,6 +18,9 @@ import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
+    ],
+    indices = [
+        Index(value = ["restaurantId"])
     ]
 )
 data class Food(

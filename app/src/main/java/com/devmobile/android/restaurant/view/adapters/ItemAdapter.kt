@@ -7,11 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devmobile.android.restaurant.databinding.LayoutFoodBinding
-import com.devmobile.android.restaurant.model.datasource.local.entities.Food
+import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import kotlin.properties.Delegates
 
 class FoodAdapter(
-    private val foods: List<Food>,
+    private val foods: List<Item>,
     private val onAddFood: ((Boolean, Long) -> (Unit))? = null,
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
@@ -20,13 +20,13 @@ class FoodAdapter(
         val foodImage: ImageView = binding.imageFood
         val foodName: TextView = binding.textFoodName
         val foodPrice: TextView = binding.textFoodPrice
-        val addButton: Button = binding.buttonAddFood
+        val selectItem: Button = binding.buttonSelectItem
         var foodId by Delegates.notNull<Long>()
         private var mustFoodAdd = false
 
         fun setListener(onClick: (Boolean, Long) -> Unit) {
 
-            addButton.setOnClickListener {
+            selectItem.setOnClickListener {
 
                 mustFoodAdd = !mustFoodAdd
                 onClick(mustFoodAdd, foodId)

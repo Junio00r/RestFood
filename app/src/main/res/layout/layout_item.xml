@@ -50,10 +50,10 @@
         app:layout_constraintStart_toStartOf="@id/textFoodName" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonAddFood"
+        android:id="@+id/buttonSelectItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/menu_add_food"
+        android:text="@string/add_item"
         app:backgroundTint="@color/green_light_two"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

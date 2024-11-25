@@ -1,30 +1,30 @@
 package com.devmobile.android.restaurant.model.repository
 
-import com.devmobile.android.restaurant.model.datasource.local.IFoodDao
-import com.devmobile.android.restaurant.model.datasource.local.entities.Food
+import com.devmobile.android.restaurant.model.datasource.local.IItemDao
+import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
 import com.devmobile.android.restaurant.usecase.Converters
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FoodChoiceRepository private constructor(
+class ItemChoiceRepository private constructor(
     private val restaurantDao: IRestaurantDao,
-    private val foodDao: IFoodDao,
+    private val foodDao: IItemDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
     companion object {
-        private var instance: FoodChoiceRepository? = null
+        private var instance: ItemChoiceRepository? = null
 
         fun getInstance(
             restaurantDao: IRestaurantDao,
-            foodDao: IFoodDao,
+            foodDao: IItemDao,
             ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-        ): FoodChoiceRepository {
+        ): ItemChoiceRepository {
 
             return instance ?: synchronized(this) {
-                instance ?: FoodChoiceRepository(restaurantDao, foodDao, ioDispatcher).also { instance = it }
+                instance ?: ItemChoiceRepository(restaurantDao, foodDao, ioDispatcher).also { instance = it }
             }
         }
     }
@@ -36,7 +36,7 @@ class FoodChoiceRepository private constructor(
         }
     }
 
-    suspend fun requestFoodsByPattern(restaurantId: Long, pattern: String): List<Food> {
+    suspend fun requestItemsByPattern(restaurantId: Long, pattern: String): List<Item> {
 
         return withContext(ioDispatcher) {
 
@@ -44,24 +44,24 @@ class FoodChoiceRepository private constructor(
         }
     }
 
-    suspend fun requestFoodsBySections(restaurantId: Long, section: String?): List<Food> {
+    suspend fun requestItemsBySections(restaurantId: Long, section: String?): List<Item> {
 
         return withContext(ioDispatcher) {
 
             if (section == null) {
 
-                return@withContext restaurantDao.getAllFoods(restaurantId)
+                return@withContext restaurantDao.getAllItems(restaurantId)
             } else {
-                return@withContext foodDao.getFoodsBySection(restaurantId, section)
+                return@withContext foodDao.getItemsBySection(restaurantId, section)
             }
         }
     }
 
-    suspend fun requestFood(restaurantId: Long, foodIds: List<Long>): List<Food> {
+    suspend fun requestItem(restaurantId: Long, foodIds: List<Long>): List<Item> {
 
         return withContext(ioDispatcher) {
 
-            foodDao.getFoodsById(restaurantId, foodIds)
+            foodDao.getItemsById(restaurantId, foodIds)
         }
     }
 }
