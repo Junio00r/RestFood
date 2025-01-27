@@ -4,8 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class TabAdapter(activity: FragmentActivity, private val tabs: List<Fragment>) :
-    FragmentStateAdapter(activity) {
+class TabAdapter(
+    activity: FragmentActivity,
+    private val tabs: List<Fragment>,
+) : FragmentStateAdapter(activity) {
 
     override fun createFragment(position: Int): Fragment {
 

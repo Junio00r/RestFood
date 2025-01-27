@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <variable
+            name="viewModel"
+            type="com.devmobile.android.restaurant.viewmodel.bottomnavigation.ItemSelectedViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.devmobile.android.restaurant.view.activities.bottomnavigation.home.ItemSelectedFragment" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:fitsSystemWindows="true"
+            app:layout_constraintBottom_toTopOf="@+id/containerButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsingToolBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+                    android:background="@color/transparent"
+                    android:fitsSystemWindows="true"
+                    app:contentScrim="@color/white"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:statusBarScrim="@color/transparent"
+                    app:toolbarId="@id/toolBar">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="false"
+                        android:fitsSystemWindows="true"
+                        android:paddingVertical="0dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/image_entrada_hamburguer" />
+
+                    <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/toolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/transparent"
+                        app:layout_collapseMode="pin"
+                        app:navigationIcon="@drawable/ic_back" />
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!-- Note: A RecyclerView can also be used -->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:id="@+id/fieldsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="16dp">
+
+                    <TextView
+                        android:id="@+id/textFoodName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:inputType="none"
+                        android:maxLength="50"
+                        android:maxLines="1"
+                        android:paddingHorizontal="16dp"
+                        android:text="@{viewModel.itemName}"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textFoodDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp"
+                        android:inputType="none"
+                        android:maxLength="200"
+                        android:paddingHorizontal="16dp"
+                        android:text="@{viewModel.itemDescription}"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_complementary_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:divider="@null"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <com.devmobile.android.restaurant.view.customelements.TextInput
+                        android:id="@+id/textOrderObservation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@{viewModel.itemObservation}"
+                        app:hintEnabled="false"
+                        app:isMultiline="@{true}" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="16dp"
+                app:dividerColor="@color/gray_four"
+                app:layout_constraintBottom_toTopOf="@+id/buttonAddItem"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonAddItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="@string/add_item"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/buttonDecrement"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/buttonDecrement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:src="@drawable/ic_decrement"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonIncrement"
+                app:layout_constraintEnd_toStartOf="@+id/textAmountFood"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonAddItem"
+                app:layout_constraintTop_toTopOf="@+id/buttonIncrement" />
+
+            <TextView
+                android:id="@+id/textAmountFood"
+                android:layout_width="59dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:maxLength="4"
+                android:minWidth="64dp"
+                android:text="@{String.valueOf(viewModel.amountItemAdded)}"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonIncrement"
+                app:layout_constraintEnd_toStartOf="@+id/buttonIncrement"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonDecrement"
+                app:layout_constraintTop_toTopOf="@+id/buttonIncrement" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/buttonIncrement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:backgroundTint="@color/gray_four"
+                android:src="@drawable/ic_increment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textAmountFood" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
