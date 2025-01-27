@@ -1,8 +1,10 @@
 package com.devmobile.android.restaurant.model.repository
 
+import android.util.Log
 import com.devmobile.android.restaurant.model.datasource.local.IItemDao
+import com.devmobile.android.restaurant.model.datasource.local.IRestaurantDao
+import com.devmobile.android.restaurant.model.datasource.local.RemoteCacheManager
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
-import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
 import com.devmobile.android.restaurant.usecase.Converters
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +26,11 @@ class ItemChoiceRepository private constructor(
         ): ItemChoiceRepository {
 
             return instance ?: synchronized(this) {
-                instance ?: ItemChoiceRepository(restaurantDao, foodDao, ioDispatcher).also { instance = it }
+                instance ?: ItemChoiceRepository(
+                    restaurantDao,
+                    foodDao,
+                    ioDispatcher
+                ).also { instance = it }
             }
         }
     }
@@ -57,11 +63,19 @@ class ItemChoiceRepository private constructor(
         }
     }
 
-    suspend fun requestItem(restaurantId: Long, foodIds: List<Long>): List<Item> {
+    suspend fun requestItems(restaurantId: Long, foodIds: List<Long>): List<Item> {
 
         return withContext(ioDispatcher) {
 
-            foodDao.getItemsById(restaurantId, foodIds)
+            foodIds.filterNot {
+                Log.d("DEBUGGING", "BUSCOU no Cache $it")
+                RemoteCacheManager.get(it.toString()) != null
+            }
+                .let {
+                    Log.d("DEBUGGING", "BUSCOU no Banco de Dados $it")
+                    foodDao.getItemsById(restaurantId, foodIds)
+                }
+
         }
     }
 }

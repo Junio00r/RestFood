@@ -16,3 +16,7 @@ fun TextView.maxLength(maxLength: Int) {
 
     filters = currentlyFilters.toTypedArray()
 }
+
+fun debounce() {
+
+}
