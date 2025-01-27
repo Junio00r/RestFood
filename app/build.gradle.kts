@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -75,7 +76,7 @@ dependencies {
      * ------------------------------------------------------------------------------- */
 
     // Compose
-        // Nothing yet
+    // Nothing yet
 
     implementation("androidx.activity:activity-ktx:1.9.2")
     implementation("androidx.core:core-ktx:1.13.1")
@@ -85,6 +86,14 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     implementation("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.5")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-common-ktx:2.8.5")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.5")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.5")
 
     // # Room #
     ksp("androidx.room:room-compiler:2.6.1")
