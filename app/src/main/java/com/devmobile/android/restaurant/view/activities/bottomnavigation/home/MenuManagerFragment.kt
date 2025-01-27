@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devmobile.android.restaurant.databinding.FragmentFindItemBinding
+import com.devmobile.android.restaurant.databinding.FragmentMenuManagerItemsBinding
 import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewItemsBinding
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.view.adapters.ItemAdapter
@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 
 class MenuManagerFragment : Fragment() {
 
-    private val _binding: FragmentFindItemBinding by lazy {
-        FragmentFindItemBinding.inflate(layoutInflater)
+    private val _binding: FragmentMenuManagerItemsBinding by lazy {
+        FragmentMenuManagerItemsBinding.inflate(layoutInflater)
     }
     private val parentViewModel: MenuManagerViewModel by activityViewModels()
 
