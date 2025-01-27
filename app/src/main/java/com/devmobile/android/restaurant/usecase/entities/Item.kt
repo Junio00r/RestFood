@@ -24,13 +24,17 @@ import com.devmobile.android.restaurant.usecase.entities.Restaurant
     ]
 )
 data class Item(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     val restaurantId: Long,
     val name: String,
-    var price: Float,
+    val price: Float,
     val section: String,
-    val requiredSides: List<Long>?,
+    @ColumnInfo(name = "max_items_available") val maxItemsAvailable: Int,
+    @ColumnInfo(name = "max_items_by_selection") val maxItemsBySelection: Int = maxItemsAvailable,
+    @ColumnInfo(name = "min_items_by_selection") val minItemsBySelection: Int = 0,
+    val isRequiredBySelection: Boolean? = null, // Case this item will be a optional or required in select of another item selected
+    @ColumnInfo(name = "complementary_sides") val complementarySides: List<Long>? = null,
     @ColumnInfo(name = "image_id") val imageId: Int,
-    @ColumnInfo(name = "time_for_prepare") val timeForPrepare: String,
-    val description: String?
+    @ColumnInfo(name = "time_to_prepare") val timeToPrepareInMin: Int,
+    val description: String? = null,
 )

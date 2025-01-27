@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant
+package com.devmobile.android.restaurant.usecase
 
 sealed class RequestResult {
     data class Success(val message: String? = null) : RequestResult()
