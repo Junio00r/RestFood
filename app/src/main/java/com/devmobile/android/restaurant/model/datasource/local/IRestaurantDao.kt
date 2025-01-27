@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.datasource.local
+package com.devmobile.android.restaurant.model.datasource.local
 
 import androidx.room.Dao
 import androidx.room.Insert

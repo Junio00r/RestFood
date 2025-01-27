@@ -10,32 +10,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ItemChoiceRepository private constructor(
+class MenuManagerRemoteRepository private constructor(
     private val restaurantDao: IRestaurantDao,
     private val foodDao: IItemDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
-    companion object {
-        private var instance: ItemChoiceRepository? = null
-
-        fun getInstance(
-            restaurantDao: IRestaurantDao,
-            foodDao: IItemDao,
-            ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-        ): ItemChoiceRepository {
-
-            return instance ?: synchronized(this) {
-                instance ?: ItemChoiceRepository(
-                    restaurantDao,
-                    foodDao,
-                    ioDispatcher
-                ).also { instance = it }
-            }
-        }
-    }
-
-    suspend fun requestSections(restaurantId: Long): ArrayList<String> {
+    suspend fun requestSections(restaurantId: Long): List<String> {
 
         return withContext(ioDispatcher) {
             Converters.fromStringToList(restaurantDao.getSections(restaurantId))
@@ -54,12 +35,12 @@ class ItemChoiceRepository private constructor(
 
         return withContext(ioDispatcher) {
 
-            if (section == null) {
-
+            if (section == null)
                 return@withContext restaurantDao.getAllItems(restaurantId)
-            } else {
+                    .also { saveInCache(it) }
+            else
                 return@withContext foodDao.getItemsBySection(restaurantId, section)
-            }
+                    .also { saveInCache(it) }
         }
     }
 
@@ -67,15 +48,35 @@ class ItemChoiceRepository private constructor(
 
         return withContext(ioDispatcher) {
 
-            foodIds.filterNot {
+            foodIds.filter {
                 Log.d("DEBUGGING", "BUSCOU no Cache $it")
-                RemoteCacheManager.get(it.toString()) != null
+                RemoteCacheManager.get(it.toString()) == null
+            }.let {
+                Log.d("DEBUGGING", "BUSCOU no Banco de Dados $it")
+                foodDao.getItemsById(restaurantId, it).also { saveInCache(it) }
             }
-                .let {
-                    Log.d("DEBUGGING", "BUSCOU no Banco de Dados $it")
-                    foodDao.getItemsById(restaurantId, foodIds)
-                }
+        }
+    }
 
+    private suspend fun saveInCache(data: List<Item>) {
+        withContext(ioDispatcher) {
+            data.onEach { RemoteCacheManager.put(it.id.toString(), it) }
+        }
+    }
+
+    companion object {
+        private var instance: MenuManagerRemoteRepository? = null
+
+        fun getInstance(
+            restaurantDao: IRestaurantDao,
+            foodDao: IItemDao,
+            ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+        ): MenuManagerRemoteRepository {
+
+            return instance ?: synchronized(this) {
+                instance ?: MenuManagerRemoteRepository(restaurantDao, foodDao, ioDispatcher)
+                    .also { instance = it }
+            }
         }
     }
 }
