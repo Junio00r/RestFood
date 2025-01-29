@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.datasource.remote
+package com.devmobile.android.restaurant.model.datasource.remote
 
 import okhttp3.ResponseBody
 import retrofit2.Response

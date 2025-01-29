@@ -3,11 +3,13 @@ package com.devmobile.android.restaurant.view.customelements
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Parcelable
+import android.text.InputType
 import android.util.AttributeSet
+import android.util.Log
 import android.util.SparseArray
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.widget.FrameLayout
+import androidx.databinding.BindingAdapter
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.usecase.maxLength
 import com.google.android.material.textfield.TextInputEditText

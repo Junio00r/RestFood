@@ -1,12 +1,11 @@
-package com.devmobile.android.restaurant.model.repository.datasource.remote
+package com.devmobile.android.restaurant.model.datasource.remote
 
 import android.content.Context
 import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
-import com.devmobile.android.restaurant.usecase.Fetch
+import com.devmobile.android.restaurant.usecase.entities.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
-import com.devmobile.android.restaurant.usecase.enums.TempoPreparo
 
 // Temporary Class
 class DatabaseSimulator {

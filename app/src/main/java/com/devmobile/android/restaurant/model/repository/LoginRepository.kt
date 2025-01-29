@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.authentication
+package com.devmobile.android.restaurant.model.repository
 
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import kotlinx.coroutines.CoroutineDispatcher

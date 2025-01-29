@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.usecase.enums
+package com.devmobile.android.restaurant.usecase
 
 /**
  * Enum class with all times to prepare a food

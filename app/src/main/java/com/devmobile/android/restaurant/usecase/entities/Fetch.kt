@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.usecase
+package com.devmobile.android.restaurant.usecase.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

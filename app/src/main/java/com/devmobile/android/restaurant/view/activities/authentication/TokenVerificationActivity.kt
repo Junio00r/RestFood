@@ -15,13 +15,13 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.devmobile.android.restaurant.IShowError
+import com.devmobile.android.restaurant.usecase.IShowError
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.RequestResult
+import com.devmobile.android.restaurant.usecase.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityVerificationCodeBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.repository.authentication.TokenVerificationRepository
-import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
+import com.devmobile.android.restaurant.model.repository.TokenVerificationRepository
+import com.devmobile.android.restaurant.model.datasource.remote.EmailApiService
 import com.devmobile.android.restaurant.usecase.maxLength
 import com.devmobile.android.restaurant.view.activities.bottomnavigation.BottomNavigationActivity
 import com.devmobile.android.restaurant.view.customelements.TextInput

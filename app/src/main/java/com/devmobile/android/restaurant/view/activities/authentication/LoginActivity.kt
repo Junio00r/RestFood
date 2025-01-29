@@ -8,11 +8,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.devmobile.android.restaurant.CalledFromXML
-import com.devmobile.android.restaurant.RequestResult
+import com.devmobile.android.restaurant.usecase.CalledFromXML
+import com.devmobile.android.restaurant.usecase.RequestResult
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.repository.authentication.LoginRepository
+import com.devmobile.android.restaurant.model.repository.LoginRepository
 import com.devmobile.android.restaurant.view.activities.bottomnavigation.BottomNavigationActivity
 import com.devmobile.android.restaurant.viewmodel.authentication.LoginViewModel
 import kotlinx.coroutines.launch

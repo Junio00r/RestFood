@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.datasource.remote
+package com.devmobile.android.restaurant.model.datasource.remote
 
 import android.util.Log
 import okhttp3.Interceptor

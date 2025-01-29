@@ -1,4 +1,4 @@
-package com.devmobile.android.restaurant.model.repository.datasource.remote
+package com.devmobile.android.restaurant.model.datasource.remote
 
 data class EmailResponse(
     val code: String,

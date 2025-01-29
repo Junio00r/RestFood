@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
-import com.devmobile.android.restaurant.model.repository.bottomnavigation.HomeRepository
+import com.devmobile.android.restaurant.model.repository.HomeRepository
 import com.devmobile.android.restaurant.usecase.InputPatterns
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

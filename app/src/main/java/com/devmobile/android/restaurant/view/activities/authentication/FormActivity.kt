@@ -13,13 +13,13 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.devmobile.android.restaurant.CalledFromXML
-import com.devmobile.android.restaurant.IShowError
+import com.devmobile.android.restaurant.usecase.CalledFromXML
+import com.devmobile.android.restaurant.usecase.IShowError
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.RequestResult
+import com.devmobile.android.restaurant.usecase.RequestResult
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.repository.authentication.FormRepository
+import com.devmobile.android.restaurant.model.repository.FormRepository
 import com.devmobile.android.restaurant.usecase.maxLength
 import com.devmobile.android.restaurant.viewmodel.authentication.FormViewModel
 import com.google.android.material.snackbar.BaseTransientBottomBar

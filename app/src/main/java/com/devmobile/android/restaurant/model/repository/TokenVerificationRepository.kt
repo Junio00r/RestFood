@@ -1,9 +1,9 @@
-package com.devmobile.android.restaurant.model.repository.authentication
+package com.devmobile.android.restaurant.model.repository
 
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.User
-import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailApiService
-import com.devmobile.android.restaurant.model.repository.datasource.remote.EmailRequest
+import com.devmobile.android.restaurant.model.datasource.remote.EmailApiService
+import com.devmobile.android.restaurant.model.datasource.remote.EmailRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
