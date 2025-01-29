@@ -7,10 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.model.datasource.local.entities.User
-import com.devmobile.android.restaurant.model.repository.datasource.local.IFetchDao
-import com.devmobile.android.restaurant.model.repository.datasource.local.IRestaurantDao
 import com.devmobile.android.restaurant.usecase.Converters
-import com.devmobile.android.restaurant.usecase.Fetch
+import com.devmobile.android.restaurant.usecase.entities.Fetch
 import com.devmobile.android.restaurant.usecase.entities.Restaurant
 
 @Database(

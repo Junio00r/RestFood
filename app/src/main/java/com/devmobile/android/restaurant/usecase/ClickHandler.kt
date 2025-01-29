@@ -10,13 +10,15 @@ class ClickHandler(private val coroutineScope: CoroutineScope) {
     private val jobs: ArrayList<Job> = arrayListOf()
 
     fun run(block: suspend () -> (Unit)) {
-        if (jobs.size == 0) {
-            jobs.add(
-                coroutineScope.launch(dispatcher) {
-                    block()
-                }
-            )
-        }
+        jobs.add(
+            coroutineScope.launch(dispatcher) {
+                block()
+            }
+        )
+    }
+
+    fun hasJobs(): Boolean {
+        return jobs.isNotEmpty()
     }
 
     fun cancelAll() {
