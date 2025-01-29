@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_de_algo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/buttonDecrement"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:minWidth="48dp"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/textQuantityItemAdded"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/gray_light_one"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:paddingHorizontal="8dp"
+        android:saveEnabled="true"
+        android:textSize="24sp" />
+
+    <ImageButton
+        android:id="@+id/buttonIncrement"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:minWidth="48dp"
+        android:minHeight="48dp" />
+
+</LinearLayout>
