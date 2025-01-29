@@ -11,7 +11,7 @@ data class Order(
     @ColumnInfo(name = "restaurantId") val restaurantId: Long,
     @ColumnInfo(name = "date") val orderDate: String,
     @ColumnInfo(name = "hour") val orderHour: String,
-    @ColumnInfo(name = "foods") val orderFoods: ArrayList<Food>,
+    @ColumnInfo(name = "items") val orderItems: ArrayList<Item>,
     @ColumnInfo(name = "userName") val orderUserName: String,
     @ColumnInfo(name = "tableOfOrder") val orderTableNumber: Int
 )
