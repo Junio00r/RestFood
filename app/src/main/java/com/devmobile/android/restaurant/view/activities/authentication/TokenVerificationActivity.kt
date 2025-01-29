@@ -96,20 +96,20 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
         _numbers.forEach { number ->
 
             // InputType
-            number.getTextInputEditText().inputType = InputType.TYPE_CLASS_NUMBER
+            number.textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
 
             // Text Alignment
-            number.getTextInputEditText().gravity = Gravity.CENTER
+            number.textInputEditText.gravity = Gravity.CENTER
 
             // Max Chars in Text
-            number.getTextInputEditText().maxLength(1)
+            number.textInputEditText.maxLength(1)
 
             number.updateLayoutParams { height = 300 }
-            number.getTextInput().updateLayoutParams { height = 300 }
+            number.textInputLayout.updateLayoutParams { height = 300 }
 
-            number.getTextInput().isErrorEnabled = true
-            number.getTextInput().errorIconDrawable = null
-            number.getTextInput().isHelperTextEnabled = false
+            number.textInputLayout.isErrorEnabled = true
+            number.textInputLayout.errorIconDrawable = null
+            number.textInputLayout.isHelperTextEnabled = false
         }
 
     }
@@ -133,8 +133,8 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
             if (!canResendCode) {
 
-                clearInput(_numbers.map { it.getTextInputEditText() })
-                _numbers.forEach { it.getTextInput().error = null }
+                clearInput(_numbers.map { it.textInputEditText })
+                _numbers.forEach { it.textInputLayout.error = null }
                 restoreFocusOrSendCode()
             }
         }
@@ -148,32 +148,32 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
             }
         }
 
-        _numbers[0].getTextInputEditText().doAfterTextChanged {
+        _numbers[0].textInputEditText.doAfterTextChanged {
 
             _viewModel.saveNumber1(it.toString())
             restoreFocusOrSendCode()
         }
-        _numbers[1].getTextInputEditText().doAfterTextChanged {
+        _numbers[1].textInputEditText.doAfterTextChanged {
 
             _viewModel.saveNumber2(it.toString())
             restoreFocusOrSendCode()
         }
-        _numbers[2].getTextInputEditText().doAfterTextChanged {
+        _numbers[2].textInputEditText.doAfterTextChanged {
 
             _viewModel.saveNumber3(it.toString())
             restoreFocusOrSendCode()
         }
-        _numbers[3].getTextInputEditText().doAfterTextChanged {
+        _numbers[3].textInputEditText.doAfterTextChanged {
 
             _viewModel.saveNumber4(it.toString())
             restoreFocusOrSendCode()
         }
-        _numbers[4].getTextInputEditText().doAfterTextChanged {
+        _numbers[4].textInputEditText.doAfterTextChanged {
 
             _viewModel.saveNumber5(it.toString())
             restoreFocusOrSendCode()
         }
-        _numbers[5].getTextInputEditText().doAfterTextChanged {
+        _numbers[5].textInputEditText.doAfterTextChanged {
 
             _viewModel.saveNumber6(it.toString())
             restoreFocusOrSendCode()
@@ -182,7 +182,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
     private fun restoreFocusOrSendCode() {
 
-        _numbers.map { it.getTextInput() }
+        _numbers.map { it.textInputLayout }
             .firstOrNull { it.editText?.text.isNullOrEmpty() }
             ?.requestFocus() ?: _viewModel.sendCodesInsertedTrigger()
     }
@@ -238,7 +238,7 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
             is RequestResult.Error -> {
 
-                _numbers.forEach { it.getTextInput().error = "Invalid Code" }
+                _numbers.forEach { it.textInputLayout.error = "Invalid Code" }
                 showErrorMessage(
                     requestOfResult.exception.message ?: "Isn't possible create account"
                 )
@@ -268,12 +268,12 @@ class TokenVerificationActivity : AppCompatActivity(), IShowError {
 
         with(_viewBinding) {
 
-            number1.getTextInputEditText().append(_viewModel.number1)
-            number2.getTextInputEditText().append(_viewModel.number2)
-            number3.getTextInputEditText().append(_viewModel.number3)
-            number4.getTextInputEditText().append(_viewModel.number4)
-            number5.getTextInputEditText().append(_viewModel.number5)
-            number6.getTextInputEditText().append(_viewModel.number6)
+            number1.textInputEditText.append(_viewModel.number1)
+            number2.textInputEditText.append(_viewModel.number2)
+            number3.textInputEditText.append(_viewModel.number3)
+            number4.textInputEditText.append(_viewModel.number4)
+            number5.textInputEditText.append(_viewModel.number5)
+            number6.textInputEditText.append(_viewModel.number6)
         }
     }
 

@@ -48,7 +48,7 @@ class HomeFragment : Fragment(), IShowError {
         HomeViewModel.provideFactory(_repository, this, null)
     }
     private val _intentNext: Intent by lazy {
-        Intent(requireContext(), ItemChoiceActivity::class.java)
+        Intent(requireContext(), HostActivity::class.java)
     }
 
     private var fragmentIndex: Int? = null
@@ -138,7 +138,7 @@ class HomeFragment : Fragment(), IShowError {
 
         _binding.recyclerHistoric.adapter = HistoricAdapter(dataSet = dataSet) { restaurantName ->
 
-            startActivity(_intentNext.putExtra("RESTAURANT_NAME", restaurantName))
+            startActivity(_intentNext.putExtra("RESTAURANT_ID", restaurantName))
         }
     }
 
@@ -157,13 +157,13 @@ class HomeFragment : Fragment(), IShowError {
                     RestaurantItemList.CLICK -> {
 
                         _viewModel.onSelect(restaurantName)
-                        startActivity(_intentNext.putExtra("RESTAURANT_NAME", restaurantName))
+                        startActivity(_intentNext.putExtra("RESTAURANT_ID", restaurantName))
                     }
 
                     else -> {
 
                         _viewModel.onSelect(restaurantName)
-                        startActivity(_intentNext.putExtra("RESTAURANT_NAME", restaurantName))
+                        startActivity(_intentNext.putExtra("RESTAURANT_ID", restaurantName))
                     }
                 }
             })

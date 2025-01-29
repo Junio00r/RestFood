@@ -1,8 +1,9 @@
-package com.devmobile.android.restaurant.model.datasource.local.entities
+package com.devmobile.android.restaurant.usecase.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 
 // Versão para testes offlines
 @Entity(tableName = "orders")

@@ -20,30 +20,19 @@ import com.google.android.material.textfield.TextInputLayout
 class TextInput @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-) : FrameLayout(context, attrs) {
+    defStyleAttr: Int? = null,
+) : TextInputLayout(context, attrs) {
 
-    private val _layoutInflated =
-        LayoutInflater.from(context).inflate(R.layout.layout_text_input, this)
+    private val _layoutInflated = LayoutInflater.from(context).inflate(R.layout.layout_text_input, this)
 
-    companion object {
-
-        private const val DEFAULT_WIDTH = 256
-        private const val DEFAULT_HEIGHT = 296
-    }
+    val textInputLayout: TextInputLayout = _layoutInflated.findViewById(R.id.textInputContainer)
+    val textInputEditText: TextInputEditText = _layoutInflated.findViewById(R.id.textInputEditText)
 
     init {
 
-        getTextInput().gravity = Gravity.CENTER
-        getTextInputEditText().textSize = 17F
-        getTextInputEditText().maxLength(50)
-    }
-
-    fun getTextInput(): TextInputLayout {
-        return _layoutInflated.findViewById(R.id.textInputContainer)
-    }
-
-    fun getTextInputEditText(): TextInputEditText {
-        return _layoutInflated.findViewById(R.id.textInputEditText)
+        textInputLayout.gravity = Gravity.CENTER
+        textInputEditText.textSize = 17F
+        textInputEditText.maxLength(50)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -54,25 +43,29 @@ class TextInput @JvmOverloads constructor(
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 
         // Height
-        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        val heightMode = MeasureSpec.getMode(textInputLayout.measuredHeight)
+        val heightSize = MeasureSpec.getSize(textInputLayout.measuredHeight)
 
         val textInputWidth: Int = when (widthMode) {
 
-            MeasureSpec.AT_MOST -> Math.min(widthSize, DEFAULT_WIDTH)
+            MeasureSpec.AT_MOST -> Math.max(widthSize, DEFAULT_WIDTH)
 
             MeasureSpec.EXACTLY -> widthSize
 
-            else -> DEFAULT_WIDTH
+            MeasureSpec.UNSPECIFIED -> Math.max(heightSize, DEFAULT_WIDTH)
+
+            else -> Math.max(heightSize, DEFAULT_WIDTH)
         }
 
         val textInputHeight = when (heightMode) {
 
-            MeasureSpec.AT_MOST -> Math.min(heightSize, DEFAULT_HEIGHT)
+            MeasureSpec.AT_MOST -> Math.max(heightSize, DEFAULT_HEIGHT)
 
             MeasureSpec.EXACTLY -> heightSize
 
-            else -> DEFAULT_HEIGHT
+            MeasureSpec.UNSPECIFIED -> Math.max(heightSize, DEFAULT_HEIGHT)
+
+            else -> Math.max(heightSize, DEFAULT_HEIGHT)
         }
 
         setMeasuredDimension(textInputWidth, textInputHeight)
@@ -84,5 +77,38 @@ class TextInput @JvmOverloads constructor(
 
     override fun dispatchRestoreInstanceState(container: SparseArray<Parcelable>) {
         // Nothing
+    }
+
+    companion object {
+
+        private const val DEFAULT_WIDTH = 600
+        private const val DEFAULT_HEIGHT = 40
+
+    }
+
+    object Adapters {
+
+        @JvmStatic
+        @BindingAdapter("app:isMultiline")
+        fun isMultiline(view: TextInput, isMultiline: Boolean) {
+
+            when (isMultiline) {
+                true -> {
+                    view.textInputEditText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                }
+
+                false -> {
+                    // Nothing
+                }
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("android:text")
+        fun setText(input: TextInput, text: String?) {
+            if (text != input.textInputEditText.text.toString()) {
+                input.textInputEditText.setText(text)
+            }
+        }
     }
 }

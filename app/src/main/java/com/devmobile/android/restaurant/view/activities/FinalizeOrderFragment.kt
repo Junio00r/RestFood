@@ -18,7 +18,7 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
     private lateinit var buttonDoOrder: MaterialButton
     private lateinit var expandableListView: ExpandableListView
     private lateinit var textValorTotalDoPedido: MaterialTextView
-    private val expandableListData = HashMap<FoodSection, ArrayList<Array<*>>>()
+//    private val expandableListData = HashMap<FoodSection, ArrayList<Array<*>>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +51,8 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
 
     private fun setExpandableListAdapter() {
 
-        val expandableListAdapter = FoodExpandableListAdapter(this, expandableListData)
-        expandableListView.setAdapter(expandableListAdapter)
+//        val expandableListAdapter = FoodExpandableListAdapter(this, expandableListData)
+//        expandableListView.setAdapter(expandableListAdapter)
     }
 
     private fun restoreDataOfIntent(): ArrayList<Array<*>> {
@@ -80,11 +80,11 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
         dataRestored.forEach { item ->
 
             val sectionOrdinal = item[3] as Int
-            val foodSection = FoodSection.entries.getOrNull(sectionOrdinal)
+//            val foodSection = FoodSection.entries.getOrNull(sectionOrdinal)
 
-            foodSection?.let {
-                expandableListData.computeIfAbsent(foodSection) { ArrayList() }.add(item)
-            }
+//            foodSection?.let {
+//                expandableListData.computeIfAbsent(foodSection) { ArrayList() }.add(item)
+//            }
         }
     }
 
@@ -109,11 +109,11 @@ class FinalizeOrderFragment : FragmentActivity(), View.OnClickListener {
 
         var valueTotal = 0F
 
-        expandableListData.forEach { group ->
-            group.value.forEach { child ->
-                valueTotal += child[2].toString().toFloat() * child[4].toString().toInt()
-            }
-        }
+//        expandableListData.forEach { group ->
+//            group.value.forEach { child ->
+//                valueTotal += child[2].toString().toFloat() * child[4].toString().toInt()
+//            }
+//        }
 
         val textValueTotal = "R$ ${ZoneNumberFormat.format(valueTotal)}"
         textValorTotalDoPedido.text = textValueTotal

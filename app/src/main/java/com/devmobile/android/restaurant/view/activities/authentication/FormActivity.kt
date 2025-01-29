@@ -65,27 +65,27 @@ class FormActivity : AppCompatActivity(), IShowError {
         _formBinding.apply {
 
             // Set Hints
-            _formBinding.inputUserName.getTextInput().hint = "Name *"
-            _formBinding.inputUserLastName.getTextInput().hint = "Lastname"
-            _formBinding.inputUserEmail.getTextInput().hint = "Email *"
-            _formBinding.inputUserPassword.getTextInput().hint = "Password *"
+            _formBinding.inputUserName.textInputLayout.hint = "Name *"
+            _formBinding.inputUserLastName.textInputLayout.hint = "Lastname"
+            _formBinding.inputUserEmail.textInputLayout.hint = "Email *"
+            _formBinding.inputUserPassword.textInputLayout.hint = "Password *"
 
             // Setup InputType
-            _formBinding.inputUserName.getTextInputEditText().inputType =
+            _formBinding.inputUserName.textInputEditText.inputType =
                 InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            _formBinding.inputUserLastName.getTextInputEditText().inputType =
+            _formBinding.inputUserLastName.textInputEditText.inputType =
                 InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            _formBinding.inputUserEmail.getTextInputEditText().inputType =
+            _formBinding.inputUserEmail.textInputEditText.inputType =
                 InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            _formBinding.inputUserEmail.getTextInputEditText().inputType =
+            _formBinding.inputUserEmail.textInputEditText.inputType =
                 InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
-            _formBinding.inputUserPassword.getTextInput().endIconMode =
+            _formBinding.inputUserPassword.textInputLayout.endIconMode =
                 TextInputLayout.END_ICON_PASSWORD_TOGGLE
-            _formBinding.inputUserEmail.getTextInputEditText().maxLength(256)
+            _formBinding.inputUserEmail.textInputEditText.maxLength(256)
 
             // Enable Counter
-            _formBinding.inputUserEmail.getTextInput().isCounterEnabled = true
+            _formBinding.inputUserEmail.textInputLayout.isCounterEnabled = true
         }
     }
 
@@ -96,22 +96,22 @@ class FormActivity : AppCompatActivity(), IShowError {
             // Errors observables
             _formViewModel.nameErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserName.getTextInput().error = error
+                inputUserName.textInputLayout.error = error
             }
 
             _formViewModel.lastNameErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserLastName.getTextInput().error = error
+                inputUserLastName.textInputLayout.error = error
             }
 
             _formViewModel.emailErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserEmail.getTextInput().error = error
+                inputUserEmail.textInputLayout.error = error
             }
 
             _formViewModel.passwordErrorPropagator.observe(this@FormActivity) { error ->
 
-                inputUserPassword.getTextInput().error = error
+                inputUserPassword.textInputLayout.error = error
             }
 
             lifecycleScope.launch {
@@ -126,22 +126,22 @@ class FormActivity : AppCompatActivity(), IShowError {
             }
 
             // Listeners after text changed
-            inputUserName.getTextInputEditText().doAfterTextChanged {
+            inputUserName.textInputEditText.doAfterTextChanged {
 
                 _formViewModel.onNameChanged(it.toString())
             }
 
-            inputUserLastName.getTextInputEditText().doAfterTextChanged {
+            inputUserLastName.textInputEditText.doAfterTextChanged {
 
                 _formViewModel.onLastNameChanged(it.toString())
             }
 
-            inputUserEmail.getTextInputEditText().doAfterTextChanged {
+            inputUserEmail.textInputEditText.doAfterTextChanged {
 
                 _formViewModel.onEmailChanged(it.toString())
             }
 
-            inputUserPassword.getTextInputEditText().doAfterTextChanged {
+            inputUserPassword.textInputEditText.doAfterTextChanged {
 
                 _formViewModel.onPasswordChanged(it.toString())
             }
@@ -160,19 +160,19 @@ class FormActivity : AppCompatActivity(), IShowError {
 
                         putExtra(
                             "EXTRA_NAME",
-                            _formBinding.inputUserName.getTextInputEditText().text.toString()
+                            _formBinding.inputUserName.textInputEditText.text.toString()
                         )
                         putExtra(
                             "EXTRA_LASTNAME",
-                            _formBinding.inputUserLastName.getTextInputEditText().text.toString()
+                            _formBinding.inputUserLastName.textInputEditText.text.toString()
                         )
                         putExtra(
                             "EXTRA_EMAIL",
-                            _formBinding.inputUserEmail.getTextInputEditText().text.toString()
+                            _formBinding.inputUserEmail.textInputEditText.text.toString()
                         )
                         putExtra(
                             "EXTRA_PASSWORD",
-                            _formBinding.inputUserPassword.getTextInputEditText().text.toString()
+                            _formBinding.inputUserPassword.textInputEditText.text.toString()
                         )
                     }
 
@@ -208,10 +208,10 @@ class FormActivity : AppCompatActivity(), IShowError {
 
         with(_formBinding) {
 
-            inputUserName.getTextInputEditText().append(_formViewModel.userName)
-            inputUserLastName.getTextInputEditText().append(_formViewModel.userLastName)
-            inputUserEmail.getTextInputEditText().append(_formViewModel.userEmail)
-            inputUserPassword.getTextInputEditText().append(_formViewModel.userPassword)
+            inputUserName.textInputEditText.append(_formViewModel.userName)
+            inputUserLastName.textInputEditText.append(_formViewModel.userLastName)
+            inputUserEmail.textInputEditText.append(_formViewModel.userEmail)
+            inputUserPassword.textInputEditText.append(_formViewModel.userPassword)
         }
     }
 
