@@ -55,6 +55,8 @@
     <!--  home restaurant  -->
     <string name="home_search_hint">Search Restaurant</string>
         <string name="add_item">ADD</string>
+        <string name="remove_item">REM</string>
+        <string name="order_observation">Ex: Quero carne mal passada</string>
 
     <!-- Others   -->
     <string name="home_restaurant">Restaurants</string>

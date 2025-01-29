@@ -6,9 +6,8 @@
         <!--  Set text appearance all texts of App  -->
         <item name="textAppearanceLargePopupMenu">@style/TextAppearance.App</item>
         <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.App</item>
-        <item name="android:windowBackground">@color/white</item>
         <item name="android:inputType">textNoSuggestions</item>
-        <item name="android:saveEnabled">false</item>
+        <item name="android:saveEnabled">true</item>
 
         <!--  Widgets styles  -->
         <item name="materialSearchBarStyle">@style/SearchBar.App.Style</item>
