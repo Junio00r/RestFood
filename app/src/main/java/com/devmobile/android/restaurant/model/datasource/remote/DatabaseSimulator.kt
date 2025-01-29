@@ -1151,7 +1151,7 @@ class DatabaseSimulator {
                             maxItemsAvailable = 3000,
                             maxItemsBySelection = 6,
                             minItemsBySelection = 1,
-                            isRequiredBySelection = true,
+                            isRequiredBySelection = false,
                             complementarySides = null,
                             imageId = R.drawable.image_bebida_cerveja,
                             timeToPrepareInMin = 19,
