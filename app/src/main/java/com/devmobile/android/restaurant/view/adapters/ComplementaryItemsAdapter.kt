@@ -2,13 +2,12 @@ package com.devmobile.android.restaurant.view.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.LayoutButtonCustomElementBinding
-import com.devmobile.android.restaurant.databinding.LayoutGroupRequiredSidesBinding
 import com.devmobile.android.restaurant.view.customelements.CustomItemView
 import com.devmobile.android.restaurant.view.customelements.CustomItemView.Companion.ITEM_TYPE
 import com.devmobile.android.restaurant.view.customelements.CustomItemView.Companion.UNSPECIFIED
@@ -27,8 +26,10 @@ class ComplementaryItemsAdapter(
         get() = if (complementaryItems.any { !it.isRequiredBySelection }) 1
         else 0
     private val layoutInflater = LayoutInflater.from(context)
+    private var qtdOfGroupsInflated = 0
 
-    inner class ComplementaryItemVH(val customItemView: CustomItemView) : RecyclerView.ViewHolder(customItemView) {
+    inner class ComplementaryItemVH(val customItemView: CustomItemView) :
+        RecyclerView.ViewHolder(customItemView) {
 
         lateinit var item: ItemBetweenUiAndVM
 
@@ -36,7 +37,7 @@ class ComplementaryItemsAdapter(
 
         fun bindClick(click: (Boolean) -> Unit) {
 
-            if(item.wasSelectedYet) viewSelectedHandle(customItemView, item)
+            if (item.wasSelectedYet) viewSelectedHandle(customItemView, item)
 
             customItemView.onItemClick {
                 viewSelectedHandle(customItemView, item)
@@ -55,11 +56,16 @@ class ComplementaryItemsAdapter(
 
                         endView = LayoutButtonCustomElementBinding.inflate(layoutInflater)
 
-                        endView.textAmountItem.text = item.amountAdded.coerceAtLeast(item.minForSelection).toString()
+                        endView.textAmountItem.text =
+                            item.amountAdded.coerceAtLeast(item.minForSelection).toString()
                         endView.buttonDecrementItem.setOnClickListener {
-                            val changeAmountInView = itemView.endBinding as LayoutButtonCustomElementBinding
+                            val changeAmountInView =
+                                itemView.endBinding as LayoutButtonCustomElementBinding
 
-                            if (!checkAndChangeItemAmount(changeAmountInView.textAmountItem, -1, item.minForSelection)) {
+                            if (!checkAndChangeItemAmount(
+                                    changeAmountInView.textAmountItem, -1, item.minForSelection
+                                )
+                            ) {
 
                                 itemView.removeView()
                                 item.wasSelectedYet = false
@@ -68,9 +74,12 @@ class ComplementaryItemsAdapter(
                             item.amountAdded = endView.textAmountItem.text.toString().toInt()
                         }
                         endView.buttonIncrementItem.setOnClickListener {
-                            val changeAmountInView = itemView.endBinding as LayoutButtonCustomElementBinding
+                            val changeAmountInView =
+                                itemView.endBinding as LayoutButtonCustomElementBinding
 
-                            checkAndChangeItemAmount(changeAmountInView.textAmountItem, 1, item.maxForSelection)
+                            checkAndChangeItemAmount(
+                                changeAmountInView.textAmountItem, 1, item.maxForSelection
+                            )
                             item.amountAdded = endView.textAmountItem.text.toString().toInt()
                         }
 
@@ -93,9 +102,7 @@ class ComplementaryItemsAdapter(
 
         @SuppressLint("SetTextI18n")
         private fun checkAndChangeItemAmount(
-            textView: TextView,
-            valueToChange: Int,
-            maxLimit: Int
+            textView: TextView, valueToChange: Int, maxLimit: Int
         ): Boolean {
             val canIncrement = textView.text.toString().toInt() < maxLimit
             val canDecrement = textView.text.toString().toInt() > maxLimit
@@ -124,15 +131,16 @@ class ComplementaryItemsAdapter(
     override fun onBindViewHolder(holder: ComplementaryItemVH, position: Int) {
 
         if (holder.customItemView.viewType == UNSPECIFIED) {
+            val isRequiredGroup = (position == requiredGroupsCount - 1)
 
-            holder.customItemView.setItemName("Group Name")
-            (holder.customItemView.binding as LayoutGroupRequiredSidesBinding).imageEnd.setImageResource(
-                R.drawable.ic_asterisk
-            )
+            if (isRequiredGroup) holder.customItemView.setItemName("Required Items")
+            else holder.customItemView.setItemName("Optional Items")
+
+            qtdOfGroupsInflated++
 
         } else if (holder.customItemView.viewType == ITEM_TYPE) {
 
-            holder.item = complementaryItems[position - 1]
+            holder.item = complementaryItems[position - qtdOfGroupsInflated]
             holder.customItemView.setImage(holder.item.image)
             holder.customItemView.setItemName(holder.item.name)
             holder.bindClick(bindClick)
@@ -150,6 +158,6 @@ class ComplementaryItemsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == requiredGroupsCount - 1 || position == complementaryItems.size + 1) UNSPECIFIED else ITEM_TYPE
+        return if (position == requiredGroupsCount - 1 || position == complementaryItems.size) UNSPECIFIED else ITEM_TYPE
     }
 }
