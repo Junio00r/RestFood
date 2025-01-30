@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.devmobile.android.restaurant.databinding.ActivityItemsManagerBinding
+import com.devmobile.android.restaurant.databinding.ActivityHostItemsManagerBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.MenuManagerRemoteRepository
 import com.devmobile.android.restaurant.model.datasource.remote.DatabaseSimulator
@@ -25,8 +25,8 @@ import kotlinx.coroutines.launch
 
 class HostActivity : AppCompatActivity() {
 
-    private val binding: ActivityItemsManagerBinding by lazy {
-        ActivityItemsManagerBinding.inflate(layoutInflater)
+    private val binding: ActivityHostItemsManagerBinding by lazy {
+        ActivityHostItemsManagerBinding.inflate(layoutInflater)
     }
     private val viewModel: MenuManagerViewModel by viewModels {
         MenuManagerViewModel.provideFactory(repository, this@HostActivity, restaurantId, Bag.getInstance())
@@ -51,13 +51,13 @@ class HostActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        if (savedInstanceState == null) {
+            createFakeRemoteDatabase()
+        }
         setUpWindowsResize()
         setContentView(binding.root)
 
         viewModel
-        if (savedInstanceState == null) {
-            createFakeRemoteDatabase()
-        }
     }
 
     private fun setUpWindowsResize() {
