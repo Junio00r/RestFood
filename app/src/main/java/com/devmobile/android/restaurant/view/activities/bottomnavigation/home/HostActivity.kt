@@ -48,8 +48,8 @@ class HostActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
             createFakeRemoteDatabase()
@@ -62,7 +62,7 @@ class HostActivity : AppCompatActivity() {
 
     private fun setUpWindowsResize() {
 
-        WindowCompat.setDecorFitsSystemWindows(this.window, true)
+        WindowCompat.setDecorFitsSystemWindows(this.window, false)
         ViewCompat.setWindowInsetsAnimationCallback(
             binding.root,
             object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
@@ -71,7 +71,6 @@ class HostActivity : AppCompatActivity() {
                     runningAnimations: MutableList<WindowInsetsAnimationCompat>
                 ): WindowInsetsCompat {
                     val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-                    binding.root.updatePadding(bottom = ime.bottom)
                     return insets
                 }
             }
