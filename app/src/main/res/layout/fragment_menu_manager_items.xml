@@ -9,9 +9,8 @@
         android:id="@+id/searchBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/green_light_two"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
-        android:paddingTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,10 +19,9 @@
             android:id="@+id/searchBarItems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_bar_hint"
-            app:elevation="22dp"
-            app:strokeColor="@color/black"
-            app:strokeWidth="1dp" />
+            android:focusedByDefault="false"
+            android:backgroundTint="@color/gray_light_one"
+            android:hint="@string/search_bar_hint" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -32,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:hint="@string/search_bar_hint"
+        android:focusedByDefault="false"
         app:backgroundTint="@color/white"
         app:layout_anchor="@id/searchBarLayout"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,8 +42,7 @@
             android:id="@+id/recyclerSearchItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:paddingHorizontal="8dp"
+            android:background="@color/transparent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </com.google.android.material.search.SearchView>
@@ -72,6 +70,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/transparent"
+        android:saveEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tabLayout"
         app:layout_constraintStart_toStartOf="@id/tabLayout"

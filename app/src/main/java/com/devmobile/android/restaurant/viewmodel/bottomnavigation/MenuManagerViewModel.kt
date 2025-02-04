@@ -42,7 +42,10 @@ class MenuManagerViewModel(
 
         return coroutineScope.async {
 
-            menuManagerRemoteRepository.requestItemsByPattern(restaurantId, pattern)
+            if(pattern.isNotEmpty())
+                menuManagerRemoteRepository.requestItemsByPattern(restaurantId, pattern)
+            else
+                emptyList()
 
         }.await()
     }

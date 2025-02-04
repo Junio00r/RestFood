@@ -1,5 +1,6 @@
 package com.devmobile.android.restaurant.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -11,16 +12,16 @@ import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import kotlin.properties.Delegates
 
 class ItemAdapter(
-    private val items: List<Item>,
+    private var items: List<Item>,
     private val onAddItem: ((Boolean, Long) -> (Unit))? = null,
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
-    class ItemViewHolder(binding: LayoutItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(binding: LayoutItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         val foodImage: ImageView = binding.imageItem
         val foodName: TextView = binding.textItemName
         val foodPrice: TextView = binding.textItemPrice
-        val selectItem: Button = binding.buttonSelectItem
+        private val selectItem: Button = binding.buttonSelectItem
         var foodId by Delegates.notNull<Long>()
         private var mustItemAdd = false
 
@@ -42,6 +43,7 @@ class ItemAdapter(
         return ItemViewHolder(viewBinding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         holder.foodImage.setImageResource(items[position].imageId)
@@ -57,5 +59,11 @@ class ItemAdapter(
     override fun getItemCount(): Int {
 
         return items.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateItems(newItems: List<Item>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }

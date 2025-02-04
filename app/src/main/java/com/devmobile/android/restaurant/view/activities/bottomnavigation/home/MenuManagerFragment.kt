@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,8 +18,12 @@ import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.view.adapters.ItemAdapter
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuManagerViewModel
+import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MenuManagerFragment : Fragment() {
@@ -27,6 +32,7 @@ class MenuManagerFragment : Fragment() {
         FragmentMenuManagerItemsBinding.inflate(layoutInflater)
     }
     private val parentViewModel: MenuManagerViewModel by activityViewModels()
+    private var isSearchEnabled = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,21 +40,46 @@ class MenuManagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        setUpSearch()
-        setUpTabs()
-        setObservables()
+        savedInstanceState?.let {
+            isSearchEnabled = it.getBoolean("PREVIOUS_SEARCH_VIEW_STATE")
+        }
+
+        if (!_binding.searchViewItems.isSetupWithSearchBar) {
+
+            setUpSearch()
+            setUpTabs()
+            setUpObservables()
+
+        }
+
+        if (isSearchEnabled) {
+            _binding.searchViewItems.show()
+        }
 
         return _binding.root
     }
 
-    private fun setObservables() {
+    private fun setUpSearch() {
+
+        _binding.searchViewItems.setupWithSearchBar(_binding.searchBarItems)
+    }
+
+    private fun setUpObservables() {
 
         _binding.searchViewItems.editText.doOnTextChanged { text, _, _, _ ->
-
             lifecycleScope.launch {
 
                 val newItems = parentViewModel.fetchItemsByPattern(text.toString())
                 populateSearch(newItems)
+            }
+        }
+
+        _binding.searchViewItems.addTransitionListener { searchView, previousState, newState ->
+
+            if (newState == SearchView.TransitionState.SHOWN)
+                isSearchEnabled = true
+            else if (newState == SearchView.TransitionState.HIDDEN) {
+                isSearchEnabled = false
             }
         }
 
@@ -62,14 +93,18 @@ class MenuManagerFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
             override fun onTabReselected(tab: TabLayout.Tab?) = Unit
         })
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            _binding.searchViewItems.hide()
+        }
     }
 
     private fun setUpTabs() {
 
         lifecycleScope.launch {
 
-            val tabsSections = parentViewModel.fetchSections()
-            val tabs = createSections(tabsSections)
+            val restaurantSections = parentViewModel.fetchSections()
+            val tabs = createSections(restaurantSections)
 
             _binding.viewPager2.offscreenPageLimit = 3
             _binding.viewPager2.adapter = TabAdapter(requireActivity(), tabs)
@@ -77,7 +112,7 @@ class MenuManagerFragment : Fragment() {
 
             TabLayoutMediator(_binding.tabLayout, _binding.viewPager2) { tab, position ->
 
-                tab.text = tabsSections[position]
+                tab.text = restaurantSections[position]
             }.attach()
         }
     }
@@ -85,36 +120,41 @@ class MenuManagerFragment : Fragment() {
     private fun createSections(menuSections: List<String>): List<Fragment> {
 
         return menuSections.mapIndexed { _, sectionName ->
-
             MenuSection().apply {
-                arguments = Bundle().apply {
-                    putStringArray("ARGUMENTS", arrayOf("0", sectionName))
+                CoroutineScope(Job() + Dispatchers.Default).launch {
+                    arguments = Bundle().apply {
+                        putStringArray("ARGUMENTS", arrayOf("0", sectionName))
+                    }
                 }
             }
         }
     }
 
-    private fun setUpSearch() {
+    private fun populateSearch(newItems: List<Item>) {
 
-        _binding.searchViewItems.setupWithSearchBar(_binding.searchBarItems)
-    }
+        if (_binding.recyclerSearchItem.adapter == null) {
 
-    private fun populateSearch(items: List<Item>) {
+            _binding.recyclerSearchItem.adapter = ItemAdapter(newItems) { mustAdd, itemId ->
 
-        _binding.recyclerSearchItem.adapter = ItemAdapter(items) { mustAdd, itemId ->
+                if (mustAdd) {
 
-            if (mustAdd) {
-
-                val action = MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
-                    itemId,
-                    parentViewModel.restaurantId
-                )
-                findNavController().navigate(action)
-                _binding.searchViewItems.hide()
+                    val action = MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
+                        itemId,
+                        parentViewModel.restaurantId
+                    )
+                    _binding.searchViewItems.clearFocus()
+                    findNavController().navigate(action)
+                }
             }
+        } else {
+            (_binding.recyclerSearchItem.adapter as ItemAdapter).updateItems(newItems)
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("PREVIOUS_SEARCH_VIEW_STATE", isSearchEnabled)
+    }
 
     class MenuSection : Fragment() {
 
@@ -124,6 +164,7 @@ class MenuManagerFragment : Fragment() {
         private val parentViewModel: MenuManagerViewModel by activityViewModels()
         private var _items: ArrayList<Item> = arrayListOf()
 
+        // Isn't still passed this for navigation component, after i do
         private val sectionName: String by lazy {
             requireArguments().getStringArray("ARGUMENTS")!![1]
         }
@@ -134,7 +175,7 @@ class MenuManagerFragment : Fragment() {
             savedInstanceState: Bundle?
         ): View {
 
-            lifecycleScope.launch {
+            lifecycleScope.launch(Dispatchers.Default) {
 
                 fetchItems()
                 setUpSectionItems()
@@ -150,28 +191,27 @@ class MenuManagerFragment : Fragment() {
 
         private fun setUpSectionItems() {
 
-            _binding.recyclerItems.addItemDecoration(
-                DividerItemDecoration(
-                    requireContext(),
-                    LinearLayoutManager.VERTICAL
+            requireActivity().runOnUiThread {
+                _binding.recyclerItems.addItemDecoration(
+                    DividerItemDecoration(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL
+                    )
                 )
-            )
 
-            if (_items.isNotEmpty()) {
+                if (_items.isNotEmpty()) {
 
-                _binding.recyclerItems.adapter = ItemAdapter(_items) { mustAdd, itemId ->
+                    _binding.recyclerItems.adapter = ItemAdapter(_items) { mustAdd, itemId ->
 
-                    if (mustAdd) {
+                        if (mustAdd) {
 
-                        val action =
-                            MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
-                                itemId,
-                                parentViewModel.restaurantId
-                            )
-                        findNavController().navigate(action)
-
-                    } else {
-                        parentViewModel.onUnselectedItem(itemId)
+                            val action =
+                                MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
+                                    itemId,
+                                    parentViewModel.restaurantId
+                                )
+                            findNavController().navigate(action)
+                        }
                     }
                 }
             }
