@@ -12,8 +12,11 @@
 
         <action
             android:id="@+id/action_from_Menu_Fragment_to_Item_Selected"
-            app:destination="@id/fragment_item_selected_dest"
-            app:restoreState="true" />
+            app:destination="@id/fragment_item_selected_dest" />
+
+        <action
+            android:id="@+id/action_from_Menu_Fragment_to_Bag"
+            app:destination="@id/fragment_bag_dest" />
 
     </fragment>
 
@@ -29,6 +32,13 @@
         <argument
             android:name="restaurantId"
             app:argType="long" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_bag_dest"
+        android:name="com.devmobile.android.restaurant.view.activities.bottomnavigation.home.BagFragment"
+        tools:layout="@layout/fragment_bag">
 
     </fragment>
 

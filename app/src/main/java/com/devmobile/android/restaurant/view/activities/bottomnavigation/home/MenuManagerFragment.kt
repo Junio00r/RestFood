@@ -1,14 +1,18 @@
 package com.devmobile.android.restaurant.view.activities.bottomnavigation.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.annotation.OptIn
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +22,7 @@ import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.view.adapters.ItemAdapter
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuManagerViewModel
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.search.SearchView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -32,8 +37,11 @@ class MenuManagerFragment : Fragment() {
         FragmentMenuManagerItemsBinding.inflate(layoutInflater)
     }
     private val parentViewModel: MenuManagerViewModel by activityViewModels()
+    private val bagViewModel: BagViewModel by activityViewModels()
     private var isSearchEnabled = false
 
+    @OptIn(ExperimentalBadgeUtils::class)
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,9 +60,8 @@ class MenuManagerFragment : Fragment() {
 
         }
 
-        if (isSearchEnabled) {
+        if (isSearchEnabled)
             _binding.searchViewItems.show()
-        }
 
         return _binding.root
     }
@@ -76,10 +83,25 @@ class MenuManagerFragment : Fragment() {
 
         _binding.searchViewItems.addTransitionListener { searchView, previousState, newState ->
 
-            if (newState == SearchView.TransitionState.SHOWN)
-                isSearchEnabled = true
-            else if (newState == SearchView.TransitionState.HIDDEN) {
+            if (newState == SearchView.TransitionState.SHOWN) isSearchEnabled = true
+            else if (newState == SearchView.TransitionState.HIDDEN)
                 isSearchEnabled = false
+        }
+
+        _binding.buttonBagItems.setOnClickListener {
+            if (_binding.buttonBagItems.foreground.alpha > 0)
+                _binding.buttonBagItems.foreground.alpha = 0
+
+            val action = MenuManagerFragmentDirections.actionFromMenuFragmentToBag()
+            findNavController().navigate(action)
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                if (bagViewModel.itemsOnBag.value.isNotEmpty())
+                    _binding.buttonBagItems.foreground.alpha = 255
+                else
+                    _binding.buttonBagItems.foreground.alpha = 0
             }
         }
 
@@ -139,8 +161,7 @@ class MenuManagerFragment : Fragment() {
                 if (mustAdd) {
 
                     val action = MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
-                        itemId,
-                        parentViewModel.restaurantId
+                        itemId, parentViewModel.restaurantId
                     )
                     _binding.searchViewItems.clearFocus()
                     findNavController().navigate(action)
@@ -170,9 +191,7 @@ class MenuManagerFragment : Fragment() {
         }
 
         override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
         ): View {
 
             lifecycleScope.launch(Dispatchers.Default) {
@@ -194,8 +213,7 @@ class MenuManagerFragment : Fragment() {
             requireActivity().runOnUiThread {
                 _binding.recyclerItems.addItemDecoration(
                     DividerItemDecoration(
-                        requireContext(),
-                        LinearLayoutManager.VERTICAL
+                        requireContext(), LinearLayoutManager.VERTICAL
                     )
                 )
 
@@ -207,8 +225,7 @@ class MenuManagerFragment : Fragment() {
 
                             val action =
                                 MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
-                                    itemId,
-                                    parentViewModel.restaurantId
+                                    itemId, parentViewModel.restaurantId
                                 )
                             findNavController().navigate(action)
                         }

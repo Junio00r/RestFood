@@ -57,6 +57,7 @@
         <string name="add_item">ADD</string>
         <string name="remove_item">REM</string>
         <string name="order_observation">Ex: Quero carne mal passada</string>
+        <string name="proceed_order">CONTINUAR…</string>
 
     <!-- Others   -->
     <string name="home_restaurant">Restaurants</string>
