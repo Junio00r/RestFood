@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.devmobile.android.restaurant.databinding.FragmentItemSelectedBinding
-import com.devmobile.android.restaurant.databinding.LayoutButtonCustomElementBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.ItemSelectedRemoteRepository
 import com.devmobile.android.restaurant.usecase.ClickHandler
@@ -41,10 +42,11 @@ class ItemSelectedFragment : Fragment() {
     private var itemsAdapter: ComplementaryItemsAdapter? = null
 
     private var currentRequiredSides: List<ItemBetweenUiAndVM> = emptyList()
-    private lateinit var endView: LayoutButtonCustomElementBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
         binding.viewModel = viewModel
@@ -66,8 +68,7 @@ class ItemSelectedFragment : Fragment() {
         binding.buttonIncrement.setOnTouchListener(touchListener)
 
         binding.toolBar.setNavigationOnClickListener {
-
-            parentFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
 
         binding.textOrderObservation.textInputEditText.doAfterTextChanged { text ->
@@ -76,8 +77,11 @@ class ItemSelectedFragment : Fragment() {
         }
 
         binding.buttonAddItem.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
-            parentFragmentManager.popBackStack()
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().popBackStack()
         }
 
         // ViewModel
@@ -123,9 +127,10 @@ class ItemSelectedFragment : Fragment() {
 
         if (itemsAdapter == null) {
 
-            itemsAdapter = ComplementaryItemsAdapter(requireContext(), newRequiredSides) { itemAdded ->
-                // q: anything
-            }
+            itemsAdapter =
+                ComplementaryItemsAdapter(requireContext(), newRequiredSides) { itemAdded ->
+                    // q: anything
+                }
             binding.recyclerComplementaryItems.adapter = itemsAdapter
 
         } else {
