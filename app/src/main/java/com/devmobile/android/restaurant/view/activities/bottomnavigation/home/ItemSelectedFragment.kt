@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,8 @@ import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDa
 import com.devmobile.android.restaurant.model.repository.ItemSelectedRemoteRepository
 import com.devmobile.android.restaurant.usecase.ClickHandler
 import com.devmobile.android.restaurant.view.adapters.ComplementaryItemsAdapter
+import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagItem
+import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.ItemBetweenUiAndVM
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.ItemSelectedViewModel
 import kotlinx.coroutines.delay
@@ -31,6 +34,8 @@ class ItemSelectedFragment : Fragment() {
     private val viewModel: ItemSelectedViewModel by viewModels {
         ItemSelectedViewModel.provideFactory(safeArgs.itemId, safeArgs.restaurantId, repository)
     }
+    private val bagViewModel: BagViewModel by activityViewModels()
+
     private val repository: ItemSelectedRemoteRepository by lazy {
         ItemSelectedRemoteRepository(
             RestaurantLocalDatabase.getInstance(requireContext()).getItemDao()
@@ -77,6 +82,10 @@ class ItemSelectedFragment : Fragment() {
         }
 
         binding.buttonAddItem.setOnClickListener {
+
+            val bagItem = BagItem(viewModel.currentItem, viewModel.requiredSides.value)
+            bagViewModel.addItemOnBag(bagItem)
+
             findNavController().popBackStack()
         }
 

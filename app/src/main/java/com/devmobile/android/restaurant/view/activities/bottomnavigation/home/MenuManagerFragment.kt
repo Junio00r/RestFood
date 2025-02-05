@@ -21,6 +21,7 @@ import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewItemsBindi
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.view.adapters.ItemAdapter
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
+import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuManagerViewModel
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.search.SearchView
@@ -57,7 +58,6 @@ class MenuManagerFragment : Fragment() {
             setUpSearch()
             setUpTabs()
             setUpObservables()
-
         }
 
         if (isSearchEnabled)
