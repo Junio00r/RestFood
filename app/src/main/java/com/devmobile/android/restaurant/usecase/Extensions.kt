@@ -1,7 +1,10 @@
 package com.devmobile.android.restaurant.usecase
 
 import android.text.InputFilter
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 /**
  * Set the max of characters on this TextView
@@ -19,4 +22,10 @@ fun TextView.maxLength(maxLength: Int) {
 
 fun debounce() {
 
+}
+
+inline fun <reified T> T.isKeyboardEnabled(): Boolean where T : View {
+    val insets = ViewCompat.getRootWindowInsets(this)
+
+    return insets?.isVisible(WindowInsetsCompat.Type.ime()) ?: false
 }

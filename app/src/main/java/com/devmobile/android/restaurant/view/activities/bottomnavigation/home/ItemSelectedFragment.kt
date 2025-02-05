@@ -96,7 +96,7 @@ class ItemSelectedFragment : Fragment() {
         // ViewModel
         lifecycleScope.launch {
             viewModel.requiredSides.collect { lists ->
-                setUpExpandableList(lists)
+                addRequiredItems(lists)
             }
         }
     }
@@ -131,7 +131,7 @@ class ItemSelectedFragment : Fragment() {
         }
     }
 
-    private fun setUpExpandableList(newRequiredSides: List<ItemBetweenUiAndVM>) {
+    private fun addRequiredItems(newRequiredSides: List<ItemBetweenUiAndVM>) {
         currentRequiredSides = newRequiredSides
 
         if (itemsAdapter == null) {

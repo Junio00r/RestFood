@@ -21,7 +21,8 @@ class ItemSelectedViewModel(
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) : ViewModel() {
 
-    private lateinit var currentItem: Item
+    lateinit var currentItem: Item
+        private set
 
     private val _itemObservation = MutableStateFlow<String?>(null)
     val itemObservation = _itemObservation.asStateFlow()

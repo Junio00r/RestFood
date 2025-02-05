@@ -23,7 +23,6 @@ class MenuManagerViewModel(
     private val menuManagerRemoteRepository: MenuManagerRemoteRepository,
     private val saveHandle: SavedStateHandle,
     val restaurantId: Long,
-    private val bag: Bag,
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) : ViewModel() {
 
@@ -77,7 +76,6 @@ class MenuManagerViewModel(
             repository: MenuManagerRemoteRepository,
             owner: SavedStateRegistryOwner,
             restaurantId: Long,
-            bag: Bag,
             defaultArgs: Bundle? = null
         ): AbstractSavedStateViewModelFactory =
             object : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -90,7 +88,6 @@ class MenuManagerViewModel(
                         menuManagerRemoteRepository = repository,
                         saveHandle = handle,
                         restaurantId = restaurantId,
-                        bag = bag
                     ) as T
                 }
             }

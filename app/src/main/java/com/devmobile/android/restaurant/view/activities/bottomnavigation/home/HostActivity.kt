@@ -17,7 +17,6 @@ import com.devmobile.android.restaurant.databinding.ActivityHostItemsManagerBind
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.MenuManagerRemoteRepository
 import com.devmobile.android.restaurant.model.datasource.remote.DatabaseSimulator
-import com.devmobile.android.restaurant.usecase.entities.Bag
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuManagerViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ class HostActivity : AppCompatActivity() {
         ActivityHostItemsManagerBinding.inflate(layoutInflater)
     }
     private val viewModel: MenuManagerViewModel by viewModels {
-        MenuManagerViewModel.provideFactory(repository, this@HostActivity, restaurantId, Bag.getInstance())
+        MenuManagerViewModel.provideFactory(repository, this@HostActivity, restaurantId)
     }
     private val repository: MenuManagerRemoteRepository by lazy {
         MenuManagerRemoteRepository.getInstance(
