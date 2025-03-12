@@ -26,41 +26,6 @@ class BagSharedViewModel(
     private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) : ViewModel() {
 
-
-//    init {
-//
-//        if (restaurantId != null && itemId != null) {
-//
-//            coroutineScope.launch {
-//                val newItem = repository.requestItem(restaurantId, itemId)
-//                newItem.also {
-//                    _itemName.value = it.name
-//                    _itemDescription.value = it.description
-//                    it.complementarySides?.map { complementaryItem ->
-//                        repository.requestItem(restaurantId, complementaryItem)
-//                    }?.also { complementaryItems ->
-//                        _requiredSides.value = complementaryItems.map {
-//                            ItemBetweenUiAndVM(
-//                                it.name,
-//                                0,
-//                                it.description.toString(),
-//                                it.imageId,
-//                                it.price,
-//                                it.minItemsBySelection,
-//                                it.maxItemsBySelection,
-//                                false,
-//                                it.isRequiredBySelection ?: false,
-//                                it.timeToPrepareInMin,
-//                            )
-//                        }
-//                    }
-//                }.also {
-//                    _currentItem.value = it
-//                }
-//            }
-//        }
-//    }
-
     private val _currentItem = MutableStateFlow<BagItem?>(null)
     val currentItem = _currentItem.asSharedFlow()
 
