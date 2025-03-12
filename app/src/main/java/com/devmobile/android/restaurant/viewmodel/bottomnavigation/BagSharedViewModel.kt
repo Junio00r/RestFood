@@ -16,7 +16,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 
 class BagSharedViewModel(
@@ -44,7 +43,7 @@ class BagSharedViewModel(
     private val _amountItemAdded = MutableStateFlow(1)
     val amountItemAdded = _amountItemAdded.asStateFlow()
 
-    private val _itemsOnBag = MutableStateFlow<List<BagItem>>(emptyList())
+    private val _itemsOnBag = MutableStateFlow<List<BagItem>?>(null)
     val itemsOnBag = _itemsOnBag.asStateFlow()
 
     fun updateItemObservation(newText: String) {
@@ -93,8 +92,10 @@ class BagSharedViewModel(
     fun addItemOnBag(itemId: Long) {
         viewModelScope.launch {
 
-            Log.d("DEBUGGING", "size is ${_itemsOnBag.value.size}")
-            _itemsOnBag.value.toList().plus(_currentItem.last())
+            _currentItem.value?.let {
+
+                    _itemsOnBag.value = (_itemsOnBag.value ?: emptyList()) + it
+            }
         }
     }
 
