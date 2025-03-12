@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.devmobile.android.restaurant.viewmodel.bottomnavigation.ItemSelectedViewModel" />
+            type="com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagSharedViewModel" />
 
         <variable
             name="fragment"

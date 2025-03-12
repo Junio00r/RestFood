@@ -6,14 +6,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
+import com.devmobile.android.restaurant.model.datasource.local.entities.ItemBetweenUiAndVM
 import com.devmobile.android.restaurant.model.datasource.local.entities.getUiLayerItem
 import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -62,7 +61,7 @@ class BagSharedViewModel(
 //        }
 //    }
 
-    private val _currentItem = MutableSharedFlow<BagItem>(replay = 0)
+    private val _currentItem = MutableStateFlow<BagItem?>(null)
     val currentItem = _currentItem.asSharedFlow()
 
     private val _itemName = MutableStateFlow<String?>(null)
@@ -71,69 +70,79 @@ class BagSharedViewModel(
     private val _itemDescription = MutableStateFlow<String?>(null)
     val itemDescription = _itemDescription.asStateFlow()
 
-    private val _requiredSides = MutableStateFlow<List<ItemBetweenUiAndVM>>(emptyList())
-    val requiredSides = _requiredSides.asStateFlow()
+    private val _itemObservation = MutableStateFlow<String?>(null)
+    val itemObservation = _itemObservation.asStateFlow()
+
+    private val _newRequiredSides = MutableStateFlow<List<ItemBetweenUiAndVM>?>(null)
+    val newRequiredSides = _newRequiredSides.asStateFlow()
 
     private val _amountItemAdded = MutableStateFlow(1)
     val amountItemAdded = _amountItemAdded.asStateFlow()
 
-
     private val _itemsOnBag = MutableStateFlow<List<BagItem>>(emptyList())
     val itemsOnBag = _itemsOnBag.asStateFlow()
 
-    init {
+    fun updateItemObservation(newText: String) {
 
-        coroutineScope.launch {
+        if (newText != _itemObservation.value) _itemObservation.value = newText
+    }
 
-            currentItem = repository.requestItem(restaurantId, itemId)
-            currentItem.let {
-                _itemName.value = it.name
-                _itemDescription.value = it.description
-                it.complementarySides?.map { complementaryItem ->
-                    repository.requestItem(restaurantId, complementaryItem)
-                }?.also { complementaryItems ->
-                    _requiredSides.value = complementaryItems.map {
-                        ItemBetweenUiAndVM(
-                            it.name,
-                            0,
-                            it.description.toString(),
-                            it.imageId,
-                            it.price,
-                            it.minItemsBySelection,
-                            it.maxItemsBySelection,
-                            false,
-                            it.isRequiredBySelection ?: false,
-                            it.timeToPrepareInMin,
-                        )
+    fun incrementTrigger() {
+        val canIncrement =
+            amountItemAdded.value <= (_currentItem.value?.item?.maxItemsAvailable ?: 1)
+
+        if (canIncrement) _amountItemAdded.value += 1
+    }
+
+    fun decrementTrigger() {
+        val canDecrement =
+            amountItemAdded.value >= (_currentItem.value?.item?.minItemsBySelection?.plus(1) ?: 1)
+
+        if (canDecrement) _amountItemAdded.value -= 1
+    }
+
+    fun fetchItem(restaurantId: Long, itemId: Long) {
+
+        if (_currentItem.value == null) {
+
+            coroutineScope.launch {
+                repository.requestItem(restaurantId, itemId).also { item ->
+
+                    val itemRequiredSides: List<ItemBetweenUiAndVM>? =
+                        item.complementarySides?.map { complementaryItemId ->
+                            repository.requestItem(restaurantId, complementaryItemId)
+                                .getUiLayerItem()
+                        }
+                    _itemName.value = item.name
+                    _itemDescription.value = item.description
+                    _amountItemAdded.value = item.minItemsBySelection
+                    itemRequiredSides?.let {
+                        _currentItem.emit(BagItem(item, it))
+                        _newRequiredSides.emit(it)
                     }
                 }
             }
         }
     }
 
-    fun updateItemObservation(newText: String) {
-
-        if (newText != _itemObservation.value)
-            _itemObservation.value = newText
-    }
-
-    fun incrementTrigger() {
-
-        if (amountItemAdded.value <= 10000)
-            _amountItemAdded.value += 1
-    }
-
-    fun decrementTrigger() {
-
-        if (amountItemAdded.value >= 2)
-            _amountItemAdded.value -= 1
-    }
-
-    fun addItemOnBag(bagItem: BagItem) {
+    fun addItemOnBag(itemId: Long) {
         viewModelScope.launch {
 
-            _itemsOnBag.emit(listOf(bagItem))
+            Log.d("DEBUGGING", "size is ${_itemsOnBag.value.size}")
+            _itemsOnBag.value.toList().plus(_currentItem.last())
         }
+    }
+
+    fun removeItemOnBag(itemId: Long) {
+        viewModelScope.launch {
+
+//            _itemsOnBag.emit(listOf(bagItem))
+        }
+    }
+
+    fun cancelItemSelection() {
+        _currentItem.value = null
+        _newRequiredSides.value = null
     }
 
     override fun onCleared() {
@@ -144,35 +153,19 @@ class BagSharedViewModel(
     companion object {
 
         fun provideFactory(
-            itemId: Long,
-            restaurantId: Long,
-            repository: ItemSelectedRemoteRepository
-        ): AbstractSavedStateViewModelFactory =
-            object : AbstractSavedStateViewModelFactory() {
+            restaurantId: Long? = null,
+            itemId: Long? = null,
+            repository: BagRemoteRepository
+        ): AbstractSavedStateViewModelFactory = object : AbstractSavedStateViewModelFactory() {
 
-                override fun <T : ViewModel> create(
-                    key: String,
-                    modelClass: Class<T>,
-                    handle: SavedStateHandle
-                ): T {
+            override fun <T : ViewModel> create(
+                key: String, modelClass: Class<T>, handle: SavedStateHandle
+            ): T {
 
-                    return ItemSelectedViewModel(itemId, restaurantId, repository, handle) as T
-                }
+                return BagSharedViewModel(restaurantId, itemId, repository) as T
             }
+        }
     }
 }
 
 data class BagItem(val item: Item, val complementaryItems: List<ItemBetweenUiAndVM>)
-
-data class ItemBetweenUiAndVM(
-    val name: String,
-    var amountAdded: Int,
-    val description: String,
-    val image: Int,
-    val price: Float,
-    val minForSelection: Int,
-    val maxForSelection: Int,
-    var wasSelectedYet: Boolean = false,
-    val isRequiredBySelection: Boolean,
-    val timeToPrepareInMin: Int
-)

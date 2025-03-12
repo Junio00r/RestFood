@@ -7,22 +7,20 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.widget.doAfterTextChanged
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.devmobile.android.restaurant.databinding.FragmentItemSelectedBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.repository.ItemSelectedRemoteRepository
+import com.devmobile.android.restaurant.model.datasource.local.entities.ItemBetweenUiAndVM
+import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
 import com.devmobile.android.restaurant.usecase.ClickHandler
 import com.devmobile.android.restaurant.view.adapters.ComplementaryItemsAdapter
-import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagItem
-import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagViewModel
-import com.devmobile.android.restaurant.viewmodel.bottomnavigation.ItemBetweenUiAndVM
-import com.devmobile.android.restaurant.viewmodel.bottomnavigation.ItemSelectedViewModel
+import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagSharedViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -31,13 +29,11 @@ class ItemSelectedFragment : Fragment() {
     private val binding: FragmentItemSelectedBinding by lazy {
         FragmentItemSelectedBinding.inflate(layoutInflater)
     }
-    private val viewModel: ItemSelectedViewModel by viewModels {
-        ItemSelectedViewModel.provideFactory(safeArgs.itemId, safeArgs.restaurantId, repository)
+    private val viewModel: BagSharedViewModel by activityViewModels {
+        BagSharedViewModel.provideFactory(null, null, repository)
     }
-    private val bagViewModel: BagViewModel by activityViewModels()
-
-    private val repository: ItemSelectedRemoteRepository by lazy {
-        ItemSelectedRemoteRepository(
+    private val repository: BagRemoteRepository by lazy {
+        BagRemoteRepository(
             RestaurantLocalDatabase.getInstance(requireContext()).getItemDao()
         )
     }
@@ -45,7 +41,6 @@ class ItemSelectedFragment : Fragment() {
 
     private val actionHandler = ClickHandler(lifecycleScope)
     private var itemsAdapter: ComplementaryItemsAdapter? = null
-
     private var currentRequiredSides: List<ItemBetweenUiAndVM> = emptyList()
 
     override fun onCreateView(
@@ -57,9 +52,16 @@ class ItemSelectedFragment : Fragment() {
         binding.viewModel = viewModel
         binding.fragment = this
         binding.lifecycleOwner = this
+
+        loadItem()
         setUpObservables()
 
         return binding.root
+    }
+
+    private fun loadItem() {
+
+        viewModel.fetchItem(safeArgs.restaurantId, safeArgs.itemId)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -72,32 +74,34 @@ class ItemSelectedFragment : Fragment() {
         binding.buttonDecrement.setOnTouchListener(touchListener)
         binding.buttonIncrement.setOnTouchListener(touchListener)
 
-        binding.toolBar.setNavigationOnClickListener {
+        // All items
+        lifecycleScope.launch {
+            viewModel.newRequiredSides.collect { lists ->
+                lists?.let {
+                    addRequiredItems(lists)
+                }
+            }
+        }
+
+        // After add go back to previous screen
+        binding.buttonAddItem.setOnClickListener {
+
+            viewModel.addItemOnBag(safeArgs.itemId)
+
+            setFragmentResult("requestAddToBagKey", bundleOf("bundleKey" to true))
+
+            viewModel.cancelItemSelection()
             findNavController().popBackStack()
         }
 
-        binding.textOrderObservation.textInputEditText.doAfterTextChanged { text ->
-
-            viewModel.updateItemObservation(text.toString())
-        }
-
-        binding.buttonAddItem.setOnClickListener {
-
-            val bagItem = BagItem(viewModel.currentItem, viewModel.requiredSides.value)
-            bagViewModel.addItemOnBag(bagItem)
-
+        binding.toolBar.setNavigationOnClickListener {
+            viewModel.cancelItemSelection()
             findNavController().popBackStack()
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.cancelItemSelection()
             findNavController().popBackStack()
-        }
-
-        // ViewModel
-        lifecycleScope.launch {
-            viewModel.requiredSides.collect { lists ->
-                addRequiredItems(lists)
-            }
         }
     }
 
@@ -136,8 +140,7 @@ class ItemSelectedFragment : Fragment() {
 
         if (itemsAdapter == null) {
 
-            itemsAdapter =
-                ComplementaryItemsAdapter(requireContext(), newRequiredSides) { itemAdded ->
+            itemsAdapter = ComplementaryItemsAdapter(requireContext(), currentRequiredSides) { itemAdded ->
                     // q: anything
                 }
             binding.recyclerComplementaryItems.adapter = itemsAdapter
