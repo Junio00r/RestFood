@@ -9,7 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.usecase.CalledFromXML
-import com.devmobile.android.restaurant.usecase.RequestResult
+import com.devmobile.android.restaurant.usecase.RequestState
 import com.devmobile.android.restaurant.model.datasource.local.entities.User
 import com.devmobile.android.restaurant.model.repository.TokenVerificationRepository
 import com.devmobile.android.restaurant.model.datasource.remote.EmailRequest

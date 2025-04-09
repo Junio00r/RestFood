@@ -9,7 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.devmobile.android.restaurant.usecase.CalledFromXML
-import com.devmobile.android.restaurant.usecase.RequestResult
+import com.devmobile.android.restaurant.usecase.RequestState
 import com.devmobile.android.restaurant.databinding.FragmentLoginBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.LoginRepository

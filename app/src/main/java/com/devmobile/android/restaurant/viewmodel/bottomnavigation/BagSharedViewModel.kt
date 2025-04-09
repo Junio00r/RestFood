@@ -9,6 +9,7 @@ import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.model.datasource.local.entities.ItemBetweenUiAndVM
 import com.devmobile.android.restaurant.model.datasource.local.entities.getUiLayerItem
 import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
+import com.devmobile.android.restaurant.usecase.RequestState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

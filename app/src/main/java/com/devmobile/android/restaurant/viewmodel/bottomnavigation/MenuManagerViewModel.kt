@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.model.repository.MenuManagerRemoteRepository
-import com.devmobile.android.restaurant.usecase.RequestResult
 import com.devmobile.android.restaurant.usecase.entities.Bag
+import com.devmobile.android.restaurant.usecase.RequestState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

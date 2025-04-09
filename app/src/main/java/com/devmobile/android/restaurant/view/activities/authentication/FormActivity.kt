@@ -16,7 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.devmobile.android.restaurant.usecase.CalledFromXML
 import com.devmobile.android.restaurant.usecase.IShowError
 import com.devmobile.android.restaurant.R
-import com.devmobile.android.restaurant.usecase.RequestResult
+import com.devmobile.android.restaurant.usecase.RequestState
 import com.devmobile.android.restaurant.databinding.ActivityFormDataBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.FormRepository

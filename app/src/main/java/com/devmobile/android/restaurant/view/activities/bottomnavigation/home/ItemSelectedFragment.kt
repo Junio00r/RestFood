@@ -19,6 +19,7 @@ import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDa
 import com.devmobile.android.restaurant.model.datasource.local.entities.ItemBetweenUiAndVM
 import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
 import com.devmobile.android.restaurant.usecase.ClickHandler
+import com.devmobile.android.restaurant.usecase.RequestState
 import com.devmobile.android.restaurant.view.adapters.ComplementaryItemsAdapter
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagSharedViewModel
 import kotlinx.coroutines.delay
