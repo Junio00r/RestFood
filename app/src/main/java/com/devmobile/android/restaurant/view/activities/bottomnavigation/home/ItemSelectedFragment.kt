@@ -13,18 +13,14 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentItemSelectedBinding
-import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.ItemBetweenUiAndVM
-import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
 import com.devmobile.android.restaurant.usecase.ClickHandler
 import com.devmobile.android.restaurant.usecase.RequestState
 import com.devmobile.android.restaurant.view.adapters.ComplementaryItemsAdapter
@@ -173,7 +169,8 @@ class ItemSelectedFragment : Fragment() {
 
         if (itemsAdapter == null) {
 
-            itemsAdapter = ComplementaryItemsAdapter(requireContext(), currentRequiredSides) { itemAdded ->
+            itemsAdapter =
+                ComplementaryItemsAdapter(requireContext(), currentRequiredSides) { itemAdded ->
                     // q: anything
                 }
             binding.recyclerComplementaryItems.adapter = itemsAdapter

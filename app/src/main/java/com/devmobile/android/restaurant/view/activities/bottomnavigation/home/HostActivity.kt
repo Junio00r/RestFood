@@ -8,18 +8,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.devmobile.android.restaurant.databinding.ActivityHostItemsManagerBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
-import com.devmobile.android.restaurant.model.repository.MenuManagerRemoteRepository
 import com.devmobile.android.restaurant.model.datasource.remote.DatabaseSimulator
 import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
+import com.devmobile.android.restaurant.model.repository.MenuManagerRemoteRepository
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagSharedViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuManagerViewModel
 import kotlinx.coroutines.Dispatchers
@@ -55,7 +50,15 @@ class HostActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        bagViewModel = ViewModelProvider(this@HostActivity, BagSharedViewModel.provideFactory(null, BagRemoteRepository.getInstance(RestaurantLocalDatabase.getInstance(this).getItemDao())))[BagSharedViewModel::class]
+        bagViewModel = ViewModelProvider(
+            this@HostActivity,
+            BagSharedViewModel.provideFactory(
+                null,
+                BagRemoteRepository.getInstance(
+                    RestaurantLocalDatabase.getInstance(this).getItemDao()
+                )
+            )
+        )[BagSharedViewModel::class]
         if (savedInstanceState == null) {
             createFakeRemoteDatabase()
         }
