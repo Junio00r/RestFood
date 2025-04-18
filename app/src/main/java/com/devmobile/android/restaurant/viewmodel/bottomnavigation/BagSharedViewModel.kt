@@ -4,30 +4,43 @@ import android.util.Log
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.model.datasource.local.entities.ItemBetweenUiAndVM
 import com.devmobile.android.restaurant.model.datasource.local.entities.getUiLayerItem
 import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
 import com.devmobile.android.restaurant.usecase.RequestState
+import com.devmobile.android.restaurant.usecase.debounce
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class BagSharedViewModel(
     val restaurantId: Long? = null,
-    val itemId: Long? = null,
     private val repository: BagRemoteRepository,
-    private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val coroutineScope: CoroutineScope = CoroutineScope(SupervisorJob() + defaultDispatcher)
 ) : ViewModel() {
 
-    private val _currentItem = MutableStateFlow<BagItem?>(null)
-    val currentItem = _currentItem.asSharedFlow()
+    private val _errorPropagator = MutableSharedFlow<RequestState>()
+
+    private val _wasItemAdded = MutableStateFlow<RequestState?>(null)
+    val wasItemAdded = _wasItemAdded.asStateFlow()
+
+    // Need create a object bag for improve the code...
+    private val _itemsOnBag = MutableStateFlow<List<BagItem>>(emptyList())
+    val itemsOnBag = _itemsOnBag.asStateFlow()
+
+    // Item selected
+    private var _currentItem: Item? = null
 
     private val _itemName = MutableStateFlow<String?>(null)
     val itemName = _itemName.asStateFlow()
@@ -41,11 +54,8 @@ class BagSharedViewModel(
     private val _newRequiredSides = MutableStateFlow<List<ItemBetweenUiAndVM>?>(null)
     val newRequiredSides = _newRequiredSides.asStateFlow()
 
-    private val _amountItemAdded = MutableStateFlow(1)
+    private val _amountItemAdded = MutableStateFlow(0)
     val amountItemAdded = _amountItemAdded.asStateFlow()
-
-    private val _itemsOnBag = MutableStateFlow<List<BagItem>?>(null)
-    val itemsOnBag = _itemsOnBag.asStateFlow()
 
     fun updateItemObservation(newText: String) {
 
@@ -53,63 +63,70 @@ class BagSharedViewModel(
     }
 
     fun incrementTrigger() {
-        val canIncrement =
-            amountItemAdded.value <= (_currentItem.value?.item?.maxItemsAvailable ?: 1)
+        val canIncrement = amountItemAdded.value <= (_currentItem?.maxItemsAvailable ?: 1)
 
         if (canIncrement) _amountItemAdded.value += 1
     }
 
     fun decrementTrigger() {
         val canDecrement =
-            amountItemAdded.value >= (_currentItem.value?.item?.minItemsBySelection?.plus(1) ?: 1)
+            amountItemAdded.value >= (_currentItem?.minItemsBySelection?.plus(1) ?: 1)
 
         if (canDecrement) _amountItemAdded.value -= 1
     }
 
     fun fetchItem(restaurantId: Long, itemId: Long) {
 
-        if (_currentItem.value == null) {
+        coroutineScope.launch {
+            repository.requestItem(restaurantId, itemId).also { item ->
 
-            coroutineScope.launch {
-                repository.requestItem(restaurantId, itemId).also { item ->
-
-                    val itemRequiredSides: List<ItemBetweenUiAndVM>? =
-                        item.complementarySides?.map { complementaryItemId ->
-                            repository.requestItem(restaurantId, complementaryItemId)
-                                .getUiLayerItem()
-                        }
-                    _itemName.value = item.name
-                    _itemDescription.value = item.description
-                    _amountItemAdded.value = item.minItemsBySelection
-                    itemRequiredSides?.let {
-                        _currentItem.emit(BagItem(item, it))
-                        _newRequiredSides.emit(it)
+                val itemRequiredSides: List<ItemBetweenUiAndVM>? =
+                    item.complementarySides?.map { complementaryItemId ->
+                        repository.requestItem(restaurantId, complementaryItemId)
+                            .getUiLayerItem()
                     }
+                _itemName.value = item.name
+                _itemDescription.value = item.description
+                _amountItemAdded.value = item.minItemsBySelection
+                itemRequiredSides?.let {
+                    _currentItem = item
+                    _newRequiredSides.value = it
                 }
             }
         }
     }
 
-    fun addItemOnBag(itemId: Long) {
-        viewModelScope.launch {
+    fun addItemOnBag(itemId: Long? = null) {
 
-            _currentItem.value?.let {
+        coroutineScope.launch {
+            _wasItemAdded.value = RequestState.Loading
 
-                    _itemsOnBag.value = (_itemsOnBag.value ?: emptyList()) + it
+            _currentItem?.let { currentItem ->
+                val itemToInsert = BagItem(currentItem, _newRequiredSides.value)
+
+                _itemsOnBag.update { currentList ->
+
+                    if (!currentList.any { it.item.id == currentItem.id })
+                        currentList + itemToInsert
+                    else
+                        currentList
+                }
+
+                _wasItemAdded.value = RequestState.Success()
+                _currentItem = null
+                _newRequiredSides.value = null
+
+                _wasItemAdded.value = null
             }
         }
     }
 
     fun removeItemOnBag(itemId: Long) {
-        viewModelScope.launch {
+        coroutineScope.launch {
 
-//            _itemsOnBag.emit(listOf(bagItem))
+            val listWithoutItem = _itemsOnBag.value.toMutableList().filter { it.item.id == itemId }
+            _itemsOnBag.value = listWithoutItem
         }
-    }
-
-    fun cancelItemSelection() {
-        _currentItem.value = null
-        _newRequiredSides.value = null
     }
 
     override fun onCleared() {
@@ -120,19 +137,17 @@ class BagSharedViewModel(
     companion object {
 
         fun provideFactory(
-            restaurantId: Long? = null,
-            itemId: Long? = null,
-            repository: BagRemoteRepository
+            restaurantId: Long? = null, repository: BagRemoteRepository
         ): AbstractSavedStateViewModelFactory = object : AbstractSavedStateViewModelFactory() {
 
             override fun <T : ViewModel> create(
                 key: String, modelClass: Class<T>, handle: SavedStateHandle
             ): T {
 
-                return BagSharedViewModel(restaurantId, itemId, repository) as T
+                return BagSharedViewModel(restaurantId, repository) as T
             }
         }
     }
 }
 
-data class BagItem(val item: Item, val complementaryItems: List<ItemBetweenUiAndVM>)
+data class BagItem(val item: Item, val complementaryItems: List<ItemBetweenUiAndVM>? = null)

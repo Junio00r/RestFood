@@ -10,9 +10,8 @@ import androidx.annotation.OptIn
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +20,6 @@ import com.devmobile.android.restaurant.databinding.LayoutRecyclerviewItemsBindi
 import com.devmobile.android.restaurant.model.datasource.local.entities.Item
 import com.devmobile.android.restaurant.view.adapters.ItemAdapter
 import com.devmobile.android.restaurant.view.adapters.TabAdapter
-import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuManagerViewModel
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.search.SearchView
@@ -38,8 +36,8 @@ class MenuManagerFragment : Fragment() {
         FragmentMenuManagerItemsBinding.inflate(layoutInflater)
     }
     private val parentViewModel: MenuManagerViewModel by activityViewModels()
-    private val bagViewModel: BagViewModel by activityViewModels()
     private var isSearchEnabled = false
+    private var hasItemOnBag = false
 
     @OptIn(ExperimentalBadgeUtils::class)
     @SuppressLint("ResourceType")
@@ -60,10 +58,16 @@ class MenuManagerFragment : Fragment() {
             setUpObservables()
         }
 
-        if (isSearchEnabled)
+        if (isSearchEnabled) {
             _binding.searchViewItems.show()
-
+        }
         return _binding.root
+    }
+
+    override fun onResume() {
+
+        _binding.buttonBagItems.foreground.alpha = if (hasItemOnBag) 255 else 0
+        super.onResume()
     }
 
     private fun setUpSearch() {
@@ -83,26 +87,17 @@ class MenuManagerFragment : Fragment() {
 
         _binding.searchViewItems.addTransitionListener { searchView, previousState, newState ->
 
-            if (newState == SearchView.TransitionState.SHOWN) isSearchEnabled = true
-            else if (newState == SearchView.TransitionState.HIDDEN)
-                isSearchEnabled = false
+            isSearchEnabled = newState == SearchView.TransitionState.SHOWN
         }
 
         _binding.buttonBagItems.setOnClickListener {
-            if (_binding.buttonBagItems.foreground.alpha > 0)
-                _binding.buttonBagItems.foreground.alpha = 0
 
-            val action = MenuManagerFragmentDirections.actionFromMenuFragmentToBag()
-            findNavController().navigate(action)
+            findNavController().navigate(MenuManagerFragmentDirections.actionFromMenuManagerFragmentToBag())
         }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (bagViewModel.itemsOnBag.value.isNotEmpty())
-                    _binding.buttonBagItems.foreground.alpha = 255
-                else
-                    _binding.buttonBagItems.foreground.alpha = 0
-            }
+        setFragmentResultListener("requestAddToBagKey") { requestKey, bundle ->
+
+            hasItemOnBag = bundle.getBoolean("bundleKey", false)
         }
 
         _binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -116,7 +111,7 @@ class MenuManagerFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) = Unit
         })
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             _binding.searchViewItems.hide()
         }
     }
@@ -160,9 +155,11 @@ class MenuManagerFragment : Fragment() {
 
                 if (mustAdd) {
 
-                    val action = MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
-                        itemId, parentViewModel.restaurantId
-                    )
+                    val action =
+                        MenuManagerFragmentDirections.actionFromMenuManagerFragmentToItemSelected(
+                            itemId,
+                            parentViewModel.restaurantId
+                        )
                     _binding.searchViewItems.clearFocus()
                     findNavController().navigate(action)
                 }
@@ -185,7 +182,7 @@ class MenuManagerFragment : Fragment() {
         private val parentViewModel: MenuManagerViewModel by activityViewModels()
         private var _items: ArrayList<Item> = arrayListOf()
 
-        // Isn't still passed this for navigation component, after i do
+        // Isn't still passed this for navigation component, after I do
         private val sectionName: String by lazy {
             requireArguments().getStringArray("ARGUMENTS")!![1]
         }
@@ -194,41 +191,42 @@ class MenuManagerFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
         ): View {
 
-            lifecycleScope.launch(Dispatchers.Default) {
-
-                fetchItems()
-                setUpSectionItems()
-            }
+            fetchItems()
+            setUpSectionItems()
 
             return _binding.root
         }
 
-        private suspend fun fetchItems() {
+        private fun fetchItems() {
 
-            _items = parentViewModel.fetchItems(sectionName) as ArrayList
+            lifecycleScope.launch(Dispatchers.Default) {
+
+                _items = parentViewModel.fetchItems(sectionName) as ArrayList
+            }
         }
 
         private fun setUpSectionItems() {
 
-            requireActivity().runOnUiThread {
-                _binding.recyclerItems.addItemDecoration(
-                    DividerItemDecoration(
-                        requireContext(), LinearLayoutManager.VERTICAL
-                    )
+
+            _binding.recyclerItems.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(), LinearLayoutManager.VERTICAL
                 )
+            )
 
-                if (_items.isNotEmpty()) {
+            if (_items.isNotEmpty()) {
 
-                    _binding.recyclerItems.adapter = ItemAdapter(_items) { mustAdd, itemId ->
+                _binding.recyclerItems.adapter = ItemAdapter(_items) { mustAdd, itemId ->
 
-                        if (mustAdd) {
+                    if (mustAdd) {
 
-                            val action =
-                                MenuManagerFragmentDirections.actionFromMenuFragmentToItemSelected(
-                                    itemId, parentViewModel.restaurantId
-                                )
-                            findNavController().navigate(action)
-                        }
+                        val action =
+                            MenuManagerFragmentDirections.actionFromMenuManagerFragmentToItemSelected(
+                                itemId,
+                                parentViewModel.restaurantId
+                            )
+                        childFragmentManager.clearFragmentResult("requestAddToBagKey")
+                        findNavController().navigate(action)
                     }
                 }
             }

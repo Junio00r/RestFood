@@ -9,6 +9,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -17,6 +19,8 @@ import com.devmobile.android.restaurant.databinding.ActivityHostItemsManagerBind
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.repository.MenuManagerRemoteRepository
 import com.devmobile.android.restaurant.model.datasource.remote.DatabaseSimulator
+import com.devmobile.android.restaurant.model.repository.BagRemoteRepository
+import com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagSharedViewModel
 import com.devmobile.android.restaurant.viewmodel.bottomnavigation.MenuManagerViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +34,7 @@ class HostActivity : AppCompatActivity() {
     private val viewModel: MenuManagerViewModel by viewModels {
         MenuManagerViewModel.provideFactory(repository, this@HostActivity, restaurantId)
     }
+    private lateinit var bagViewModel: BagSharedViewModel
     private val repository: MenuManagerRemoteRepository by lazy {
         MenuManagerRemoteRepository.getInstance(
             restaurantDao = RestaurantLocalDatabase.getInstance(this).getRestaurantDao(),
@@ -42,14 +47,15 @@ class HostActivity : AppCompatActivity() {
         intent.getLongExtra("RESTAURANT_ID", 0)
     }
 
-    private val navController: NavController by lazy {
-        (supportFragmentManager.findFragmentById(binding.navHostItems.id) as NavHostFragment).findNavController()
-    }
+//    private val navController: NavController by lazy {
+//        (supportFragmentManager.findFragmentById(binding.navHostItems.id) as NavHostFragment).navController
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        bagViewModel = ViewModelProvider(this@HostActivity, BagSharedViewModel.provideFactory(null, BagRemoteRepository.getInstance(RestaurantLocalDatabase.getInstance(this).getItemDao())))[BagSharedViewModel::class]
         if (savedInstanceState == null) {
             createFakeRemoteDatabase()
         }
@@ -84,7 +90,7 @@ class HostActivity : AppCompatActivity() {
 //                _viewModel.onItemSelected.collect {
 //
 //                    findNavController(R.id.nav_host_items).navigate(R.id.action_from_Menu_Fragment_to_Item_Selected)
-////                    navController.navigate(R.id.action_from_Menu_Fragment_to_Item_Selected)
+//                    navController.navigate(R.id.action_from_Menu_Fragment_to_Item_Selected)
 //                }
 //            }
 //

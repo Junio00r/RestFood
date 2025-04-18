@@ -2,18 +2,25 @@ package com.devmobile.android.restaurant.view.activities.bottomnavigation.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.devmobile.android.restaurant.R
 import com.devmobile.android.restaurant.databinding.FragmentItemSelectedBinding
 import com.devmobile.android.restaurant.model.datasource.local.RestaurantLocalDatabase
 import com.devmobile.android.restaurant.model.datasource.local.entities.ItemBetweenUiAndVM
@@ -30,16 +37,9 @@ class ItemSelectedFragment : Fragment() {
     private val binding: FragmentItemSelectedBinding by lazy {
         FragmentItemSelectedBinding.inflate(layoutInflater)
     }
-    private val viewModel: BagSharedViewModel by activityViewModels {
-        BagSharedViewModel.provideFactory(null, null, repository)
-    }
-    private val repository: BagRemoteRepository by lazy {
-        BagRemoteRepository(
-            RestaurantLocalDatabase.getInstance(requireContext()).getItemDao()
-        )
-    }
-    private val safeArgs: ItemSelectedFragmentArgs by navArgs()
+    private val parentViewModel: BagSharedViewModel by activityViewModels()
 
+    private val safeArgs: ItemSelectedFragmentArgs by navArgs()
     private val actionHandler = ClickHandler(lifecycleScope)
     private var itemsAdapter: ComplementaryItemsAdapter? = null
     private var currentRequiredSides: List<ItemBetweenUiAndVM> = emptyList()
@@ -50,59 +50,85 @@ class ItemSelectedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding.viewModel = viewModel
+        binding.viewModel = parentViewModel
         binding.fragment = this
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        loadItem()
+        fetchItem()
         setUpObservables()
 
         return binding.root
     }
 
-    private fun loadItem() {
+    private fun fetchItem() {
 
-        viewModel.fetchItem(safeArgs.restaurantId, safeArgs.itemId)
+        parentViewModel.fetchItem(safeArgs.restaurantId, safeArgs.itemId)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setUpObservables() {
-        val touchListener = View.OnTouchListener { v, event ->
+        // Required items
+        lifecycleScope.launch {
+            parentViewModel.newRequiredSides
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { lists ->
+                    lists?.let {
+                        loadRequiredItems(lists)
+                    }
+                }
+        }
 
+        binding.textOrderObservation.textInputEditText.doAfterTextChanged {
+            parentViewModel.updateItemObservation(it.toString())
+        }
+
+        val touchListener = View.OnTouchListener { v, event ->
             onButtonClick(v, event.action)
             return@OnTouchListener true
         }
         binding.buttonDecrement.setOnTouchListener(touchListener)
         binding.buttonIncrement.setOnTouchListener(touchListener)
 
-        // All items
-        lifecycleScope.launch {
-            viewModel.newRequiredSides.collect { lists ->
-                lists?.let {
-                    addRequiredItems(lists)
-                }
-            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            onFinishScreen(false)
         }
 
-        // After add go back to previous screen
+        binding.buttonToolBar.setNavigationOnClickListener {
+            onFinishScreen(false)
+        }
+
         binding.buttonAddItem.setOnClickListener {
 
-            viewModel.addItemOnBag(safeArgs.itemId)
-
-            setFragmentResult("requestAddToBagKey", bundleOf("bundleKey" to true))
-
-            viewModel.cancelItemSelection()
-            findNavController().popBackStack()
+            parentViewModel.addItemOnBag(safeArgs.itemId)
         }
 
-        binding.toolBar.setNavigationOnClickListener {
-            viewModel.cancelItemSelection()
-            findNavController().popBackStack()
-        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                parentViewModel.wasItemAdded.collect { requestState ->
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            viewModel.cancelItemSelection()
-            findNavController().popBackStack()
+                    when (requestState) {
+
+                        is RequestState.Loading -> {
+                            // Add button animation
+                        }
+
+                        is RequestState.Success -> {
+                            // Add success message?
+                            // After add we're go back to the previous screen
+                            Log.i("DEBUGGING", "Item selected and add at bag")
+                            onFinishScreen(true)
+                        }
+
+                        is RequestState.Error -> {
+                            // Add error message
+                        }
+
+                        null -> {
+                            // Nothing
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -118,10 +144,10 @@ class ItemSelectedFragment : Fragment() {
 
                             if (view.id == binding.buttonIncrement.id) {
 
-                                viewModel.incrementTrigger()
+                                parentViewModel.incrementTrigger()
                             } else {
 
-                                viewModel.decrementTrigger()
+                                parentViewModel.decrementTrigger()
                             }
                             delay(200)
                         }
@@ -136,7 +162,13 @@ class ItemSelectedFragment : Fragment() {
         }
     }
 
-    private fun addRequiredItems(newRequiredSides: List<ItemBetweenUiAndVM>) {
+    private fun onFinishScreen(wasItemAdd: Boolean) {
+
+        setFragmentResult("requestAddToBagKey", bundleOf("bundleKey" to wasItemAdd))
+        findNavController().popBackStack()
+    }
+
+    private fun loadRequiredItems(newRequiredSides: List<ItemBetweenUiAndVM>) {
         currentRequiredSides = newRequiredSides
 
         if (itemsAdapter == null) {
