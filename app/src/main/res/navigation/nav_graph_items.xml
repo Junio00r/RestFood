@@ -11,11 +11,11 @@
         tools:layout="@layout/fragment_menu_manager_items">
 
         <action
-            android:id="@+id/action_from_Menu_Fragment_to_Item_Selected"
+            android:id="@+id/action_from_Menu_Manager_Fragment_to_Item_Selected"
             app:destination="@id/fragment_item_selected_dest" />
 
         <action
-            android:id="@+id/action_from_Menu_Fragment_to_Bag"
+            android:id="@+id/action_from_Menu_Manager_Fragment_to_Bag"
             app:destination="@id/fragment_bag_dest" />
 
     </fragment>

@@ -4,8 +4,6 @@
 
     <data>
 
-        <import type="androidx.lifecycle.LiveData" />
-
         <variable
             name="viewModel"
             type="com.devmobile.android.restaurant.viewmodel.bottomnavigation.BagSharedViewModel" />
@@ -47,7 +45,7 @@
                     app:contentScrim="@color/white"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:statusBarScrim="@color/transparent"
-                    app:toolbarId="@id/toolBar">
+                    app:toolbarId="@id/buttonToolBar">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
@@ -59,7 +57,7 @@
                         android:src="@drawable/image_entrada_hamburguer" />
 
                     <com.google.android.material.appbar.MaterialToolbar
-                        android:id="@+id/toolBar"
+                        android:id="@+id/buttonToolBar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         android:background="@color/transparent"
