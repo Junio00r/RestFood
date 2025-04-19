@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -108,10 +109,11 @@ class BagSharedViewModel(
                         currentList
                 }
 
-                _wasItemAdded.value = RequestState.Success()
                 _currentItem = null
                 _newRequiredSides.value = null
 
+                _wasItemAdded.value = RequestState.Success()
+                delay(200)
                 _wasItemAdded.value = null
             }
         }
