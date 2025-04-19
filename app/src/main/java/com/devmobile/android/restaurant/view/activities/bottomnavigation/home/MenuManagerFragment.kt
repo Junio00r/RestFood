@@ -191,42 +191,41 @@ class MenuManagerFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
         ): View {
 
-            fetchItems()
-            setUpSectionItems()
+            lifecycleScope.launch(Dispatchers.Default) {
+
+                fetchItems()
+                setUpSectionItems()
+            }
 
             return _binding.root
         }
 
-        private fun fetchItems() {
+        private suspend fun fetchItems() {
 
-            lifecycleScope.launch(Dispatchers.Default) {
-
-                _items = parentViewModel.fetchItems(sectionName) as ArrayList
-            }
+            _items = parentViewModel.fetchItems(sectionName) as ArrayList
         }
 
         private fun setUpSectionItems() {
 
-
-            _binding.recyclerItems.addItemDecoration(
-                DividerItemDecoration(
-                    requireContext(), LinearLayoutManager.VERTICAL
+            requireActivity().runOnUiThread {
+                _binding.recyclerItems.addItemDecoration(
+                    DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
                 )
-            )
 
-            if (_items.isNotEmpty()) {
+                if (_items.isNotEmpty()) {
 
-                _binding.recyclerItems.adapter = ItemAdapter(_items) { mustAdd, itemId ->
+                    _binding.recyclerItems.adapter = ItemAdapter(_items) { mustAdd, itemId ->
 
-                    if (mustAdd) {
+                        if (mustAdd) {
 
-                        val action =
-                            MenuManagerFragmentDirections.actionFromMenuManagerFragmentToItemSelected(
-                                itemId,
-                                parentViewModel.restaurantId
-                            )
-                        childFragmentManager.clearFragmentResult("requestAddToBagKey")
-                        findNavController().navigate(action)
+                            val action =
+                                MenuManagerFragmentDirections.actionFromMenuManagerFragmentToItemSelected(
+                                    itemId,
+                                    parentViewModel.restaurantId
+                                )
+
+                            findNavController().navigate(action)
+                        }
                     }
                 }
             }
