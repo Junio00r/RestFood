@@ -74,20 +74,23 @@ class BagSharedViewModel(
 
     fun fetchItem(restaurantId: Long, itemId: Long) {
 
-        coroutineScope.launch {
-            repository.requestItem(restaurantId, itemId).also { item ->
+        if(_currentItem == null) {
 
-                val itemRequiredSides: List<ItemBetweenUiAndVM>? =
-                    item.complementarySides?.map { complementaryItemId ->
-                        repository.requestItem(restaurantId, complementaryItemId)
-                            .getUiLayerItem()
+            coroutineScope.launch {
+                repository.requestItem(restaurantId, itemId).also { item ->
+
+                    val itemRequiredSides: List<ItemBetweenUiAndVM>? =
+                        item.complementarySides?.map { complementaryItemId ->
+                            repository.requestItem(restaurantId, complementaryItemId)
+                                .getUiLayerItem()
+                        }
+                    _itemName.value = item.name
+                    _itemDescription.value = item.description
+                    _amountItemAdded.value = item.minItemsBySelection
+                    itemRequiredSides?.let {
+                        _currentItem = item
+                        _newRequiredSides.value = it
                     }
-                _itemName.value = item.name
-                _itemDescription.value = item.description
-                _amountItemAdded.value = item.minItemsBySelection
-                itemRequiredSides?.let {
-                    _currentItem = item
-                    _newRequiredSides.value = it
                 }
             }
         }
